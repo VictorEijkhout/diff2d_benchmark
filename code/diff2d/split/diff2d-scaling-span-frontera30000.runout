@@ -1,0 +1,81 @@
+==== Run diff2d on 1 threads ====
+Execute program diff2d cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:   1
+Time: 124398 msec
+span-BW: (estimated)   0.289
+span-Flops:  0.0806
+==== Run diff2d on 5 threads ====
+Execute program diff2d cores 5
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=5 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:   5
+Time:  25076 msec
+span-BW: (estimated)    1.44
+span-Flops:     0.4
+==== Run diff2d on 11 threads ====
+Execute program diff2d cores 11
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  11
+Time:  11508 msec
+span-BW: (estimated)    3.13
+span-Flops:   0.871
+==== Run diff2d on 16 threads ====
+Execute program diff2d cores 16
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=16 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  16
+Time:   8015 msec
+span-BW: (estimated)    4.49
+span-Flops:    1.25
+==== Run diff2d on 22 threads ====
+Execute program diff2d cores 22
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  22
+Time:   5896 msec
+span-BW: (estimated)    6.11
+span-Flops:     1.7
+==== Run diff2d on 28 threads ====
+Execute program diff2d cores 28
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=28 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  28
+Time:   4650 msec
+span-BW: (estimated)    7.74
+span-Flops:    2.16
+==== Run diff2d on 33 threads ====
+Execute program diff2d cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  33
+Time:   3941 msec
+span-BW: (estimated)    9.13
+span-Flops:    2.54
+==== Run diff2d on 39 threads ====
+Execute program diff2d cores 39
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=39 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  39
+Time:   3348 msec
+span-BW: (estimated)    10.8
+span-Flops:    2.99
+==== Run diff2d on 44 threads ====
+Execute program diff2d cores 44
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  44
+Time:   2987 msec
+span-BW: (estimated)    12.1
+span-Flops:    3.36
+==== Run diff2d on 50 threads ====
+Execute program diff2d cores 50
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=50 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  50
+Time:   2633 msec
+span-BW: (estimated)    13.7
+span-Flops:    3.81
+==== Run diff2d on 56 threads ====
+Execute program diff2d cores 56
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 30000 -n 30000 -i 5 
+Threads:  56
+Time:   2368 msec
+span-BW: (estimated)    15.2
+span-Flops:    4.23
+================ This type of run:
+Very inefficient 1D range split into 2D i,j
+indexing into 2D mdspan
+parallel by OpenMP

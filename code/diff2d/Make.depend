@@ -1,0 +1,38 @@
+# -*- makefile -*-
+################################################################
+################################################################
+####
+#### This makefile is part of the source of 
+#### "Parallel Computing for Science and Engineering"
+#### by Victor Eijkhout, copyright 2013-2024
+####
+#### general dependencies for diff2d
+####
+################################################################
+################################################################
+
+##
+## dependencies
+##
+EXTRA_OBJS = ../lib/${CATEGORY}.o ../lib/base.o ../lib/options.o
+EXTRA_OBJS_diff2d = ../lib/${CATEGORY}.o ../lib/base.o ../lib/options.o
+diff2d.o : ../main.cpp ../lib/options.hpp ../lib/${CATEGORY}.hpp ../lib/base.hpp
+diff2d.o : ${EXTRA_OBJS}
+../lib/${CATEGORY}.o : ../lib/${CATEGORY}.cpp ../lib/${CATEGORY}.hpp
+	@cd ../lib \
+	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      ${CATEGORY}.o
+../lib/base.o : ../lib/base.cpp ../lib/base.hpp
+	@cd ../lib \
+	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      base.o
+../lib/options.o : ../lib/options.cpp ../lib/options.hpp
+	@cd ../lib \
+	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      options.o
+EXTRA_INCLUDES = -I${TACC_MDSPAN_INC} \
+    $$( pkg-config --cflags cxxopts ) \
+    $$( if [ "${CATEGORY}" = "range" ] ; then echo $$( pkg-config --cflags tbb ) ; fi ) \
+    $$( if [ "${CATEGORY}" = "dist" ] ; then \
+	echo "-I${TACC_MPL_INC}" && echo "-I${TACC_MPI_INC}" \
+	; fi )

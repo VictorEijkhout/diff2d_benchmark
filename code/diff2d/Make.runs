@@ -1,0 +1,79 @@
+# -*- makefile -*-
+################################################################
+################################################################
+####
+#### This makefile is part of the source of 
+#### "Parallel Computing for Science and Engineering"
+#### by Victor Eijkhout, copyright 2013-2023
+####
+#### make include file for diff2d scaling runs
+#### AT THE MOMENT ONLY FOR OPENMP
+####
+################################################################
+################################################################
+
+info ::
+	@echo "================ custom runs"
+	@echo "make run_default : profiling run"
+run_default :
+	@make --no-print-directory diff2d ECHO=1
+	@OMP_NUM_THREADS=8 OMP_PROC_BIND=true ./diff2d -m 10000 -n 20000 -i 8 -t
+
+info ::
+	@echo "make run_scaling : core count strong scaling"
+	@echo "    [ NSIZE=... (default=${NSIZE}) ]"
+	@echo "    [ THREADSCALE=\"1 2 4 &c\" (default is automatic, use NDIV=4 &c) ]"
+	@echo "    [ D2D_OPTIONS=... ]"
+	@echo "make run_scaling_plot"
+NSIZE = 10000
+.PHONY: run_scaling run_scaling_plot
+run_scaling :
+	@if [ -z "${CATEGORY}" ] ; then \
+	  echo "Set CATEGORY variable for this directory" && exit 1 \
+	; else \
+	  echo "================ Run category: ${CATEGORY} ========" \
+	; fi
+	@runoutid=${CATEGORY}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${NSIZE} \
+	 && if [ "${MODE}" = "mpl" ] ; then \
+	      SCALING=mpi_scaling ; else SCALING=omp_scaling ; fi \
+	 && if [ "${CATEGORY}" = "range" -a "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
+	      tbblib=$$( pkg-config --libs tbb | cut -d ' ' -f 1 ) \
+	       && tbblib=$${tbblib##-L} \
+	       && export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$${tbblib} \
+	    ; fi \
+	 && results=$$( make --no-print-directory scaling_logname \
+	                PROGRAM="diff2d" RUNOUTID=$${runoutid} ) \
+	 && make --no-print-directory $${SCALING} PROGRAM=diff2d \
+	    ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" CATCHER= \
+	    RUN_OPTIONS="-m ${NSIZE} -n ${NSIZE} -i 5 ${D2D_OPTIONS}" \
+	 && cmdline="./diff2d -H" \
+	     && if [ "${MODE}" = "mpl" ] ; then cmdline="ibrun -n 1 $$cmdline" ; fi \
+	     && if [ "${ECHO}" = "1" ] ; then echo "cmdline=$$cmdline" ; fi \
+	     && eval $$cmdline | tee -a $${results} \
+	 && if [ "${GITADD}" = "1" ] ; then \
+	      mv $${results} $${results%%.out}.runout \
+	       && git add $${results%%.out}.runout \
+	       && git commit -m "scaling output for $${runoutid}" \
+	    ; fi
+run_scaling_plot :
+	@fname=diff2d-scaling-omp-${TACC_SYSTEM}${NSIZE} \
+	 && python3 \
+	    ../../../scripts/graphs_extract.py \
+	        $$fname.out \
+	        Threads:1 Time:1
+old_run_scaling :
+	@make --no-print-directory diff2d ECHO=1
+	@if [ ! -z "${THREADSCALE}" ] ; then \
+	    threadscale="${THREADSCALE}" \
+	 ; else \
+	    threadscale=$$( make --no-print-directory omp_proc_scale NDIV=${NDIV} ) \
+	 ; fi \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	      echo "Running on $${threadscale} threads" ; fi \
+	 && for t in $${threadscale} ; do \
+	      echo "Threads: $$t" \
+	       && cmdline="OMP_PROC_BIND=true OMP_NUM_THREADS=$$t \
+	               ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 $${RUN_OPTIONS}" \
+	       && if [ "${ECHO}" = "1" ] ; then echo "cmdline: $$cmdline" ; fi \
+	       && eval $$cmdline \
+	    ; done

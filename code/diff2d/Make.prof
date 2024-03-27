@@ -1,0 +1,40 @@
+# -*- makefile -*-
+################################################################
+################################################################
+####
+#### This makefile is part of the source of 
+#### "Parallel Computing for Science and Engineering"
+#### by Victor Eijkhout, copyright 2013-2023
+####
+#### make include file for diff2d profiling
+####
+################################################################
+################################################################
+
+info ::
+	@echo "================ profiling"
+	@echo "set PROF=1 for compiling for gprof"
+ifeq "${PROF}" "1"
+  EXTRA_OPTIONS = -pg
+  EXTRA_LINK_FLAGS = -pg
+endif
+
+info ::
+	@echo "make profile : analyze gprof output"
+.PHONY: profile
+profile :
+	gprof diff2d gmon.out > diff2d.out
+clean ::
+	@rm -f *.out perf.data*
+.PHONY: perf
+info ::
+	@echo "make perf : analyze output of perf record"
+	@echo "    [ PERF_OPTIONS=... ]"
+perf :
+	@if [ ! -f perf.data ] ; then \
+	    echo "No file perf.data found; first: perf record yourprogram" \
+	     && exit 1 ; fi
+	@perf report --stdio --percent-limit=1 \
+	    --fields=Overhead,Symbol ${PERF_OPTIONS} \
+	    2>/dev/null \
+	 | awk '/Overhead/ {p=1} p==1 {print}' 

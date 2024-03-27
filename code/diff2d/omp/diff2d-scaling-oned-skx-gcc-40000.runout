@@ -1,0 +1,79 @@
+Execute program diff2d cores 1
+Runtype: omp
+Threads:   1
+Vector size: 40000 x 40000
+Time:  28918 msec
+omp-BW: (estimated)    2.21
+omp-Flops:    1.94
+Execute program diff2d cores 4
+Runtype: omp
+Threads:   4
+Vector size: 40000 x 40000
+Time:   7273 msec
+omp-BW: (estimated)     8.8
+omp-Flops:     7.7
+Execute program diff2d cores 9
+Runtype: omp
+Threads:   9
+Vector size: 40000 x 40000
+Time:   3290 msec
+omp-BW: (estimated)    19.5
+omp-Flops:      17
+Execute program diff2d cores 14
+Runtype: omp
+Threads:  14
+Vector size: 40000 x 40000
+Time:   2227 msec
+omp-BW: (estimated)    28.7
+omp-Flops:    25.1
+Execute program diff2d cores 19
+Runtype: omp
+Threads:  19
+Vector size: 40000 x 40000
+Time:   1818 msec
+omp-BW: (estimated)    35.2
+omp-Flops:    30.8
+Execute program diff2d cores 24
+Runtype: omp
+Threads:  24
+Vector size: 40000 x 40000
+Time:   1552 msec
+omp-BW: (estimated)    41.2
+omp-Flops:    36.1
+Execute program diff2d cores 28
+Runtype: omp
+Threads:  28
+Vector size: 40000 x 40000
+Time:   1441 msec
+omp-BW: (estimated)    44.4
+omp-Flops:    38.9
+Execute program diff2d cores 33
+Runtype: omp
+Threads:  33
+Vector size: 40000 x 40000
+Time:   1380 msec
+omp-BW: (estimated)    46.4
+omp-Flops:    40.6
+Execute program diff2d cores 38
+Runtype: omp
+Threads:  38
+Vector size: 40000 x 40000
+Time:   1296 msec
+omp-BW: (estimated)    49.4
+omp-Flops:    43.2
+Execute program diff2d cores 43
+Runtype: omp
+Threads:  43
+Vector size: 40000 x 40000
+Time:   1280 msec
+omp-BW: (estimated)      50
+omp-Flops:    43.8
+Execute program diff2d cores 48
+Runtype: omp
+Threads:  48
+Vector size: 40000 x 40000
+Time:   1240 msec
+omp-BW: (estimated)    51.6
+omp-Flops:    45.2
+================ This type of run:
+OpenMP version using 2D loop

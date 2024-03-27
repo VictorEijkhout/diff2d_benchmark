@@ -1,0 +1,24 @@
+Threads:   1
+Time: 124390 msec
+span-BW: (estimated)   0.289
+span-Flops:  0.0806
+Threads:  11
+Time:  11520 msec
+span-BW: (estimated)    3.13
+span-Flops:    0.87
+Threads:  22
+Time:   5913 msec
+span-BW: (estimated)    6.09
+span-Flops:     1.7
+Threads:  33
+Time:   3944 msec
+span-BW: (estimated)    9.13
+span-Flops:    2.54
+Threads:  44
+Time:   2988 msec
+span-BW: (estimated)      12
+span-Flops:    3.36
+Threads:  56
+Time:   2367 msec
+span-BW: (estimated)    15.2
+span-Flops:    4.24
