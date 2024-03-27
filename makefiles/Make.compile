@@ -1,0 +1,505 @@
+# -*- makefile -*-
+################################################################
+####
+#### This makefile is part of `Parallel Programming in MPI and OpenMP'
+#### Victor Eijkhout
+#### eijkhout@tacc.utexas.edu
+####
+#### copyright Victor Eijkhout 2012-2024
+####
+#### Make include file with general compile rules
+####
+################################################################
+
+MAKEFLAGS += --no-builtin-rules
+
+info ::
+	@echo
+	@echo "================ Compilation"
+	@if [ -z "${MODE}" ] ; then \
+	    echo "Please set MODE variable" && echo \
+	 ; else \
+	    case ${MODE} in \
+	        ( cuda | mpi | mpl | omp | ompg | hybrid | petsc | slepc | tbb | 1api ) \
+	            echo "using mode=${MODE}" ;; \
+	        ( * ) echo && echo "Unknown MODE=${MODE}" && echo ;; \
+	    esac \
+	 ; fi 
+	@echo "make APP (in ${APPS} ${EXERCISES} ${PROGRAMS} )"
+	@echo "    [ OPTLEVEL=0/1/2, default:${OPTLEVEL} ]"
+	@echo "    [ EXTRA_OPTIONS=... ]"
+	@echo "    [ EXTRA_INCLUDES=... ]"
+	@echo "    [ EXTRA_LIBS=... ]"
+	@echo "    [ EXTRA_LINK_FLAGS=... ]"
+	@echo "    [ ECHO=0/1 : echo commandline ]"
+	@if [ "${MODE}" = "omp" ] ; then \
+	    echo "    [ OMPFLAGS=... (default: ${OMPFLAGS}) ]" ; fi
+OPTLEVEL = 2
+
+EXT_c = c
+EXT_C = c
+EXT_F = F90
+EXT_f = F90
+EXT_F08 = F90
+EXT_f08 = F90
+EXT_cxx = cxx
+EXT_CXX = cxx
+EXT_mpl = cxx
+EXT = ${EXT_${LANGUAGE}}
+
+CFLAGS =
+CXXFLAGS =
+FFLAGS =
+
+INTEL19 := $(findstring 19,${TACC_FAMILY_COMPILER_VERSION})
+INTEL23 := $(findstring 23,${TACC_FAMILY_COMPILER_VERSION})
+INTEL24 := $(findstring 24,${TACC_FAMILY_COMPILER_VERSION})
+
+CSTANDARD = 99
+ifeq "${MODE}" "cuda"
+    C_STD_FLAGS = 
+else ifeq "${TACC_FAMILY_COMPILER}" "nvhpc"
+    C_STD_FLAGS = 
+else
+    C_STD_FLAGS = -std=c99
+endif
+CFLAGS   += ${C_STD_FLAGS}
+
+CPPSTANDARD = 17
+CXX_STD_FLAGS = -std=c++${CPPSTANDARD}
+CXXFLAGS += ${CXX_STD_FLAGS}
+
+OPTFLAGS := -O${OPTLEVEL} -g
+ifeq "${MODE}" "cuda"
+  OPTFLAGS += -allow-unsupported-compiler
+else
+  ifeq "${TACC_FAMILY_COMPILER}" "intel"
+    ## OPTFLAGS += "-sox"
+  else ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+    OPTFLAGS += "-Wno-psabi"
+  endif
+endif
+
+CFLAGS   += ${OPTFLAGS}
+CXXFLAGS += ${OPTFLAGS}
+FFLAGS   += ${OPTFLAGS}
+
+## there are bugs in the qopenmp backend of Intel23
+ifdef INTEL_OMP_FLAG
+  OMPFLAGS_intel = ${INTEL_OMP_FLAG}
+else ifeq "${INTEL23}" "23"
+  OMPFLAGS_intel    = -fopenmp 
+else
+  OMPFLAGS_intel    = -qopenmp 
+endif
+OMPFLAGS_oneapi   = -qopenmp 
+OMPFLAGS_gcc      = -ggdb -fopenmp
+OMPFLAGS_clang    = -fopenmp
+OMPFLAGS_cuda     = -mp=gpu
+OMPFLAGS_nvhpc    = -fopenmp
+OMPFLAGS_xl       = -qsmp=omp -qoffload
+ifeq "${MODE}" "ompg"
+  OMPFLAGS := -fiopenmp -fopenmp-targets=spir64
+else
+  OMPFLAGS := ${OMPFLAGS_${TACC_FAMILY_COMPILER}}
+endif
+
+# these conditionals are not executed. why?
+ifeq "${MODE}" "omp"
+  CFLAGS   += ${OMPFLAGS}
+  CXXFLAGS += ${OMPFLAGS}
+  FFLAGS   += ${OMPFLAGS}
+else ifeq "${MODE}" "ompg"
+  CFLAGS   += ${OMPFLAGS}
+  CXXFLAGS += ${OMPFLAGS}
+  FFLAGS   += ${OMPFLAGS}
+else ifeq "${MODE}" "tbb"
+  CFLAGS   += ${OMPFLAGS}
+  CXXFLAGS += ${OMPFLAGS}
+  FFLAGS   += ${OMPFLAGS}
+else ifeq "${MODE}" "hybrid"
+  CFLAGS   += ${OMPFLAGS}
+  CXXFLAGS += ${OMPFLAGS}
+  FFLAGS   += ${OMPFLAGS}
+else ifeq "${MODE}" "mpl"
+  CXXFLAGS += -I${TACC_MPL_INC}
+endif
+
+MPI_C_COMPILER = mpicc
+MPI_CXX_COMPILER = mpicxx
+MPI_F_COMPILER = mpif90
+MPI_F08_COMPILER = mpif90
+
+ifdef TACC_TAU_DIR
+  C_COMPILER = tau_cc.sh -optCompInst -optPreProcess
+  CXX_COMPILER = tau_cxx.sh -optCompInst -optPreProcess
+  F_COMPILER = tau_f90.sh -optCompInst -optPreProcess
+  F08_COMPILER = tau_f90.sh -optCompInst -optPreProcess
+  MPI_C_COMPILER = tau_cc.sh  -optCompInst -optPreProcess
+  MPI_CXX_COMPILER = tau_cxx.sh -optCompInst -optPreProcess
+  MPI_F_COMPILER = tau_f90.sh -optCompInst -optPreProcess
+  MPI_F08_COMPILER = tau_f90.sh -optCompInst -optPreProcess
+else ifeq "${MODE}" "mpi"
+  C_COMPILER   = ${MPI_C_COMPILER}
+  CXX_COMPILER = ${MPI_CXX_COMPILER}
+  F_COMPILER   = ${MPI_F_COMPILER}
+  F08_COMPILER   = ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "hybrid"
+  C_COMPILER   = ${MPI_C_COMPILER}
+  CXX_COMPILER = ${MPI_CXX_COMPILER}
+  F_COMPILER   = ${MPI_F_COMPILER}
+  F08_COMPILER   = ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "mpl"
+  C_COMPILER   = ${MPI_C_COMPILER}
+  CXX_COMPILER = ${MPI_CXX_COMPILER}
+  F_COMPILER   = ${MPI_F_COMPILER}
+  F08_COMPILER   = ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "sycl"
+    CXX_COMPILER = icpx
+    CXXFLAGS +=  -fsycl
+    LINK_FLAGS += -fsycl
+else ifeq "${MODE}" "1api"
+    CXX_COMPILER = icpx
+    CXXFLAGS +=  -fsycl
+    LINK_FLAGS += -fsycl
+else ifeq "${MODE}" "petsc"
+  ##
+  ## annoyingly, there is only an mpicc/mpicxx/mpif90 script
+  ## in the petsc bin dir, if you have --download-mpich
+  ## this may have changed in 3.12.4
+  ##
+  C_COMPILER = mpicc
+  # ${PETSC_DIR}/${PETSC_ARCH}/bin/mpicc
+  CXX_COMPILER = mpicxx
+  #${PETSC_DIR}/${PETSC_ARCH}/bin/mpicxx
+  F_COMPILER = mpif90
+  F08_COMPILER = mpif90
+  #${PETSC_DIR}/${PETSC_ARCH}/bin/mpif90
+  MPI_C_COMPILER   = ${C_COMPILER}
+  MPI_CXX_COMPILER = ${CXX_COMPILER}
+  MPI_F_COMPILER   = ${F_COMPILER}
+  MPI_F08_COMPILER   = ${F08_COMPILER}
+
+  CFLAGS += ${PETSC_CC_INCLUDES} 
+  CXXFLAGS += ${PETSC_CXX_INCLUDES} 
+  FFLAGS += ${PETSC_FC_INCLUDES} 
+else # regular compiler modes
+
+  ifeq "${MODE}" "cuda"
+    C_COMPILER   = nvcc
+    CXX_COMPILER = nvcc
+    F_COMPILER   = /bin/false
+    F08_COMPILER   = /bin/false
+
+    F_HOST_COMPILER   = no_such_f_compiler
+    F08_HOST_COMPILER   = no_such_f_compiler
+    ifeq "${TACC_FAMILY_COMPILER}" "intel"
+      C_HOST_COMPILER   = icc
+      CXX_HOST_COMPILER = icpc 
+	  notHOST_FLAGS = -diag-disable=10441
+    else ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+      C_HOST_COMPILER   = gcc
+      CXX_HOST_COMPILER = g++
+    else 
+      C_HOST_COMPILER   = no_such_compiler
+      CXX_HOST_COMPILER = no_such_compiler
+	endif
+  else ifdef TACC_CXX
+    C_COMPILER=${TACC_CC}
+    CXX_COMPILER=${TACC_CXX}
+    F_COMPILER=${TACC_FC}
+    F08_COMPILER=${TACC_FC}
+  else ifeq "${TACC_FAMILY_COMPILER}" "intel"
+      ifeq "${INTEL23}" "23"
+	C_COMPILER   = icx
+	CXX_COMPILER = icpx
+	F_COMPILER   = ifx
+	F08_COMPILER = ifx
+      else ifeq "${INTEL24}" "24"
+	C_COMPILER   = icx
+	    CXX_COMPILER = icpx
+	F_COMPILER   = ifx
+	F08_COMPILER = ifx
+      else
+	C_COMPILER   = icc
+	CXX_COMPILER = icpc
+	F_COMPILER   = ifort
+	F08_COMPILER = ifort
+	  endif
+  else ifeq "${TACC_FAMILY_COMPILER}" "oneapi"
+    C_COMPILER   = icx
+    CXX_COMPILER = icpx
+    F_COMPILER   = ifort
+    F08_COMPILER   = ifort
+  else ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+    C_COMPILER   = gcc
+    CXX_COMPILER = g++
+    F_COMPILER   = gfortran
+    F08_COMPILER   = gfortran
+  else ifeq "${TACC_FAMILY_COMPILER}" "clang"
+    C_COMPILER   = clang
+    CXX_COMPILER = clang++
+    F_COMPILER   = gfortran
+    F08_COMPILER   = gfortran
+  else ifeq "${TACC_FAMILY_COMPILER}" "nvhpc"
+    C_COMPILER   = nvcc
+    CXX_COMPILER = nvcc
+    F_COMPILER   = /bin/false
+    F08_COMPILER   = /bin/false
+  else ifeq "${TACC_FAMILY_COMPILER}" "xl"
+    C_COMPILER   = xlc
+    CXX_COMPILER = xlc++
+    F_COMPILER   = xlf
+    F08_COMPILER   = xlf
+  else ifeq "${TACC_FAMILY_COMPILER}" "devcloud"
+    CXX_COMPILER = dpcpp
+  endif # end of non-mpi compiler setting
+
+endif
+
+# we need extra options with all compilers
+CFLAGS   += ${EXTRA_OPTIONS}
+CXXFLAGS += ${EXTRA_OPTIONS}
+FFLAGS   += ${EXTRA_OPTIONS}
+
+##
+## Module detection
+##
+.PHONY: modules
+modules :
+	@needs="" \
+	 && modules="${MODULES}" \
+	 && if [ ! -z "${PROGRAM}" ] ; then \
+	      modules="$${modules} $$( make -p | grep MODULES_${PROGRAM} | cut -d '=' -f 2 ) " \
+	    ; fi \
+	 && for m in $$modules ; do \
+	      mdir=TACC_$${m}_DIR \
+	       && mdir=$$( env | grep -i $${mdir} | cut -d = -f 2 ) \
+	       && if [ -z "$${mdir}" ] ; then \
+	            needs="$$needs $$m" \
+	           ; \
+	          fi \
+	       ; \
+	     done \
+	     && if [ ! -z "$$needs" ] ; then \
+	          echo "Please load modules: $$needs" \
+	           && echo  \
+	           && exit 1 \
+	           ;  \
+	        fi
+
+##
+## Ordinary C/C++ rules
+##
+%.o : %.c 
+	@make --no-print-directory modules
+	@if [ -z "${C_COMPILER}" ] ; then \
+	    echo "Variable C_COMPILER not set" && exit 1 ; fi
+	@cmdline="${C_COMPILER} -g  ${EXTRA_INCLUDES} ${CFLAGS} \
+	    -c $<" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Compiling: $$cmdline" \
+	         && echo "with ${C_COMPILER}=$$( which ${C_COMPILER} )" \
+	         && if [ "${MODE}" = "mpi" ] ; then \
+	                echo "where ${C_COMPILER}=$$( ${C_COMPILER} -show )" \
+	            ; fi \
+	    ; fi \
+	 && eval $$cmdline
+%.o : %.cxx 
+	@program=$@ && program=$${program%%.o} \
+	 && make --no-print-directory modules PROGRAM=$${program}
+	@if [ -z "${CXX_COMPILER}" ] ; then \
+	    echo "Variable CXX_COMPILER not set" && exit 1 ; fi
+	@cmdline="${CXX_COMPILER} -g ${EXTRA_INCLUDES} ${CXXFLAGS} \
+	    -c $<" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Compiling: $$cmdline" \
+	         && echo "with ${CXX_COMPILER}=$$( which ${CXX_COMPILER} )" \
+	         && if [ "${MODE}" = "mpi" ] ; then \
+	                echo "where ${CXX_COMPILER}=$$( ${CXX_COMPILER} -show )" \
+	            ; fi \
+	    ; fi \
+	 && eval $$cmdline
+%.o : %.cpp 
+	@make --no-print-directory modules
+	@if [ -z "${CXX_COMPILER}" ] ; then \
+	    echo "Variable CXX_COMPILER not set" && exit 1 ; fi
+	@cmdline="${CXX_COMPILER} -g ${EXTRA_INCLUDES} ${CXXFLAGS} \
+	    -c $<" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Compiling: $$cmdline" \
+	         && echo "with ${CXX_COMPILER}=$$( which ${CXX_COMPILER} )" \
+	         && if [ "${MODE}" = "mpi" ] ; then \
+	                echo "where ${CXX_COMPILER}=$$( ${CXX_COMPILER} -show )" \
+	            ; fi \
+	    ; fi \
+	 && eval $$cmdline
+##
+## Cuda C/C++ rules
+##
+%.o : %.cu
+	@if [ "${LANGUAGE}" = "CXX" ] ; then \
+	    compiler=${CXX_COMPILER} && hostcompiler=${CXX_HOST_COMPILER} \
+	    ; else \
+	    compiler=${C_COMPILER} && hostcompiler=${C_HOST_COMPILER} \
+	    ; fi \
+	 && if [ -z "${HOST_FLAGS}" ] ; then \
+	      cmdline="$${compiler} -ccbin $${hostcompiler}" \
+	      ; \
+	    else \
+	      cmdline="$${compiler} -ccbin \"$${hostcompiler} ${HOST_FLAGS}\"" \
+	      ; \
+	    fi \
+	 && cmdline="$${compiler}" \
+	 && cmdline="$$cmdline ${EXTRA_INCLUDES} ${CFLAGS} -c $<" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Compiling: $$cmdline" \
+	         && echo "with $${compiler}=$$( which $${compiler} )" \
+	         && echo " and $${hostcompiler}=$$( which $${hostcompiler} )" \
+	    ; fi \
+	 && eval $$cmdline
+
+%.o : %.f
+	${F_COMPILER}   -c $< ${FFLAGS} ${EXTRA_INCLUDES} 
+%.o : %.F90
+	@cmdline="${F_COMPILER} -g ${FFLAGS} ${EXTRA_INCLUDES} \
+	    -c $<" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Compiling: $$cmdline" \
+	         && echo "with ${F_COMPILER}=$$( which ${F_COMPILER} )" \
+	         && if [ "${MODE}" = "mpi" ] ; then \
+	              mpicompiler=$$( ${F_COMPILER} -show ) \
+	               && echo "where ${F_COMPILER}=$$mpicompiler" \
+	               && fcompiler=$$( echo $$mpicompiler | cut -d ' ' -f 1 ) \
+	               && echo "where $$fcompiler=$$( which $$fcompiler ) " \
+	            ; fi \
+	    ; fi \
+	 && eval $$cmdline
+%.o : %.f90
+	${F_COMPILER}   -c $< ${FFLAGS} ${EXTRA_INCLUDES} 
+
+ifeq "${MODE}" "mpi"
+C_LINKER   := ${MPI_C_COMPILER}
+CXX_LINKER := ${MPI_CXX_COMPILER}
+F_LINKER   := ${MPI_F_COMPILER}
+F08_LINKER   := ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "mpl"
+C_LINKER   := ${MPI_C_COMPILER}
+CXX_LINKER := ${MPI_CXX_COMPILER}
+F_LINKER   := ${MPI_F_COMPILER}
+F08_LINKER   := ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "hybrid"
+C_LINKER   := ${MPI_C_COMPILER}
+CXX_LINKER := ${MPI_CXX_COMPILER}
+F_LINKER   := ${MPI_F_COMPILER}
+F08_LINKER   := ${MPI_F08_COMPILER}
+else ifeq "${MODE}" "1api"
+C_LINKER   := ${C_COMPILER}
+CXX_LINKER := ${CXX_COMPILER}
+F_LINKER   := ${F_COMPILER}
+F08_LINKER   := ${F08_COMPILER}
+else ifeq "${MODE}" "cuda"
+C_LINKER   := ${C_COMPILER} -ccbin ${C_HOST_COMPILER}
+CXX_LINKER := ${CXX_COMPILER} -ccbin ${CXX_HOST_COMPILER}
+else 
+C_LINKER   := ${C_COMPILER}
+CXX_LINKER := ${CXX_COMPILER}
+F_LINKER   := ${F_COMPILER}
+F08_LINKER   := ${F08_COMPILER}
+endif
+LINKER     := ${${LANGUAGE}_LINKER}
+
+ifeq "${MODE}" "mpl"
+  # header only
+else ifeq "${MODE}" "petsc"
+  LINK_FLAGS += ${PETSC_LIB}
+else ifeq "${MODE}" "slepc"
+  LINK_FLAGS += ${PETSC_LIB} -lslepc
+else ifeq "${MODE}" "hybrid"
+  LINK_FLAGS += ${OMPFLAGS}
+else ifeq "${MODE}" "omp"
+  LINK_FLAGS += ${OMPFLAGS}
+else ifeq "${MODE}" "ompg"
+  LINK_FLAGS += ${OMPFLAGS}
+else ifeq "${MODE}" "tbb"
+  LINK_FLAGS += ${OMPFLAGS}
+endif
+ifeq "${TACC_FAMILY_COMPILER}" "gcc"
+  LINK_FLAGS += -lm
+endif
+
+.SECONDEXPANSION:
+## why the double colon?
+${APPS} ${EXERCISES} ${PROGRAMS} ${WRONGS} :: $$@.o ${EXTRA_OBJS}
+	@if [ ! -z "${LINK_SETUP_COMMANDS}" ] ; then \
+	    if [ "${ECHO}" = "1" ] ; then echo ${LINK_SETUP_COMMANDS} ; fi \
+	     && eval ${LINK_SETUP_COMMANDS} \
+	    ; fi
+	@if [ -z "${LINKER}" ] ; then \
+	    echo "No linker defined for LANGUAGE=${LANGUAGE}" && exit 1 ; fi
+	@if [ ! -z "${RPATH}" ] ; then \
+	      for r in ${RPATH} ; do \
+	          rpath="$$rpath -Wl,-rpath,$${r}" \
+	      ; done \
+	    ; fi \
+	 && cmd="${LINKER} -o $@ $^ \
+	        ${LINK_FLAGS} ${EXTRA_LINK_FLAGS} \
+	        ${EXTRA_LIBS} $$rpath " \
+	 && if [ "${ECHO}" = "1" ] ; then echo "Linking: $$cmd" ; fi \
+	 && eval $$cmd
+	@if [ "${ECHO}" = "1" -a ! -z "${LINK_EXTRA_COMMANDS}" ] ; then \
+	    echo ${LINK_EXTRA_COMMANDS} \
+	    ; fi \
+	 && eval ${LINK_EXTRA_COMMANDS}
+
+.PHONY: compile
+compile :
+	@make --no-print-directory ${PROGRAM}.o
+	${LINKER} -o ${PROGRAM} ${PROGRAM}.o ${EXTRA_OBJS} ${LINK_FLAGS} ${EXTRA_LIBS}
+
+info ::
+	@if [ ! -z "${APPS}${EXERCISES}" ] ; then \
+	    echo "make listsources : list all sources in this directory" \
+	    && echo "make listapps : list all apps in this directory" \
+	    && echo "make apps : compile all applications in this directory" \
+	    ; \
+	fi
+.PHONY: apps listapps listsources
+listsources :
+	@for a in ${APPS} ; do \
+	  if [ -e $$a.c ] ; then echo $$a.c ; fi ; \
+	  if [ -e $$a.cxx ] ; then echo $$a.cxx ; fi ; \
+	  if [ -e $$a.F90 ] ; then echo $$a.F90 ; fi ; \
+	done | awk 'BEGIN { v="" } {v = v " " $$0} END {print v}'
+	@echo tools.{c,h}
+apps : clean
+	@( \
+	for a in ${APPS} ${EXERCISES} ; do \
+	    echo "%%%%%%%%%%%%%%%%" && echo "Compiling: $${a}" \
+	    && make --no-print-directory $${a} || echo "failure" \
+	    ; \
+	done \
+	) 2>&1 | tee compile.log
+	@echo && echo "See compile.log for full output" && echo
+listapps :
+	@echo ${APPS} ${EXERCISES}
+	@x=$$( make --no-print-directory extension ) \
+	 && for app in ${APPS} ${EXERCISES} ; do \
+	      if [ $$( ls $${app}.$${x} 2>/dev/null | wc -l ) -eq 0 ] ; then \
+	        echo "Warning: missing source for <<$${ap}.$${x}>>" \
+	      ; fi \
+	    ; done
+
+info ::
+	@echo "make extension : file extension depending on LANGUAGE"
+.PHONY: extension
+extension ::
+	@case ${LANGUAGE} in \
+	    ( C ) echo c ;; \
+	    ( CXX ) echo cxx ;; \
+	    ( F ) echo F90 ;; \
+	    ( P ) echo py ;; \
+	    ( * ) echo unknown ;; \
+	esac
+clean ::
+	@rm -f compile.log run.log

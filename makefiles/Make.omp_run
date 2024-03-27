@@ -1,0 +1,179 @@
+# -*- makefile -*-
+################################################################
+####
+#### This makefile is part of `Parallel Programming in MPI and OpenMP'
+#### by Victor Eijkhout, copyright 2013-2023
+#### eijkhout@tacc.utexas.edu
+####
+#### Make include file for omp test runs
+####
+################################################################
+
+info ::
+	@echo "================ OMP running"
+	@echo "make run_xxx in: ${RUNS}"
+
+info ::
+	@echo "make omp_run [ NP=... ] PROGRAM=program"
+	@echo "    [ RUNOUTID= .... (extra id, default blank) ]"
+	@echo "    [ RUN_OPTIONS=... (run options for executable) ]"
+	@echo "    OMPTHREADS= core range (default=${OMPTHREADS})"
+	@echo "    OMPSCHEDULE= schedule (default=${OMPSCHEDULE})"
+	@echo "    BIND=true/false/cores/... (OMP_PROC_BIND, default=${BIND})"
+	@echo "    ACTIVE=... (default=${ACTIVE}) for OMP_MAX_ACTIVE_LEVELS"
+	@echo "make omp_scaling [ NP=... ] [ NDIV=... ] [ PROGRAM=... ]"
+	@echo "    [ SCRIPT_OPTIONS=.... (options for run rule) ]"
+
+BIND = true
+ACTIVE = 1
+ECHO = 0
+TWOLEVEL =
+OMPSCHEDULE = 
+
+.PHONY: omp_run omp_scaling omp_proc_scale
+omp_run :
+	@if [ -z "${PROGRAM}" ] ; then \
+	    echo "Please set variable PROGRAM" >2 && exit 1 ; fi 
+	@if [ ! -f "${PROGRAM}" ] ; then \
+	    echo "Could not find executable PROGRAM=${PROGRAM}" && exit 1 ; fi 
+	@command="./${PROGRAM}" \
+	 && np=`make --no-print-directory num_cores NP=${NP}` \
+	 && if [ ! -z "${TWOLEVEL}" ] ; then \
+	        command="OMP_NUM_THREADS=${TWOLEVEL},$$(( $$np / ${TWOLEVEL} )) $$command" \
+	    ; else \
+	        command="OMP_NUM_THREADS=$$np $$command" \
+	    ; fi \
+	 && echo "Execute program ${PROGRAM} cores $${np}" \
+	 && command="OMP_PROC_BIND=${BIND} $$command" \
+	 && if [ ${ACTIVE} -gt 1 ] ; then \
+	         command="OMP_MAX_ACTIVE_LEVELS=${ACTIVE} $$command" ; fi \
+	 && if [ ! -z "${OMPSCHEDULE}" ] ; then \
+	         command="OMP_SCHEDULE=${OMPSCHEDULE} $$command" ; fi \
+	 && if [ ! -z "${RUN_OPTIONS}" ] ; then \
+	        command="$$command ${RUN_OPTIONS}" ; fi \
+	 && if [ "${ECHO}" = "1" ] ; then echo "Commandline: $$command" ; fi \
+	 && eval $$command
+omp_proc_scale :
+	@export np=$$( make --no-print-directory num_cores ) \
+	 && if [ -z "${NDIV}" ] ; then ndiv=5 ; else ndiv=${NDIV} ; fi \
+	 && export ompthreads="$$( make --no-print-directory omp_threads NP=$$np NDIV=$$ndiv )" \
+	 && echo $$ompthreads
+omp_scaling :
+	@ompthreads="$$( make --no-print-directory omp_proc_scale NDIV=${NDIV} )" \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	        echo "Using threads: $$ompthreads out of cores: $$np" ; fi \
+	 && if [ -z "${PROGRAM}" ] ; then \
+	        echo "Set PROGRAM variable" && exit 1 \
+	    ; fi \
+	 && if [ -z "${RESULTS}" ] ; then \
+	      results=$$( make --no-print-directory scaling_logname \
+	                  RUNOUTID="${RUNOUTID}" PROGRAM="${PROGRAM}" ) \
+	    ; else results="${RESULTS}" ; fi \
+	 && ( \
+	    for t in $$ompthreads ; do \
+	        if [ "${ECHO}" = "1" ] ; then \
+	            echo "==== Run ${PROGRAM} on $$t threads ====" ; fi \
+	         && make --no-print-directory omp_run NP=$$t PROGRAM=${PROGRAM} \
+	                ECHO=${ECHO} NEST=${NEST} TWOLEVEL=${TWOLEVEL} ACTIVE=${ACTIVE} \
+	                RUN_OPTIONS="${RUN_OPTIONS}" RUNOUTID=${TACC_SYSTEM} \
+	    ; done \
+	    ) | tee $$results \
+	 && if [ ! -z "${FTIME}" -a ! -z "${FTHREAD}" ] ; then \
+	      cat $$results \
+	      | awk '{ times=times" "$$(${FTIME}) ; thrds=thrds" "$$(${FTHREAD}) } \
+	                END { print "thrds: " thrds; print "times: "times } ' \
+	    ; fi \
+	 && echo " scaling results in: $$results"
+.PHONY: scaling_logname
+scaling_logname :
+	@if [ ! -z "${RUNOUTID}" ] ; then \
+	  echo ${PROGRAM}-scaling-${RUNOUTID}.out \
+	; else \
+	  echo ${PROGRAM}-scaling.out \
+	; fi
+
+#
+# Utility targets
+#
+.PHONY: num_cores
+info ::
+	@echo "make num_cores : based on SLURM_CPUS_ON_NODE, override with NP"
+num_cores :
+	@if [ ! -z ${NP} ] ; then \
+	        echo ${NP} \
+	    ; elif [ ! -z ${SLURM_CPUS_ON_NODE} ] ; then \
+	        echo ${SLURM_CPUS_ON_NODE} \
+	    ; else \
+	        echo "Specify number of processors with NP=..." \
+	         && exit 1 \
+	    ; fi
+.PHONY: omp_threads
+omp_threads :
+	@if [ ! -z "${OMPTHREADS}" ] ; then \
+	    echo "${OMPTHREADS}" \
+	    ; \
+	else \
+	    if [ ! -z "${NDIV}" ] ; then \
+	        ndiv=${NDIV} \
+	    ; else \
+	        ndiv=3 \
+	    ; fi \
+	     && if [ -z "${NP}" ] ; then \
+	            np=8 ; else np=${NP} ; fi \
+	     && div=`seq 1 $$ndiv` \
+	     && frac=`for d in $$div ; do echo "$$(( $$d * $$np / $$ndiv ))" ; done` \
+	     && echo "1 $$frac" \
+	    ; \
+	fi
+
+info ::
+	@echo "make runs : compile and run everything and generate output file"
+	@echo "make runouts : generate runout files"
+	@echo "    using RUNS=${RUNS}"
+
+.PHONY: runs runouts
+runs :
+	@for r in ${APPS} ; do \
+	    echo "---------------- Test run: $$r ----------------" \
+	     && rule=run_$${r} \
+	     && if [ $$( grep $$rule Makefile | wc -l ) -gt 0 ] ; then \
+	          echo "using run rule: $$rule" \
+	           && runtarget=$$rule \
+	        ; else \
+	          echo "generic run: $$r" \
+	           && runtarget="omp_run PROGRAM=$$r" \
+	        ; fi \
+	     && make --no-print-directory $$runtarget OPTLEVEL=${OPTLEVEL} \
+	                NEST=${NEST} ACTIVE=${ACTIVE} OMPTHREADS="${OMPTHREADS}" \
+	 ; done \
+	 && echo "runout in:  $${runout}"
+runouts :
+	@for r in ${RUNS} ; do \
+	    echo "---------------- Test run: $$r ----------------" \
+	     && runname=$${r##run_} \
+	     && if [ ! -z "${RUNOUTID}" ] ; then \
+	            runout=$${runname}-${RUNOUTID}.runout \
+	        ; else runout=$${runname}.runout ; fi \
+	     && make --no-print-directory $$r OPTLEVEL=${OPTLEVEL} \
+	                NEST=${NEST} ACTIVE=${ACTIVE} OMPTHREADS="${OMPTHREADS}" \
+	            2>&1 | tee $${runout} \
+	     && git add $${runout} \
+	 ; done \
+	 && echo "runout in:  $${runout}"
+
+runapps : clean
+	@( \
+	for a in ${APPS} ${EXERCISES} ; do \
+	    echo "%%%%%%%%%%%%%%%% Compile $${a}" \
+	     && make --no-print-directory $${a} ECHO=${ECHO} \
+	     && echo "%%%%%%%%%%%%%%%% Run $${a}" \
+	     && make --no-print-directory omp_run \
+	            PROGRAM=$$a ECHO=${ECHO} NP=${NP} ECHO=${ECHO} \
+	    ; \
+	done \
+	) 2>&1 | tee run.log
+	@echo && echo "See run.log for all output" && echo 
+
+total_clean ::
+	@rm -f *.runout
+
