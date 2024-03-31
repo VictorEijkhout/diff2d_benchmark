@@ -26,18 +26,8 @@ namespace linalg {
     : bordered_array_base<real>(m,n,border) {
     auto out = this->data();
     auto b = this->border(), n2b = this->n2b();
-    // for ( size_t i=0; i<m+2*b; i++ ) {
-    //   for ( size_t j=0; j<n+2*b; j++ ) {
-    // 	out[ oindex(i,j) ] = static_cast<real>(0);
-    //   }
-    // }
     for ( auto ij=0; ij<(m+2*b)*(n+2*b); ++ij )
       out[ij] = static_cast<real>(0);
-    // for ( size_t i=0-border; i<m+border; i++ ) {
-    //   for ( size_t j=0-border; j<n+border; j++ ) {
-    //     out[ IINDEX(i,j,b,n2b) ] = static_cast<real>(0);
-    //   }
-    // }
   };
 
   //! Compute the 5-point Laplace stencil from an input array

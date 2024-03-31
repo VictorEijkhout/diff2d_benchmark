@@ -22,6 +22,16 @@
 
 namespace linalg {
 
+  template< typename real >
+  bordered_array_1d<real>::bordered_array_1d( size_t m,size_t n,int border )
+    : bordered_array_base<real>(m,n,border) {
+    auto out = this->data();
+    auto b = this->border(), n2b = this->n2b();
+    #pragma omp parallel for
+    for ( auto ij=0; ij<(m+2*b)*(n+2*b); ++ij )
+      out[ij] = static_cast<real>(0);
+  };
+
   //! Compute the 5-point Laplace stencil from an input array
   //codesnippet d2d5ptomp
   template< typename real >
