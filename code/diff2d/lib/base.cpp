@@ -1,8 +1,21 @@
+/****************************************************************
+ ****
+ **** This file belongs with the course
+ **** Parallel Programming in MPI and OpenMP
+ **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ ****
+ **** base.cpp : base routines
+ ****
+ ****************************************************************/
+
 #include "base.hpp"
 
 namespace linalg {
 
-  //! The constructor copies arguments and allocates the data
+  /*! The constructor copies arguments and allocates the data
+   * Note that the data is not zero-initialized, 
+   * because this is done mode-dependent
+   */
     //codesnippet d2dspan1
   template< typename real >
   bordered_array_base<real>::bordered_array_base( size_t m,size_t n,int border )

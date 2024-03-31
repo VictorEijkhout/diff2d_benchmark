@@ -28,8 +28,7 @@ namespace linalg {
     //codesnippet end
 
     // constructors
-    bordered_array_seq( size_t m,size_t n,int border )
-      : bordered_array_base<real>(m,n,border) {};
+    bordered_array_seq( size_t m,size_t n,int border );
     bordered_array_seq( size_t m,size_t n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 
