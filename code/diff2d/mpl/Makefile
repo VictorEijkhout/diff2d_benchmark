@@ -31,38 +31,40 @@ MODULES = cxxopts mdspan mpl
 EXTRA_OBJS = ../lib/${CATEGORY}.o ../lib/seq.o ../lib/base.o ../lib/options.o
 EXTRA_OBJS_diff2d = ../lib/${CATEGORY}.o ../lib/seq.o ../lib/base.o ../lib/options.o
 diff2d.o : ../main.cpp ../lib/options.hpp ../lib/${CATEGORY}.hpp ../lib/base.hpp
-diff2d.o : ${EXTRA_OBJS}
+diff2d.o : modules ${EXTRA_OBJS}
 ../lib/${CATEGORY}.o : ../lib/${CATEGORY}.cpp ../lib/${CATEGORY}.hpp
 	@cd ../lib \
 	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      EXTRA_INCLUDES="${EXTRA_INCLUDES}" \
+	      EXTRA_OPTIONS="${EXTRA_OPTIONS}" \
 	      ${CATEGORY}.o
 ../lib/seq.o : ../lib/seq.cpp ../lib/seq.hpp
 	@cd ../lib \
 	 && make --no-print-directory ECHO=${ECHO} CATEGORY=seq \
+	      EXTRA_INCLUDES="${EXTRA_INCLUDES}" \
+	      EXTRA_OPTIONS="${EXTRA_OPTIONS}" \
 	      seq.o
 ../lib/base.o : ../lib/base.cpp ../lib/base.hpp
 	@cd ../lib \
 	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      EXTRA_INCLUDES="${EXTRA_INCLUDES}" \
+	      EXTRA_OPTIONS="${EXTRA_OPTIONS}" \
 	      base.o
 ../lib/options.o : ../lib/options.cpp ../lib/options.hpp
 	@cd ../lib \
 	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	      EXTRA_INCLUDES="${EXTRA_INCLUDES}" \
+	      EXTRA_OPTIONS="${EXTRA_OPTIONS}" \
 	      options.o
+##
+## compilation
+##
 EXTRA_INCLUDES = -I${TACC_MDSPAN_INC} \
     $$( pkg-config --cflags cxxopts ) \
     -I${TACC_MPL_INC}
 
-##
-## compilation
-##
 include ../../../makefiles/Make.compile
-ifeq "${TACC_FAMILY_COMPILER}" "intel"
-  CPPSTANDARD = 2b
-else
-  CPPSTANDARD = 23
-endif
-EXTRA_INCLUDES = -I${TACC_MDSPAN_INC} \
-    $$( pkg-config --cflags cxxopts )
+CPPSTANDARD = 23
 
 RUNS =
 info ::

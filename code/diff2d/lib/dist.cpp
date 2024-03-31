@@ -18,6 +18,7 @@ using std::vector;
 #include <iostream>
 using std::cout;
 #include <format>
+using std::format;
 
 #include <ranges>
 namespace rng = std::ranges;

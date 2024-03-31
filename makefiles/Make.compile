@@ -48,7 +48,7 @@ EXT_mpl = cxx
 EXT = ${EXT_${LANGUAGE}}
 
 CFLAGS =
-CXXFLAGS =
+CXXFLAGS = 
 FFLAGS =
 
 INTEL19 := $(findstring 19,${TACC_FAMILY_COMPILER_VERSION})
@@ -310,7 +310,9 @@ modules :
 	 && make --no-print-directory modules PROGRAM=$${program}
 	@if [ -z "${CXX_COMPILER}" ] ; then \
 	    echo "Variable CXX_COMPILER not set" && exit 1 ; fi
-	@cmdline="${CXX_COMPILER} -g ${EXTRA_INCLUDES} ${CXXFLAGS} \
+	@cmdline="${CXX_COMPILER} -g \
+	    -DCXXEXTRAINCSTART ${EXTRA_INCLUDES} -DCXXEXTRAINCSTOP \
+	    -DCXXFLAGSSTART    ${CXXFLAGS}       -DCXXFLAGSSTOP\
 	    -c $<" \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	        echo "Compiling: $$cmdline" \
@@ -324,7 +326,9 @@ modules :
 	@make --no-print-directory modules
 	@if [ -z "${CXX_COMPILER}" ] ; then \
 	    echo "Variable CXX_COMPILER not set" && exit 1 ; fi
-	@cmdline="${CXX_COMPILER} -g ${EXTRA_INCLUDES} ${CXXFLAGS} \
+	@cmdline="${CXX_COMPILER} -g \
+	    -DCXXEXTRAINCSTART ${EXTRA_INCLUDES} -DCXXEXTRAINCSTOP \
+	    -DCXXFLAGSSTART    ${CXXFLAGS}       -DCXXFLAGSSTOP\
 	    -c $<" \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	        echo "Compiling: $$cmdline" \
