@@ -11,8 +11,8 @@
 .PHONY: info
 info ::
 
-VARIANTS = omp range span
-# cxx  clps kokkos tile tbb
+VARIANTS = cxx omp span
+# cxx  clps kokkos tile tbb range 
 .PHONY: compile
 info ::
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"

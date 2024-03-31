@@ -1,3 +1,13 @@
+/****************************************************************
+ ****
+ **** This file belongs with the course
+ **** Parallel Programming in MPI and OpenMP
+ **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ ****
+ **** span.hpp : headers openmp iteration over index space
+ ****
+ ****************************************************************/
+
 #ifndef LINALG_SPAN_H
 #define LINALG_SPAN_H
 
@@ -14,8 +24,8 @@ namespace linalg {
     using bordered_array_base<real>::log_bytes;
     //codesnippet end
 
-    bordered_array_span( size_t m,size_t n,int border )
-      : bordered_array_base<real>(m,n,border) {};
+    // constructors
+    bordered_array_span( size_t m,size_t n,int border );
     bordered_array_span( size_t m,size_t n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 

@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** linalg.cpp : bordered vector routines using mdspan
+ **** span.cpp : bordered vector routines using mdspan
  ****
  ****************************************************************/
 
@@ -21,6 +21,17 @@ using std::format;
 #include "span.hpp"
 
 namespace linalg {
+
+  template< typename real >
+  bordered_array_span<real>::bordered_array_span( size_t m,size_t n,int border )
+    : bordered_array_base<real>(m,n,border) {
+    auto out = this->data();
+    for ( size_t i=0; i<m+2*border; i++ ) {
+      for ( size_t j=0; j<n+2*border; j++ ) {
+	out[ this->oindex(i,j) ] = static_cast<real>(0);
+      }
+    }
+  };
 
   //! Compute the 5-point Laplace stencil from an input array
   //codesnippet d2d5ptrng
@@ -104,14 +115,6 @@ namespace linalg {
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }
     }
-    // auto out = this->data2d();
-    // auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
-    // for ( int i=0; i<m; i++ )
-    //   for ( int j=0; j<n; j++ )
-    // 	if ( i==m-1 or j==n-1 ) {
-    //       char c = ( j<n2b-1 ? ' ' : '\n' );
-    //       cout << format("{:5.2}{}",out[i,j],c);
-    //     }
   };
 };
 
