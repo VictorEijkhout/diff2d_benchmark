@@ -8,6 +8,8 @@
  ****
  ****************************************************************/
 
+#include <memory>
+using std::unique_ptr,std::make_unique;
 #include <string>
 using std::string;
 #include <tuple>
@@ -39,7 +41,7 @@ namespace linalg {
       ( const mpl::cartesian_communicator& comm,size_t m,size_t n,bool trace )
         : comm(comm)
 	, m_global(m),n_global(n)
-	, data( 1,1,1 ) /* place holder array */ {
+  {
     auto rank = comm.rank();
     //codesnippet end
     /*
@@ -78,17 +80,14 @@ namespace linalg {
     auto
       sm = proc_start_m[pm+1]-proc_start_m[pm],
       sn = proc_start_n[pn+1]-proc_start_n[pn];
-    data = bordered_array_seq<real>(sm,sn,1);
+    data = unique_ptr<bordered_array_base<real>>
+      ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
+    tmp = unique_ptr<bordered_array_base<real>>
+      ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
     set_neighbors(trace);
     //codesnippet end
   };
   //codesnippet end
-
-  // template< typename real >
-  // pair<int,int> distributed_array<real>::proc_grid_size() {
-  //   int pm = dimensions.size(0), pn = dimensions.size(1);    
-  //   return make_pair(pm,pn);
-  // };
 
   /*! Auxiliary for constructor.
    * We use matrix-numbering: down and right
@@ -126,16 +125,16 @@ namespace linalg {
   //! Derive pointer and layout for the halo, given the source direction
   template< typename real >
   BUFFER distributed_array<real>::get_halo( char direction ) {
-    auto [m,n,b] = data.outer_sizes();
+    auto [m,n,b] = data->outer_sizes();
     real* ptr; 
     if ( direction=='N' )
-      ptr = &( data.data2d()[0,b] );
+      ptr = &( data->data2d()[0,b] );
     else if ( direction=='W' )
-      ptr = &( data.data2d()[b,0] );
+      ptr = &( data->data2d()[b,0] );
     else if ( direction=='E' )
-      ptr = &( data.data2d()[b,n-b] );
+      ptr = &( data->data2d()[b,n-b] );
     else if ( direction=='S' )
-      ptr = &( data.data2d()[m-b,b] );
+      ptr = &( data->data2d()[m-b,b] );
     shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
@@ -150,16 +149,16 @@ namespace linalg {
   //! Derive pointer and layout for the inner edge, given the target direction
   template< typename real >
   BUFFER distributed_array<real>::get_edge( char direction ) {
-    auto [m,n,b] = data.outer_sizes();
+    auto [m,n,b] = data->outer_sizes();
     real* ptr; 
     if ( direction=='N' )
-      ptr = &( data.data2d()[b,b] );
+      ptr = &( data->data2d()[b,b] );
     else if ( direction=='W' )
-      ptr = &( data.data2d()[b,b] );
+      ptr = &( data->data2d()[b,b] );
     else if ( direction=='E' )
-      ptr = &( data.data2d()[b,n-2*b] );
+      ptr = &( data->data2d()[b,n-2*b] );
     else if ( direction=='S' )
-      ptr = &( data.data2d()[m-2*b,b] );
+      ptr = &( data->data2d()[m-2*b,b] );
     shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
@@ -197,12 +196,11 @@ namespace linalg {
   //! Other is by non-const reference because we do halo exchange on it.
   template< typename real >
   void distributed_array<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const linalg::bordered_array_base<real>& other,bool trace ) {
     // upcast base to derived type
-    const auto& other_ = dynamic_cast<const linalg::distributed_array<real>&>(_other);
-    auto other(other_); // copy because we do halo in place, and _other/other_ are const
-    other.halo_exchange( trace );
-    data.central_difference_from( other.data,trace );
+    tmp->scale_interior( *data,static_cast<real>(1) );
+    halo_exchange( tmp,trace );
+    data->central_difference_from( tmp,trace );
   };
 
   /*
@@ -210,34 +208,35 @@ namespace linalg {
    */
   template< typename real >
   void distributed_array<real>::log_flops( float n ) {
-    data.log_flops(n); };
+    data->log_flops(n); };
   template< typename real >
   void distributed_array<real>::log_bytes( float n ) {
-    data.log_bytes(n); };
+    data->log_bytes(n); };
   template< typename real >
   std::pair<float,float> distributed_array<real>::log_report() {
     // TODO this needs a reduction
-    return data.log_report(); };
+    return data->log_report(); };
 
   //! Gather an array for printing
   template< typename real >
   void distributed_array<real>::view( string caption ) {
     size_t global_size{0}; auto myrank = comm.rank();
     // size without borders
-    size_t local_size = data.inner_size();
+    size_t local_size = data->inner_size();
     // send data is strided vector because of border
     real* first_data_point =  // should this be an mdspan?
-      data.data() + 2*data.n2b() + 2*data.border();
+      data->data() + 2*data->n2b() + 2*data->border();
     auto proc_inner_layout =
-      [ this ] ( auto rank ) { 
+      [ this ] ( auto rank,auto n2b ) { 
 	auto coord = this->comm.coordinates(rank);
 	auto pm = coord[0], pn = coord[1];
 	auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
 	auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
-	cout << format("strided, msize={} bs={} n2b={}\n",msize,bs,this->n2b());
-	return mpl::strided_vector_layout<real>( msize, bs, this->n2b() );
+	cout << format("rank={}: strided, msize={} bs={} n2b={}\n",
+		       rank,msize,bs,n2b);
+	return mpl::strided_vector_layout<real>( msize, bs, n2b );
       };
-    mpl::layout<real> send_layout = proc_inner_layout(comm.rank());
+    mpl::layout<real> send_layout = proc_inner_layout(comm.rank(),data->n2b());
     if ( myrank==0 ) {
       comm.reduce( mpl::plus<size_t>(),0,local_size,global_size );
       vector<real> gathered_data(global_size);
@@ -249,17 +248,17 @@ namespace linalg {
 	auto pm = coord[0], pn = coord[1];
 	auto msize = proc_start_m[pm+1]-proc_start_m[pm];
 	auto bs    = proc_start_n[pn+1]-proc_start_n[pn];
-	recv_layouts[iproc] = proc_inner_layout(iproc);
+	recv_layouts[iproc] = proc_inner_layout(iproc,global_n2b());
 	recv_displs[iproc] = proc_start_m[pm]*n_global + proc_start_n[pm];
       }
-      comm.gatherv
-        ( 0,
-	  first_data_point,send_layout,
-          gathered_data.data(),recv_layouts,recv_displs );
-      // view as zero-border array
-      bordered_array_seq<real>( m_global,n_global,gathered_data.data() ).view(caption);
-    } else {
-      comm.reduce( mpl::plus<size_t>(),0,local_size );
+    //   // comm.gatherv
+    //   //   ( 0,
+    //   // 	  first_data_point,send_layout,
+    //   //     gathered_data->data(),recv_layouts,recv_displs );
+    //   // view as zero-border array
+    //   bordered_array_seq<real>( m_global,n_global,gathered_data->data() ).view(caption);
+    // } else {
+    //   comm.reduce( mpl::plus<size_t>(),0,local_size );
       comm.gatherv( 0, first_data_point,send_layout );
     }
       cout << "Done\n";
@@ -269,7 +268,7 @@ namespace linalg {
   //codesnippet d2dnormmpl
   template< typename real >
   real distributed_array<real>::l2norm() { 
-    real local_norm = data.l2norm(), global_norm;
+    real local_norm = data->l2norm(), global_norm;
     local_norm *= local_norm;
     comm.allreduce( mpl::plus<real>(),local_norm,global_norm);
     return std::sqrt(global_norm);
@@ -283,7 +282,7 @@ namespace linalg {
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
     const auto& other = dynamic_cast<const linalg::distributed_array<real>&>(_other);
-    data.scale_interior(other.data,factor);
+    data->scale_interior(other.data,factor);
   };
   //codesnippet end
 

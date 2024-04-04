@@ -16,6 +16,7 @@
 include ../Make.depend
 LANGUAGE = CXX
 MODE = omp
+CATEGORY  = dist
 include ../../../makefiles/Make.compile
 CPPSTANDARD = 23
 

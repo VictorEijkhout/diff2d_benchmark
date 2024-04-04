@@ -28,7 +28,7 @@ namespace linalg {
 
   //codesnippet d2distarray
   template< typename real >
-  class distributed_array : public bordered_array_base<real> {
+  class distributed_array { // : public bordered_array_base<real> {
   private:
     const mpl::cartesian_communicator& comm; 
     mpl::cartesian_communicator::dimensions dimensions; 
@@ -38,36 +38,34 @@ namespace linalg {
     mpl::cartesian_communicator::vector coord;
     std::map<char,int> neighbors;
     size_t m_global,n_global;
-    bordered_array_seq<real> data;
+    std::unique_ptr<bordered_array_base<real>> data{nullptr},tmp{nullptr};
   //codesnippet end
   public:
     // constructor
     distributed_array
         ( const mpl::cartesian_communicator&,size_t m,size_t n,bool trace=false );
-    //    std::pair<int,int> proc_grid_size();
-    // std::pair<size_t,size_t> set_local_dimensions
-    //     ( const mpl::cartesian_communicator&,int,size_t,size_t,bool=false );
     void set_neighbors( bool=false );
+    size_t global_n2b() const { return n_global+2*data->border(); };
 
     // required functionality
     void central_difference_from
-        ( const linalg::bordered_array_base<real>&,bool=false ) override;
-    void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
-    real l2norm() override;
-    void set( real value,bool trace=false) override {
-      data.set( value,trace ); };
-    void set_bc(bool down,bool right, bool trace=false) override {
-      data.set_bc( coord[0]==dimensions.size(0),coord[1]==dimensions.size(1), trace ); };
-    void view( std::string="" ) override;
+        ( const linalg::bordered_array_base<real>&,bool=false );
+    void scale_interior( const linalg::bordered_array_base<real>&, real );
+    real l2norm() ;
+    void set( real value,bool trace=false)  {
+      data->set( value,trace ); };
+    void set_bc(bool down,bool right, bool trace=false)  {
+      data->set_bc( coord[0]==dimensions.size(0),coord[1]==dimensions.size(1), trace ); };
+    void view( std::string="" ) ;
 
     /*
      * MPI communication routines
      */
     BUFFER get_halo( char direction );
     BUFFER get_edge( char direction );
-    void halo_exchange(bool=false);
-    void central_difference_from( distributed_array<real>& other,bool=false );
-    void copy_interior_from( distributed_array<real> other );
+    void halo_exchange( bordered_array_base<real>&,bool=false);
+    void central_difference_from( const distributed_array<real>& other,bool=false );
+    void copy_interior_from( const distributed_array<real> other );
     void scale_interior( const distributed_array<real>&, real );
 
     // logging
