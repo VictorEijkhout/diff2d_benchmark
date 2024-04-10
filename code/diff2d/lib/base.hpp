@@ -35,12 +35,14 @@ public:
 
 namespace linalg {
 
+  // forward definition so that we can declare it `friend'
   template< typename real >
   class distributed_array;
 
   //codesnippet d2dvirtualbase
   template< typename real >
   class bordered_array_base {
+    friend class distributed_array<real>;
   protected:
     std::size_t _m{0},_n{0},_border{0}; 
     //codesnippet end

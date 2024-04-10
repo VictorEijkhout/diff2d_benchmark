@@ -19,7 +19,8 @@
 
 #include <mpl/mpl.hpp>
 #define BUFFER        std::pair<real*,std::shared_ptr<mpl::layout<real>>>
-#define MKBUFFER std::make_pair<real*,std::shared_ptr<mpl::layout<real>>>
+#define MKBUFFER std::make_pair
+// #define MKBUFFER std::make_pair<real*,std::shared_ptr<mpl::layout<real>>>
 
 #include "base.hpp"
 #include "seq.hpp"
@@ -28,7 +29,7 @@ namespace linalg {
 
   //codesnippet d2distarray
   template< typename real >
-  class distributed_array { // : public bordered_array_base<real> {
+  class distributed_array {
   private:
     const mpl::cartesian_communicator& comm; 
     mpl::cartesian_communicator::dimensions dimensions; 
@@ -38,35 +39,38 @@ namespace linalg {
     mpl::cartesian_communicator::vector coord;
     std::map<char,int> neighbors;
     size_t m_global,n_global;
-    std::unique_ptr<bordered_array_base<real>> data{nullptr},tmp{nullptr};
+    std::unique_ptr<bordered_array_base<real>> subdomain{nullptr};
+    // temp array, just for the central difference routine. somewhat wasteful
+    std::unique_ptr<distributed_array<real>>   tmp{nullptr};
   //codesnippet end
   public:
     // constructor
     distributed_array
-        ( const mpl::cartesian_communicator&,size_t m,size_t n,bool trace=false );
+        ( const mpl::cartesian_communicator&,size_t m,size_t n,
+	  bool needs_temp=true,bool trace=false );
     void set_neighbors( bool=false );
-    size_t global_n2b() const { return n_global+2*data->border(); };
+    size_t global_n2b() const { return n_global+2*subdomain->border(); };
+    std::tuple<size_t,size_t,int> outer_sizes() const {
+      return std::make_tuple(m_global,n_global,subdomain->border()); };
 
     // required functionality
+    void halo_exchange( bordered_array_base<real>&, bool=false);
     void central_difference_from
-        ( const linalg::bordered_array_base<real>&,bool=false );
-    void scale_interior( const linalg::bordered_array_base<real>&, real );
+        ( const distributed_array<real>& other,bool=false );
+    void scale_interior
+        ( const linalg::distributed_array<real>& other, real );
     real l2norm() ;
     void set( real value,bool trace=false)  {
-      data->set( value,trace ); };
+      subdomain->set( value,trace ); };
     void set_bc(bool down,bool right, bool trace=false)  {
-      data->set_bc( coord[0]==dimensions.size(0),coord[1]==dimensions.size(1), trace ); };
+      subdomain->set_bc( coord[0]==dimensions.size(0),coord[1]==dimensions.size(1), trace ); };
     void view( std::string="" ) ;
 
     /*
      * MPI communication routines
      */
-    BUFFER get_halo( char direction );
-    BUFFER get_edge( char direction );
-    void halo_exchange( bordered_array_base<real>&,bool=false);
-    void central_difference_from( const distributed_array<real>& other,bool=false );
-    void copy_interior_from( const distributed_array<real> other );
-    void scale_interior( const distributed_array<real>&, real );
+    BUFFER get_halo( const bordered_array_base<real>&,char direction );
+    BUFFER get_edge( const bordered_array_base<real>&,char direction );
 
     // logging
     void log_flops( float n );
