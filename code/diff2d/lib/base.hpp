@@ -145,7 +145,7 @@ namespace linalg {
     virtual real l2norm() = 0;
     virtual void set( real value,bool trace=false ) = 0;
     virtual void set_bc(bool down, bool right, bool trace=false) = 0;
-    virtual void view( std::string="" ) = 0;
+    virtual void view( std::string="" );
     //codesnippet end
 
     // logging

@@ -9,6 +9,9 @@
  ****************************************************************/
 
 #include "base.hpp"
+#include <iostream>
+#include <sstream>
+#include <format>
 
 namespace linalg {
 
@@ -38,6 +41,22 @@ namespace linalg {
     , data_owned(false)
     , cartesian_data( md::mdspan( _data,md::extents{m,n} ) ) 
   {};
+
+  template< typename real >
+  void bordered_array_base<real>::view( std::string caption ) {
+    std::stringstream cout;
+    if (caption!="")
+      cout << std::format("{}:\n",caption);
+    auto out = this->data();
+    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
+    for ( size_t i=0; i<m+2*b; i++ ) {
+      for ( size_t j=0; j<n+2*b; j++ ) {
+        char c = ( j<n+2*b-1 ? ' ' : '\n' );
+        cout << std::format("{:5.2}{}",out[ oindex(i,j) ],c);
+      }
+    }
+    std::cout << cout.str() << '\n';
+  };
 
 };
 

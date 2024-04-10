@@ -108,20 +108,6 @@ namespace linalg {
           out[ IINDEX(i,j,b,n2b) ] = 1.;
   };
 
-  template< typename real >
-  void bordered_array_seq<real>::view( std::string caption ) {
-    if (caption!="")
-      std::cout << format("{}:\n",caption);
-    auto out = this->data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
-    for ( size_t i=0; i<m+2*b; i++ ) {
-      for ( size_t j=0; j<n+2*b; j++ ) {
-        char c = ( j<n+2*b-1 ? ' ' : '\n' );
-        std::cout << std::format("{:5.2}{}",out[ oindex(i,j) ],c);
-      }
-    }
-  };
-
 };
 
 namespace linalg {

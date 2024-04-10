@@ -38,7 +38,6 @@ namespace linalg {
     real l2norm() override;
     void set( real value,bool trace=false ) override;
     void set_bc(bool down, bool right, bool trace=false) override;
-    void view( std::string="" ) override;
 
     /*
      * utility section
