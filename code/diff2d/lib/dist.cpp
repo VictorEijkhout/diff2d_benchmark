@@ -139,9 +139,9 @@ namespace linalg {
     else if ( direction=='W' )
       ptr = &( data2d[b,b] );
     else if ( direction=='E' )
-      ptr = &( data2d[b,n+b] );
+      ptr = &( data2d[b,n+b-1] );
     else if ( direction=='S' )
-      ptr = &( data2d[m+b,b] );
+      ptr = &( data2d[m+b-1,b] );
     shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
@@ -171,9 +171,9 @@ namespace linalg {
     else if ( direction=='W' )
       ptr = &( data2d[b,0] );
     else if ( direction=='E' )
-      ptr = &( data2d[b,n+b+1] );
+      ptr = &( data2d[b,n+b] );
     else if ( direction=='S' )
-      ptr = &( data2d[m+b+1,b] );
+      ptr = &( data2d[m+b,b] );
     shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
@@ -182,7 +182,7 @@ namespace linalg {
         ( make_shared<mpl::contiguous_layout<real>>(n) );
     else
       layout = shared_ptr<mpl::layout<real>>
-        ( make_shared<mpl::strided_vector_layout<real>>(m,b,n2b) );
+        ( make_shared<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
     return MKBUFFER(ptr,layout);      
   };
 

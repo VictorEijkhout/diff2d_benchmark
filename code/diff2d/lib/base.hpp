@@ -46,7 +46,6 @@ namespace linalg {
   protected:
     std::int64_t _m{0},_n{0}; int _border{0}; 
     //codesnippet end
-    std::int64_t _n2b{0}; // nsize with borders: only used to optimize linear indexing
   public:
     virtual ~bordered_array_base() {
       if (data_owned) { delete[] _data; } };

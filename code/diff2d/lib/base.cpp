@@ -23,7 +23,6 @@ namespace linalg {
   template< typename real >
   bordered_array_base<real>::bordered_array_base( int64_t m,int64_t n,int border )
     : _m(m),_n(n),_border(border)
-    , _n2b( n+2*border )
     , _data( new real[ (m+2*border)*(n+2*border) ] )
     , data_owned(true)
     , cartesian_data
