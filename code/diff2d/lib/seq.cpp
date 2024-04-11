@@ -22,12 +22,14 @@
 namespace linalg {
 
   template< typename real >
-  bordered_array_seq<real>::bordered_array_seq( size_t m,size_t n,int border )
-    : bordered_array_base<real>(m,n,border) {
+  bordered_array_seq<real>::bordered_array_seq( int64_t m_inner,int64_t n_inner,int border )
+    : bordered_array_base<real>(m_inner,n_inner,border) {
     auto out = this->data();
-    auto b = this->border(), n2b = this->n2b();
-    for ( auto ij=0; ij<(m+2*b)*(n+2*b); ++ij )
-      out[ij] = static_cast<real>(0);
+    const auto [m,n,b] = this->outer_sizes();
+    //std::cout << std::format("zero with border: {} x {}\n",m,n);
+    for ( int64_t i=0; i<m; ++i )
+      for ( int64_t j=0; j<n; ++j )
+	out[ IINDEX(i,j,0,n) ] = static_cast<real>(0);
   };
 
   //! Compute the 5-point Laplace stencil from an input array
@@ -39,12 +41,12 @@ namespace linalg {
     const auto& other = dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
-    std::cout << std::format("seq m={} n={} b={} n2b={}\n",m,n,b,n2b);
-    for ( size_t i=0; i<m; i++ ) {
-      for ( size_t j=0; j<n; j++ ) {
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
+    for ( int64_t i=0; i<m; i++ ) {
+      for ( int64_t j=0; j<n; j++ ) {
         out[ IINDEX(i,j,b,n2b) ] = 4*in[ IINDEX(i,j,b,n2b) ]
-          - in[ IINDEX(i-1,j,b,n2b) ] - in[ IINDEX(i+1,j,b,n2b) ] - in[ IINDEX(i,j-1,b,n2b) ] - in[ IINDEX(i,j+1,b,n2b) ];
+          - in[ IINDEX(i-1,j,b,n2b) ] - in[ IINDEX(i+1,j,b,n2b) ]
+	  - in[ IINDEX(i,j-1,b,n2b) ] - in[ IINDEX(i,j+1,b,n2b) ];
       }
     }
   //codesnippet end
@@ -60,7 +62,7 @@ namespace linalg {
     const auto& other = dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ )
         out[ IINDEX(i,j,b,n2b) ] = in[ IINDEX(i,j,b,n2b) ] * factor;
@@ -74,7 +76,7 @@ namespace linalg {
   real bordered_array_seq<real>::l2norm() {
     real sum_of_squares{0};
     auto out = this->data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ ) {
         auto v = out[ IINDEX(i,j,b,n2b) ];
@@ -89,7 +91,7 @@ namespace linalg {
   template< typename real >
   void bordered_array_seq<real>::set( real value, bool trace ) {
     auto out = this->data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ ) {
         auto ij = IINDEX(i,j,b,n2b);
@@ -101,7 +103,7 @@ namespace linalg {
   template< typename real >
   void bordered_array_seq<real>::set_bc( bool down,bool right, bool trace ) {
     auto out = this->data();
-    auto m = this->m(), n = this->n(), b = this->border(), n2b = this->n2b();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )

@@ -39,11 +39,12 @@ namespace linalg {
   template< typename real >
   distributed_array<real>::distributed_array
       ( const mpl::cartesian_communicator& comm,size_t m,size_t n,
-	bool needs_temp,bool trace )
+	bool trace )
         : comm(comm)
+	, rank( comm.rank() )
 	, m_global(m),n_global(n)
   {
-    auto rank = comm.rank();
+    //    auto rank = comm.rank();
     //codesnippet end
     /*
      * set up processor grid
@@ -54,24 +55,12 @@ namespace linalg {
     auto
       pmsize = dimensions.size(0),
       pnsize = dimensions.size(1);
-    proc_start_m = vector<size_t>(pmsize+1);
-    proc_start_n = vector<size_t>(pnsize+1);
-    // start and end for each processor
-    for ( int pi=0; pi<=pmsize; pi++ )
-      proc_start_m.at(pi) = pi*m/pmsize;
-    for ( int pi=0; pi<=pnsize; pi++ )
-      proc_start_n.at(pi) = pi*n/pnsize;
-    //codesnippet end
-    if (rank==0 and trace) {
-      rng::for_each( proc_start_m,
-		     [init=true] ( auto p ) mutable {
-		       if (init) { init=false; cout << format("pm: {}",p); } 
-		       else cout << format(", {}",p); } ); cout << format("\n");
-      rng::for_each( proc_start_n,
-		     [init=true] ( auto p ) mutable {
-		       if (init) { init=false; cout << format("pn: {}",p); } 
-		       else cout << format(", {}",p); } ); cout << format("\n");
-    }
+    std::cout << std::format("Process grid: {}x{}\n",pmsize,pnsize);
+    /*
+     * Start and end for each processor
+     */
+    proc_start_m = segmentize(m,pmsize); 
+    proc_start_n = segmentize(n,pnsize);
     /*
      * This process in particular
      */
@@ -83,12 +72,27 @@ namespace linalg {
       sn = proc_start_n[pn+1]-proc_start_n[pn];
     subdomain = unique_ptr<bordered_array_base<real>>
       ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
-    if (needs_temp)
-      tmp = make_unique<distributed_array<real>>(comm,m,n,false,false);
+    tmp = unique_ptr<bordered_array_base<real>>
+      ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
     set_neighbors(trace);
     //codesnippet end
   };
   //codesnippet end
+
+  
+  template< typename real >
+  std::vector<std::int64_t> distributed_array<real>::segmentize
+      (std::int64_t size,int psize,bool trace) {
+    vector<std::int64_t> segments(psize+1);
+    for ( int pi=0; pi<=psize; pi++ )
+      segments.at(pi) = pi*size/psize;
+    if (trace and rank==0) 
+      rng::for_each( segments,
+		     [init=true] ( auto p ) mutable {
+		       if (init) { init=false; cout << format("pstarts: {}",p); } 
+		       else cout << format(", {}",p); } ); cout << format("\n");
+    return segments;
+  };
 
   /*! Auxiliary for constructor.
    * We use matrix-numbering: down and right
@@ -123,61 +127,68 @@ namespace linalg {
       cout << format("\n"); }
   };
 
-  //! Derive pointer and layout for the halo, given the source direction
-  template< typename real >
-  BUFFER distributed_array<real>::get_halo( const bordered_array_base<real> &data,char direction ) {
-    // implicit assumption that `data' is compatible with `this'
-    const auto [m,n,b] = outer_sizes();
-    real* ptr; 
-    if ( direction=='N' )
-      ptr = &( data.data2d()[0,b] );
-    else if ( direction=='W' )
-      ptr = &( data.data2d()[b,0] );
-    else if ( direction=='E' )
-      ptr = &( data.data2d()[b,n-b] );
-    else if ( direction=='S' )
-      ptr = &( data.data2d()[m-b,b] );
-    shared_ptr<mpl::layout<real>> layout;
-    if (b>1)
-      throw( "can not make layout for b>1" );
-    if ( direction=='N' or direction=='S' )
-      layout = shared_ptr<mpl::layout<real>>
-        ( make_shared<mpl::contiguous_layout<real>>(n-2*b) );
-    else
-      layout = shared_ptr<mpl::layout<real>>
-        ( make_shared<mpl::strided_vector_layout<real>>(m-2*b,b,n) );
-    return MKBUFFER(ptr,layout);      
-  };
-  //! Derive pointer and layout for the inner edge, given the target direction
+  /*! Derive pointer and layout for the inner edge send buffer, 
+   * given the target direction */
   template< typename real >
   BUFFER distributed_array<real>::get_edge( const bordered_array_base<real> &data,char direction ) {
-    const auto [m,n,b] = outer_sizes();
+    const auto [m,n,b,m2b,n2b] = data.inner_sizes();
+    const auto data2d = data.data2d();
     real* ptr; 
     if ( direction=='N' )
-      ptr = &( data.data2d()[b,b] );
+      ptr = &( data2d[b,b] );
     else if ( direction=='W' )
-      ptr = &( data.data2d()[b,b] );
+      ptr = &( data2d[b,b] );
     else if ( direction=='E' )
-      ptr = &( data.data2d()[b,n-2*b] );
+      ptr = &( data2d[b,n+b] );
     else if ( direction=='S' )
-      ptr = &( data.data2d()[m-2*b,b] );
+      ptr = &( data2d[m+b,b] );
     shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
     if ( direction=='N' or direction=='S' )
       //codesnippet d2dlythor
       layout = shared_ptr<mpl::layout<real>>
-        ( make_shared<mpl::contiguous_layout<real>>(n-2*b) );
+        ( make_shared<mpl::contiguous_layout<real>>(n) );
       //codesnippet end
     else
       //codesnippet d2dlytver
       layout = shared_ptr<mpl::layout<real>>
-        ( make_shared<mpl::strided_vector_layout<real>>(m-2*b,b,n) );
+        ( make_shared<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
       //codesnippet end
     return make_pair(ptr,layout);      
   };
+
+  /*! Derive pointer and layout for the halo receive buffer,
+   *  given the source direction */
+  template< typename real >
+  BUFFER distributed_array<real>::get_halo( const bordered_array_base<real> &data,char direction ) {
+    // implicit assumption that `data' is compatible with `this'
+    const auto [m,n,b,m2b,n2b] = data.inner_sizes();
+    const auto data2d = data.data2d();
+    real* ptr; 
+    if ( direction=='N' )
+      ptr = &( data2d[0,b] );
+    else if ( direction=='W' )
+      ptr = &( data2d[b,0] );
+    else if ( direction=='E' )
+      ptr = &( data2d[b,n+b+1] );
+    else if ( direction=='S' )
+      ptr = &( data2d[m+b+1,b] );
+    shared_ptr<mpl::layout<real>> layout;
+    if (b>1)
+      throw( "can not make layout for b>1" );
+    if ( direction=='N' or direction=='S' )
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::contiguous_layout<real>>(n) );
+    else
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::strided_vector_layout<real>>(m,b,n2b) );
+    return MKBUFFER(ptr,layout);      
+  };
+
   /*! Halo exchange by loopoing over 4 directions.
    * This is almost a class method: it operates completely on a bordered array
+   * passed in as parameter.
    */
   //codesnippet d2dexchange
   template< typename real >
@@ -202,8 +213,9 @@ namespace linalg {
   void distributed_array<real>::central_difference_from
   ( const linalg::distributed_array<real>& other,bool trace ) {
     // make distributed vector that has internal data of `other'
-    tmp->subdomain->scale_interior( other.subdomain,static_cast<real>(1) );
+    tmp->scale_interior( *(other.subdomain),static_cast<real>(1) );
     halo_exchange( *tmp,trace );
+    tmp->view("halo exchanged");
     subdomain->central_difference_from( *tmp,trace );
   };
 
@@ -223,7 +235,7 @@ namespace linalg {
   template< typename real >
   void distributed_array<real>::scale_interior
       ( const linalg::distributed_array<real>& other, real factor ) {
-    subdomain->scale_interior( other.subdomain,factor);
+    subdomain->scale_interior( *(other.subdomain),factor);
   };
   //codesnippet end
 
@@ -242,11 +254,13 @@ namespace linalg {
 	auto pm = coord[0], pn = coord[1];
 	auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
 	auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
-	cout << format("rank={}: strided, msize={} bs={} n2b={}\n",
-		       rank,msize,bs,n2b);
+	// cout << format("rank={}: strided, msize={} bs={} n2b={}\n",
+	// 	       rank,msize,bs,n2b);
 	return mpl::strided_vector_layout<real>( msize, bs, n2b );
       };
     mpl::layout<real> send_layout = proc_inner_layout(comm.rank(),subdomain->n2b());
+    subdomain->view( std::format("[{}] {}",myrank,caption) );
+    return;
     if ( myrank==0 ) {
       comm.reduce( mpl::plus<size_t>(),0,local_size,global_size );
       vector<real> gathered_data(global_size);

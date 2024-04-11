@@ -58,9 +58,9 @@ int main(int argc,char **argv) {
     std::cout << std::format("Setting up domain of {} x {}\n",msize,nsize);
 
   auto X = // unique_ptr<linalg::bordered_array_base<real>>
-    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border,true);
+    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border);
   auto Y = // unique_ptr<linalg::bordered_array_base<real>>
-    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border,true);
+    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border);
 
   try {
 #include "../main.cpp"

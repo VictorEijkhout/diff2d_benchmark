@@ -32,22 +32,24 @@ namespace linalg {
   class distributed_array {
   private:
     const mpl::cartesian_communicator& comm; 
+    const int rank;
     mpl::cartesian_communicator::dimensions dimensions; 
     //! orthogonal sizes of processor subdomains
-    std::vector<size_t> proc_start_m,proc_start_n;
+    std::vector<std::int64_t> proc_start_m,proc_start_n;
     //! coordinate of this processor
     mpl::cartesian_communicator::vector coord;
     std::map<char,int> neighbors;
     size_t m_global,n_global;
     std::unique_ptr<bordered_array_base<real>> subdomain{nullptr};
     // temp array, just for the central difference routine. somewhat wasteful
-    std::unique_ptr<distributed_array<real>>   tmp{nullptr};
+    std::unique_ptr<bordered_array_base<real>> tmp{nullptr};
   //codesnippet end
   public:
     // constructor
     distributed_array
         ( const mpl::cartesian_communicator&,size_t m,size_t n,
-	  bool needs_temp=true,bool trace=false );
+	  bool trace=false );
+    std::vector<std::int64_t> segmentize(std::int64_t m,int pm,bool trace=false);
     void set_neighbors( bool=false );
     size_t global_n2b() const { return n_global+2*subdomain->border(); };
     std::tuple<size_t,size_t,int> outer_sizes() const {
