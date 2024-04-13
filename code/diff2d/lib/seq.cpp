@@ -15,7 +15,7 @@
 
 #include "seq.hpp"
 
-//codesnippet d2d5ptompindex
+//codesnippet d2dindexscale
 #define IINDEX( i,j,b,n2b ) ((i)+b)*n2b + (j)+b
 //codesnippet end
 
@@ -54,7 +54,6 @@ namespace linalg {
   };
 
   //! Scale the interior, leaving the border alone
-  //codesnippet d2dscaleomp
   template< typename real >
   void bordered_array_seq<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
@@ -63,12 +62,13 @@ namespace linalg {
     auto out = this->data();
     auto in = other.data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
+    //codesnippet d2dscaledseq
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ )
         out[ IINDEX(i,j,b,n2b) ] = in[ IINDEX(i,j,b,n2b) ] * factor;
+    //codesnippet end
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
   };
-  //codesnippet end
 
   //! Compute the L2 norm of the interior
   //codesnippet d2dnormomp

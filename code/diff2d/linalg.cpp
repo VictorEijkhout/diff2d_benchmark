@@ -32,7 +32,6 @@ namespace linalg {
     , std::vector<real>( (m+2*border)*(n+2*border) ) {};
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2dmvp
   template< typename real >
   void bordered_array<real>::central_difference_from
       ( const linalg::bordered_array<real>& other,bool trace ) {
@@ -50,7 +49,6 @@ namespace linalg {
         );
     log_flops(_m*_n*5); log_bytes( sizeof(real)*_m*_n*7 );
   };
-  //codesnippet end
 
   //! Copy the interior of another bordered array, but leave border alone
   template< typename real >
@@ -70,7 +68,6 @@ namespace linalg {
   };
 
   //! Scale the interior, leaving the border alone
-  //codesnippet d2dscale
   template< typename real >
   void bordered_array<real>::scale_interior
       ( const linalg::bordered_array<real>& other,real factor ) {
@@ -90,7 +87,6 @@ namespace linalg {
         );
     log_flops(_m*_n*1); log_bytes( sizeof(real)*_m*_n*2 );
   };
-  //codesnippet end
 
   //! Compute the L2 norm of the interior
   template< typename real >
