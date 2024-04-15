@@ -33,7 +33,7 @@ namespace linalg {
   };
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2d5ptomp
+  //codesnippet d2d5ptseq
   template< typename real >
   void bordered_array_seq<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -71,7 +71,7 @@ namespace linalg {
   };
 
   //! Compute the L2 norm of the interior
-  //codesnippet d2dnormomp
+  //codesnippet d2dnormseq
   template< typename real >
   real bordered_array_seq<real>::l2norm() {
     real sum_of_squares{0};
