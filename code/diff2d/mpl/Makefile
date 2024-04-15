@@ -17,6 +17,7 @@ info ::
 include ../../../makefiles/Make.info
 
 APPS = diff2d
+PROGRAM = diff2d
 WRONGS = 
 
 MODE = mpl

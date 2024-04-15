@@ -47,7 +47,7 @@ namespace linalg {
   public:
     // constructor
     distributed_array
-        ( const mpl::cartesian_communicator&,size_t m,size_t n,
+        ( const mpl::cartesian_communicator&,size_t m,size_t n,int border,
 	  bool trace=false );
     std::vector<std::int64_t> segmentize(std::int64_t m,int pm,bool trace=false);
     void set_neighbors( bool=false );

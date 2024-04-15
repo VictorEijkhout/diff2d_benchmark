@@ -33,6 +33,7 @@ info ::
 	@echo "    ( catchrun gives orderly output)"
 	@echo "    [ PROGRAM=... NP=... ]"
 	@echo "    [ ENVOPTIONS=... stuff before mpiexec ]"
+	@echo "    [ OPTIONS= program options ]"
 	@if [ "${LANGUAGE}" = "python" ] ; then \
 	    if [ -z "${PYTHON}"  ] ; then \
 	        echo "    please set PYTHON variable" \
@@ -77,7 +78,7 @@ mpirun :
 	                PROGRAM=${PROGRAM} NP=${NP} NPMULT=${NPMULT} ) \
 	 && invoke=$$( make --no-print-directory proginvocation \
 	                PROGRAM="${PROGRAM}" \
-	                LANGUAGE="${LANGUAGE}" OPTIONS="${OPTIONS}" PYTHON="${PYTHON}" \
+	                LANGUAGE="${LANGUAGE}" RUN_OPTIONS="${RUN_OPTIONS}" PYTHON="${PYTHON}" \
 	                CATCHER="${CATCHER}" \
 	            ) \
 	 && cmdline="${ENVOPTIONS} ${MPIRUN} ${NPOPTION} $$np $${invoke}" \
@@ -122,7 +123,7 @@ mpi_scaling :
 	        ppn=$$(( $$t / ${SLURM_NNODES} )) \
 	         && echo "Procs: $$t ppn=$$ppn" \
 	         && make --no-print-directory mpirun ECHO=${ECHO} \
-	                NP=$$t PROGRAM=${PROGRAM} \
+	                NP=$$t PROGRAM=${PROGRAM} RUN_OPTIONS="${RUN_OPTIONS}" \
 	                ENVOPTIONS="IBRUN_TASKS_PER_NODE=$$ppn" \
 	         && echo \
 	    ; done \

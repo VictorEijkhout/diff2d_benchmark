@@ -38,7 +38,7 @@ namespace linalg {
   //codesnippet d2ddistributed1
   template< typename real >
   distributed_array<real>::distributed_array
-      ( const mpl::cartesian_communicator& comm,size_t m,size_t n,
+      ( const mpl::cartesian_communicator& comm,size_t m,size_t n,int border,
 	bool trace )
         : comm(comm)
 	, rank( comm.rank() )
@@ -55,7 +55,8 @@ namespace linalg {
     auto
       pmsize = dimensions.size(0),
       pnsize = dimensions.size(1);
-    std::cout << std::format("Process grid: {}x{}\n",pmsize,pnsize);
+    //codesnippet end
+
     /*
      * Start and end for each processor
      */
@@ -71,13 +72,12 @@ namespace linalg {
       sm = proc_start_m[pm+1]-proc_start_m[pm],
       sn = proc_start_n[pn+1]-proc_start_n[pn];
     subdomain = unique_ptr<bordered_array_base<real>>
-      ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
+      ( make_unique<bordered_array_seq<real>>(sm,sn,border) );
     tmp = unique_ptr<bordered_array_base<real>>
-      ( make_unique<bordered_array_seq<real>>(sm,sn,1) );
+      ( make_unique<bordered_array_seq<real>>(sm,sn,border) );
     set_neighbors(trace);
     //codesnippet end
   };
-  //codesnippet end
 
   
   template< typename real >
@@ -124,7 +124,8 @@ namespace linalg {
                    if (init) init=false; else cout << format(", ");
                    auto [d,r] = n; cout << format("{}={}",d,r);
                  } );
-      cout << format("\n"); }
+      cout << format("\n");
+    }
   };
 
   /*! Derive pointer and layout for the inner edge send buffer, 
@@ -215,7 +216,8 @@ namespace linalg {
     // make distributed vector that has internal data of `other'
     tmp->scale_interior( *(other.subdomain),static_cast<real>(1) );
     halo_exchange( *tmp,trace );
-    tmp->view("halo exchanged");
+    if (trace)
+      tmp->view("halo exchanged");
     subdomain->central_difference_from( *tmp,trace );
   };
 
@@ -254,8 +256,6 @@ namespace linalg {
 	auto pm = coord[0], pn = coord[1];
 	auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
 	auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
-	// cout << format("rank={}: strided, msize={} bs={} n2b={}\n",
-	// 	       rank,msize,bs,n2b);
 	return mpl::strided_vector_layout<real>( msize, bs, n2b );
       };
     mpl::layout<real> send_layout = proc_inner_layout(comm.rank(),subdomain->n2b());
@@ -285,7 +285,6 @@ namespace linalg {
     //   comm.reduce( mpl::plus<size_t>(),0,local_size );
       comm.gatherv( 0, first_data_point,send_layout );
     }
-      cout << "Done\n";
   };
 
   /*
