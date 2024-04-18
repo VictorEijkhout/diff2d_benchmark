@@ -119,14 +119,16 @@ mpi_scaling :
 	    ; fi \
 	 && results=${PROGRAM}-scaling${SCALETAG}.runout \
 	 && ( \
-	    for t in $$mpiprocs ; do \
-	        ppn=$$(( $$t / ${SLURM_NNODES} )) \
-	         && echo "Procs: $$t ppn=$$ppn" \
-	         && make --no-print-directory mpirun ECHO=${ECHO} \
+	    if [ "${ECHO}" = "1" ] ; then \
+	      echo "MPI scaling into <<$${results}>> over $${mpiprocs}" ; fi \
+	     && for t in $$mpiprocs ; do \
+	          ppn=$$(( $$t / ${SLURM_NNODES} )) \
+	           && echo "Procs: $$t ppn=$$ppn" \
+	           && make --no-print-directory mpirun ECHO=${ECHO} \
 	                NP=$$t PROGRAM=${PROGRAM} RUN_OPTIONS="${RUN_OPTIONS}" \
 	                ENVOPTIONS="IBRUN_TASKS_PER_NODE=$$ppn" \
-	         && echo \
-	    ; done \
+	           && echo \
+	      ; done \
 	    ) | tee $$results
 .PHONY: mpi_procs
 mpi_procs :
