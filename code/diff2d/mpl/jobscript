@@ -5,20 +5,15 @@
 #SBATCH -e myjob.e%j       # Name of stderr error file
 #SBATCH -p normal      # Queue (partition) name
 #SBATCH -N 4               # Total # of nodes 
-#SBATCH -n 4              # Total # of mpi tasks
-#SBATCH -t 01:30:00        # Run time (hh:mm:ss)
+#SBATCH --ntasks-per-node 56              # Total # of mpi tasks
+#SBATCH -t 00:30:00        # Run time (hh:mm:ss)
 ##SBATCH --mail-user=myname@myschool.edu
 ##SBATCH --mail-type=all    # Send email at begin and end of job
 #SBATCH -A A-ccsc       # Allocation name (req'd if you have more than 1)
 
-# Other commands must follow all #SBATCH directives...
-
-module list
-pwd
-date
-
-# Launch MPI code... 
-
-ibrun ./mycode.exe         # Use ibrun instead of mpirun or mpiexec
-
-# ---------------------------------------------------
+n=40000
+make mpi_scaling RUN_OPTIONS="-m $n -n $n -i 10" \
+    ECHO=1 \
+    NDIV=10 \
+    NPLOW=${SLURM_NNODES} \
+    SCALETAG=-frontera-N${SLURM_NNODES}-$n
