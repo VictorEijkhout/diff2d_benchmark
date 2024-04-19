@@ -31,8 +31,10 @@ int main(int argc,char **argv) {
   std::cout << std::format("Threads: 1 obviously\n");
   std::cout << std::format("Vector size: {} x {}\n",msize,nsize);
 
+  //codesnippet d2duniqueseq
   auto X = unique_ptr<linalg::bordered_array_base<real>>
     ( make_unique<linalg::bordered_array_seq<real>>(msize,nsize,border) );
+  //codesnippet end
   auto Y = unique_ptr<linalg::bordered_array_base<real>>
     ( make_unique<linalg::bordered_array_seq<real>>(msize,nsize,border) );
 
