@@ -42,10 +42,10 @@ namespace linalg {
   //codesnippet d2dvirtualbase
   template< typename real >
   class bordered_array_base {
+    //codesnippet end
     friend class distributed_array<real>;
   protected:
     std::int64_t _m{0},_n{0}; int _border{0}; 
-    //codesnippet end
   public:
     virtual ~bordered_array_base() {
       if (data_owned) { delete[] _data; } };
