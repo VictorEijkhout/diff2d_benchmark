@@ -31,17 +31,21 @@ namespace linalg {
   template< typename real >
   class distributed_array {
   private:
-    const mpl::cartesian_communicator& comm; 
-    const int rank;
     size_t m_global,n_global;
     std::unique_ptr<bordered_array_base<real>> subdomain{nullptr};
     //codesnippet end
-    //codesnippet d2distarraydata
+
+    //codesnippet d2distarraycomm    
+    const mpl::cartesian_communicator& comm; 
+    const int rank;
     mpl::cartesian_communicator::dimensions dimensions; 
-    //! orthogonal sizes of processor subdomains
-    std::vector<std::int64_t> proc_start_m,proc_start_n;
     //! coordinate of this processor
     mpl::cartesian_communicator::vector coord;
+    //codesnippet end    
+
+    //codesnippet d2distarraydata
+    //! orthogonal sizes of processor subdomains
+    std::vector<std::int64_t> proc_start_m,proc_start_n;
     std::map<char,int> neighbors;
     // temp array, just for the central difference routine. somewhat wasteful
     std::unique_ptr<bordered_array_base<real>> tmp{nullptr};

@@ -44,7 +44,6 @@ namespace linalg {
 	, rank( comm.rank() )
 	, m_global(m),n_global(n)
   {
-    //    auto rank = comm.rank();
     //codesnippet end
     /*
      * set up processor grid
