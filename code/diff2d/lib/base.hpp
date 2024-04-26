@@ -112,11 +112,11 @@ namespace linalg {
       int b = this->border();
       std::int64_t
         lo_m = static_cast<std::int64_t>(b),
-	hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-	lo_n = static_cast<std::int64_t>(b),
-	hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+        hi_m = static_cast<std::int64_t>(s.extent(0)-b),
+        lo_n = static_cast<std::int64_t>(b),
+        hi_n = static_cast<std::int64_t>(s.extent(1)-b);
       return rng::views::cartesian_product
-	( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
+        ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
     };
     //codesnippet end
 
@@ -125,18 +125,18 @@ namespace linalg {
       int b = this->border();
       std::int64_t
         lo_m = static_cast<std::int64_t>(b),
-	hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-	lo_n = static_cast<std::int64_t>(b),
-	hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+        hi_m = static_cast<std::int64_t>(s.extent(0)-b),
+        lo_n = static_cast<std::int64_t>(b),
+        hi_n = static_cast<std::int64_t>(s.extent(1)-b);
       return (hi_m-lo_m) * ( hi_n-lo_n);
     };
 
     auto domain() {
       const auto& s = data2d();
       return rng::views::cartesian_product
-	( rng::views::iota(0,static_cast<int>( s.extent(0) )),
-	  rng::views::iota(0,static_cast<int>( s.extent(1) ))
-	  );
+        ( rng::views::iota(0,static_cast<int>( s.extent(0) )),
+          rng::views::iota(0,static_cast<int>( s.extent(1) ))
+          );
     };
 
   public:
@@ -183,61 +183,61 @@ namespace linalg {
       // constructor
       iter() = default;
       iter( std::int64_t lo_m,std::int64_t hi_m, std::int64_t lo_n,std::int64_t hi_n,
-	    int border, std::int64_t n2b, std::int64_t seek_i,std::int64_t seek_j )
-	: lo_m(lo_m),hi_m(hi_m), lo_n(lo_n),hi_n(hi_n)
-	, border(border), n2b(n2b)
-	, seek_i(seek_i), seek_j(seek_j) {};
+            int border, std::int64_t n2b, std::int64_t seek_i,std::int64_t seek_j )
+        : lo_m(lo_m),hi_m(hi_m), lo_n(lo_n),hi_n(hi_n)
+        , border(border), n2b(n2b)
+        , seek_i(seek_i), seek_j(seek_j) {};
       // operators
       auto operator*() const { return std::make_pair(seek_i,seek_j); };
 
       auto operator==( const iter& other ) const {
-	return seek_i==other.seek_i or seek_j==other.seek_j; };
+        return seek_i==other.seek_i or seek_j==other.seek_j; };
       auto operator!=( const iter& other ) const {
-	return seek_i!=other.seek_i or seek_j!=other.seek_j; };
+        return seek_i!=other.seek_i or seek_j!=other.seek_j; };
 
       auto operator<( const iter& other ) const {
-	return seek_i<other.seek_i or
-		      ( seek_i==other.seek_i and seek_j<other.seek_j ); }
+        return seek_i<other.seek_i or
+                      ( seek_i==other.seek_i and seek_j<other.seek_j ); }
       auto operator>( const iter& other ) const {
-	return seek_i>other.seek_i or
-		      ( seek_i==other.seek_i and seek_j>other.seek_j ); }
+        return seek_i>other.seek_i or
+                      ( seek_i==other.seek_i and seek_j>other.seek_j ); }
       auto operator>=( const iter& other ) const {
-	return operator>(other) or operator==(other); };
+        return operator>(other) or operator==(other); };
       auto operator<=( const iter& other ) const {
-	return operator<(other) or operator==(other); };
+        return operator<(other) or operator==(other); };
 
       auto& operator++() { // needs to return by reference!
-	seek_j++; if (seek_j==hi_n) { seek_j=lo_n; seek_i++; }
-	return *this; };
+        seek_j++; if (seek_j==hi_n) { seek_j=lo_n; seek_i++; }
+        return *this; };
       auto& operator--() { // needs to return by reference!
-	seek_j--; if (seek_j==border) { seek_j=hi_n; seek_i--; }
-	return *this; };
+        seek_j--; if (seek_j==border) { seek_j=hi_n; seek_i--; }
+        return *this; };
       auto operator++(int) { auto tmp(*this); ++(*this); return tmp; };
       auto operator--(int) { auto tmp(*this); --(*this); return tmp; };
 
       std::int64_t operator-( const iter& other ) const {
-	auto lin1 = (seek_i-border) * ( hi_n-lo_n ) + seek_j-border;
-	auto lin2 = (other.seek_i-other.border) * ( hi_n-lo_n ) + other.seek_j-other.border;
-	return lin1-lin2; };
+        auto lin1 = (seek_i-border) * ( hi_n-lo_n ) + seek_j-border;
+        auto lin2 = (other.seek_i-other.border) * ( hi_n-lo_n ) + other.seek_j-other.border;
+        return lin1-lin2; };
       auto& operator+=( std::int64_t dist ) {
-	auto lines = dist / (hi_n-lo_n);
-	auto pts = dist - lines*(hi_n-lo_n);
-	seek_i += lines; seek_j += pts;
-	if ( seek_j> hi_n ) { seek_i++; seek_j -= (hi_n-lo_n); };
-	return *this; };
+        auto lines = dist / (hi_n-lo_n);
+        auto pts = dist - lines*(hi_n-lo_n);
+        seek_i += lines; seek_j += pts;
+        if ( seek_j> hi_n ) { seek_i++; seek_j -= (hi_n-lo_n); };
+        return *this; };
       auto operator+( std::int64_t dist ) const {
-	auto tmp(*this); tmp += dist; return tmp; };
+        auto tmp(*this); tmp += dist; return tmp; };
 
     };
 
     auto begin() { return iter
-	( a.border(),a.border()+a.m(), a.border(),a.border()+a.n(),
-	  a.n2b(), a.border(),
-	  a.border(),a.border() ); };
+        ( a.border(),a.border()+a.m(), a.border(),a.border()+a.n(),
+          a.n2b(), a.border(),
+          a.border(),a.border() ); };
     auto end() { return iter
-	( a.border(),a.border()+a.m(), a.border(),a.border()+a.n(),
-	  a.n2b(), a.border(),
-	  a.border()+a.m(),a.border() ); };
+        ( a.border(),a.border()+a.m(), a.border(),a.border()+a.n(),
+          a.n2b(), a.border(),
+          a.border()+a.m(),a.border() ); };
   };
 
   template< typename real >
