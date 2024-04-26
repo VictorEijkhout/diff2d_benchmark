@@ -54,11 +54,13 @@ namespace linalg {
   };
 
   //! Scale the interior, leaving the border alone
+  //codesnippet d2dupcast
   template< typename real >
   void bordered_array_seq<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
     const auto& other = dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
+  //codesnippet end
     auto out = this->data();
     auto in = other.data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
