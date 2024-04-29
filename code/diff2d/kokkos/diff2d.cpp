@@ -1,91 +1,99 @@
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <fstream>
 #include <iostream>
+#include <chrono>
 #include <Kokkos_Core.hpp>
 
 #define ENABLE_CUDA false
 
-void checkArgs(int &n, int &nrepeat);
-/*
-void printMatrix(const char* title, Kokkos::View<double**, Kokkos::HostSpace> matrix, int N) {
-    std::cout << title << std::endl;
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            std::cout << matrix(i, j) << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-*/
+#include "../lib/options.hpp"
+using real = float;
+
 int main(int argc, char *argv[]) {
-    int n = 4;  // Internal grid size
-    int N = n + 2;  // Total size including boundaries
-    int nrepeat = 100;  // Reduce to 1 for demonstration purposes
 
-    checkArgs(n, nrepeat);
+  auto [exit,msize,nsize,border,itcount,trace,view] =
+    parse_options(argc,argv,"Kokkos version using 2D loop");
+  if (exit) return 0;
+  const std::string prefix{"kks"};
+  const int procno{0};
 
-    Kokkos::initialize(argc, argv);
-    {
-        using MemSpace = Kokkos::HostSpace;  // Simplify to HostSpace for printing
-        using Layout = Kokkos::LayoutRight;
+  Kokkos::initialize(argc, argv);
+  {
+    using MemSpace = Kokkos::HostSpace;  // Simplify to HostSpace for printing
+    using Layout = Kokkos::LayoutRight;
 
-        using ViewMatrixType = Kokkos::View<double**, Layout, MemSpace>;
-        ViewMatrixType x("x", N, N), Ax("Ax", N, N);
+    using ViewMatrixType = Kokkos::View<real**, Layout, MemSpace>;
+    ViewMatrixType x("x", msize,nsize ), Ax("Ax", msize,nsize);
 
-        // Initialize matrix with boundaries
-        Kokkos::parallel_for("Initialize matrix", Kokkos::MDRangePolicy<Kokkos::Rank<2>>({0, 0}, {N, N}),
-                             KOKKOS_LAMBDA(int i, int j) {
-                                 if (i > 0 && i < N-1 && j > 0 && j < N-1) {
-                                     x(i, j) = 1.0;  // Interior
-                                 } else {
-                                     x(i, j) = 0.0;  // Boundary
-                                 }
-                             });
+    // Initialize matrix with boundaries
+#if 0
+    Kokkos::parallel_for
+      ("Initialize matrix",
+       Kokkos::MDRangePolicy<Kokkos::Rank<2>>({0, 0}, {msize,nsize}),
+       KOKKOS_LAMBDA(int i, int j) {
+	if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
+	  x(i, j) = 1.0;  // Interior
+	} else {
+	  x(i, j) = 0.0;  // Boundary
+	}
+      });
+#else
+    for (int i=0; i<msize; i++)
+      for (int j=0; j<nsize; j++)
+	if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
+	  x(i, j) = 1.0;  // Interior
+	} else {
+	  x(i, j) = 0.0;  // Boundary
+	}
+#endif
 
-        Kokkos::View<double**, Kokkos::HostSpace> h_x = Kokkos::create_mirror_view(x);
-        Kokkos::View<double**, Kokkos::HostSpace> h_Ax = Kokkos::create_mirror_view(Ax);
-        Kokkos::deep_copy(h_x, x);
-//        printMatrix("Original matrix:", h_x, N);
+    Kokkos::View<real**, Kokkos::HostSpace> h_x = Kokkos::create_mirror_view(x);
+    Kokkos::View<real**, Kokkos::HostSpace> h_Ax = Kokkos::create_mirror_view(Ax);
+    Kokkos::deep_copy(h_x, x);
+    //        printMatrix("Original matrix:", h_x, N);
 
-        for (int repeat = 0; repeat < nrepeat; ++repeat) {
-            Kokkos::parallel_for("StencilApplication", Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {N-1, N-1}),
-                                 KOKKOS_LAMBDA(int i, int j) {
-                                     Ax(i, j) = 4 * x(i, j) - x(i-1, j) - x(i+1, j) - x(i, j-1) - x(i, j+1);
-                                 });
+    using myclock = std::chrono::steady_clock;
+    auto start_time = myclock::now();
 
-            Kokkos::deep_copy(h_Ax, Ax);
-//            printMatrix("After operator applied:", h_Ax, N);
+    for (int repeat = 0; repeat<itcount; ++repeat) {
+      Kokkos::parallel_for
+	("StencilApplication",
+	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1,nsize-1}),
+	 KOKKOS_LAMBDA(int i, int j) {
+	  Ax(i, j) = 4 * x(i, j) - x(i-1, j) - x(i+1, j) - x(i, j-1) - x(i, j+1);
+	});
 
-            // Compute and apply scaling
-            double norm = 0.0;
-            Kokkos::parallel_reduce("Compute norm", Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {N-1, N-1}),
-                                    KOKKOS_LAMBDA(int i, int j, double& update) {
-                                        update += Ax(i, j) * Ax(i, j);
-                                    }, norm);
-            norm = std::sqrt(norm);
+      //Kokkos::deep_copy(h_Ax, Ax);
 
-            Kokkos::parallel_for("Update x", Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {N-1, N-1}),
-                                 KOKKOS_LAMBDA(int i, int j) {
-                                     x(i, j) = Ax(i, j) / norm;
-                                 });
+      // Compute and apply scaling
+      real norm = 0.0;
+      Kokkos::parallel_reduce
+	("Compute norm",
+	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
+	 KOKKOS_LAMBDA(int i, int j, real& update) {
+	  update += Ax(i, j) * Ax(i, j);
+	}, norm);
+      norm = std::sqrt(norm);
 
-            Kokkos::deep_copy(h_x, x);
-//            printMatrix("After scaling:", h_x, N);
-        }
-
+      Kokkos::parallel_for
+	("Update x",
+	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
+	 KOKKOS_LAMBDA(int i, int j) {
+	  x(i, j) = Ax(i, j) / norm;
+	});
+      
+      //Kokkos::deep_copy(h_x, x);
     }
 
-        Kokkos::finalize();
-    return 0;
-}
+    /*
+     * Time reporting
+     */
+    auto duration = myclock::now()-start_time;
+    auto millisec_duration = 
+      std::chrono::duration_cast<std::chrono::microseconds>(duration)/1000;
+    auto msec = millisec_duration.count();
+    if ( procno==0 )
+      std::cout << std::format("Time: {:>6} msec\n",msec);
+  }
 
-void checkArgs(int &n, int &nrepeat) {
-    if (n < 3 || nrepeat < 1) {
-        std::cerr << "Error: grid size n must be at least 3 and nrepeat must be greater than 0." << std::endl;
-        exit(1);
-    }
+  Kokkos::finalize();
+  return 0;
 }
-

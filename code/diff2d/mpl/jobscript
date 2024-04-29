@@ -2,7 +2,7 @@
 
 #SBATCH -J myjob           # Job name
 #SBATCH -o myjob.o%j       # Name of stdout output file
-#SBATCH -e myjob.e%j       # Name of stderr error file
+#SBATCH -e myjob.o%j       # Name of stderr error file
 #SBATCH -p normal      # Queue (partition) name
 #SBATCH -N 4               # Total # of nodes 
 #SBATCH --ntasks-per-node 56              # Total # of mpi tasks

@@ -120,7 +120,7 @@ mpi_scaling :
 	 && results=${PROGRAM}-scaling${SCALETAG}.runout \
 	 && ( \
 	    if [ "${ECHO}" = "1" ] ; then \
-	      echo "MPI scaling into <<$${results}>> over $${mpiprocs}" ; fi \
+	      echo "MPI scaling into <<$${results}>> over $${np}=$${mpiprocs}" ; fi \
 	     && for t in $$mpiprocs ; do \
 	          ppn=$$(( $$t / ${SLURM_NNODES} )) \
 	           && echo "Procs: $$t ppn=$$ppn" \

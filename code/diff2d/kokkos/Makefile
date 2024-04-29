@@ -21,8 +21,8 @@ WRONGS =
 
 MODE = omp
 LANGUAGE = CXX
-CATEGORY = range
-MODULES = cxxopts mdspan
+CATEGORY = kokkos
+MODULES = cxxopts kokkos
 
 include ../Make.depend
 
@@ -35,11 +35,11 @@ ifeq "${INTEL23}" "23"
 else
   CPPSTANDARD = 23
 endif
-EXTRA_INCLUDES := -I${TACC_MDSPAN_INC} \
-    $$( pkg-config --cflags tbb ) \
+EXTRA_INCLUDES := \
+    -I${TACC_KOKKOS_INC} \
     $$( pkg-config --cflags cxxopts ) 
 EXTRA_LIBS = \
-    $$( pkg-config --libs tbb ) 
+    -L${TACC_KOKKOS_LIB} -lkokkoscore
 
 ##
 ## profiling
