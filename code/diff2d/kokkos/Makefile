@@ -5,38 +5,26 @@
 #### "Parallel Computing for Science and Engineering"
 #### by Victor Eijkhout, copyright 2013-2024
 ####
-#### makefile for diff2d in OpenMP/C++ using spans
+#### makefile for diff2d in OpenMP/C++ usig range algorithms
 ####
 ################################################################
 ################################################################
 
 info ::
 	@echo "================================================================"
-	@echo "    OpenMP codes for diff2d in C++ with span"
+	@echo "    OpenMP codes for diff2d in C++ using range algorithms"
 	@echo "================================================================"
 	@echo && echo "Available rules:" && echo
 
 APPS = diff2d
 WRONGS = 
 
-##
-## use of c++20 range algorithms in OpenMP
-## note, we need the ranges library regardless
-## for the cartesian product and such
-##
-RANGE = 0
-
 MODE = omp
 LANGUAGE = CXX
-CATEGORY = span
-MODULES = cxxopts kokkos
+CATEGORY = range
+MODULES = cxxopts mdspan
 
-##
-## dependencies
-##
-## EXTRA_OBJS = linalg.o
-diff2d.o : ../main.cpp ../options.cpp linalg.hpp
-linalg.o : linalg.hpp
+include ../Make.depend
 
 ##
 ## compilation
@@ -47,12 +35,11 @@ ifeq "${INTEL23}" "23"
 else
   CPPSTANDARD = 23
 endif
-EXTRA_INCLUDES := \
-    -I${TACC_KOKKOS_INC} \
+EXTRA_INCLUDES := -I${TACC_MDSPAN_INC} \
+    $$( pkg-config --cflags tbb ) \
     $$( pkg-config --cflags cxxopts ) 
 EXTRA_LIBS = \
-    -L${TACC_KOKKOS_LIB} -lkokkoscore
-RPATH = ${TACC_KOKKOS_LIB}
+    $$( pkg-config --libs tbb ) 
 
 ##
 ## profiling
