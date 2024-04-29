@@ -88,12 +88,15 @@ namespace linalg {
     //codesnippet d2dspan2
     //! pointer to the data as 2D array
     auto& data2d() {
-      return cartesian_data;
-    };
-    //codesnippet end
+      return cartesian_data; };
     const auto& data2d() const {
-      return cartesian_data;
-    };
+      return cartesian_data; };
+    //codesnippet end
+
+    // template<typename Self>
+    // auto& data2d( this Self& self ) {
+    //   return self.cartesian_data;
+    // };
 
     //! index in the bordered array
     auto oindex( int i,int j ) {
