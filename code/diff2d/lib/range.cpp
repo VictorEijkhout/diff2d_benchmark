@@ -96,7 +96,8 @@ namespace linalg {
   template< typename real >
   void bordered_array_range<real>::set_bc( bool down,bool right, bool trace ) {
     auto& out = this->data2d();
-    auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
+    auto m = this->m(), n = this->n(), n2b = this->n2b();
+    auto border = this->border();
     std::for_each
       ( std::execution::par,
         this->domain().begin(),this->domain().end(),
@@ -113,7 +114,8 @@ namespace linalg {
     if (caption!="")
       std::cout << format("{}:\n",caption);
     auto& out = this->data2d();
-    auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
+    auto m = this->m(), n = this->n(), n2b = this->n2b();
+    auto border = this->border();
     auto inner = this->inner();
     std::for_each
       ( std::execution::par,

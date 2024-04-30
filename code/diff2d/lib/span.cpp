@@ -23,11 +23,11 @@ using std::format;
 namespace linalg {
 
   template< typename real >
-  bordered_array_span<real>::bordered_array_span( size_t m,size_t n,int border )
+  bordered_array_span<real>::bordered_array_span( int64_t m,int64_t n,int border )
     : bordered_array_base<real>(m,n,border) {
     auto out = this->data();
-    for ( size_t i=0; i<m+2*border; i++ ) {
-      for ( size_t j=0; j<n+2*border; j++ ) {
+    for ( int64_t i=0; i<m+2*border; i++ ) {
+      for ( int64_t j=0; j<n+2*border; j++ ) {
 	out[ this->oindex(i,j) ] = static_cast<real>(0);
       }
     }
@@ -95,7 +95,8 @@ namespace linalg {
   template< typename real >
   void bordered_array_span<real>::set_bc( bool down,bool right, bool trace ) {
     auto out = this->data2d();
-    auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
+    auto m = this->m(), n = this->n(), n2b = this->n2b();
+    auto border = this->border();
 #   pragma omp parallel for 
     for ( int i=0; i<m; i++ )
       for ( int j=0; j<n; j++ )
@@ -108,9 +109,10 @@ namespace linalg {
     if (caption!="")
       cout << format("{}:\n",caption);
     auto out = this->data();
-    auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
-    for ( size_t i=0; i<m+2*border; i++ ) {
-      for ( size_t j=0; j<n+2*border; j++ ) {
+    auto m = this->m(), n = this->n(), n2b = this->n2b();
+    auto border = this->border();
+    for ( int64_t i=0; i<m+2*border; i++ ) {
+      for ( int64_t j=0; j<n+2*border; j++ ) {
         char c = ( j<n+2*border-1 ? ' ' : '\n' );
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }

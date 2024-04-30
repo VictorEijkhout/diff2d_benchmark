@@ -11,8 +11,10 @@
 .PHONY: info
 info ::
 
-VARIANTS = cxx omp span
-# cxx  clps kokkos tile tbb range 
+# list cxx last because that's sequential 
+# and we're not terribly interested
+VARIANTS = kokkos omp range span cxx
+# clps tile tbb 
 .PHONY: compile
 info ::
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
@@ -27,11 +29,14 @@ compile :
 info ::
 	@echo "run_scaling : big run across all variants"
 	@echo "    [ NSIZE= (default: ${NSIZE}) ]"
-NSIZE = 30000
+NSIZE = 40000
 run_scaling :
+	@if [ -z "${TACC_PROC_CODE}" ] ; then \
+	    echo "Set variable: TACC_PROC_CODE" && exit 1 ; fi 
 	@for v in ${VARIANTS} ; do \
 	  ( cd $${v} \
 	     && make --no-print-directory run_scaling \
+	          TACC_SYSTEM=${TACC_PROC_CODE} \
 	          NDIV=10 NSIZE=${NSIZE} ECHO=1 GITADD=${GITADD} \
 	  ) \
 	 ; done
