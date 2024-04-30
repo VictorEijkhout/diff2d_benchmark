@@ -24,7 +24,7 @@ compile :
 	       && cd $${v} \
 	       && make --no-print-directory diff2d \
 	    ) \
-	; done
+	; done 2>&1 | tee compile.log && echo "See: compile.log"
 .PHONY: run_scaling
 info ::
 	@echo "run_scaling : big run across all variants"
@@ -40,7 +40,7 @@ run_scaling :
 	          TACC_SYSTEM=${TACC_PROC_CODE} \
 	          NDIV=10 NSIZE=${NSIZE} ECHO=1 GITADD=${GITADD} \
 	  ) \
-	 ; done
+	 ; done 2>&1 | tee run.log && echo "See: run.log"
 
 include ../../makefiles/Make.clean
 clean :: recursive_clean
