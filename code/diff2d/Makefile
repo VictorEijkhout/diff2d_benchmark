@@ -29,6 +29,7 @@ compile :
 info ::
 	@echo "run_scaling : big run across all variants"
 	@echo "    [ NSIZE= (default: ${NSIZE}) ]"
+	@echo "    [ GITADD= (1 to rename as runout and add to repo)"
 NSIZE = 40000
 run_scaling :
 	@if [ -z "${TACC_PROC_CODE}" ] ; then \
