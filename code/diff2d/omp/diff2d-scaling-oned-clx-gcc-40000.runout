@@ -1,0 +1,101 @@
+==== Run diff2d on 1 threads ====
+Execute program diff2d cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:   1
+Vector size: 40000 x 40000
+Time:  24359 msec
+omp-BW: (estimated Gb/sec)    9.98
+omp-Flops:    3.15
+==== Run diff2d on 5 threads ====
+Execute program diff2d cores 5
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=5 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:   5
+Vector size: 40000 x 40000
+Time:   4942 msec
+omp-BW: (estimated Gb/sec)    49.2
+omp-Flops:    15.5
+==== Run diff2d on 11 threads ====
+Execute program diff2d cores 11
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  11
+Vector size: 40000 x 40000
+Time:   2335 msec
+omp-BW: (estimated Gb/sec)     104
+omp-Flops:    32.9
+==== Run diff2d on 16 threads ====
+Execute program diff2d cores 16
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=16 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  16
+Vector size: 40000 x 40000
+Time:   1718 msec
+omp-BW: (estimated Gb/sec)     142
+omp-Flops:    44.7
+==== Run diff2d on 22 threads ====
+Execute program diff2d cores 22
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  22
+Vector size: 40000 x 40000
+Time:   1428 msec
+omp-BW: (estimated Gb/sec)     170
+omp-Flops:    53.8
+==== Run diff2d on 28 threads ====
+Execute program diff2d cores 28
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=28 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  28
+Vector size: 40000 x 40000
+Time:   1279 msec
+omp-BW: (estimated Gb/sec)     190
+omp-Flops:      60
+==== Run diff2d on 33 threads ====
+Execute program diff2d cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  33
+Vector size: 40000 x 40000
+Time:   1244 msec
+omp-BW: (estimated Gb/sec)     195
+omp-Flops:    61.7
+==== Run diff2d on 39 threads ====
+Execute program diff2d cores 39
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=39 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  39
+Vector size: 40000 x 40000
+Time:   1198 msec
+omp-BW: (estimated Gb/sec)     203
+omp-Flops:    64.1
+==== Run diff2d on 44 threads ====
+Execute program diff2d cores 44
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  44
+Vector size: 40000 x 40000
+Time:   1143 msec
+omp-BW: (estimated Gb/sec)     213
+omp-Flops:    67.2
+==== Run diff2d on 50 threads ====
+Execute program diff2d cores 50
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=50 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  50
+Vector size: 40000 x 40000
+Time:   1118 msec
+omp-BW: (estimated Gb/sec)     218
+omp-Flops:    68.7
+==== Run diff2d on 56 threads ====
+Execute program diff2d cores 56
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 40000 -n 40000 -i 5 
+Runtype: omp
+Threads:  56
+Vector size: 40000 x 40000
+Time:   1112 msec
+omp-BW: (estimated Gb/sec)     219
+omp-Flops:    69.1
+================ This type of run:
+OpenMP version using 2D loop
