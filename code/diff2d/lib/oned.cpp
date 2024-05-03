@@ -16,7 +16,7 @@
 #include "omp.h"
 #include "oned.hpp"
 
-//codesnippet d2d5ptompindex
+//codesnippet d2donedindex
 #define IINDEX( i,j ) ((i)+border)*n2b + (j)+border
 //codesnippet end
 

@@ -27,6 +27,8 @@ namespace linalg {
   = std::__and_<std::is_base_of<std::random_access_iterator_tag,
 				std::__iterator_category_t<_IteratorTypes>>...>;
 
+    // range algorithms on ranges doesn't work
+    // auto inner = this->inner();
   template< typename real >
   void bordered_array_range<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -34,8 +36,6 @@ namespace linalg {
     auto& out = this->data2d();
     const auto& in = other.data2d();
     auto inner = inner_range<real>(*this);
-    // range algorithms on ranges doesn't work
-    // auto inner = this->inner();
     std::for_each
       ( std::execution::par,
         inner.begin(),inner.end(),
