@@ -34,7 +34,7 @@ namespace linalg {
   };
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2d5ptomp
+  //codesnippet d2d5ptoned
   template< typename real >
   void bordered_array_1d<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -56,7 +56,7 @@ namespace linalg {
   };
 
   //! Scale the interior, leaving the border alone
-  //codesnippet d2dscaleomp
+  //codesnippet d2dscaleoned
   template< typename real >
   void bordered_array_1d<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {

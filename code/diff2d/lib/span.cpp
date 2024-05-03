@@ -58,7 +58,7 @@ namespace linalg {
     const auto& other = dynamic_cast<const linalg::bordered_array_span<real>&>(_other);
     auto out = this->data2d();
     auto in = other.data2d();
-#   pragma omp parallel for
+    #pragma omp parallel for
     for ( auto ij : this->inner() ) {
       auto [i,j] = ij;
       out[ i,j ] = in[ i,j] * factor;
@@ -72,7 +72,7 @@ namespace linalg {
   real bordered_array_span<real>::l2norm() {
     real sum_of_squares{0};
     auto array = this->data2d();
-#   pragma omp parallel for reduction(+:sum_of_squares)
+    #pragma omp parallel for reduction(+:sum_of_squares)
     for ( auto ij : this->inner() ) {
       auto [i,j] = ij;
       auto v = array[i,j];
@@ -97,7 +97,7 @@ namespace linalg {
     auto out = this->data2d();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-#   pragma omp parallel for 
+    #pragma omp parallel for 
     for ( int i=0; i<m; i++ )
       for ( int j=0; j<n; j++ )
 	if ( i==m-1 or j==n-1 )
