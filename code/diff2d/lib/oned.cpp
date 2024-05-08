@@ -48,7 +48,8 @@ namespace linalg {
     for ( int64_t i=0; i<m; i++ ) {
       for ( int64_t j=0; j<n; j++ ) {
         out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
-          - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ] - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
+          - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ]
+          - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
       }
     }
   //codesnippet end

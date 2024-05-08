@@ -59,14 +59,15 @@ namespace linalg {
   void bordered_array_seq<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
+    const auto& other =
+      dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
   //codesnippet end
     auto out = this->data();
     auto in = other.data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
     //codesnippet d2dscaledseq
-    for ( size_t i=0; i<m; i++ )
-      for ( size_t j=0; j<n; j++ )
+    for ( int64_t i=0; i<m; i++ )
+      for ( int64_t j=0; j<n; j++ )
         out[ IINDEX(i,j,b,n2b) ] = in[ IINDEX(i,j,b,n2b) ] * factor;
     //codesnippet end
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
@@ -79,8 +80,8 @@ namespace linalg {
     real sum_of_squares{0};
     auto out = this->data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
-    for ( size_t i=0; i<m; i++ )
-      for ( size_t j=0; j<n; j++ ) {
+    for ( int64_t i=0; i<m; i++ )
+      for ( int64_t j=0; j<n; j++ ) {
         auto v = out[ IINDEX(i,j,b,n2b) ];
         sum_of_squares += v*v;
       }
@@ -94,8 +95,8 @@ namespace linalg {
   void bordered_array_seq<real>::set( real value, bool trace ) {
     auto out = this->data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
-    for ( size_t i=0; i<m; i++ )
-      for ( size_t j=0; j<n; j++ ) {
+    for ( int64_t i=0; i<m; i++ )
+      for ( int64_t j=0; j<n; j++ ) {
         auto ij = IINDEX(i,j,b,n2b);
         out[ ij ] = value;
       }
@@ -106,8 +107,8 @@ namespace linalg {
   void bordered_array_seq<real>::set_bc( bool down,bool right, bool trace ) {
     auto out = this->data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
-    for ( size_t i=0; i<m; i++ )
-      for ( size_t j=0; j<n; j++ )
+    for ( int64_t i=0; i<m; i++ )
+      for ( int64_t j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
           out[ IINDEX(i,j,b,n2b) ] = 1.;
   };
