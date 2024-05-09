@@ -32,6 +32,7 @@ run_scaling :
 	  echo "Set CATEGORY variable for this directory" && exit 1 \
 	; else \
 	  echo "================ Run category: ${CATEGORY} ========" \
+	   && echo " .. running on $( hostname )" \
 	; fi
 	@runoutid=${CATEGORY}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${NSIZE} \
 	 && if [ "${MODE}" = "mpl" ] ; then \
@@ -44,7 +45,7 @@ run_scaling :
 	 && results=$$( make --no-print-directory scaling_logname \
 	                PROGRAM="diff2d" RUNOUTID=$${runoutid} ) \
 	 && make --no-print-directory $${SCALING} PROGRAM=diff2d \
-	    ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" CATCHER= \
+	    ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" CATCHER= NDIV=10 \
 	    RUN_OPTIONS="-m ${NSIZE} -n ${NSIZE} -i 5 ${D2D_OPTIONS}" \
 	 && cmdline="./diff2d -H" \
 	     && if [ "${MODE}" = "mpl" ] ; then cmdline="ibrun -n 1 $$cmdline" ; fi \
@@ -61,19 +62,3 @@ run_scaling_plot :
 	    ../../../scripts/graphs_extract.py \
 	        $$fname.out \
 	        Threads:1 Time:1
-old_run_scaling :
-	@make --no-print-directory diff2d ECHO=1
-	@if [ ! -z "${THREADSCALE}" ] ; then \
-	    threadscale="${THREADSCALE}" \
-	 ; else \
-	    threadscale=$$( make --no-print-directory omp_proc_scale NDIV=${NDIV} ) \
-	 ; fi \
-	 && if [ "${ECHO}" = "1" ] ; then \
-	      echo "Running on $${threadscale} threads" ; fi \
-	 && for t in $${threadscale} ; do \
-	      echo "Threads: $$t" \
-	       && cmdline="OMP_PROC_BIND=true OMP_NUM_THREADS=$$t \
-	               ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 $${RUN_OPTIONS}" \
-	       && if [ "${ECHO}" = "1" ] ; then echo "cmdline: $$cmdline" ; fi \
-	       && eval $$cmdline \
-	    ; done
