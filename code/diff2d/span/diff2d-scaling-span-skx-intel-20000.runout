@@ -1,0 +1,79 @@
+Execute program diff2d cores 1
+Runtype: span
+Threads:   1
+Vector size: 20000 x 20000
+Time: 126585 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 4
+Runtype: span
+Threads:   4
+Vector size: 20000 x 20000
+Time:  31692 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 9
+Runtype: span
+Threads:   9
+Vector size: 20000 x 20000
+Time:  14099 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 14
+Runtype: span
+Threads:  14
+Vector size: 20000 x 20000
+Time:   9084 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 19
+Runtype: span
+Threads:  19
+Vector size: 20000 x 20000
+Time:   6699 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 24
+Runtype: span
+Threads:  24
+Vector size: 20000 x 20000
+Time:   5314 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 28
+Runtype: span
+Threads:  28
+Vector size: 20000 x 20000
+Time:   9078 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 33
+Runtype: span
+Threads:  33
+Vector size: 20000 x 20000
+Time:   8210 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 38
+Runtype: span
+Threads:  38
+Vector size: 20000 x 20000
+Time:   6704 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 43
+Runtype: span
+Threads:  43
+Vector size: 20000 x 20000
+Time:   5972 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+Execute program diff2d cores 48
+Runtype: span
+Threads:  48
+Vector size: 20000 x 20000
+Time:   5658 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+================ This type of run:
+OpenMP over 1D index range with mdspan
