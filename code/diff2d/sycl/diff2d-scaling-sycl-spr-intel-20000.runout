@@ -1,0 +1,13 @@
+Execute program diff2d cores 1
+Execute program diff2d cores 11
+Execute program diff2d cores 22
+Execute program diff2d cores 33
+Execute program diff2d cores 44
+Execute program diff2d cores 56
+Execute program diff2d cores 67
+Execute program diff2d cores 78
+Execute program diff2d cores 89
+Execute program diff2d cores 100
+Execute program diff2d cores 112
+================ This type of run:
+SYCL version using 2D loop
