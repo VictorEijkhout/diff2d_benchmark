@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** diff2d.cpp : 2D diffusion in parallel through OpenMP
+ **** diff2d.cpp : 2D diffusion sequential reference code
  ****
  ****************************************************************/
 
@@ -21,7 +21,7 @@ using real = float;
 
 int main(int argc,char **argv) {
 
-  auto [exit,msize,nsize,border,itcount,trace,view] =
+  auto [exit,msize,nsize,border,itcount,gpu,trace,view] =
     parse_options(argc,argv,"OpenMP version using 2D loop");
   if (exit) return 0;
   const std::string prefix{"seq"};

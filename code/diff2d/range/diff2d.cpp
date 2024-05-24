@@ -24,7 +24,7 @@ using real = float;
 
 int main(int argc,char **argv) {
 
-  auto [exit,msize,nsize,border,itcount,trace,view] = 
+  auto [exit,msize,nsize,border,itcount,gpu,trace,view] = 
     parse_options(argc,argv,"Range algorithm version using execution policies");
   if (exit) return 0;
 

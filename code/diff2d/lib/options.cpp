@@ -29,6 +29,7 @@ std::tuple<bool,size_t,size_t,int,int,bool,bool> parse_options
     ("b,border","border around omega",cxxopts::value<int>()->default_value("1"))
     ("i,itcount","iteration count",cxxopts::value<int>()->default_value("10"))
     ("p,parallelism","number of threads/processes",cxxopts::value<int>()->default_value("4"))
+    ("g,gpu","use GPU",cxxopts::value<bool>()->default_value("false"))
     ("t,trace","view arrays",cxxopts::value<bool>()->default_value("false"))
     ("v,view","view arrays",cxxopts::value<bool>()->default_value("false"))
     ;
@@ -50,9 +51,10 @@ std::tuple<bool,size_t,size_t,int,int,bool,bool> parse_options
   int border   = result["b"].as<int>();
   int itcount  = result["i"].as<int>();
 
+  bool gpu     = result["g"].as<bool>();
   bool trace   = result["t"].as<bool>();
   bool view    = result["v"].as<bool>();
   bool help_msg = result.count("Help")>0;
 
-  return std::make_tuple(false,msize,nsize,border,itcount,trace,view);
+  return std::make_tuple(false,msize,nsize,border,itcount,gpu,trace,view);
 }

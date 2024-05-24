@@ -28,7 +28,7 @@ int main(int argc,char **argv) {
   auto procno = comm_world.rank();
   auto nprocs = comm_world.size();
 
-  auto [exit,msize,nsize,border,itcount,trace,view] =
+  auto [exit,msize,nsize,border,itcount,gpu,trace,view] =
     parse_options(argc,argv,"OpenMP version using 2D loop");
   comm_world.bcast(0,exit);
   if (exit) return 0;
