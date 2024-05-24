@@ -1,0 +1,24 @@
+Execute program diff2d cores 1
+Time:   6375 msec
+Execute program diff2d cores 11
+Time:    590 msec
+Execute program diff2d cores 22
+Time:    297 msec
+Execute program diff2d cores 33
+Time:    199 msec
+Execute program diff2d cores 44
+Time:    155 msec
+Execute program diff2d cores 56
+Time:    129 msec
+Execute program diff2d cores 67
+Time:    217 msec
+Execute program diff2d cores 78
+Time:    221 msec
+Execute program diff2d cores 89
+Time:    164 msec
+Execute program diff2d cores 100
+Time:    147 msec
+Execute program diff2d cores 112
+Time:    134 msec
+================ This type of run:
+Kokkos version using 2D loop
