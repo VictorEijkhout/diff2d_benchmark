@@ -1,13 +1,57 @@
 Execute program diff2d cores 1
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    936 msec
 Execute program diff2d cores 11
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    893 msec
 Execute program diff2d cores 22
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    923 msec
 Execute program diff2d cores 33
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    892 msec
 Execute program diff2d cores 44
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    893 msec
 Execute program diff2d cores 56
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    923 msec
 Execute program diff2d cores 67
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    892 msec
 Execute program diff2d cores 78
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:   1021 msec
 Execute program diff2d cores 89
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    919 msec
 Execute program diff2d cores 100
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    916 msec
 Execute program diff2d cores 112
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 56
+Time:    895 msec
 ================ This type of run:
 SYCL version using 2D loop
