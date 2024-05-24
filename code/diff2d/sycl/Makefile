@@ -5,14 +5,14 @@
 #### "Parallel Computing for Science and Engineering"
 #### by Victor Eijkhout, copyright 2013-2024
 ####
-#### makefile for diff2d in OpenMP/C++ usig range algorithms
+#### makefile for diff2d in OpenMP/C++ using SYCL
 ####
 ################################################################
 ################################################################
 
 info ::
 	@echo "================================================================"
-	@echo "    OpenMP codes for diff2d in C++ using range algorithms"
+	@echo "    OpenMP codes for diff2d in C++ using SYCL"
 	@echo "================================================================"
 	@echo && echo "Available rules:" && echo
 
@@ -21,8 +21,8 @@ WRONGS =
 
 MODE = omp
 LANGUAGE = CXX
-CATEGORY = kokkos
-MODULES = cxxopts kokkos
+CATEGORY = sycl
+MODULES = cxxopts 
 
 include ../Make.depend
 
@@ -36,10 +36,8 @@ else
   CPPSTANDARD = 23
 endif
 EXTRA_INCLUDES := \
-    -I${TACC_KOKKOS_INC} \
     $$( pkg-config --cflags cxxopts ) 
-EXTRA_LIBS = \
-    -L${TACC_KOKKOS_LIB} -lkokkoscore
+EXTRA_LIBS = 
 
 ##
 ## profiling
