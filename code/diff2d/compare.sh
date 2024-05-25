@@ -6,9 +6,10 @@
 ################################################################
 
 function usage () {
-    echo "Usage: $0 [ -c c1,c2,c3 (default: ${codes}) ] [ -t (trace) ]"
+    echo "Usage: $0 [ -c c1,c2,c3 (default: ${codes}) ] [ -t (trace) ] [ -s (srun) ]"
 }
 
+srun=
 trace=
 codes=span,kokkos,sycl
 while [ $# -gt 0 ] ; do
@@ -16,6 +17,8 @@ while [ $# -gt 0 ] ; do
 	usage && exit 1
     elif [ $1 = "-c" ] ; then 
 	shift && codes=$1 && shift
+    elif [ $1 = "-s" ] ; then 
+	srun=1 && shift
     elif [ $1 = "-t" ] ; then
 	 trace=1 && shift
     else
@@ -27,8 +30,13 @@ queue=spr
 for code in $( echo $codes | tr ',' ' ' ) ; do
     echo && echo "================ submit to queue=$queue, proc code=$code" && echo
     ( cd ${code} \
-       && cmdline="srun -p $queue -t 0:30:0 -N 1 -n 1 -A A-ccsc \
-            --sockets-per-node=2 --cpu-bind=verbose,sockets \
+       && if [ "${srun}" = "1" ] ; then \
+	     cmdline="srun -p $queue -t 0:30:0 -N 1 -n 1 -A A-ccsc \
+            -		   --sockets-per-node=2 --cpu-bind=verbose,sockets" \
+	  ; else \
+	      cmdline="" \
+	  ; fi \
+       && cmdline="$cmdline \
 	    make run_scaling NSIZE=20000 GITADD=1 \
 	      TACC_SYSTEM=spr \
 	      THREADSYSTEM=$( \
