@@ -1,78 +1,177 @@
+==== Run diff2d on 1 threads ====
 Execute program diff2d cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:   1
 Vector size: 20000 x 20000
-Time: 126585 msec
+x norm: 4096
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2359498
+[ 2] y norm: 2.8982863
+[ 3] y norm: 3.1950016
+[ 4] y norm: 3.3714614
+Time: 129585 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 4 threads ====
 Execute program diff2d cores 4
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=4 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:   4
 Vector size: 20000 x 20000
-Time:  31692 msec
+x norm: 8192
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.236221
+[ 2] y norm: 2.8976326
+[ 3] y norm: 3.1980023
+[ 4] y norm: 3.369134
+Time:  32579 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 9 threads ====
 Execute program diff2d cores 9
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=9 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:   9
 Vector size: 20000 x 20000
-Time:  14099 msec
+x norm: 12288
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.236189
+[ 2] y norm: 2.8979106
+[ 3] y norm: 3.197879
+[ 4] y norm: 3.3689232
+Time:  14532 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 14 threads ====
 Execute program diff2d cores 14
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=14 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  14
 Vector size: 20000 x 20000
-Time:   9084 msec
+x norm: 15325.829
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362273
+[ 2] y norm: 2.8979323
+[ 3] y norm: 3.1977782
+[ 4] y norm: 3.36924
+Time:   9360 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 19 threads ====
 Execute program diff2d cores 19
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=19 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  19
 Vector size: 20000 x 20000
-Time:   6699 msec
+x norm: 17854.05
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362545
+[ 2] y norm: 2.8979225
+[ 3] y norm: 3.197755
+[ 4] y norm: 3.3692355
+Time:   7369 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 24 threads ====
 Execute program diff2d cores 24
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=24 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  24
 Vector size: 20000 x 20000
-Time:   5314 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362685
+[ 2] y norm: 2.8979244
+[ 3] y norm: 3.1976416
+[ 4] y norm: 3.36928
+Time:   5635 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 28 threads ====
 Execute program diff2d cores 28
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=28 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  28
 Vector size: 20000 x 20000
-Time:   9078 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362757
+[ 2] y norm: 2.8979185
+[ 3] y norm: 3.1976273
+[ 4] y norm: 3.3692656
+Time:   4685 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  33
 Vector size: 20000 x 20000
-Time:   8210 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362812
+[ 2] y norm: 2.897908
+[ 3] y norm: 3.1976125
+[ 4] y norm: 3.3692784
+Time:   4111 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 38 threads ====
 Execute program diff2d cores 38
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=38 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  38
 Vector size: 20000 x 20000
-Time:   6704 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362845
+[ 2] y norm: 2.8979027
+[ 3] y norm: 3.1975982
+[ 4] y norm: 3.3692884
+Time:   3637 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 43 threads ====
 Execute program diff2d cores 43
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=43 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  43
 Vector size: 20000 x 20000
-Time:   5972 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362883
+[ 2] y norm: 2.8978958
+[ 3] y norm: 3.1975894
+[ 4] y norm: 3.3693018
+Time:   3074 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
+==== Run diff2d on 48 threads ====
 Execute program diff2d cores 48
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=48 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Total cores available: 48
 Runtype: span
 Threads:  48
 Vector size: 20000 x 20000
-Time:   5658 msec
+x norm: 20000
+[ 0] y norm: 282.85684
+[ 1] y norm: 2.2362928
+[ 2] y norm: 2.8978932
+[ 3] y norm: 3.1975875
+[ 4] y norm: 3.3693035
+Time:   2868 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ================ This type of run:
