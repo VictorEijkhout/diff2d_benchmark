@@ -11,6 +11,7 @@
 
 #include <chrono>
 #include <iostream>
+using std::cout;
 #include <format>
 
 #include <sycl/sycl.hpp>
@@ -31,19 +32,23 @@ int main(int argc,char *argv[])
   /*
    * SYCL setup
    */
-    queue cpu_selector(cpu_selector_v);
-    queue gpu_selector(gpu_selector_v);
-    queue q;
-    if (gpu)
-        q = gpu_selector;
-    else
-        q = cpu_selector;
+    queue q =
+      [=] () -> queue {
+	if (gpu) {
+	  cout << "Selecting device GPU\n";
+	  return queue(gpu_selector_v);
+	} else {
+	  cout << "Selecting host CPU\n";
+	  return queue(cpu_selector_v);
+	}
+      }();
 
     std::cout << "Device : " << q.get_device().get_info<info::device::name>() << "\n";
     std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
 
     std::vector<real> Mat_A(msize*nsize,10.0);
     std::vector<real> Mat_Stencil(msize*nsize,0.0);
+    real FNorm;
 
     buffer<real,2> Buf_a(Mat_A.data(),range<2>(msize,nsize));
     buffer<real,2> Buf_b(Mat_Stencil.data(),range<2>(msize,nsize));
@@ -61,7 +66,7 @@ int main(int argc,char *argv[])
 	accessor D_b(Buf_b,h);
 	auto D_Fn = reduction(Buf_Fn, h, std::plus<real>());
 
-	h.parallel_for(range<2>(N-2,M-2), D_Fn, [=](item<2> index, auto &sum){
+	h.parallel_for(range<2>(msize-2,nsize-2), D_Fn, [=](item<2> index, auto &sum){
 	  auto row = index.get_id(0) + 1;
 	  auto col = index.get_id(1) + 1;
 
@@ -82,7 +87,7 @@ int main(int argc,char *argv[])
 	accessor D_b(Buf_b,h);
 	accessor D_Fn(Buf_Fn,h);
 
-	h.parallel_for(range<2>(N-2,M-2), [=](auto index){
+	h.parallel_for(range<2>(msize-2,nsize-2), [=](auto index){
 	  auto row = index.get_id(0) + 1;
 	  auto col = index.get_id(1) + 1;
 
@@ -90,10 +95,6 @@ int main(int argc,char *argv[])
 	});
       }).wait();
 
-      end = rdtsc();
-    
-      elapsed_count[count] = (double)(end - start)/ClkPerSec;
-      printf("TTC : %.12f\n",elapsed_count[count]);
     }
 
     /*
@@ -105,13 +106,6 @@ int main(int argc,char *argv[])
     auto msec = millisec_duration.count();
     if ( procno==0 )
       std::cout << std::format("Time: {:>6} msec\n",msec);
-
-    // for(int count=1;count<(atoi(argv[1]));count++)
-    //   Average += elapsed_count[count];
-   
-    // std::cout << "\nTime to compute 5pt-Stencil + Power Method (Total) = " << Average << "\n"; 
-    // Average = Average/(atoi(argv[1]) -1);
-    // std::cout << "\nTime to compute (Avg over " << atoi(argv[1]) << " loops) = " << Average << "\n";
 
     return 0;
 }

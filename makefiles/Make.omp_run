@@ -30,7 +30,10 @@ ECHO = 0
 TWOLEVEL =
 OMPSCHEDULE = 
 
-.PHONY: omp_run omp_scaling omp_proc_scale
+.PHONY: omp_run omp_proc_scale
+# export DPCPP_CPU_CU_AFFINITY=close
+# export DPCPP_CPU_PLACES=cores
+# export DPCPP_CPU_NUM_CUS=8~
 omp_run :
 	@if [ -z "${PROGRAM}" ] ; then \
 	    echo "Please set variable PROGRAM" >2 && exit 1 ; fi 
@@ -41,10 +44,18 @@ omp_run :
 	 && if [ ! -z "${TWOLEVEL}" ] ; then \
 	        command="OMP_NUM_THREADS=${TWOLEVEL},$$(( $$np / ${TWOLEVEL} )) $$command" \
 	    ; else \
-	        command="OMP_NUM_THREADS=$$np $$command" \
+	        if [ "${THREADSYSTEM}" = "dpcpp" ] ; then \
+	          command="DPCPP_CPU_NUM_CUS=$$np $$command" \
+	        ; else \
+	          command="OMP_NUM_THREADS=$$np $$command" \
+	        ; fi \
 	    ; fi \
 	 && echo "Execute program ${PROGRAM} cores $${np}" \
-	 && command="OMP_PROC_BIND=${BIND} $$command" \
+	 && if [ "${THREADSYSTEM}" = "dpcpp" ] ; then \
+	      command="DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores $$command" \
+	    ; else \
+	      command="OMP_PROC_BIND=${BIND} $$command" \
+	    ; fi \
 	 && if [ ${ACTIVE} -gt 1 ] ; then \
 	         command="OMP_MAX_ACTIVE_LEVELS=${ACTIVE} $$command" ; fi \
 	 && if [ ! -z "${OMPSCHEDULE}" ] ; then \
@@ -58,6 +69,11 @@ omp_proc_scale :
 	 && if [ -z "${NDIV}" ] ; then ndiv=5 ; else ndiv=${NDIV} ; fi \
 	 && export ompthreads="$$( make --no-print-directory omp_threads NP=$$np NDIV=$$ndiv )" \
 	 && echo $$ompthreads
+
+.PHONY: omp_scaling dpcpp_scaling
+THREADSYSTEM=omp
+dpcpp_scaling :
+	@make --no-print-directory omp_scaling THREADSYSTEM=dpcpp
 omp_scaling :
 	@ompthreads="$$( make --no-print-directory omp_proc_scale NDIV=${NDIV} )" \
 	 && if [ "${ECHO}" = "1" ] ; then \
@@ -74,6 +90,7 @@ omp_scaling :
 	        if [ "${ECHO}" = "1" ] ; then \
 	            echo "==== Run ${PROGRAM} on $$t threads ====" ; fi \
 	         && make --no-print-directory omp_run NP=$$t PROGRAM=${PROGRAM} \
+	                THREADSYSTEM=${THREADSYSTEM} \
 	                ECHO=${ECHO} NEST=${NEST} TWOLEVEL=${TWOLEVEL} ACTIVE=${ACTIVE} \
 	                RUN_OPTIONS="${RUN_OPTIONS}" RUNOUTID=${TACC_SYSTEM} \
 	    ; done \

@@ -32,11 +32,16 @@ run_scaling :
 	  echo "Set CATEGORY variable for this directory" && exit 1 \
 	; else \
 	  echo "================ Run category: ${CATEGORY} ========" \
-	   && echo " .. running on $( hostname )" \
+	   && echo " .. running on hostname=$( hostname )" \
 	; fi
 	@runoutid=${CATEGORY}-${TACC_SYSTEM}-${TACC_FAMILY_COMPILER}-${NSIZE} \
 	 && if [ "${MODE}" = "mpl" ] ; then \
-	      SCALING=mpi_scaling ; else SCALING=omp_scaling ; fi \
+	      SCALING=mpi_scaling \
+	    ; elif [ "${MODE}" = "dpcpp" ] ; then \
+	      SCALING=dpcpp_scaling \
+	    ; else \
+	      SCALING=omp_scaling \
+	    ; fi \
 	 && if [ "${CATEGORY}" = "range" -a "${TACC_FAMILY_COMPILER}" = "gcc" ] ; then \
 	      tbblib=$$( pkg-config --libs tbb | cut -d ' ' -f 1 ) \
 	       && tbblib=$${tbblib##-L} \

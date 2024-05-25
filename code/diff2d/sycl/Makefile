@@ -19,7 +19,7 @@ info ::
 APPS = diff2d
 WRONGS = 
 
-MODE = omp
+MODE = sycl
 LANGUAGE = CXX
 CATEGORY = sycl
 MODULES = cxxopts 

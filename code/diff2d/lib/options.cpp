@@ -16,7 +16,7 @@ using std::size_t;
 #include "cxxopts.hpp"
 #include "options.hpp"
 
-std::tuple<bool,size_t,size_t,int,int,bool,bool> parse_options
+std::tuple<bool,size_t,size_t,int,int,bool,bool,bool> parse_options
     (int argc,char **argv,std::string helpmsg) {
   cxxopts::Options options
     ("diff2d",
@@ -37,13 +37,13 @@ std::tuple<bool,size_t,size_t,int,int,bool,bool> parse_options
   auto result = options.parse(argc,argv);
   if (result.count("help")) {
     std::cout << options.help() << '\n';
-    return std::make_tuple(true,0,0,0,0,false,false);
+    return std::make_tuple(true,0,0,0,0,false,false,false);
   }
 
   if (result.count("Help")) {
     std::cout << "================ This type of run:\n";
     std::cout << helpmsg << '\n';
-    return std::make_tuple(true,0,0,0,0,false,false);
+    return std::make_tuple(true,0,0,0,0,false,false,false);
   }
 
   size_t msize    = result["m"].as<size_t>();

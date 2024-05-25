@@ -13,7 +13,8 @@ info ::
 
 # list cxx last because that's sequential 
 # and we're not terribly interested
-VARIANTS = cxx kokkos oned range span sycl
+VARIANTS = kokkos oned range span sycl \
+    cxx
 # clps tile tbb 
 .PHONY: compile
 info ::
