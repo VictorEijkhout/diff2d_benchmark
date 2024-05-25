@@ -1,79 +1,79 @@
 ==== Run diff2d on 1 threads ====
 Execute program diff2d cores 1
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=1 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    952 msec
+Time:   9893 msec
 ==== Run diff2d on 11 threads ====
 Execute program diff2d cores 11
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=11 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    892 msec
+Time:   1678 msec
 ==== Run diff2d on 22 threads ====
 Execute program diff2d cores 22
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=22 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    893 msec
+Time:   1199 msec
 ==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=33 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    935 msec
+Time:   1044 msec
 ==== Run diff2d on 44 threads ====
 Execute program diff2d cores 44
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=44 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    934 msec
+Time:   1038 msec
 ==== Run diff2d on 56 threads ====
 Execute program diff2d cores 56
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=56 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    910 msec
+Time:    914 msec
 ==== Run diff2d on 67 threads ====
 Execute program diff2d cores 67
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=67 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    906 msec
+Time:    903 msec
 ==== Run diff2d on 78 threads ====
 Execute program diff2d cores 78
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=78 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    959 msec
+Time:    955 msec
 ==== Run diff2d on 89 threads ====
 Execute program diff2d cores 89
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=89 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    893 msec
+Time:    958 msec
 ==== Run diff2d on 100 threads ====
 Execute program diff2d cores 100
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=100 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    892 msec
+Time:    921 msec
 ==== Run diff2d on 112 threads ====
 Execute program diff2d cores 112
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=112 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 56
-Time:    946 msec
+Time:    957 msec
 ================ This type of run:
 SYCL version using 2D loop
