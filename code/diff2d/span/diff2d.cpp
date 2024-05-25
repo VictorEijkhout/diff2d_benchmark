@@ -28,6 +28,10 @@ int main(int argc,char **argv) {
   const std::string prefix{"span"};
   const int procno{0};
 
+#pragma omp parallel
+#pragma omp single
+  std::cout << std::format("Total cores available: {}\n",omp_get_num_procs());
+  
   const int nthreads = 
     [] () {
     int nt;

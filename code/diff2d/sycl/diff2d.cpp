@@ -57,7 +57,7 @@ int main(int argc,char *argv[])
     using myclock = std::chrono::steady_clock;
     auto start_time = myclock::now();
 
-    for (int repeat = 0; repeat<itcount; ++repeat) {
+    for (int it = 0; it<itcount; ++it) {
 
       // Kernel to compute the 5pt stencil and simultaneously the L2Norm
       q.submit([&] (handler &h)
@@ -80,6 +80,8 @@ int main(int argc,char *argv[])
       }).wait();
 
       FNorm = std::sqrt(FNorm);
+      if (trace)
+	std::cout << std::format("[{:>2}] y norm: {}\n",it,FNorm);
 	
       q.submit([&] (handler &h)
       {
