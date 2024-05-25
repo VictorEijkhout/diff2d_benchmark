@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
     using myclock = std::chrono::steady_clock;
     auto start_time = myclock::now();
 
-    for (int repeat = 0; repeat<itcount; ++repeat) {
+    for (int it = 0; it<itcount; ++it) {
       Kokkos::parallel_for
 	("StencilApplication",
 	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1,nsize-1}),
@@ -72,6 +72,9 @@ int main(int argc, char *argv[]) {
 	  update += Ax(i, j) * Ax(i, j);
 	}, norm);
       norm = std::sqrt(norm);
+
+      if ( trace and procno==0 )
+	std::cout << std::format("[{:>2}] y norm: {}\n",it,norm);
 
       Kokkos::parallel_for
 	("Update x",
