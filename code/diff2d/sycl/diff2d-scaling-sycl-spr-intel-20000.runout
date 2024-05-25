@@ -3,132 +3,132 @@ Execute program diff2d cores 1
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=1 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:   9898 msec
+Time:   9939 msec
 ==== Run diff2d on 11 threads ====
 Execute program diff2d cores 11
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=11 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:   1683 msec
+Time:   1672 msec
 ==== Run diff2d on 22 threads ====
 Execute program diff2d cores 22
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=22 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:   1203 msec
+Time:   1269 msec
 ==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=33 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:   1046 msec
+Time:   1112 msec
 ==== Run diff2d on 44 threads ====
 Execute program diff2d cores 44
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=44 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:   1040 msec
+Time:   1031 msec
 ==== Run diff2d on 56 threads ====
 Execute program diff2d cores 56
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=56 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    892 msec
+Time:    974 msec
 ==== Run diff2d on 67 threads ====
 Execute program diff2d cores 67
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=67 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    895 msec
+Time:    963 msec
 ==== Run diff2d on 78 threads ====
 Execute program diff2d cores 78
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=78 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    897 msec
+Time:    960 msec
 ==== Run diff2d on 89 threads ====
 Execute program diff2d cores 89
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=89 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    945 msec
+Time:    961 msec
 ==== Run diff2d on 100 threads ====
 Execute program diff2d cores 100
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=100 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    969 msec
+Time:    964 msec
 ==== Run diff2d on 112 threads ====
 Execute program diff2d cores 112
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=112 ./diff2d -m 20000 -n 20000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 56
+Max Compute Units : 112
 [ 0] y norm: 0
 [ 1] y norm: -nan
 [ 2] y norm: -nan
 [ 3] y norm: -nan
 [ 4] y norm: -nan
-Time:    892 msec
+Time:    937 msec
 ================ This type of run:
 SYCL version using 2D loop
