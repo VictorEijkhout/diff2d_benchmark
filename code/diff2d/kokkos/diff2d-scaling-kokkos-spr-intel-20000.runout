@@ -1,24 +1,46 @@
+==== Run diff2d on 1 threads ====
 Execute program diff2d cores 1
-Time:   6375 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:   6423 msec
+==== Run diff2d on 11 threads ====
 Execute program diff2d cores 11
-Time:    590 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    768 msec
+==== Run diff2d on 22 threads ====
 Execute program diff2d cores 22
-Time:    297 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    528 msec
+==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
-Time:    199 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    411 msec
+==== Run diff2d on 44 threads ====
 Execute program diff2d cores 44
-Time:    155 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    412 msec
+==== Run diff2d on 56 threads ====
 Execute program diff2d cores 56
-Time:    129 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    344 msec
+==== Run diff2d on 67 threads ====
 Execute program diff2d cores 67
-Time:    217 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    323 msec
+==== Run diff2d on 78 threads ====
 Execute program diff2d cores 78
-Time:    221 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    324 msec
+==== Run diff2d on 89 threads ====
 Execute program diff2d cores 89
-Time:    164 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    303 msec
+==== Run diff2d on 100 threads ====
 Execute program diff2d cores 100
-Time:    147 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    307 msec
+==== Run diff2d on 112 threads ====
 Execute program diff2d cores 112
-Time:    134 msec
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./diff2d -m 20000 -n 20000 -i 5 --trace
+Time:    203 msec
 ================ This type of run:
 Kokkos version using 2D loop
