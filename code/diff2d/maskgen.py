@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+####
+#### https://github.com/surak/slurm-cpu-bind-mask-generator
+####
 
 import sys
 from random import randint
