@@ -54,6 +54,19 @@ int main(int argc,char *argv[])
     buffer<real,2> Buf_b(Mat_Stencil.data(),range<2>(msize,nsize));
     buffer<real,1> Buf_Fn(&FNorm, range<1>(1));
 
+    q.submit([&] (handler &h) {
+      accessor D_a(Buf_a,h);
+      accessor D_b(Buf_b,h);
+      accessor D_Fn(Buf_Fn,h);
+
+      h.parallel_for(range<2>(msize-2,nsize-2), [=](auto index){
+	auto row = index.get_id(0) + 1;
+	auto col = index.get_id(1) + 1;
+
+	D_a[row][col] = 1.;
+      });
+    }).wait();
+
     using myclock = std::chrono::steady_clock;
     auto start_time = myclock::now();
 
