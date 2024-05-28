@@ -56,15 +56,14 @@ int main(int argc,char *argv[])
 
     q.submit([&] (handler &h) {
       accessor D_a(Buf_a,h);
-      accessor D_b(Buf_b,h);
-      accessor D_Fn(Buf_Fn,h);
 
-      h.parallel_for(range<2>(msize-2,nsize-2), [=](auto index){
-	auto row = index.get_id(0) + 1;
-	auto col = index.get_id(1) + 1;
-
-	D_a[row][col] = 1.;
-      });
+      h.parallel_for
+	(range<2>(msize-2,nsize-2),
+	 [=](auto index){
+	   auto row = index.get_id(0) + 1;
+	   auto col = index.get_id(1) + 1;
+	   D_a[row][col] = 1.;
+	 });
     }).wait();
 
     using myclock = std::chrono::steady_clock;
