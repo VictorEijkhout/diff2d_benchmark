@@ -15,7 +15,7 @@
 using std::unique_ptr,std::make_unique;
 
 #include "omp.h"
-#include "../lib/oned.hpp"
+#include "../lib/clps.hpp"
 #include "../lib/options.hpp"
 
 using real = float;
