@@ -1,7 +1,7 @@
 #!/bin/bash
 ################################################################
 ####
-#### Compare programming paradigms
+#### Compare programming paradigms on Sapphire Rapids
 ####
 ################################################################
 
@@ -14,7 +14,7 @@ function usage () {
 gitadd=0
 srun=
 trace=
-codes=span,kokkos,sycl
+codes=oned,clps,kokkos,span,sycl
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then 
 	usage && exit 1
@@ -44,8 +44,8 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
 	      cmdline="" \
 	  ; fi \
        && cmdline="$cmdline \
-	    make run_scaling NSIZE=20000 GITADD=${gitadd} \
-	      TACC_SYSTEM=spr \
+	    make run_scaling NSIZE=25000 GITADD=${gitadd} \
+	      TACC_SYSTEM=spr-${TACC_FAMILY_COMPILER} \
 	      THREADSYSTEM=$( \
 	        if [ \"${code}\" = \"sycl\" ] ; then echo dpcpp ; else echo omp ; fi ) \
 	      $( if [ ! -z \"${trace}\" ] ; then echo "ECHO=1 D2D_OPTIONS=--trace" ; fi ) \
