@@ -45,7 +45,7 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
 	  ; fi \
        && cmdline="$cmdline \
 	    make run_scaling NSIZE=25000 GITADD=${gitadd} \
-	      TACC_SYSTEM=spr-${TACC_FAMILY_COMPILER} \
+	      TACC_SYSTEM=spr \
 	      THREADSYSTEM=$( \
 	        if [ \"${code}\" = \"sycl\" ] ; then echo dpcpp ; else echo omp ; fi ) \
 	      $( if [ ! -z \"${trace}\" ] ; then echo "ECHO=1 D2D_OPTIONS=--trace" ; fi ) \
