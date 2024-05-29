@@ -60,7 +60,6 @@ int main(int argc,char *argv[])
     //codesnippet syclbufaccess
     q.submit([&] (handler &h) {
       accessor D_a(Buf_a,h);
-    //codesnippet end
 
       h.parallel_for
 	(range<2>(msize-2,nsize-2),
@@ -70,6 +69,7 @@ int main(int argc,char *argv[])
 	   D_a[row][col] = 1.;
 	 });
     }).wait();
+    //codesnippet end
 
     using myclock = std::chrono::steady_clock;
     auto start_time = myclock::now();

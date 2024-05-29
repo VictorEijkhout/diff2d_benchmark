@@ -20,10 +20,10 @@ int main(int argc, char *argv[]) {
     //codesnippet kokkosbufcreate
     using MemSpace = Kokkos::HostSpace;
     using Layout = Kokkos::LayoutRight;
-    using ViewMatrixType = Kokkos::View<real**, Layout, MemSpace>;
-    ViewMatrixType x("x", msize,nsize );
+    using HostMatrixType = Kokkos::View<real**, Layout, MemSpace>;
+    HostMatrixType x("x", msize,nsize );
     //codesnippet end
-    ViewMatrixType Ax("Ax", msize,nsize);
+    HostMatrixType Ax("Ax", msize,nsize);
 
     // Initialize matrix with boundaries
 #if 0
