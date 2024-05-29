@@ -62,7 +62,8 @@ namespace linalg {
   void bordered_array_1d<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other =
+      dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
@@ -71,7 +72,7 @@ namespace linalg {
     for ( int64_t i=0; i<m; i++ )
       for ( int64_t j=0; j<n; j++ )
         out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
-    log_flops(m*n*1); log_bytes( sizeof(real)*m*n*3 );
+    log_flops(m*n*1); log_bytes( sizeof(real)*m*n*3 );//snippetskip
   };
   //codesnippet end
 

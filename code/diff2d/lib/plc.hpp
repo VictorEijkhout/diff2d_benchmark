@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** range.hpp : headers for range-based indexing for diff2d
+ **** plc.hpp : range policy based implementation
  ****
  ****************************************************************/
 

@@ -70,10 +70,12 @@ namespace linalg {
     //codesnippet d2dspan0
   private:
     real *_data{nullptr};
-    bool data_owned;
-    md::mdspan< real,md::dextents<std::int64_t,2> > 
-        cartesian_data;
+    md::mdspan<
+      real,
+      md::dextents<std::int64_t,2>
+              > cartesian_data;
     //codesnippet end
+    bool data_owned;
 
   protected:
     /*

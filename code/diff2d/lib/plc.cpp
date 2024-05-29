@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** linalg.cpp : bordered vector routines for omp
+ **** plc.cpp : range policy based implementation
  ****
  ****************************************************************/
 
