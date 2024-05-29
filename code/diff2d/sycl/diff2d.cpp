@@ -46,16 +46,21 @@ int main(int argc,char *argv[])
     std::cout << "Device : " << q.get_device().get_info<info::device::name>() << "\n";
     std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
 
+    //codesnippet syclbufcreate
     std::vector<real> Mat_A(msize*nsize,10.0);
+    buffer<real,2> Buf_a(Mat_A.data(),range<2>(msize,nsize));
+    //codesnippet end
+
     std::vector<real> Mat_Stencil(msize*nsize,0.0);
     real FNorm;
 
-    buffer<real,2> Buf_a(Mat_A.data(),range<2>(msize,nsize));
     buffer<real,2> Buf_b(Mat_Stencil.data(),range<2>(msize,nsize));
     buffer<real,1> Buf_Fn(&FNorm, range<1>(1));
 
+    //codesnippet syclbufaccess
     q.submit([&] (handler &h) {
       accessor D_a(Buf_a,h);
+    //codesnippet end
 
       h.parallel_for
 	(range<2>(msize-2,nsize-2),

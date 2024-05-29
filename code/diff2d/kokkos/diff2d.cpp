@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
   Kokkos::initialize(argc, argv);
   {
-    using MemSpace = Kokkos::HostSpace;  // Simplify to HostSpace for printing
+    using MemSpace = Kokkos::HostSpace;
     using Layout = Kokkos::LayoutRight;
 
     using ViewMatrixType = Kokkos::View<real**, Layout, MemSpace>;
