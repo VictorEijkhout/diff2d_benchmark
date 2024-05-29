@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 
   Kokkos::initialize(argc, argv);
   {
-    //codesnippet kokkosbuffercreate
+    //codesnippet kokkosbufcreate
     using MemSpace = Kokkos::HostSpace;
     using Layout = Kokkos::LayoutRight;
     using ViewMatrixType = Kokkos::View<real**, Layout, MemSpace>;
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
       if ( trace and procno==0 )
         std::cout << std::format("[{:>2}] y norm: {}\n",it,norm);
 
-      //codesnippet kokkosbufferaccess
+      //codesnippet kokkosbufaccess
       Kokkos::parallel_for
         ("Update x",
          Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
