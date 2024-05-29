@@ -17,11 +17,13 @@ int main(int argc, char *argv[]) {
 
   Kokkos::initialize(argc, argv);
   {
+    //codesnippet kokkosbuffercreate
     using MemSpace = Kokkos::HostSpace;
     using Layout = Kokkos::LayoutRight;
-
     using ViewMatrixType = Kokkos::View<real**, Layout, MemSpace>;
-    ViewMatrixType x("x", msize,nsize ), Ax("Ax", msize,nsize);
+    ViewMatrixType x("x", msize,nsize );
+    //codesnippet end
+    ViewMatrixType Ax("Ax", msize,nsize);
 
     // Initialize matrix with boundaries
 #if 0
@@ -29,20 +31,20 @@ int main(int argc, char *argv[]) {
       ("Initialize matrix",
        Kokkos::MDRangePolicy<Kokkos::Rank<2>>({0, 0}, {msize,nsize}),
        KOKKOS_LAMBDA(int i, int j) {
-	if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
-	  x(i, j) = 1.0;  // Interior
-	} else {
-	  x(i, j) = 0.0;  // Boundary
-	}
+        if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
+          x(i, j) = 1.0;  // Interior
+        } else {
+          x(i, j) = 0.0;  // Boundary
+        }
       });
 #else
     for (int i=0; i<msize; i++)
       for (int j=0; j<nsize; j++)
-	if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
-	  x(i, j) = 1.0;  // Interior
-	} else {
-	  x(i, j) = 0.0;  // Boundary
-	}
+        if (i > 0 && i < msize-1 && j > 0 && j < nsize-1) {
+          x(i, j) = 1.0;  // Interior
+        } else {
+          x(i, j) = 0.0;  // Boundary
+        }
 #endif
 
     Kokkos::View<real**, Kokkos::HostSpace> h_x = Kokkos::create_mirror_view(x);
@@ -55,33 +57,35 @@ int main(int argc, char *argv[]) {
 
     for (int it = 0; it<itcount; ++it) {
       Kokkos::parallel_for
-	("StencilApplication",
-	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1,nsize-1}),
-	 KOKKOS_LAMBDA(int i, int j) {
-	  Ax(i, j) = 4 * x(i, j) - x(i-1, j) - x(i+1, j) - x(i, j-1) - x(i, j+1);
-	});
+        ("StencilApplication",
+         Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1,nsize-1}),
+         KOKKOS_LAMBDA(int i, int j) {
+          Ax(i, j) = 4 * x(i, j) - x(i-1, j) - x(i+1, j) - x(i, j-1) - x(i, j+1);
+        });
 
       //Kokkos::deep_copy(h_Ax, Ax);
 
       // Compute and apply scaling
       real norm = 0.0;
       Kokkos::parallel_reduce
-	("Compute norm",
-	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
-	 KOKKOS_LAMBDA(int i, int j, real& update) {
-	  update += Ax(i, j) * Ax(i, j);
-	}, norm);
+        ("Compute norm",
+         Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
+         KOKKOS_LAMBDA(int i, int j, real& update) {
+          update += Ax(i, j) * Ax(i, j);
+        }, norm);
       norm = std::sqrt(norm);
 
       if ( trace and procno==0 )
-	std::cout << std::format("[{:>2}] y norm: {}\n",it,norm);
+        std::cout << std::format("[{:>2}] y norm: {}\n",it,norm);
 
+      //codesnippet kokkosbufferaccess
       Kokkos::parallel_for
-	("Update x",
-	 Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
-	 KOKKOS_LAMBDA(int i, int j) {
-	  x(i, j) = Ax(i, j) / norm;
-	});
+        ("Update x",
+         Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
+         KOKKOS_LAMBDA(int i, int j) {
+          x(i, j) = Ax(i, j) / norm;
+        });
+      //codesnippet end
       
       //Kokkos::deep_copy(h_x, x);
     }
