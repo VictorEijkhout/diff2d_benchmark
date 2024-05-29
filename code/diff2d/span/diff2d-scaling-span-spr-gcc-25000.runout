@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  23036 msec
+Time:  23109 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 11 threads ====
@@ -24,10 +24,10 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
-[ 2] y norm: 2.897532
-[ 3] y norm: 3.1975744
+[ 2] y norm: 2.8975317
+[ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:   2431 msec
+Time:   2333 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 22 threads ====
@@ -42,8 +42,8 @@ x norm: 19211.943
 [ 1] y norm: 2.2364159
 [ 2] y norm: 2.897688
 [ 3] y norm: 3.1974232
-[ 4] y norm: 3.3677886
-Time:   1263 msec
+[ 4] y norm: 3.367788
+Time:   1251 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 33 threads ====
@@ -59,7 +59,7 @@ x norm: 23529.729
 [ 2] y norm: 2.897677
 [ 3] y norm: 3.197384
 [ 4] y norm: 3.3678663
-Time:    831 msec
+Time:    816 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 44 threads ====
@@ -72,10 +72,10 @@ Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363734
-[ 2] y norm: 2.8977091
+[ 2] y norm: 2.897709
 [ 3] y norm: 3.1973436
-[ 4] y norm: 3.3679042
-Time:    625 msec
+[ 4] y norm: 3.367904
+Time:    618 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 56 threads ====
@@ -87,11 +87,11 @@ Threads:  56
 Vector size: 25000 x 25000
 x norm: 24999.994
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236359
-[ 2] y norm: 2.8977215
-[ 3] y norm: 3.1973445
-[ 4] y norm: 3.3679001
-Time:    493 msec
+[ 1] y norm: 2.2363586
+[ 2] y norm: 2.897722
+[ 3] y norm: 3.1973448
+[ 4] y norm: 3.3679004
+Time:    486 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 67 threads ====
@@ -103,11 +103,11 @@ Threads:  67
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363489
-[ 2] y norm: 2.8977191
-[ 3] y norm: 3.1973388
+[ 1] y norm: 2.236349
+[ 2] y norm: 2.897719
+[ 3] y norm: 3.1973386
 [ 4] y norm: 3.367933
-Time:    412 msec
+Time:    409 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 78 threads ====
@@ -120,10 +120,10 @@ Vector size: 25000 x 25000
 x norm: 25000.002
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363422
-[ 2] y norm: 2.897724
-[ 3] y norm: 3.1973443
+[ 2] y norm: 2.8977237
+[ 3] y norm: 3.1973445
 [ 4] y norm: 3.3679435
-Time:    376 msec
+Time:    375 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 89 threads ====
@@ -135,11 +135,11 @@ Threads:  89
 Vector size: 25000 x 25000
 x norm: 24999.99
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363381
-[ 2] y norm: 2.8977253
-[ 3] y norm: 3.1973367
-[ 4] y norm: 3.367957
-Time:    361 msec
+[ 1] y norm: 2.2363386
+[ 2] y norm: 2.8977258
+[ 3] y norm: 3.1973355
+[ 4] y norm: 3.3679569
+Time:    358 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 100 threads ====
@@ -151,11 +151,11 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363353
-[ 2] y norm: 2.8977256
-[ 3] y norm: 3.1973314
+[ 1] y norm: 2.236336
+[ 2] y norm: 2.8977258
+[ 3] y norm: 3.197332
 [ 4] y norm: 3.3679626
-Time:    367 msec
+Time:    372 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 112 threads ====
@@ -167,11 +167,11 @@ Threads: 112
 Vector size: 25000 x 25000
 x norm: 24999.992
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363331
+[ 1] y norm: 2.236334
 [ 2] y norm: 2.8977344
-[ 3] y norm: 3.1973286
-[ 4] y norm: 3.3679688
-Time:    379 msec
+[ 3] y norm: 3.1973264
+[ 4] y norm: 3.367969
+Time:    375 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ================ This type of run:
