@@ -41,7 +41,7 @@ namespace linalg {
     auto in = other.data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    #pragma omp parallel for
+    #pragma omp parallel for collapse(2)
     for ( int64_t i=0; i<m; i++ ) {
       for ( int64_t j=0; j<n; j++ ) {
         out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
@@ -62,7 +62,7 @@ namespace linalg {
     auto in = other.data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    #pragma omp parallel for 
+    #pragma omp parallel for collapse(2)
     for ( int64_t i=0; i<m; i++ )
       for ( int64_t j=0; j<n; j++ )
         out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
@@ -76,7 +76,7 @@ namespace linalg {
     auto out = this->data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    #pragma omp parallel for reduction(+:sum_of_squares)
+    #pragma omp parallel for collapse(2) reduction(+:sum_of_squares)
     for ( int64_t i=0; i<m; i++ )
       for ( int64_t j=0; j<n; j++ ) {
         auto v = out[ IINDEX(i,j) ];
@@ -92,7 +92,7 @@ namespace linalg {
     auto out = this->data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    #pragma omp parallel for 
+    #pragma omp parallel for collapse(2)
     for ( int64_t i=0; i<m; i++ )
       for ( int64_t j=0; j<n; j++ ) {
         auto ij = IINDEX(i,j);
