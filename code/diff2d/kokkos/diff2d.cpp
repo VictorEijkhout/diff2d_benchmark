@@ -67,12 +67,14 @@ int main(int argc, char *argv[]) {
 
       // Compute and apply scaling
       real norm = 0.0;
+      //codesnippet kokkosreduce
       Kokkos::parallel_reduce
         ("Compute norm",
          Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
          KOKKOS_LAMBDA(int i, int j, real& update) {
           update += Ax(i, j) * Ax(i, j);
         }, norm);
+      //codesnippet end
       norm = std::sqrt(norm);
 
       if ( trace and procno==0 )
