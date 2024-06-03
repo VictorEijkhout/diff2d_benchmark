@@ -18,6 +18,7 @@ VARIANTS = oned clps kokkos span sycl \
 # clps tile tbb 
 .PHONY: compile
 info ::
+	@echo "================ Program building"
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
 compile :
 	@for v in ${VARIANTS} ; do \
@@ -26,8 +27,26 @@ compile :
 	       && make --no-print-directory diff2d \
 	    ) \
 	; done 2>&1 | tee compile.log && echo "See: compile.log"
+
+.PHONY: cmake
+info ::
+	@echo "make cmake [ VARIANTS=.... ]"
+cmake :
+	@for v in ${VARIANTS} ; do \
+	  rm -rf build && mkdir build \
+	   && ( cd build \
+	     && cmake \
+	          -D CMAKE_VERBOSE_MAKEFILE=ON \
+	          -D MDSPAN_INC=${TACC_MDSPAN_INC} \
+	          -D CMAKE_INSTALL_PREFIX=../codes \
+	          ../$${v} \
+	     && make V=1 && make install \
+	      ) \
+	; done
+
 .PHONY: run_scaling
 info ::
+	@echo "================ Running"
 	@echo "run_scaling : big run across all variants"
 	@echo "    [ NSIZE= (default: ${NSIZE}) ]"
 	@echo "    [ GITADD= (1 to rename as runout and add to repo)"
@@ -45,5 +64,6 @@ run_scaling :
 
 include ../../makefiles/Make.clean
 clean :: recursive_clean
+	@rm -rf build
 MAKEFILESDIR := ../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .."

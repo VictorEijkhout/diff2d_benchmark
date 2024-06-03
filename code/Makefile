@@ -12,6 +12,10 @@
 info ::
 	@echo "Available targets:"
 
+info ::
+	@echo "================ Program building"
+	@echo "go into diff2d and make there"
+
 include ../makefiles/Make.clean
 clean :: recursive_clean
 MAKEFILESDIR := ../${MAKEFILESDIR}
