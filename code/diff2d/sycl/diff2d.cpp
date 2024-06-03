@@ -32,16 +32,18 @@ int main(int argc,char *argv[])
   /*
    * SYCL setup
    */
+    //codesnippet syclqueue
     queue q =
       [=] () -> queue {
-	if (gpu) {
-	  cout << "Selecting device GPU\n";
-	  return queue(gpu_selector_v);
-	} else {
-	  cout << "Selecting host CPU\n";
-	  return queue(cpu_selector_v);
-	}
+        if (gpu) {
+          cout << "Selecting device GPU\n";
+          return queue(gpu_selector_v);
+        } else {
+          cout << "Selecting host CPU\n";
+          return queue(cpu_selector_v);
+        }
       }();
+    //codesnippet syclqueue
 
     std::cout << "Device : " << q.get_device().get_info<info::device::name>() << "\n";
     std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
@@ -62,12 +64,12 @@ int main(int argc,char *argv[])
       accessor D_a(Buf_a,h,write_only);
 
       h.parallel_for
-	(range<2>(msize-2,nsize-2),
-	 [=](auto index){
-	   auto row = index.get_id(0) + 1;
-	   auto col = index.get_id(1) + 1;
-	   D_a[row][col] = 1.;
-	 });
+        (range<2>(msize-2,nsize-2),
+         [=](auto index){
+           auto row = index.get_id(0) + 1;
+           auto col = index.get_id(1) + 1;
+           D_a[row][col] = 1.;
+         });
     }).wait();
     //codesnippet end
 
@@ -98,20 +100,20 @@ int main(int argc,char *argv[])
 
       FNorm = std::sqrt(FNorm);
       if (trace)
-	std::cout << std::format("[{:>2}] y norm: {}\n",it,FNorm);
-	
+        std::cout << std::format("[{:>2}] y norm: {}\n",it,FNorm);
+        
       q.submit([&] (handler &h)
       {
-	accessor D_a(Buf_a,h);
-	accessor D_b(Buf_b,h);
-	accessor D_Fn(Buf_Fn,h);
+        accessor D_a(Buf_a,h);
+        accessor D_b(Buf_b,h);
+        accessor D_Fn(Buf_Fn,h);
 
-	h.parallel_for(range<2>(msize-2,nsize-2), [=](auto index){
-	  auto row = index.get_id(0) + 1;
-	  auto col = index.get_id(1) + 1;
+        h.parallel_for(range<2>(msize-2,nsize-2), [=](auto index){
+          auto row = index.get_id(0) + 1;
+          auto col = index.get_id(1) + 1;
 
-	  D_a[row][col] = (D_b[row-1][col-1]/D_Fn[0]);
-	});
+          D_a[row][col] = (D_b[row-1][col-1]/D_Fn[0]);
+        });
       }).wait();
 
     }
