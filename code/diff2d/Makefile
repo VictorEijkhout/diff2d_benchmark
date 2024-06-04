@@ -33,14 +33,17 @@ info ::
 	@echo "make cmake [ VARIANTS=.... ]"
 cmake :
 	@for v in ${VARIANTS} ; do \
-	  rm -rf build && mkdir build \
-	   && ( cd build \
-	     && cmake \
+	  rm -rf build $${v}/CMakeLists.txt \
+	   && mkdir -p build && ln cmake/CMakeLists.txt $${v}/ \
+	   && ( cd build  \
+	         && cmake \
+	          -D CMAKE_CXX_COMPILER=${TACC_CXX} \
 	          -D CMAKE_VERBOSE_MAKEFILE=ON \
+	          -D VARIANT=$${v} \
 	          -D MDSPAN_INC=${TACC_MDSPAN_INC} \
 	          -D CMAKE_INSTALL_PREFIX=../codes \
 	          ../$${v} \
-	     && make V=1 && make install \
+	         && make V=1 && make install \
 	      ) \
 	; done
 
@@ -65,5 +68,8 @@ run_scaling :
 include ../../makefiles/Make.clean
 clean :: recursive_clean
 	@rm -rf build
+	@for v in ${VARIANTS} ; do rm -f $${v}/CMakeLists.txt ; done
+total_clean ::
+	@rm -rf ./codes
 MAKEFILESDIR := ../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .."
