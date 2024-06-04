@@ -15,6 +15,9 @@ info ::
 # and we're not terribly interested
 VARIANTS = oned clps kokkos span sycl \
     seq
+.PHONY: variants
+variants: 
+	@echo ${VARIANTS}
 # clps tile tbb 
 .PHONY: compile
 info ::
@@ -71,7 +74,5 @@ include ../../makefiles/Make.clean
 clean :: recursive_clean
 	@rm -rf build
 	@for v in ${VARIANTS} ; do rm -f $${v}/CMakeLists.txt ; done
-total_clean ::
-	@rm -rf ./codes
 MAKEFILESDIR := ../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .."

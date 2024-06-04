@@ -3,7 +3,7 @@ if( NOT DEFINED VARIANT )
   message( FATAL_ERROR "\nYou need to set the VARIANT variable\n" )
 endif()
 
-project( diff2d_${VARIANT} VERSION 1.0 )
+project( ${VARIANT} VERSION 1.0 )
 message( STATUS "\n====   Building variant: ${PROJECT_NAME}" )
 
 add_executable( ${PROJECT_NAME} )
