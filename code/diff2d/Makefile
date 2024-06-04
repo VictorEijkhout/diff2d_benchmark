@@ -33,18 +33,20 @@ info ::
 	@echo "make cmake [ VARIANTS=.... ]"
 cmake :
 	@for v in ${VARIANTS} ; do \
-	  rm -rf build $${v}/CMakeLists.txt \
-	   && mkdir -p build && ln cmake/CMakeLists.txt $${v}/ \
-	   && ( cd build  \
+	  if [ -d "$${v}" ] ; then \
+	    rm -rf build $${v}/CMakeLists.txt \
+	     && mkdir -p build && ln cmake/CMakeLists.txt $${v}/ \
+	     && ( cd build  \
 	         && cmake \
 	          -D CMAKE_CXX_COMPILER=${TACC_CXX} \
 	          -D CMAKE_VERBOSE_MAKEFILE=ON \
 	          -D VARIANT=$${v} \
-	          -D MDSPAN_INC=${TACC_MDSPAN_INC} \
 	          -D CMAKE_INSTALL_PREFIX=../codes \
 	          ../$${v} \
 	         && make V=1 && make install \
 	      ) \
+	  ; else echo "No such variant: <<$$v>>" && exit 1 \
+	  ; fi \
 	; done
 
 .PHONY: run_scaling
