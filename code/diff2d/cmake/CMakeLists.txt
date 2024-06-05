@@ -45,9 +45,8 @@ message( STATUS "\n====   options handling" )
 # target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 # target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 
-find_package( PkgConfig REQUIRED )
-pkg_check_modules( OPTS REQUIRED cxxopts )
-target_include_directories( ${PROJECT_NAME} PRIVATE ${OPTS_INCLUDE_DIRS} )
+find_package( cxxopts REQUIRED )
+target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.cpp )
 
 ##
