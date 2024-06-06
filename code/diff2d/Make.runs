@@ -4,7 +4,7 @@
 ####
 #### This makefile is part of the source of 
 #### "Parallel Computing for Science and Engineering"
-#### by Victor Eijkhout, copyright 2013-2023
+#### by Victor Eijkhout, copyright 2013-2024
 ####
 #### make include file for diff2d scaling runs
 #### AT THE MOMENT ONLY FOR OPENMP
