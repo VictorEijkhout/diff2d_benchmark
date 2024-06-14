@@ -73,7 +73,8 @@ run_scaling :
 include ../../makefiles/Make.clean
 clean :: recursive_clean
 	@rm -rf build
-	@rm -rf r[0-9]*hs
+	@rm -rf r[0-9]*hs *.log
 	@for v in ${VARIANTS} ; do rm -f $${v}/CMakeLists.txt ; done
+	@cd codes && make --no-print-directory clean 
 MAKEFILESDIR := ../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .."
