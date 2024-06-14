@@ -49,7 +49,7 @@ int main(int argc,char *argv[])
     std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
 
     //codesnippet syclbufcreate
-    std::vector<real> Mat_A(msize*nsize,10.0);
+    std::vector<real> Mat_A(msize*nsize);
     buffer<real,2> Buf_a(Mat_A.data(),range<2>(msize,nsize));
     //codesnippet end
 
@@ -61,7 +61,7 @@ int main(int argc,char *argv[])
 
     //codesnippet syclbufaccess
     q.submit([&] (handler &h) {
-      accessor D_a(Buf_a,h);
+      accessor D_a(Buf_a,h,write_only);
 
       h.parallel_for
         (range<2>(msize-2,nsize-2),
@@ -81,25 +81,21 @@ int main(int argc,char *argv[])
       // Kernel to compute the 5pt stencil and simultaneously the L2Norm
       q.submit([&] (handler &h)
       {
-        accessor D_a(Buf_a,h);
-        accessor D_b(Buf_b,h);
-        //codesnippet syclreduct
-        auto D_Fn = reduction(Buf_Fn, h, std::plus<real>());
+	accessor D_a(Buf_a,h,read_only);
+	accessor D_b(Buf_b,h,write_only);
+	auto D_Fn = reduction(Buf_Fn, h, std::plus<real>());
 
-        h.parallel_for
-          (range<2>(msize-2,nsize-2), D_Fn,
-           [=](item<2> index, auto &sum){
-        //codesnippet end
-             auto row = index.get_id(0) + 1;
-             auto col = index.get_id(1) + 1;
+	h.parallel_for(range<2>(msize-2,nsize-2), D_Fn, [=](item<2> index, auto &sum){
+	  auto row = index.get_id(0) + 1;
+	  auto col = index.get_id(1) + 1;
 
-             real stencil_value =
-               4*D_a[row][col]
-               - D_a[row-1][col] - D_a[row+1][col]
-               - D_a[row][col-1] - D_a[row][col+1];
-             D_b[row-1][col-1] = stencil_value;
-             sum += (stencil_value * stencil_value);
-           });
+	  real stencil_value =
+	    4*D_a[row][col]
+	    - D_a[row-1][col] - D_a[row+1][col]
+	    - D_a[row][col-1] - D_a[row][col+1];
+	  D_b[row-1][col-1] = stencil_value;
+	  sum += (stencil_value * stencil_value);
+	});
       }).wait();
 
       FNorm = std::sqrt(FNorm);

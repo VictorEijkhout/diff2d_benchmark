@@ -15,6 +15,9 @@ info ::
 # and we're not terribly interested
 VARIANTS = oned clps kokkos span sycl \
     seq
+.PHONY: variants
+variants: 
+	@echo ${VARIANTS}
 # clps tile tbb 
 .PHONY: compile
 info ::
@@ -33,15 +36,20 @@ info ::
 	@echo "make cmake [ VARIANTS=.... ]"
 cmake :
 	@for v in ${VARIANTS} ; do \
-	  rm -rf build && mkdir build \
-	   && ( cd build \
-	     && cmake \
+	  if [ -d "$${v}" ] ; then \
+	    rm -rf build $${v}/CMakeLists.txt \
+	     && mkdir -p build && ln cmake/CMakeLists.txt $${v}/ \
+	     && ( cd build  \
+	         && cmake \
+	          -D CMAKE_CXX_COMPILER=${TACC_CXX} \
 	          -D CMAKE_VERBOSE_MAKEFILE=ON \
-	          -D MDSPAN_INC=${TACC_MDSPAN_INC} \
+	          -D VARIANT=$${v} \
 	          -D CMAKE_INSTALL_PREFIX=../codes \
 	          ../$${v} \
-	     && make V=1 && make install \
+	         && make V=1 && make install \
 	      ) \
+	  ; else echo "No such variant: <<$$v>>" && exit 1 \
+	  ; fi \
 	; done
 
 .PHONY: run_scaling
@@ -65,5 +73,7 @@ run_scaling :
 include ../../makefiles/Make.clean
 clean :: recursive_clean
 	@rm -rf build
+	@rm -rf r[0-9]*hs
+	@for v in ${VARIANTS} ; do rm -f $${v}/CMakeLists.txt ; done
 MAKEFILESDIR := ../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .."

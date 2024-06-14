@@ -1,20 +1,21 @@
 #!/bin/bash
 ################################################################
 ####
-#### Compare programming paradigms on Sapphire Rapids
+#### Compare programming paradigms on one chip
 ####
 ################################################################
 
 function usage () {
     echo "Usage: $0 [ -c c1,c2,c3 (default: ${codes}) ] }"
     echo "    [ -g (git add ) ] [ -s (prepend srun) ]"
-    echo "    [ -t (trace) ] "
+    echo "    [ -q queue (default: ${queue}) ] [ -t (trace) ] "
 }
 
 gitadd=0
 srun=
 trace=
 codes=oned,clps,kokkos,span,sycl
+queue=spr
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then 
 	usage && exit 1
@@ -22,6 +23,8 @@ while [ $# -gt 0 ] ; do
 	shift && codes=$1 && shift
     elif [ $1 = "-g" ] ; then 
 	gitadd=1 && shift
+    elif [ $1 = "-q" ] ; then
+	shift && queue=$1 && shift
     elif [ $1 = "-s" ] ; then 
 	srun=1 && shift
     elif [ $1 = "-t" ] ; then
@@ -31,7 +34,6 @@ while [ $# -gt 0 ] ; do
     fi
 done
 
-queue=spr
 for code in $( echo $codes | tr ',' ' ' ) ; do
     cpus=112
     mask=$( python3 maskgen.py ${cpus} 1 )
