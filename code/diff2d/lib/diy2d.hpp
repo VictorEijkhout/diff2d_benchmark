@@ -35,31 +35,38 @@ namespace linalg {
     void set( real value,bool trace=false ) override;
     void set_bc(bool down, bool right, bool trace=false) override;
     void view( std::string="" ) override;
-  };
 
-  /*
-   * Iterator class
-   */
-  class twod_iterator {
-  private: 
-    std::int64_t m, n; int b;
-    std::int64_t i{0}, j{0}; 
-  public:
-    two_iterator( std::int64_t m, std::int64_t n,int b ) 
-      : m(m),n(n),b(b) {};
-    auto& begin() { return *this; };
-    auto& end() { i=m; j=0; return *this; };
-    bool operator!=( const two_iterator& other ) const {
-      return this->j!=other->j or this->i!=other->i; };
-    std::int64_t operator*() const {
-      return (i+b)*(m+2*b) + (j+b); };
-    auto& operator++( int ) {
-      j++; i+= (j/m); j = j%m; return *this; };
+    /*
+     * Iterator class
+     */
+    class twod_iterator {
+    private: 
+      std::int64_t m, n; int b;
+      std::int64_t i{0}, j{0}; 
+    public:
+      twod_iterator( std::int64_t m, std::int64_t n,int b ) 
+	: m(m),n(n),b(b) {};
+      auto& begin() { return *this; };
+      auto& end() { i=m; j=0; return *this; };
+      bool operator!=( const twod_iterator& other ) const {
+	return this->j!=other.j or this->i!=other.i; };
+      auto operator*() const {
+	return std::make_pair( (i+b), (j+b) ); };
+      auto& operator++(  ) {
+	j++; i+= (j/m); j = j%m; return *this; };
+      auto operator+( std::int64_t dist ) const {
+	auto displaced(*this);
+	auto lin = ( i*m+j ) + dist;
+	displaced.i = lin/m; displaced.j = lin%m; 
+	return displaced;
+      };
+      std::int64_t operator-( const twod_iterator& other ) const {
+	return (i-other.i)*m + (j-other.j); }
+    };
+    auto inner_diy() {
+      return twod_iterator(this->m(),this->n(),this->border());
+    };
   };
-  auto inner() override {
-    return twod_iterator(this->m(),this->n(),this->border());
-  };
-
 };
 
 #endif

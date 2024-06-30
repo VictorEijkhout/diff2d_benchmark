@@ -112,7 +112,7 @@ namespace linalg {
      * \todo we really want cbegin / cend but not yet available
      */
     //codesnippet d2dinner
-    virtual auto inner() {
+    auto inner() {
       const auto& s = data2d();
       int b = this->border();
       std::int64_t
