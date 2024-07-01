@@ -1,46 +1,22 @@
 ==== Run diff2d on 1 threads ====
-Execute program diff2d cores 1
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 40000 -n 40000 -i 5 
-Time:  28393 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 5 threads ====
-Execute program diff2d cores 5
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=5 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   6592 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 11 threads ====
-Execute program diff2d cores 11
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   3678 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 16 threads ====
-Execute program diff2d cores 16
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=16 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   3180 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 22 threads ====
-Execute program diff2d cores 22
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   2906 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 28 threads ====
-Execute program diff2d cores 28
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=28 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   2861 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 33 threads ====
-Execute program diff2d cores 33
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   2818 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 39 threads ====
-Execute program diff2d cores 39
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=39 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   2902 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 44 threads ====
-Execute program diff2d cores 44
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   3046 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 50 threads ====
-Execute program diff2d cores 50
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=50 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   3033 msec
+Could not find executable PROGRAM=diff2d
 ==== Run diff2d on 56 threads ====
-Execute program diff2d cores 56
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 40000 -n 40000 -i 5 
-Time:   3233 msec
-================ This type of run:
-Kokkos version using 2D loop
+Could not find executable PROGRAM=diff2d
