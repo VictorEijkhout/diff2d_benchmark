@@ -66,6 +66,7 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
        && cmdline="$cmdline \
 	    make run_scaling NSIZE=${nsize} GITADD=${gitadd} \
 	      TACC_SYSTEM=${cpu} \
+	      CATEGORY=${code} \
 	      THREADSYSTEM=$( \
 	        if [ \"${code}\" = \"sycl\" ] ; then echo dpcpp ; else echo omp ; fi ) \
 	      $( if [ ! -z \"${trace}\" ] ; then echo "ECHO=1 D2D_OPTIONS=--trace" ; fi ) \
