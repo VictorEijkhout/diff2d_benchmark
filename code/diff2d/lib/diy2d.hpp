@@ -64,6 +64,12 @@ namespace linalg {
           displaced.i = lin/m; displaced.j = lin%m; 
           return displaced;
         };
+	// gcc needs +=, intel only +
+        auto& operator+=( std::int64_t dist ) {
+          auto lin = ( i*m+j ) + dist;
+	  i = lin/m; j = lin%m; 
+          return *this;
+        };
         std::int64_t operator-( const cartesian_iterator& other ) const {
           return (i-other.i)*m + (j-other.j); }
       };
