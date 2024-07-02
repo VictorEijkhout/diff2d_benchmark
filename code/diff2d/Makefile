@@ -30,6 +30,7 @@ compile :
 	       && make --no-print-directory diff2d \
 	    ) \
 	; done 2>&1 | tee compile.log && echo "See: compile.log"
+	ls -l $$( for v in ${VARIANTS} ; do echo $$v/diff2d ; done )
 
 .PHONY: cmake
 info ::
