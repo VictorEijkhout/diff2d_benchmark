@@ -1,22 +1,35 @@
 ==== Run diff2d on 1 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 1
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=1 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 5 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 5
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=5 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 11 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 11
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=11 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 16 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 16
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=16 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 22 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 22
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=22 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 28 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 28
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=28 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 33 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 33
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=33 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 39 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 39
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=39 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 44 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 44
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=44 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 50 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 50
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=50 ./diff2d -m 40000 -n 40000 -i 5 --trace
 ==== Run diff2d on 56 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 56
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=56 ./diff2d -m 40000 -n 40000 -i 5 --trace
+================ This type of run:
+SYCL version using 2D loop
