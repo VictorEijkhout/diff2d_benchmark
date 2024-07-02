@@ -54,20 +54,21 @@ namespace linalg {
         bool operator==( const cartesian_iterator& other ) const {
           return this->j==other.j and this->i==other.i; };
         auto operator*() const {
-          // std::cout << std::format("deref {},{}\n",i,j);
           return std::make_pair( (i+b), (j+b) ); };
+        //codesnippet d2ddiyiter
         auto& operator++(  ) {
           j++; i+= (j/m); j = j%m; return *this; };
+        //codesnippet end
         auto operator+( std::int64_t dist ) const {
           auto displaced(*this);
           auto lin = ( i*m+j ) + dist;
           displaced.i = lin/m; displaced.j = lin%m; 
           return displaced;
         };
-	// gcc needs +=, intel only +
+        // gcc needs +=, intel only +
         auto& operator+=( std::int64_t dist ) {
           auto lin = ( i*m+j ) + dist;
-	  i = lin/m; j = lin%m; 
+          i = lin/m; j = lin%m; 
           return *this;
         };
         std::int64_t operator-( const cartesian_iterator& other ) const {
