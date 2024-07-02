@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  82747 msec
+Time:  82751 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 11 threads ====
@@ -27,7 +27,7 @@ x norm: 13584.8955
 [ 2] y norm: 2.897532
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675358
-Time:   7720 msec
+Time:   7716 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 22 threads ====
@@ -43,7 +43,7 @@ x norm: 19211.943
 [ 2] y norm: 2.897688
 [ 3] y norm: 3.197423
 [ 4] y norm: 3.3677886
-Time:   3874 msec
+Time:   3876 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 33 threads ====
@@ -59,7 +59,7 @@ x norm: 23529.729
 [ 2] y norm: 2.8976772
 [ 3] y norm: 3.1973839
 [ 4] y norm: 3.367866
-Time:   2649 msec
+Time:   2609 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 44 threads ====
@@ -75,7 +75,7 @@ x norm: 25000
 [ 2] y norm: 2.8977087
 [ 3] y norm: 3.1973436
 [ 4] y norm: 3.3679037
-Time:   2007 msec
+Time:   2010 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 56 threads ====
@@ -91,7 +91,7 @@ x norm: 25000
 [ 2] y norm: 2.897722
 [ 3] y norm: 3.1973445
 [ 4] y norm: 3.3679004
-Time:   1587 msec
+Time:   1574 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 67 threads ====
@@ -107,7 +107,7 @@ x norm: 25000
 [ 2] y norm: 2.897719
 [ 3] y norm: 3.1973388
 [ 4] y norm: 3.367935
-Time:   1383 msec
+Time:   1322 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 78 threads ====
@@ -123,7 +123,7 @@ x norm: 25000
 [ 2] y norm: 2.8977227
 [ 3] y norm: 3.1973443
 [ 4] y norm: 3.3679435
-Time:   1156 msec
+Time:   1147 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 89 threads ====
@@ -139,7 +139,7 @@ x norm: 25000
 [ 2] y norm: 2.8977246
 [ 3] y norm: 3.1973372
 [ 4] y norm: 3.367957
-Time:   1015 msec
+Time:   1013 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 100 threads ====
@@ -155,7 +155,7 @@ x norm: 25000
 [ 2] y norm: 2.8977263
 [ 3] y norm: 3.1973321
 [ 4] y norm: 3.3679633
-Time:    909 msec
+Time:    944 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run diff2d on 112 threads ====
@@ -171,7 +171,7 @@ x norm: 25000
 [ 2] y norm: 2.8977337
 [ 3] y norm: 3.1973267
 [ 4] y norm: 3.3679688
-Time:    820 msec
+Time:    813 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ================ This type of run:
