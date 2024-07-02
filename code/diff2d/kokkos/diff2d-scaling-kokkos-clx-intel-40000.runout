@@ -1,22 +1,101 @@
 ==== Run diff2d on 1 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.232993
+[ 2] y norm: 2.9048743
+[ 3] y norm: 3.1942296
+[ 4] y norm: 3.3656197
+Time:  28400 msec
 ==== Run diff2d on 5 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 5
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=5 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.23584
+[ 2] y norm: 2.8983703
+[ 3] y norm: 3.1953745
+[ 4] y norm: 3.371015
+Time:   6581 msec
 ==== Run diff2d on 11 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 11
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.2356179
+[ 2] y norm: 2.8985448
+[ 3] y norm: 3.196529
+[ 4] y norm: 3.3701475
+Time:   3668 msec
 ==== Run diff2d on 16 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 16
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=16 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.2355757
+[ 2] y norm: 2.8987775
+[ 3] y norm: 3.1965756
+[ 4] y norm: 3.3688517
+Time:   3185 msec
 ==== Run diff2d on 22 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 22
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.235556
+[ 2] y norm: 2.8987827
+[ 3] y norm: 3.1966183
+[ 4] y norm: 3.3688896
+Time:   2918 msec
 ==== Run diff2d on 28 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 28
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=28 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.235554
+[ 2] y norm: 2.8987854
+[ 3] y norm: 3.1966276
+[ 4] y norm: 3.36902
+Time:   2865 msec
 ==== Run diff2d on 33 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.2355542
+[ 2] y norm: 2.8987918
+[ 3] y norm: 3.1966224
+[ 4] y norm: 3.3690045
+Time:   2836 msec
 ==== Run diff2d on 39 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 39
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=39 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.235558
+[ 2] y norm: 2.8987947
+[ 3] y norm: 3.1966016
+[ 4] y norm: 3.3689816
+Time:   2924 msec
 ==== Run diff2d on 44 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 44
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.235555
+[ 2] y norm: 2.898798
+[ 3] y norm: 3.1966033
+[ 4] y norm: 3.3689642
+Time:   2997 msec
 ==== Run diff2d on 50 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 50
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=50 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.2355516
+[ 2] y norm: 2.8987997
+[ 3] y norm: 3.1966126
+[ 4] y norm: 3.3689458
+Time:   3019 msec
 ==== Run diff2d on 56 threads ====
-Could not find executable PROGRAM=diff2d
+Execute program diff2d cores 56
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 40000 -n 40000 -i 5 --trace
+[ 0] y norm: 400
+[ 1] y norm: 2.2355447
+[ 2] y norm: 2.8988216
+[ 3] y norm: 3.1966221
+[ 4] y norm: 3.3689039
+Time:   3023 msec
+================ This type of run:
+Kokkos version using 2D loop
