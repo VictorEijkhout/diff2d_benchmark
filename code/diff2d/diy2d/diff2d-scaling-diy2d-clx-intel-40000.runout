@@ -11,7 +11,7 @@ x norm: 11585.237
 [ 2] y norm: 2.898207
 [ 3] y norm: 3.198088
 [ 4] y norm: 3.3648713
-Time:  89232 msec
+Time:  89252 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 5 threads ====
@@ -27,7 +27,7 @@ x norm: 25905.379
 [ 2] y norm: 2.8983412
 [ 3] y norm: 3.1966453
 [ 4] y norm: 3.367872
-Time:  18571 msec
+Time:  18695 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 11 threads ====
@@ -43,7 +43,7 @@ x norm: 38423.887
 [ 2] y norm: 2.8985221
 [ 3] y norm: 3.196578
 [ 4] y norm: 3.367732
-Time:   8658 msec
+Time:   8673 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 16 threads ====
@@ -59,7 +59,7 @@ x norm: 40000
 [ 2] y norm: 2.8985317
 [ 3] y norm: 3.1965544
 [ 4] y norm: 3.367699
-Time:   5934 msec
+Time:   5898 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 22 threads ====
@@ -75,7 +75,7 @@ x norm: 40000
 [ 2] y norm: 2.898516
 [ 3] y norm: 3.1965387
 [ 4] y norm: 3.3677313
-Time:   4272 msec
+Time:   4285 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 28 threads ====
@@ -91,7 +91,7 @@ x norm: 40000
 [ 2] y norm: 2.8985195
 [ 3] y norm: 3.1965196
 [ 4] y norm: 3.3677297
-Time:   3405 msec
+Time:   3402 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 33 threads ====
@@ -123,7 +123,7 @@ x norm: 40000
 [ 2] y norm: 2.8985226
 [ 3] y norm: 3.1965203
 [ 4] y norm: 3.3677154
-Time:   2691 msec
+Time:   2692 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 44 threads ====
@@ -139,7 +139,7 @@ x norm: 39999.996
 [ 2] y norm: 2.8985229
 [ 3] y norm: 3.1965165
 [ 4] y norm: 3.3677197
-Time:   2646 msec
+Time:   2622 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 50 threads ====
@@ -155,7 +155,7 @@ x norm: 40000
 [ 2] y norm: 2.898523
 [ 3] y norm: 3.1965063
 [ 4] y norm: 3.3677337
-Time:   2588 msec
+Time:   2592 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run diff2d on 56 threads ====
@@ -171,7 +171,7 @@ x norm: 39999.996
 [ 2] y norm: 2.898525
 [ 3] y norm: 3.1965148
 [ 4] y norm: 3.367717
-Time:   2565 msec
+Time:   2578 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ================ This type of run:
