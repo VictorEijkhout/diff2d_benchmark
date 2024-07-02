@@ -1,6 +1,6 @@
-include ../../../makefiles/Make.clean
+include ../../../../makefiles/Make.clean
 clean :: local_clean
 clean ::
 	@rm -f $$( make variants -f ../Makefile )
-MAKEFILESDIR := ../../${MAKEFILESDIR}
+MAKEFILESDIR := ../../../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .. .. "
