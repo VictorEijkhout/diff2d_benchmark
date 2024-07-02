@@ -6,23 +6,32 @@
 ################################################################
 
 function usage () {
-    echo "Usage: $0 [ -c c1,c2,c3 (default: ${codes}) ] }"
+    echo "Usage: $0 "
+    echo "    [ -c cpu ]"
+    echo "    [ -p 1123 (procs, default=${cores}) ]"
     echo "    [ -g (git add ) ] [ -s (prepend srun) ]"
     echo "    [ -q queue (default: ${queue}) ] [ -t (trace) ] "
+    echo "    c1,c2,c3 (from: ${allcodes} or \"all\" for all)"
 }
 
+cpu=cpu
+nsize=25000
+procs=112
 gitadd=0
 srun=
 trace=
-codes=oned,clps,kokkos,span,sycl
 queue=spr
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then 
 	usage && exit 1
     elif [ $1 = "-c" ] ; then 
-	shift && codes=$1 && shift
+	shift && cpu=$1 && shift
     elif [ $1 = "-g" ] ; then 
 	gitadd=1 && shift
+    elif [ $1 = "-n" ] ; then
+	shift && nsize=$1 && shift
+    elif [ $1 = "-p" ] ; then
+	shift && procs=$1 && shift
     elif [ $1 = "-q" ] ; then
 	shift && queue=$1 && shift
     elif [ $1 = "-s" ] ; then 
@@ -30,14 +39,23 @@ while [ $# -gt 0 ] ; do
     elif [ $1 = "-t" ] ; then
 	 trace=1 && shift
     else
-	echo "Undefined option: $1" && exit 1
+	break
     fi
 done
+codes=$1
+if [ ${codes} = "all" ] ; then
+    codes=oned,clps,kokkos,span,sycl,diy2d
+fi
+
+echo "================ Testing codes: ${codes}"
+echo " problem size $nsize"
+echo " using $procs cores"
+echo " cpu designation: $cpu"
+echo " queue $queue"
 
 for code in $( echo $codes | tr ',' ' ' ) ; do
-    cpus=112
-    mask=$( python3 maskgen.py ${cpus} 1 )
-    echo && echo "================ submit to queue=$queue, proc code=$code" && echo
+    mask=$( python3 ../utils/maskgen.py ${procs} 1 )
+    echo && echo "================ submit diff2d code=$code" && echo
     ( cd ${code} \
        && if [ "${srun}" = "1" ] ; then \
 	     cmdline="srun -p $queue -t 0:30:0 -N 1 -n 1 -A A-ccsc \
@@ -46,8 +64,8 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
 	      cmdline="" \
 	  ; fi \
        && cmdline="$cmdline \
-	    make run_scaling NSIZE=25000 GITADD=${gitadd} \
-	      TACC_SYSTEM=spr \
+	    make run_scaling NSIZE=${nsize} GITADD=${gitadd} \
+	      TACC_SYSTEM=${cpu} \
 	      THREADSYSTEM=$( \
 	        if [ \"${code}\" = \"sycl\" ] ; then echo dpcpp ; else echo omp ; fi ) \
 	      $( if [ ! -z \"${trace}\" ] ; then echo "ECHO=1 D2D_OPTIONS=--trace" ; fi ) \

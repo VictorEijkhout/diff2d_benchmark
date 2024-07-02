@@ -47,11 +47,19 @@ run_scaling :
 	       && tbblib=$${tbblib##-L} \
 	       && export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$${tbblib} \
 	    ; fi \
+	 \
+	 && echo " .. result file name:" \
 	 && results=$$( make --no-print-directory scaling_logname \
 	                PROGRAM="diff2d" RUNOUTID=$${runoutid} ) \
+	 && echo "    $${results}" \
+	 \
+	 && echo " .. start scaling run: $${SCALING}" \
 	 && make --no-print-directory $${SCALING} PROGRAM=diff2d \
-	    ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" CATCHER= NDIV=10 \
+	    ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" \
+	    CATCHER= NDIV=10 \
 	    RUN_OPTIONS="-m ${NSIZE} -n ${NSIZE} -i 5 ${D2D_OPTIONS}" \
+	 \
+	 && echo " .. help info about this run type" \
 	 && cmdline="./diff2d -H" \
 	     && if [ "${MODE}" = "mpl" ] ; then cmdline="ibrun -n 1 $$cmdline" ; fi \
 	     && if [ "${ECHO}" = "1" ] ; then echo "cmdline=$$cmdline" ; fi \
