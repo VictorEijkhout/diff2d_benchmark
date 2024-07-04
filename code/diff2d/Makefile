@@ -13,7 +13,7 @@ info ::
 
 # list cxx last because that's sequential 
 # and we're not terribly interested
-VARIANTS = oned clps kokkos span sycl diy2d \
+VARIANTS = oned clps kokkos span sycl diy2d diy2e \
     seq
 .PHONY: variants
 variants: 
