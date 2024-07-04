@@ -8,7 +8,7 @@
 function usage () {
     echo "Usage: $0 "
     echo "    [ -c cpu ]"
-    echo "    [ -p 1123 (procs, default=${cores}) ]"
+    echo "    [ -n 123456 (default ${nsize}) ] [ -p 1123 (default=${cores}) ]"
     echo "    [ -g (git add ) ] [ -s (prepend srun) ]"
     echo "    [ -q queue (default: ${queue}) ] [ -t (trace) ] "
     echo "    c1,c2,c3 (from: ${allcodes} or \"all\" for all)"

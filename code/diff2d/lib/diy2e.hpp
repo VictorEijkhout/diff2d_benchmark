@@ -47,17 +47,26 @@ namespace linalg {
       private:
         std::int64_t m, n; int b; /* global domain description */
         std::int64_t i{0}, j{0};  /* local iteration point */
+	std::int64_t c{-1};
       public:
         cartesian_iterator\
             ( std::int64_t m, std::int64_t n, int b, std::int64_t i, std::int64_t j )
-              : m(m),n(n),b(b),i(i),j(j) {};
+              : m(m),n(n),b(b),i(i),j(j) { c=m; };
         bool operator==( const cartesian_iterator& other ) const {
           return this->j==other.j and this->i==other.i; };
         auto operator*() const {
           return std::make_pair( (i+b), (j+b) ); };
+        // auto& operator++(  ) {
+	//   std::cout << i << "," << j << "pp " << '\n';
+        //   j++; i+= (j/m); j = j%m; return *this; };
         //codesnippet d2ediyiter
         auto& operator++(  ) {
-          j++; i+= (j/m); j = j%m; return *this; };
+	  c--;
+          j++; j *= (c>0);
+	  i += (c==0);
+	  c += m*(c==0);
+	  return *this;
+	};
         //codesnippet end
         auto operator+( std::int64_t dist ) const {
           auto displaced(*this);
@@ -66,11 +75,12 @@ namespace linalg {
           return displaced;
         };
         // gcc needs +=, intel only +
-        auto& operator+=( std::int64_t dist ) {
-          auto lin = ( i*m+j ) + dist;
-          i = lin/m; j = lin%m; 
-          return *this;
-        };
+        // auto& operator+=( std::int64_t dist ) {
+	//   std::cout << dist << " " << '\n';
+	//   auto lin = ( i*m+j ) + dist;
+	//   i = lin/m; j = lin%m; 
+        //   return *this;
+        // };
         std::int64_t operator-( const cartesian_iterator& other ) const {
           return (i-other.i)*m + (j-other.j); }
       };
@@ -88,3 +98,32 @@ namespace linalg {
 };
 
 #endif
+
+#if 0
+        //codesnippet d2ediyiter
+        auto& operator++(  ) {
+	  c--;
+          j++; j *= (c>0);
+	  i += (c==0);
+	  c += m*(c==0);
+	  return *this;
+	};
+        //codesnippet end
+#endif
+
+#if 0
+	  if ( dist==1 ) {
+	    j++; auto t = (j==m); j *= t; i+=t;
+	  } else if (dist==m) {
+	    i++; j *= (i<n);
+	  } else {
+	    auto lin = ( i*m+j ) + dist;
+	    i = lin/m; j = lin%m; 
+	  }
+	  // attmempt1
+	  // while( dist>=m ) { i++; dist -= m; }
+	  // j += dist;
+	  // if (j>m) { i++; j -= m; }
+	  // if (i==n) j=0;
+#endif
+

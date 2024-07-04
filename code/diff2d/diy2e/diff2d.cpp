@@ -25,7 +25,7 @@ int main(int argc,char **argv) {
   auto [exit,msize,nsize,border,itcount,gpu,trace,view] =
     parse_options(argc,argv,"OpenMP over 1D index range with mdspan");
   if (exit) return 0;
-  const std::string prefix{"diy"};
+  const std::string prefix{"diz"};
   const int procno{0};
 
 #pragma omp parallel
