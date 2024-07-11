@@ -41,6 +41,7 @@ perf :
 	@if [ ! -f perf.data ] ; then \
 	    echo "No file perf.data found; first: perf record yourprogram" \
 	     && exit 1 ; fi
+	@perf annotate 
 	@perf report --stdio --percent-limit=1 \
 	    --fields=Overhead,Symbol ${PERF_OPTIONS} \
 	    2>/dev/null \
