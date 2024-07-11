@@ -14,6 +14,9 @@
 ##
 ## dependencies
 ##
+diff2d :: diff2d.o \
+    ../lib/${CATEGORY}.o ../lib/base.o ../lib/options.o
+	${LINKER} ${LINK_FLAGS} -o $@ $^
 EXTRA_OBJS = ../lib/${CATEGORY}.o ../lib/base.o ../lib/options.o
 EXTRA_OBJS_diff2d = ../lib/${CATEGORY}.o ../lib/base.o ../lib/options.o
 diff2d.o : ../main.cpp ../lib/options.hpp ../lib/${CATEGORY}.hpp ../lib/base.hpp
