@@ -19,22 +19,32 @@ ifeq "${PROF}" "1"
   EXTRA_LINK_FLAGS = -pg
 endif
 
+##
+## gprof
+##
 info ::
 	@echo "make profile : analyze gprof output"
 .PHONY: profile
 profile :
-	gprof diff2d gmon.out > diff2d.out
+	gprof -l diff2d gmon.out > diff2d.prof
 clean ::
-	@rm -f *.out perf.data*
-.PHONY: perf
+	@rm -f gmon.out diff2d.prof
+
+##
+## perf
+##
 info ::
 	@echo "make perf : analyze output of perf record"
 	@echo "    [ PERF_OPTIONS=... ]"
+.PHONY: perf
 perf :
 	@if [ ! -f perf.data ] ; then \
 	    echo "No file perf.data found; first: perf record yourprogram" \
 	     && exit 1 ; fi
+	@perf annotate 
 	@perf report --stdio --percent-limit=1 \
 	    --fields=Overhead,Symbol ${PERF_OPTIONS} \
 	    2>/dev/null \
 	 | awk '/Overhead/ {p=1} p==1 {print}' 
+clean ::
+	@rm -f perf.data*
