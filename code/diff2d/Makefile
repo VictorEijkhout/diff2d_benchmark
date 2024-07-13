@@ -84,9 +84,9 @@ run_scaling :
 ## do profiling on each
 ##
 info ::
-	echo "================ Profiling"
-	echo "run_gprof : gprof on variants"
-	echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "================ Profiling"
+	@echo "run_gprof : gprof on variants"
+	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
 .PHONY: run_gprof
 run_gprof :
 	@for v in ${VARIANTS} ; do \
@@ -104,9 +104,9 @@ run_gprof :
 ## do profiling on each
 ##
 info ::
-	echo "================ Profiling"
-	echo "run_perf : perf on variants"
-	echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "================ Profiling"
+	@echo "run_perf : perf on variants"
+	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
 .PHONY: run_perf
 run_perf :
 	@for v in ${VARIANTS} ; do \
