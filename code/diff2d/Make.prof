@@ -37,12 +37,13 @@ info ::
 	@echo "make perf : analyze output of perf record"
 	@echo "    [ PERF_OPTIONS=... ]"
 .PHONY: perf
+PERFDATA = perf.data
 perf :
-	@if [ ! -f perf.data ] ; then \
-	    echo "No file perf.data found; first: perf record yourprogram" \
+	@if [ ! -f "${PERFDATA}" ] ; then \
+	    echo "No data file ${PERFDATA} found; first: perf record yourprogram" \
 	     && exit 1 ; fi
-	@perf annotate 
-	@perf report --stdio --percent-limit=1 \
+	@## perf annotate 
+	@perf report --input="${PERFDATA}" --stdio --percent-limit=1 \
 	    --fields=Overhead,Symbol ${PERF_OPTIONS} \
 	    2>/dev/null \
 	 | awk '/Overhead/ {p=1} p==1 {print}' 

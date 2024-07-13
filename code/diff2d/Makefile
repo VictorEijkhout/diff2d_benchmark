@@ -111,10 +111,11 @@ info ::
 run_perf :
 	@for v in ${VARIANTS} ; do \
 	  ( cd $${v} \
+	     && perfdata=perf_$${v}_${TACC_FAMILY_COMPILER}.out \
 	     && rm -f diff2d && make --no-print-directory diff2d ECHO=${ECHO} \
-	     && perf record \
+	     && perf record --output=$${perfdata} \
 	            ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 -t \
-	     && make --no-print-directory perf \
+	     && make --no-print-directory perf PERDATA=$${perfdata} \
 	  ) \
 	; done
 ##           --call-graph fp --freq=max

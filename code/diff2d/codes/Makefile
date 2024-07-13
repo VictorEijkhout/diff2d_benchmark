@@ -1,6 +1,8 @@
 include ../../../../makefiles/Make.clean
-recursive_clean ::
-clean :: 
-	@rm -f $$( make --no-print-directory variants -f ../Makefile )
+recursive_clean :: localclean
+localclean :: 
+	@variants="$$( cd .. && make --no-print-directory variants )" \
+	 && echo " .. variants: $${variants}" >/dev/null \
+	 && rm -f $${variants}
 MAKEFILESDIR := ../../../${MAKEFILESDIR}
 MAKETRACESTRING := "${MAKETRACESTRING} .. .. .. "
