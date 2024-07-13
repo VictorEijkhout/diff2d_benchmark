@@ -75,3 +75,7 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
        && eval $cmdline \
 	)
 done
+for code in $( echo $codes | tr ',' ' ' ) ; do
+    ls -l ${code}/diff2d-scaling-*-${cpu}-${TACC_FAMILY_COMPILER}-${nsize}.*out
+done
+
