@@ -10,9 +10,9 @@ x norm: 24999.111
 [ 2] y norm: 2.898758
 [ 3] y norm: 3.1967068
 [ 4] y norm: 3.3692253
-Time:   5544 msec
-omp-BW: (estimated Gb/sec)    17.1
-omp-Flops:    5.41
+Time:   5530 msec
+omp-BW: (estimated Gb/sec)    17.2
+omp-Flops:    5.42
 ==== Run diff2d on 11 threads ====
 Execute program diff2d cores 11
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -25,9 +25,9 @@ x norm: 25000
 [ 2] y norm: 2.8985915
 [ 3] y norm: 3.196819
 [ 4] y norm: 3.3687003
-Time:    502 msec
-omp-BW: (estimated Gb/sec)     189
-omp-Flops:    59.8
+Time:    501 msec
+omp-BW: (estimated Gb/sec)     190
+omp-Flops:    59.9
 ==== Run diff2d on 22 threads ====
 Execute program diff2d cores 22
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -40,9 +40,9 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968098
 [ 4] y norm: 3.3687022
-Time:    253 msec
-omp-BW: (estimated Gb/sec)     375
-omp-Flops:     119
+Time:    254 msec
+omp-BW: (estimated Gb/sec)     374
+omp-Flops:     118
 ==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -70,9 +70,9 @@ x norm: 25000
 [ 2] y norm: 2.8985784
 [ 3] y norm: 3.1968105
 [ 4] y norm: 3.3686976
-Time:    128 msec
-omp-BW: (estimated Gb/sec)     742
-omp-Flops:     234
+Time:    129 msec
+omp-BW: (estimated Gb/sec)     736
+omp-Flops:     233
 ==== Run diff2d on 56 threads ====
 Execute program diff2d cores 56
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -85,9 +85,9 @@ x norm: 25000
 [ 2] y norm: 2.898576
 [ 3] y norm: 3.1968071
 [ 4] y norm: 3.3687072
-Time:    104 msec
-omp-BW: (estimated Gb/sec)     913
-omp-Flops:     288
+Time:    105 msec
+omp-BW: (estimated Gb/sec)     905
+omp-Flops:     286
 ==== Run diff2d on 67 threads ====
 Execute program diff2d cores 67
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -100,9 +100,9 @@ x norm: 25000
 [ 2] y norm: 2.898574
 [ 3] y norm: 3.1968043
 [ 4] y norm: 3.3687155
-Time:     89 msec
-omp-BW: (estimated Gb/sec) 1.07e+03
-omp-Flops:     337
+Time:     90 msec
+omp-BW: (estimated Gb/sec) 1.06e+03
+omp-Flops:     333
 ==== Run diff2d on 78 threads ====
 Execute program diff2d cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -115,9 +115,9 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.196802
 [ 4] y norm: 3.3687165
-Time:     79 msec
-omp-BW: (estimated Gb/sec) 1.2e+03
-omp-Flops:     380
+Time:     80 msec
+omp-BW: (estimated Gb/sec) 1.19e+03
+omp-Flops:     375
 ==== Run diff2d on 89 threads ====
 Execute program diff2d cores 89
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -130,9 +130,9 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:     68 msec
-omp-BW: (estimated Gb/sec) 1.4e+03
-omp-Flops:     441
+Time:     69 msec
+omp-BW: (estimated Gb/sec) 1.38e+03
+omp-Flops:     435
 ==== Run diff2d on 100 threads ====
 Execute program diff2d cores 100
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -145,9 +145,9 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:     63 msec
-omp-BW: (estimated Gb/sec) 1.51e+03
-omp-Flops:     476
+Time:     64 msec
+omp-BW: (estimated Gb/sec) 1.48e+03
+omp-Flops:     469
 ==== Run diff2d on 112 threads ====
 Execute program diff2d cores 112
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./diff2d -m 25000 -n 25000 -i 5 --trace
@@ -160,8 +160,8 @@ x norm: 25000
 [ 2] y norm: 2.898571
 [ 3] y norm: 3.1968057
 [ 4] y norm: 3.3687134
-Time:     63 msec
-omp-BW: (estimated Gb/sec) 1.51e+03
-omp-Flops:     476
+Time:     64 msec
+omp-BW: (estimated Gb/sec) 1.48e+03
+omp-Flops:     469
 ================ This type of run:
 OpenMP version using 2D loop
