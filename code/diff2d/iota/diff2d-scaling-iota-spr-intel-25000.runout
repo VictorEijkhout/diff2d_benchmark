@@ -11,7 +11,7 @@ x norm: 24999.111
 [ 2] y norm: 2.898758
 [ 3] y norm: 3.1967068
 [ 4] y norm: 3.3692253
-Time:  32048 msec
+Time:   5517 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 11 threads ====
@@ -27,7 +27,7 @@ x norm: 25000
 [ 2] y norm: 2.8985915
 [ 3] y norm: 3.196819
 [ 4] y norm: 3.3687003
-Time:   3187 msec
+Time:    825 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 22 threads ====
@@ -43,7 +43,7 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968098
 [ 4] y norm: 3.3687022
-Time:   1707 msec
+Time:    564 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 33 threads ====
@@ -59,7 +59,7 @@ x norm: 25000
 [ 2] y norm: 2.898581
 [ 3] y norm: 3.1968086
 [ 4] y norm: 3.3686988
-Time:   1176 msec
+Time:    429 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 44 threads ====
@@ -75,7 +75,7 @@ x norm: 25000
 [ 2] y norm: 2.8985784
 [ 3] y norm: 3.1968105
 [ 4] y norm: 3.3686976
-Time:    896 msec
+Time:    352 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 56 threads ====
@@ -91,7 +91,7 @@ x norm: 25000
 [ 2] y norm: 2.898576
 [ 3] y norm: 3.1968071
 [ 4] y norm: 3.3687072
-Time:    731 msec
+Time:    321 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 67 threads ====
@@ -107,7 +107,7 @@ x norm: 25000
 [ 2] y norm: 2.898574
 [ 3] y norm: 3.1968043
 [ 4] y norm: 3.3687155
-Time:    634 msec
+Time:    315 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 78 threads ====
@@ -123,7 +123,7 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.196802
 [ 4] y norm: 3.3687165
-Time:    573 msec
+Time:    324 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 89 threads ====
@@ -139,7 +139,7 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:    523 msec
+Time:    327 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 100 threads ====
@@ -155,7 +155,7 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:    490 msec
+Time:    342 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run diff2d on 112 threads ====
@@ -171,7 +171,7 @@ x norm: 25000
 [ 2] y norm: 2.898571
 [ 3] y norm: 3.1968057
 [ 4] y norm: 3.3687134
-Time:    501 msec
+Time:    359 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ================ This type of run:
