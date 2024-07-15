@@ -43,11 +43,10 @@ namespace linalg {
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for 
-    for ( auto ij : this->inner() ) {
-      auto [i,j] = ij;
-      out[ i,j ] = 4*in[ i,j ]
-	- in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
-    }
+    for ( auto i : this->inneri() )
+      for ( auto j : this->innerj() )
+	out[ i,j ] = 4*in[ i,j ]
+	  - in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
   };
   //codesnippet end
 

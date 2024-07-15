@@ -107,18 +107,54 @@ info ::
 	@echo "================ Profiling"
 	@echo "run_perf : perf on variants"
 	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "    [ NORUN= (nonzero for redisplay of perf output) ]"
+NORUN =
 .PHONY: run_perf
 run_perf :
 	@for v in ${VARIANTS} ; do \
 	  ( cd $${v} \
 	     && perfdata=perf_$${v}_${TACC_FAMILY_COMPILER}.out \
-	     && rm -f diff2d && make --no-print-directory diff2d ECHO=${ECHO} \
-	     && perf record --output=$${perfdata} \
-	            ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 -t \
+	     && if [ -z "${NORUN}" ] ; then \
+	          rm -f diff2d && make --no-print-directory diff2d ECHO=${ECHO} \
+	           && cmdline="perf record --output=$${perfdata} \
+	                 --call-graph fp \
+	                ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 -t" \
+	           && echo "perf cmdline: $$cmdline" && eval $$cmdline \
+	        ; fi \
 	     && make --no-print-directory perf PERDATA=$${perfdata} \
 	  ) \
 	; done
-##           --call-graph fp --freq=max
+clean ::
+	@rm -f */perf_*.out */perf.data*
+
+##
+## VTUNE profiling
+## here we loop over models,
+## do profiling on each
+##
+info ::
+	@echo "================ Profiling"
+	@echo "run_vtune : vtune on variants"
+	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "    [ NORUN= (nonzero for redisplay of vtune output) ]"
+NORUN =
+.PHONY: run_vtune
+run_vtune :
+	@for v in ${VARIANTS} ; do \
+	  ( cd $${v} \
+	     && vtunedata=vtune_$${v}_${TACC_FAMILY_COMPILER}.vt \
+	     && if [ -z "${NORUN}" ] ; then \
+	          rm -rf diff2d $${vtunedata} \
+	           && make --no-print-directory diff2d ECHO=${ECHO} \
+	           && cmdline="vtune -collect hotspots --result-dir=$${vtunedata} \
+	                ./diff2d -m ${NSIZE} -n ${NSIZE} -i 5 -t" \
+	           && echo "vtune cmdline: $$cmdline" && eval $$cmdline \
+	        ; fi \
+	     && make --no-print-directory vtune VTUNEDATA=$${vtunedata} \
+	  ) \
+	; done
+clean ::
+	@rm -rf r0*hs
 
 ##
 ## Clean

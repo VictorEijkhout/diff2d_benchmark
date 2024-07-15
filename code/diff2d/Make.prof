@@ -4,7 +4,7 @@
 ####
 #### This makefile is part of the source of 
 #### "Parallel Computing for Science and Engineering"
-#### by Victor Eijkhout, copyright 2013-2023
+#### by Victor Eijkhout, copyright 2013-2024
 ####
 #### make include file for diff2d profiling
 ####
@@ -42,10 +42,35 @@ perf :
 	@if [ ! -f "${PERFDATA}" ] ; then \
 	    echo "No data file ${PERFDATA} found; first: perf record yourprogram" \
 	     && exit 1 ; fi
-	@## perf annotate 
+	@perf annotate 
 	@perf report --input="${PERFDATA}" --stdio --percent-limit=1 \
 	    --fields=Overhead,Symbol ${PERF_OPTIONS} \
 	    2>/dev/null \
-	 | awk '/Overhead/ {p=1} p==1 {print}' 
+	 && echo
 clean ::
 	@rm -f perf.data*
+
+##
+## vtune
+##
+info ::
+	@echo "make vtune : analyze output of vtune collect"
+	@echo "    [ VTUNE_OPTIONS=... ]"
+## Available columns:
+## Function,CPU Time,CPU Time:Effective Time,CPU Time:Spin Time,CPU Time:Spin Time:Imbalance or Serial Spinning,CPU Time:Spin Time:Lock Contention,CPU Time:Spin Time:Other,CPU Time:Overhead Time,CPU Time:Overhead Time:Creation,CPU Time:Overhead Time:Scheduling,CPU Time:Overhead Time:Reduction,CPU Time:Overhead Time:Atomics,CPU Time:Overhead Time:Other,Function (Full)
+.PHONY: vtune
+VTUNEDATA = r000hs
+vtune :
+	@if [ ! -d "${VTUNEDATA}" ] ; then \
+	    echo "No data folder ${VTUNEDATA} found; first: vtune record yourprogram" \
+	     && exit 1 ; fi
+	@vtune -report hotspots -result-dir ${VTUNEDATA} \
+	    -report-knob show-issues=false \
+	    -format csv -csv-delimiter comma \
+	    -column "Function,CPU Time:Effective" \
+	 | awk --field-separator="," '{printf("%60s %7.5f\n", $$1 , $$2); }' \
+	    2>/dev/null \
+	 && echo
+clean ::
+	@rm -f vtune_*.vt
+

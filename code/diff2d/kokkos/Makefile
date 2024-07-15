@@ -29,17 +29,17 @@ include ../Make.depend
 ##
 ## compilation
 ##
+EXTRA_INCLUDES = \
+    -I${TACC_KOKKOS_INC} \
+    $$( pkg-config --cflags cxxopts ) 
+EXTRA_LIBS = \
+    -L${TACC_KOKKOS_LIB} -lkokkoscore
 include ../../../makefiles/Make.compile
 ifeq "${INTEL23}" "23"
   CPPSTANDARD = 2b
 else
   CPPSTANDARD = 23
 endif
-EXTRA_INCLUDES := \
-    -I${TACC_KOKKOS_INC} \
-    $$( pkg-config --cflags cxxopts ) 
-EXTRA_LIBS = \
-    -L${TACC_KOKKOS_LIB} -lkokkoscore
 
 ##
 ## profiling
