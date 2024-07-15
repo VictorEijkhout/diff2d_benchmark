@@ -10,7 +10,7 @@ x norm: 11585.237
 [ 2] y norm: 2.8978484
 [ 3] y norm: 3.1961644
 [ 4] y norm: 3.370536
-Time:  25208 msec
+Time:  25198 msec
 omp-BW: (estimated Gb/sec)    3.77
 omp-Flops:    1.19
 ==== Run diff2d on 11 threads ====
@@ -40,8 +40,8 @@ x norm: 24999.998
 [ 2] y norm: 2.8985593
 [ 3] y norm: 3.1968582
 [ 4] y norm: 3.3687148
-Time:   1147 msec
-omp-BW: (estimated Gb/sec)    82.8
+Time:   1146 msec
+omp-BW: (estimated Gb/sec)    82.9
 omp-Flops:    26.2
 ==== Run diff2d on 33 threads ====
 Execute program diff2d cores 33
@@ -55,8 +55,8 @@ x norm: 24999.998
 [ 2] y norm: 2.898569
 [ 3] y norm: 3.1968539
 [ 4] y norm: 3.3687165
-Time:    764 msec
-omp-BW: (estimated Gb/sec)     124
+Time:    763 msec
+omp-BW: (estimated Gb/sec)     125
 omp-Flops:    39.3
 ==== Run diff2d on 44 threads ====
 Execute program diff2d cores 44
