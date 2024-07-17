@@ -12,6 +12,7 @@
 #define LINALG_BASE_H
 
 #include <cstddef>
+using idxint = std::int64_t;
 
 #include <optional>
 #include <string>
@@ -47,20 +48,20 @@ namespace linalg {
     //codesnippet end
     friend class distributed_array<real>;
   protected:
-    std::int64_t _m{0},_n{0}; int _border{0}; 
+    idxint _m{0},_n{0}; int _border{0}; 
   public:
     virtual ~bordered_array_base() {
       if (data_owned) { delete[] _data; } };
     //codesnippet d2dbaseconstruct
-    bordered_array_base( std::int64_t m,std::int64_t n,int border );
+    bordered_array_base( idxint m,idxint n,int border );
     //codesnippet end
     //! We need the default constructor for the MPI version
     bordered_array_base() = default;
     // Constructor from data, only for the MPI gathered version
-    bordered_array_base( std::int64_t m,std::int64_t n,real *data );
-    std::tuple<std::int64_t,std::int64_t,int> outer_sizes() const {
+    bordered_array_base( idxint m,idxint n,real *data );
+    std::tuple<idxint,idxint,int> outer_sizes() const {
       return std::make_tuple(_m+2*_border,_n+2*_border,_border); };
-    std::tuple<std::int64_t,std::int64_t,int,std::int64_t,std::int64_t> inner_sizes() const {
+    std::tuple<idxint,idxint,int,idxint,idxint> inner_sizes() const {
       return std::make_tuple(_m,_n,_border,_m+2*_border,_n+2*_border); };
     inline auto m() const { return _m; };
     inline auto n() const { return _n; };
@@ -74,7 +75,7 @@ namespace linalg {
     real *_data{nullptr};
     md::mdspan<
       real,
-      md::dextents<std::int64_t,2>
+      md::dextents<idxint,2>
               > cartesian_data;
     //codesnippet end
     bool data_owned;
@@ -114,19 +115,19 @@ namespace linalg {
      * \todo we really want cbegin / cend but not yet available
      */
     mutable std::optional< decltype( rng::views::cartesian_product
-			     ( rng::views::iota(std::int64_t{0},std::int64_t{0}),
-			       rng::views::iota(std::int64_t{0},std::int64_t{0}) ) ) >
+			     ( rng::views::iota(idxint{0},idxint{0}),
+			       rng::views::iota(idxint{0},idxint{0}) ) ) >
             range2d = {};
     //codesnippet d2dinner
     auto inner() const {
       if (not range2d.has_value()) {
 	const auto& s = data2d();
 	int b = this->border();
-	std::int64_t
-	  lo_m = static_cast<std::int64_t>(b),
-	  hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-	  lo_n = static_cast<std::int64_t>(b),
-	  hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+	idxint
+	  lo_m = static_cast<idxint>(b),
+	  hi_m = static_cast<idxint>(s.extent(0)-b),
+	  lo_n = static_cast<idxint>(b),
+	  hi_n = static_cast<idxint>(s.extent(1)-b);
 	range2d = rng::views::cartesian_product
 	  ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
       }
@@ -134,33 +135,33 @@ namespace linalg {
     };
     //codesnippet end
 
-    mutable std::optional< decltype( rng::views::iota(std::int64_t{0},std::int64_t{0}) ) >
+    mutable std::optional< decltype( rng::views::iota(idxint{0},idxint{0}) ) >
             range2di = {};
     auto inneri() const {
       if (not range2di.has_value()) {
 	const auto& s = data2d();
 	int b = this->border();
-	std::int64_t
-	  lo_m = static_cast<std::int64_t>(b),
-	  hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-	  lo_n = static_cast<std::int64_t>(b),
-	  hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+	idxint
+	  lo_m = static_cast<idxint>(b),
+	  hi_m = static_cast<idxint>(s.extent(0)-b),
+	  lo_n = static_cast<idxint>(b),
+	  hi_n = static_cast<idxint>(s.extent(1)-b);
 	range2di = rng::views::iota(lo_m,hi_m);
       }
       return *range2di;
     };
 
-    mutable std::optional< decltype( rng::views::iota(std::int64_t{0},std::int64_t{0}) ) >
+    mutable std::optional< decltype( rng::views::iota(idxint{0},idxint{0}) ) >
             range2dj = {};
     auto innerj() const {
       if (not range2dj.has_value()) {
 	const auto& s = data2d();
 	int b = this->border();
-	std::int64_t
-	  lo_m = static_cast<std::int64_t>(b),
-	  hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-	  lo_n = static_cast<std::int64_t>(b),
-	  hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+	idxint
+	  lo_m = static_cast<idxint>(b),
+	  hi_m = static_cast<idxint>(s.extent(0)-b),
+	  lo_n = static_cast<idxint>(b),
+	  hi_n = static_cast<idxint>(s.extent(1)-b);
 	range2dj = rng::views::iota(lo_n,hi_n);
       }
       return *range2dj;
@@ -169,11 +170,11 @@ namespace linalg {
     auto inner_size() const {
       const auto& s = data2d();
       int b = this->border();
-      std::int64_t
-        lo_m = static_cast<std::int64_t>(b),
-        hi_m = static_cast<std::int64_t>(s.extent(0)-b),
-        lo_n = static_cast<std::int64_t>(b),
-        hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+      idxint
+        lo_m = static_cast<idxint>(b),
+        hi_m = static_cast<idxint>(s.extent(0)-b),
+        lo_n = static_cast<idxint>(b),
+        hi_n = static_cast<idxint>(s.extent(1)-b);
       return (hi_m-lo_m) * ( hi_n-lo_n);
     };
 
@@ -212,16 +213,16 @@ namespace linalg {
     inner_range( const bordered_array_base<real>& a ) : a(a) {};
     class iter {
     private:
-      std::int64_t lo_m,hi_m, lo_n,hi_n;
+      idxint lo_m,hi_m, lo_n,hi_n;
       int border;
-      std::int64_t n2b;
-      std::int64_t seek_i,seek_j;
+      idxint n2b;
+      idxint seek_i,seek_j;
     public:
-      using coordinate = std::pair<std::int64_t,std::int64_t>;
+      using coordinate = std::pair<idxint,idxint>;
       using iterator_category = std::random_access_iterator_tag;
       using value_type = coordinate;
-      using difference_type = std::int64_t; // std::ptrdiff_t; // integral type
-      using iter_difference_type = std::int64_t; // std::ptrdiff_t; // integral type
+      using difference_type = idxint; // std::ptrdiff_t; // integral type
+      using iter_difference_type = idxint; // std::ptrdiff_t; // integral type
 
       using pointer = coordinate*;
       using pointer_type = coordinate*;
@@ -229,8 +230,8 @@ namespace linalg {
       using reference_type  = coordinate&;
       // constructor
       iter() = default;
-      iter( std::int64_t lo_m,std::int64_t hi_m, std::int64_t lo_n,std::int64_t hi_n,
-            int border, std::int64_t n2b, std::int64_t seek_i,std::int64_t seek_j )
+      iter( idxint lo_m,idxint hi_m, idxint lo_n,idxint hi_n,
+            int border, idxint n2b, idxint seek_i,idxint seek_j )
         : lo_m(lo_m),hi_m(hi_m), lo_n(lo_n),hi_n(hi_n)
         , border(border), n2b(n2b)
         , seek_i(seek_i), seek_j(seek_j) {};
@@ -262,17 +263,17 @@ namespace linalg {
       auto operator++(int) { auto tmp(*this); ++(*this); return tmp; };
       auto operator--(int) { auto tmp(*this); --(*this); return tmp; };
 
-      std::int64_t operator-( const iter& other ) const {
+      idxint operator-( const iter& other ) const {
         auto lin1 = (seek_i-border) * ( hi_n-lo_n ) + seek_j-border;
         auto lin2 = (other.seek_i-other.border) * ( hi_n-lo_n ) + other.seek_j-other.border;
         return lin1-lin2; };
-      auto& operator+=( std::int64_t dist ) {
+      auto& operator+=( idxint dist ) {
         auto lines = dist / (hi_n-lo_n);
         auto pts = dist - lines*(hi_n-lo_n);
         seek_i += lines; seek_j += pts;
         if ( seek_j> hi_n ) { seek_i++; seek_j -= (hi_n-lo_n); };
         return *this; };
-      auto operator+( std::int64_t dist ) const {
+      auto operator+( idxint dist ) const {
         auto tmp(*this); tmp += dist; return tmp; };
 
     };
@@ -288,7 +289,7 @@ namespace linalg {
   };
 
   template< typename real >
-  auto operator+( std::int64_t dist,const typename inner_range<real>::iter& cur ) {
+  auto operator+( idxint dist,const typename inner_range<real>::iter& cur ) {
     return cur+dist; };
 
   // static_assert( std::input_iterator< inner_range<float>::iter > );

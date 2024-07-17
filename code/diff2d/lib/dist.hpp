@@ -45,7 +45,7 @@ namespace linalg {
 
     //codesnippet d2distarraydata
     //! orthogonal sizes of processor subdomains
-    std::vector<std::int64_t> proc_start_m,proc_start_n;
+    std::vector<idxint> proc_start_m,proc_start_n;
     std::map<char,int> neighbors;
     // temp array, just for the central difference routine. somewhat wasteful
     std::unique_ptr<bordered_array_base<real>> tmp{nullptr};
@@ -55,7 +55,7 @@ namespace linalg {
     distributed_array
         ( const mpl::cartesian_communicator&,size_t m,size_t n,int border,
 	  bool trace=false );
-    std::vector<std::int64_t> segmentize(std::int64_t m,int pm,bool trace=false);
+    std::vector<idxint> segmentize(idxint m,int pm,bool trace=false);
     void set_neighbors( bool=false );
     size_t global_n2b() const { return n_global+2*subdomain->border(); };
     std::tuple<size_t,size_t,int> outer_sizes() const {

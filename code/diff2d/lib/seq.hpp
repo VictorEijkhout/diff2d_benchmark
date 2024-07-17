@@ -28,8 +28,8 @@ namespace linalg {
     //codesnippet end
 
     // constructors
-    bordered_array_seq( int64_t m,int64_t n,int border );
-    bordered_array_seq( int64_t m,int64_t n,real *data )
+    bordered_array_seq( idxint m,idxint n,int border );
+    bordered_array_seq( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 
     // required functionality
@@ -44,7 +44,7 @@ namespace linalg {
      */
     
     //! convert linear ij interior to pair i,j in the global data
-    std::pair<int64_t,int64_t> split_i_j( int64_t ij ) {
+    std::pair<idxint,idxint> split_i_j( idxint ij ) {
       return std::make_pair( ij/this->n()+this->border(), ij%this->n()+this->border() );
     };
 

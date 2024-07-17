@@ -24,9 +24,9 @@ namespace linalg {
     using bordered_array_base<real>::log_bytes;
     //codesnippet end
 
-    bordered_array_range( size_t m,size_t n,int border )
+    bordered_array_range( idxint m,idxint n,int border )
       : bordered_array_base<real>(m,n,border) {};
-    bordered_array_range( size_t m,size_t n,real *data )
+    bordered_array_range( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 
     void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
