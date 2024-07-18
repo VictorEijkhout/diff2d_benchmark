@@ -114,22 +114,22 @@ namespace linalg {
      * \todo we should really use _m,_n instead of the extents
      * \todo we really want cbegin / cend but not yet available
      */
-    mutable std::optional< decltype( rng::views::cartesian_product
-			     ( rng::views::iota(idxint{0},idxint{0}),
-			       rng::views::iota(idxint{0},idxint{0}) ) ) >
-            range2d = {};
     //codesnippet d2dinner
+    mutable std::optional< decltype( rng::views::cartesian_product
+                             ( rng::views::iota(idxint{0},idxint{0}),
+                               rng::views::iota(idxint{0},idxint{0}) ) ) >
+            range2d = {};
     auto inner() const {
       if (not range2d.has_value()) {
-	const auto& s = data2d();
-	int b = this->border();
-	idxint
-	  lo_m = static_cast<idxint>(b),
-	  hi_m = static_cast<idxint>(s.extent(0)-b),
-	  lo_n = static_cast<idxint>(b),
-	  hi_n = static_cast<idxint>(s.extent(1)-b);
-	range2d = rng::views::cartesian_product
-	  ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
+        const auto& s = data2d();
+        int b = this->border();
+        idxint
+          lo_m = static_cast<idxint>(b),
+          hi_m = static_cast<idxint>(s.extent(0)-b),
+          lo_n = static_cast<idxint>(b),
+          hi_n = static_cast<idxint>(s.extent(1)-b);
+        range2d = rng::views::cartesian_product
+          ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
       }
       return *range2d;
     };
@@ -139,14 +139,14 @@ namespace linalg {
             range2di = {};
     auto inneri() const {
       if (not range2di.has_value()) {
-	const auto& s = data2d();
-	int b = this->border();
-	idxint
-	  lo_m = static_cast<idxint>(b),
-	  hi_m = static_cast<idxint>(s.extent(0)-b),
-	  lo_n = static_cast<idxint>(b),
-	  hi_n = static_cast<idxint>(s.extent(1)-b);
-	range2di = rng::views::iota(lo_m,hi_m);
+        const auto& s = data2d();
+        int b = this->border();
+        idxint
+          lo_m = static_cast<idxint>(b),
+          hi_m = static_cast<idxint>(s.extent(0)-b),
+          lo_n = static_cast<idxint>(b),
+          hi_n = static_cast<idxint>(s.extent(1)-b);
+        range2di = rng::views::iota(lo_m,hi_m);
       }
       return *range2di;
     };
@@ -155,14 +155,14 @@ namespace linalg {
             range2dj = {};
     auto innerj() const {
       if (not range2dj.has_value()) {
-	const auto& s = data2d();
-	int b = this->border();
-	idxint
-	  lo_m = static_cast<idxint>(b),
-	  hi_m = static_cast<idxint>(s.extent(0)-b),
-	  lo_n = static_cast<idxint>(b),
-	  hi_n = static_cast<idxint>(s.extent(1)-b);
-	range2dj = rng::views::iota(lo_n,hi_n);
+        const auto& s = data2d();
+        int b = this->border();
+        idxint
+          lo_m = static_cast<idxint>(b),
+          hi_m = static_cast<idxint>(s.extent(0)-b),
+          lo_n = static_cast<idxint>(b),
+          hi_n = static_cast<idxint>(s.extent(1)-b);
+        range2dj = rng::views::iota(lo_n,hi_n);
       }
       return *range2dj;
     };
