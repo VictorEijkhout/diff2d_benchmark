@@ -12,6 +12,7 @@
 #define LINALG_BASE_H
 
 #include <cstddef>
+#include <cstdint>
 using idxint = std::int64_t;
 
 #include <optional>
