@@ -1,5 +1,11 @@
 # Diff2d benchmark
 
+This is a benchmark for parallel computation of a "power method":
+stencil-based matrix-vector product, norm, scaling, and repeat that.
+
+So far there are C++ implementations based on OpenMP, Kokkos, Sycl, MPI.
+Contributed implemetations welcome.
+
 ## compilation
 
 Go into `code/diff2d` and use make or cmake:
