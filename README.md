@@ -8,6 +8,18 @@ Contributed implementations welcome.
 
 ## Compilation
 
+### Prerequisites
+
+This software uses the package [cxxopts](https://github.com/jarro2783/cxxopts)
+and [mdspan](https://github.com/kokkos/mdspan).
+
+If you want to install those yourself:
+
+ - add the `.pc` files from `cxxopts` to the `PKG_CONFIG_PATH`
+ - add the `mdspan` installation directory to the `CMAKE_PREFIX_PATH`.
+
+### Makefile compilation
+
 Go into `code/diff2d`. Calling `make` without arguments
 tells you all the make rules. For compilation use make or cmake:
 
@@ -15,7 +27,12 @@ tells you all the make rules. For compilation use make or cmake:
 make compile VARIANTS="seq oned"
 ```
 
-or
+Set the variable `TACC_MDSPAN_INC`
+to the location of the header files.
+
+### CMake compilation
+
+Go into `code/diff2d`. Drive the cmake installation with the makefile:
 
 ```
 make cmake VARIANTS="kokkos sycl"
@@ -38,3 +55,4 @@ cmake \
     -D MDSPAN_INC=${TACC_MDSPAN_INC}
 ```
 
+using of course your own actual installation path.
