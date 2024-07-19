@@ -4,11 +4,12 @@ This is a benchmark for parallel computation of a "power method":
 stencil-based matrix-vector product, norm, scaling, and repeat that.
 
 So far there are C++ implementations based on OpenMP, Kokkos, Sycl, MPI.
-Contributed implemetations welcome.
+Contributed implementations welcome.
 
-## compilation
+## Compilation
 
-Go into `code/diff2d` and use make or cmake:
+Go into `code/diff2d`. Calling `make` without arguments
+tells you all the make rules. For compilation use make or cmake:
 
 ```
 make compile VARIANTS="seq oned"
