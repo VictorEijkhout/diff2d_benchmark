@@ -24,6 +24,8 @@ info ::
 	@echo "================ Program building"
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
 compile :
+	@if [ ! -z "${VARIANT}" ] ; then \
+	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
 	@variants="$$( echo ${VARIANTS} | tr ',' ' ' )" \
 	 && for v in $$variants ; do \
 	    ( echo "Making variant $${v}" \
@@ -37,13 +39,15 @@ compile :
 info ::
 	@echo "make cmake [ VARIANTS=.... ]"
 cmake :
+	@if [ ! -z "${VARIANT}" ] ; then \
+	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
 	@for v in ${VARIANTS} ; do \
 	  if [ -d "$${v}" ] ; then \
 	    rm -rf build $${v}/CMakeLists.txt \
-	     && mkdir -p build && ln cmake/CMakeLists.txt $${v}/ \
+	     && mkdir -p build && ln cmake/CMakeLists.txt $${v}/CMakeLists.txt \
 	     && ( cd build  \
 	         && cmake \
-	          -D CMAKE_CXX_COMPILER=${TACC_CXX} \
+	          $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
 	          -D CMAKE_VERBOSE_MAKEFILE=ON \
 	          -D VARIANT=$${v} \
 	          -D CMAKE_INSTALL_PREFIX=../codes \
@@ -52,7 +56,9 @@ cmake :
 	      ) \
 	  ; else echo "No such variant: <<$$v>>" && exit 1 \
 	  ; fi \
-	; done
+	 ; done \
+	 && echo "Generated:" \
+	 && for v in ${VARIANTS} ; do ls -l codes/$$v ; done
 
 ##
 ## Scaling
