@@ -51,3 +51,18 @@ make compile VARIANTS="seq oned"
 
 Set the variable `TACC_MDSPAN_INC`
 to the location of the header files.
+
+## Code variants
+
+The following code variants are available:
+
+ - `oned` : traditional C-style OpenMP implementation.
+ - `clps` : OpenMP with `collapse(2)` directive.
+ - `span` : iterating over a `ranges::view::cartesian_product`.
+ - `iota` : double loop over `iota_view`s. 
+ - `range` : Using range execution policies. Not Working Yet!
+ - `kokkos` : based on Kokkos.
+ - `sycl` : using Sycl; only tested with Intel's Sycl, not with AdaptiveCPP or other implementation.
+ - `dist` : MPI implementation through MPL. 
+
+ Not yet compilable with CMake: kokkos, sycl, dist.
