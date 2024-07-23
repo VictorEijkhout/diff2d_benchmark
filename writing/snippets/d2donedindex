@@ -1,0 +1,2 @@
+// oned.cpp
+#define IINDEX( i,j ) ((i)+border)*n2b + (j)+border

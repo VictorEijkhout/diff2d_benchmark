@@ -1,0 +1,3 @@
+// diff2d.cpp
+auto X = unique_ptr<linalg::bordered_array_base<real>>
+  ( make_unique<linalg::bordered_array_seq<real>>(msize,nsize,border) );

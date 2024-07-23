@@ -1,0 +1,5 @@
+template< typename real >
+void distributed_array<real>::scale_interior
+    ( const linalg::distributed_array<real>& other, real factor ) {
+  subdomain->scale_interior( *(other.subdomain),factor);
+};

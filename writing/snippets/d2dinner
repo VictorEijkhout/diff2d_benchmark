@@ -1,0 +1,14 @@
+auto inner() const {
+  if (not range2d.has_value()) {
+	const auto& s = data2d();
+	int b = this->border();
+	std::int64_t
+	  lo_m = static_cast<std::int64_t>(b),
+	  hi_m = static_cast<std::int64_t>(s.extent(0)-b),
+	  lo_n = static_cast<std::int64_t>(b),
+	  hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+	range2d = rng::views::cartesian_product
+	  ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
+  }
+  return *range2d;
+};

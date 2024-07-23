@@ -1,0 +1,5 @@
+auto D_Fn = reduction(Buf_Fn, h, std::plus<real>());
+
+h.parallel_for
+  (range<2>(msize-2,nsize-2), D_Fn,
+   [=](item<2> index, auto &sum){

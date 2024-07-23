@@ -1,0 +1,3 @@
+// base.hpp
+template< typename real >
+class bordered_array_base {

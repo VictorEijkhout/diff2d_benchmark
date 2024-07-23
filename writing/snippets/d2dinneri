@@ -1,0 +1,14 @@
+auto inneri() const {
+  if (not range2di.has_value()) {
+	const auto& s = data2d();
+	int b = this->border();
+	std::int64_t
+	  lo_m = static_cast<std::int64_t>(b),
+	  hi_m = static_cast<std::int64_t>(s.extent(0)-b),
+	  lo_n = static_cast<std::int64_t>(b),
+	  hi_n = static_cast<std::int64_t>(s.extent(1)-b);
+	// update mutable member
+	range2di = rng::views::iota(lo_m,hi_m);
+  }
+  return *range2di;
+};

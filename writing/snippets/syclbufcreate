@@ -1,0 +1,2 @@
+std::vector<real> Mat_A(msize*nsize);
+buffer<real,2> Buf_a(Mat_A.data(),range<2>(msize,nsize));
