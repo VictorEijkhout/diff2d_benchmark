@@ -51,7 +51,37 @@ clean ::
 	@rm -f perf.data*
 
 ##
-## vtune
+## VTUNE profiling
+## here we loop over models,
+## do profiling on each
+##
+info ::
+	@echo "================ Profiling"
+	@echo "run_vtune : vtune on variants"
+	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "    [ NORUN= (nonzero for redisplay of vtune output) ]"
+NORUN =
+.PHONY: run_vtune
+##
+## generation
+##
+run_vtune :
+	@for v in ${VARIANTS} ; do \
+	  vtunedata=vtune_$${v}_${TACC_FAMILY_COMPILER}.vt \
+	   && rm -rf bin/$${v} $${vtunedata} \
+	   && if [ -z "${NORUN}" ] ; then \
+	        make cmake VARIANTS=$${v} ECHO=${ECHO} \
+	         && cmdline="vtune -collect hotspots --result-dir=$${vtunedata} \
+	                bin/$${v} -m ${NSIZE} -n ${NSIZE} -i 5 -t" \
+	         && echo "vtune cmdline: $$cmdline" && eval $$cmdline \
+	      ; fi \
+	   && echo && echo "Displaying vtune results for $${v}" && echo \
+	   && make --no-print-directory vtune VTUNEDATA=$${vtunedata} \
+	; done
+localclean ::
+	@rm -rf $.vt
+##
+## analysis
 ##
 info ::
 	@echo "make vtune : analyze output of vtune collect"
@@ -66,9 +96,9 @@ vtune :
 	     && exit 1 ; fi
 	@vtune -report hotspots -result-dir ${VTUNEDATA} \
 	    -report-knob show-issues=false \
-	    -format csv -csv-delimiter comma \
+	    -format csv -csv-delimiter tab \
 	    -column "Function,CPU Time:Effective" \
-	 | awk --field-separator="," '{printf("%60s %7.5f\n", $$1 , $$2); }' \
+	 | awk --field-separator="\t" '{printf("%60s %7.5f\n", $$1 , $$2); }' \
 	    2>/dev/null \
 	 && echo
 clean ::

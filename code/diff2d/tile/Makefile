@@ -67,11 +67,6 @@ EXTRA_LIBS = \
 RPATH = ${TACC_FMTLIB_LIB}
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 

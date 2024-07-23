@@ -42,11 +42,6 @@ EXTRA_LIBS = \
     $$( pkg-config --libs tbb ) 
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 

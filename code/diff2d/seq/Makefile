@@ -36,11 +36,6 @@ else
 endif
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 

@@ -31,11 +31,6 @@ include ../../../makefiles/Make.compile
 CPPSTANDARD = 23
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 

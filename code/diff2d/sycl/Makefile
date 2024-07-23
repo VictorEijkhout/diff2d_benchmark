@@ -40,11 +40,6 @@ EXTRA_INCLUDES := \
 EXTRA_LIBS = 
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 

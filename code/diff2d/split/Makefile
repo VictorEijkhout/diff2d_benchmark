@@ -52,11 +52,6 @@ EXTRA_INCLUDES := \
     $$( pkg-config --cflags cxxopts ) 
 
 ##
-## profiling
-##
-include ../Make.prof
-
-##
 ## Runs
 ##
 
