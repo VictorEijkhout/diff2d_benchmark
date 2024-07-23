@@ -1,0 +1,89 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% `Parallel Computing'
+%%%% by Victor Eijkhout, copyright 2023-2024
+%%%%
+%%%% diff2d.tex : article
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,fleqn]{artikel3}
+
+\usepackage[pdftex,colorlinks]{hyperref}
+\hypersetup{bookmarksopen=true}
+
+\usepackage{geometry,fancyhdr,wrapfig}
+\usepackage{amssymb,amsmath,verbatim,graphicx,pslatex,multicol}
+
+\usepackage{comment}
+\newif\ifInBook \InBooktrue
+\input book.inex
+\input acromacs
+\input articlemacs
+\input ../../../scientific-computing-private/macros/commonmacs
+\input ../../../introduction-scientific-programming-private/guide/macros/idxmacs
+\input idxpkgmacs
+\input listingmacs
+\newcommand\codesnippetsdir{../../snippets}
+\input snippetmacs
+\input ../../../scientific-computing-private/macros/tikzplot
+\excludecomment{packt}
+
+\begin{document}
+\title{Performance analysis of a stencil power method}
+\author{Victor Eijkhout\thanks{{\tt
+      eijkhout@tacc.utexas.edu}, Texas Advanced Computing Center, The
+    University of Texas at Austin.
+  }, Yojan Chitkara, Daksh Chaplot}
+\maketitle
+
+\input d2dtests
+
+\paragraph*{Acknowledgement}
+This work was supported by
+the Intel OneAPI Center of Excellence, and the 
+TACC STAR Scholars program,
+funded by generous gifts from TACC industry partners, including Intel, Shell, Exxon, and Chevron.
+
+\part{Appendix}
+
+Table~\ref{fig:diff2d-variants} left.
+
+\lstinputlisting{plots/spr-models-intel.csv}
+
+Right.
+
+\lstinputlisting{plots/spr-models-intel-sp.csv}
+
+Table~\ref{fig:diff2d-variants} left.
+
+\lstinputlisting{plots/spr-models-gcc.csv}
+
+Right.
+
+\lstinputlisting{plots/spr-models-gcc-sp.csv}
+
+Table~\ref{fig:diff2d-procs} left.
+
+skx
+
+\lstinputlisting{plots/intel-skx.csv}
+
+csx
+
+\lstinputlisting{plots/intel-csx.csv}
+
+icx
+
+\lstinputlisting{plots/intel-icx.csv}
+
+spr
+
+\lstinputlisting{plots/intel-spr.csv}
+
+
+\end{document}
