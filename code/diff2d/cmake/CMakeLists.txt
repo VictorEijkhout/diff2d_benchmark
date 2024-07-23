@@ -24,37 +24,44 @@ if( ${index} GREATER 0 )
     find_package(OpenMP)
     target_link_libraries( ${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX  )
 endif()
-# if( ${index} EQUAL 3 )
-#   message( STATUS "   also adding Kokkos" )
-#   # Create imported target std::mdspan
-#   target_link_libraries( ${PROJECT_NAME} std::mdspan)
-#   add_library(std::mdspan INTERFACE IMPORTED)
-#   set_target_properties(std::mdspan PROPERTIES
-#     INTERFACE_INCLUDE_DIRECTORIES ${MDSPAN_INC} )
-# endif()
+
+include( FetchContent )
 
 ##
 ## options handling
 ##
 
-message( STATUS "\n====   options handling" )
-# include( FetchContent )
-# FetchContent_Declare(
-#     cxxopts GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git )
-# FetchContent_MakeAvailable( cxxopts )
-# target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
-# target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
-
-find_package( cxxopts REQUIRED )
+find_package( cxxopts QUIET )
+if( cxxopts_FOUND )
+  message( STATUS "Thanks for installing cxxopts yourself" )
+else()
+  message( STATUS "Downloading cxxopts for you" )
+  FetchContent_Declare(
+    cxxopts GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git )
+  FetchContent_MakeAvailable( cxxopts )
+endif()
+target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
+target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.cpp )
 
 ##
 ## span handling
 ##
-message( STATUS "\n====   span handling" )
-find_package( mdspan REQUIRED )
+find_package( mdspan QUIET )
+if( mdspan_FOUND )
+  message( STATUS "Thanks for installing mdspan yourself" )
+else()
+  message( STATUS "Downloading mdspan for you" )
+  FetchContent_Declare(
+    mdspan
+    GIT_REPOSITORY https://github.com/kokkos/mdspan.git
+    GIT_TAG stable
+    )
+  FetchContent_MakeAvailable( mdspan )
+endif()
 target_link_libraries( ${PROJECT_NAME} PUBLIC std::mdspan )
+
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/${VARIANT}.cpp ../lib/base.cpp )
 target_include_directories( ${PROJECT_NAME} PRIVATE ../lib )
 
