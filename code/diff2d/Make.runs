@@ -26,6 +26,7 @@ info ::
 	@echo "    [ D2D_OPTIONS=... ]"
 	@echo "make run_scaling_plot"
 NSIZE = 10000
+PROGAM = diff2d
 .PHONY: run_scaling run_scaling_plot
 run_scaling :
 	@if [ -z "${CATEGORY}" ] ; then \
@@ -38,7 +39,7 @@ run_scaling :
 	 && runlog=$$(pwd)/../run-$${runoutid}.log \
 	 && if [ "${MODE}" = "mpl" ] ; then \
 	      SCALING=mpi_scaling \
-	    ; elif [ "${MODE}" = "dpcpp" ] ; then \
+	    ; elif [ "${MODE}" = "sycl" ] ; then \
 	      SCALING=dpcpp_scaling \
 	    ; else \
 	      SCALING=omp_scaling \
@@ -56,22 +57,25 @@ run_scaling :
 	     && echo "    $${results}" \
 	     \
 	     && echo " .. start scaling run: $${SCALING}" \
-	     && make --no-print-directory $${SCALING} PROGRAM=diff2d \
+	     && make --no-print-directory $${SCALING} PROGRAM=${PROGRAM} \
 	        ECHO=${ECHO} RUNOUTID=$${runoutid} RESULTS="$${results}" \
 	        CATCHER= NDIV=10 \
 	        RUN_OPTIONS="-m ${NSIZE} -n ${NSIZE} -i 5 ${D2D_OPTIONS}" \
 	     \
-	     && echo " .. help info about this run type" \
-	     && cmdline="./diff2d -H" \
-	         && if [ "${MODE}" = "mpl" ] ; then cmdline="ibrun -n 1 $$cmdline" ; fi \
-	         && if [ "${ECHO}" = "1" ] ; then echo "cmdline=$$cmdline" ; fi \
-	         && eval $$cmdline | tee -a $${results} \
 	     && if [ "${GITADD}" = "1" ] ; then \
 	          mv $${results} $${results%%.out}.runout \
 	           && git add $${results%%.out}.runout \
 	           && git commit -m "scaling output for $${runoutid}" \
 	        ; fi \
 	    ) 2>&1 | tee $${runlog}
+disabled_help:
+	foo \
+	     && echo " .. help info about this run type" \
+	     && cmdline="./diff2d -H" \
+	         && if [ "${MODE}" = "mpl" ] ; then cmdline="ibrun -n 1 $$cmdline" ; fi \
+	         && if [ "${ECHO}" = "1" ] ; then echo "cmdline=$$cmdline" ; fi \
+	         && eval $$cmdline | tee -a $${results} \
+	foo
 run_scaling_plot :
 	@fname=diff2d-scaling-omp-${TACC_SYSTEM}${NSIZE} \
 	 && python3 \

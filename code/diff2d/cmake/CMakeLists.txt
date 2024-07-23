@@ -23,7 +23,13 @@ if( ${index} GREATER 0 )
     message( STATUS "\n====   adding OpenMP backend for index ${index}" )
     find_package(OpenMP)
     target_link_libraries( ${PROJECT_NAME} PUBLIC OpenMP::OpenMP_CXX  )
+elseif( ${VARIANT} STREQUAL "sycl" )
+  message( STATUS "\n====   using Sycl backend" )
+  ## find_package( IntelDPCPP REQUIRED )
+  find_package( IntelSYCL REQUIRED )
+  add_sycl_to_target(TARGET ${PROJECT_NAME} SOURCES diff2d.cpp )
 endif()
+
 
 include( FetchContent )
 

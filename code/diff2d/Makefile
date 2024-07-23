@@ -50,7 +50,7 @@ cmake :
 	          $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
 	          -D CMAKE_VERBOSE_MAKEFILE=ON \
 	          -D VARIANT=$${v} \
-	          -D CMAKE_INSTALL_PREFIX=../codes \
+	          -D CMAKE_INSTALL_PREFIX=../bin \
 	          ../$${v} \
 	         && make V=1 && make install \
 	      ) \
@@ -58,27 +58,26 @@ cmake :
 	  ; fi \
 	 ; done \
 	 && echo "Generated:" \
-	 && for v in ${VARIANTS} ; do ls -l codes/$$v ; done
+	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done
 
 ##
-## Scaling
-## here we loop over models,
-## do scaling on each
+## Do scaling runs over all VARIANTS
+## This calls "make run_scaling" in each directory;
+## that rule is in Make.runs
 ##
-
-.PHONY: run_scaling
 info ::
 	@echo "================ Running"
 	@echo "run_scaling : big run across all variants"
 	@echo "    [ NSIZE= (default: ${NSIZE}) ]"
 	@echo "    [ GITADD= (1 to rename as runout and add to repo)"
 NSIZE = 40000
+.PHONY: run_scaling
 run_scaling :
 	@if [ -z "${TACC_PROC_CODE}" ] ; then \
 	    echo "Set variable: TACC_PROC_CODE" && exit 1 ; fi 
 	@for v in ${VARIANTS} ; do \
 	  ( cd $${v} \
-	     && make --no-print-directory run_scaling \
+	     && make --no-print-directory run_scaling PROGRAM=../bin/$${v} \
 	          TACC_SYSTEM=${TACC_PROC_CODE} \
 	          NDIV=10 NSIZE=${NSIZE} ECHO=1 GITADD=${GITADD} \
 	  ) \

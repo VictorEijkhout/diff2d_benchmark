@@ -73,13 +73,14 @@ omp_proc_scale :
 .PHONY: omp_scaling dpcpp_scaling
 THREADSYSTEM=omp
 dpcpp_scaling :
-	@make --no-print-directory omp_scaling THREADSYSTEM=dpcpp
+	@make --no-print-directory omp_scaling THREADSYSTEM=dpcpp \
+	    PROGRAM=${PROGRAM} ECHO=${ECHO}
 omp_scaling :
 	@ompthreads="$$( make --no-print-directory omp_proc_scale NDIV=${NDIV} )" \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	        echo "Using threads: $$ompthreads out of cores: $$np" ; fi \
 	 && if [ -z "${PROGRAM}" ] ; then \
-	        echo "Set PROGRAM variable" && exit 1 \
+	        echo "Set PROGRAM variable for omp_scaling rule" && exit 1 \
 	    ; fi \
 	 && if [ -z "${RESULTS}" ] ; then \
 	      results=$$( make --no-print-directory scaling_logname \
