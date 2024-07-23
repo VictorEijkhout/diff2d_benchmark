@@ -1,0 +1,12 @@
+template< typename real >
+void bordered_array_iota<real>::scale_interior
+    ( const linalg::bordered_array_base<real>& _other, real factor ) {
+  const auto& other = dynamic_cast<const linalg::bordered_array_iota<real>&>(_other);
+  auto out = this->data2d();
+  auto in = other.data2d();
+  #pragma omp parallel for
+  for ( auto i : this->inneri() )
+    for ( auto j : this->innerj() )
+	out[ i,j ] = in[ i,j] * factor;
+  
+};

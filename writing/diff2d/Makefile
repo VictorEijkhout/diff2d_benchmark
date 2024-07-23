@@ -3,7 +3,7 @@
 ################################################################
 ####
 #### This make file is part of the source of 
-#### `Parallel Programing in Science and Engineering'
+#### the diff2d_benchmark
 #### by Victor Eijkhout, copyright 2023-2024
 ####
 #### Root makefile for the diff2d writeup
@@ -18,10 +18,9 @@ FILE = diff2d
 FILES= diff2d cppcon2024
 pdf : 
 	@echo rsync ../../plots/*.csv ./plots/
-	@TEXINPUTS=../../macros:../../graphics:../../snippets:../../chapters:${TEXINPUTS} \
-	    pdflatex -shell-escape ${FILE}
-	cp ${FILE}.pdf ${HOME}/Dropbox/Scicomp/
-	cp ${FILE}.pdf ${HOME}/Current/istc/diff2d_benchmark/reports/
+	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
+	@export TEXINPUTS=../macros:../graphics:../snippets:../:${TEXINPUTS} \
+	 && pdflatex -shell-escape ${FILE}
 
 include ../../makefiles/Make.clean
 MAKEFILESDIR := ../../${MAKEFILESDIR}

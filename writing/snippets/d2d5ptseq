@@ -1,0 +1,15 @@
+template< typename real >
+void bordered_array_seq<real>::central_difference_from
+    ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+// upcast base to derived type
+  const auto& other = dynamic_cast<const linalg::bordered_array_seq<real>&>(_other);
+  auto out = this->data();
+  auto in = other.data();
+  auto [m,n,b,m2b,n2b] = this->inner_sizes();
+  for ( int64_t i=0; i<m; i++ ) {
+    for ( int64_t j=0; j<n; j++ ) {
+      out[ IINDEX(i,j,b,n2b) ] = 4*in[ IINDEX(i,j,b,n2b) ]
+        - in[ IINDEX(i-1,j,b,n2b) ] - in[ IINDEX(i+1,j,b,n2b) ]
+	  - in[ IINDEX(i,j-1,b,n2b) ] - in[ IINDEX(i,j+1,b,n2b) ];
+    }
+  }

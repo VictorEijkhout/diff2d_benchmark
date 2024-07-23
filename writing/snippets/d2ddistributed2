@@ -1,0 +1,5 @@
+// global processor grid size
+dimensions = comm.get_dimensions();
+auto
+  pmsize = dimensions.size(0),
+  pnsize = dimensions.size(1);

@@ -1,0 +1,15 @@
+template< typename real >
+void bordered_array_1d<real>::scale_interior
+    ( const linalg::bordered_array_base<real>& _other, real factor ) {
+// upcast base to derived type
+  const auto& other =
+    dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+  auto out = this->data();
+  auto in = other.data();
+  auto m = this->m(), n = this->n(), n2b = this->n2b();
+  auto border = this->border();
+  #pragma omp parallel for 
+  for ( int64_t i=0; i<m; i++ )
+    for ( int64_t j=0; j<n; j++ )
+      out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
+};
