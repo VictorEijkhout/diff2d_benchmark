@@ -64,7 +64,7 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
 	      cmdline="" \
 	  ; fi \
        && cmdline="$cmdline \
-	    make run_scaling NSIZE=${nsize} GITADD=${gitadd} \
+	    make run_scaling PROGRAM=../bin/${code} NSIZE=${nsize} GITADD=${gitadd} \
 	      TACC_SYSTEM=${cpu} \
 	      CATEGORY=${code} \
 	      THREADSYSTEM=$( \
