@@ -68,39 +68,43 @@ NORUN =
 run_vtune :
 	@for v in ${VARIANTS} ; do \
 	  vtunedata=vtune_$${v}_${TACC_FAMILY_COMPILER}.vt \
-	   && rm -rf bin/$${v} $${vtunedata} \
 	   && if [ -z "${NORUN}" ] ; then \
-	        make cmake VARIANTS=$${v} ECHO=${ECHO} \
+	        rm -rf bin/$${v} $${vtunedata} \
+	         && make --no-print-directory cmake VARIANTS=$${v} ECHO=${ECHO} \
 	         && cmdline="vtune -collect hotspots --result-dir=$${vtunedata} \
 	                bin/$${v} -m ${NSIZE} -n ${NSIZE} -i 5 -t" \
-	         && echo "vtune cmdline: $$cmdline" && eval $$cmdline \
+	         && echo && echo  "Vtune collect: $$cmdline" && echo \
+	         && eval $$cmdline \
 	      ; fi \
 	   && echo && echo "Displaying vtune results for $${v}" && echo \
-	   && make --no-print-directory vtune VTUNEDATA=$${vtunedata} \
+	   && make --no-print-directory analyze_vtune VTUNEDATA=$${vtunedata} \
+	   && make --no-print-directory display_vtune VTUNEDATA=$${vtunedata} \
 	; done
 localclean ::
-	@rm -rf $.vt
+	@rm -rf *.vt
 ##
 ## analysis
 ##
-info ::
-	@echo "make vtune : analyze output of vtune collect"
-	@echo "    [ VTUNE_OPTIONS=... ]"
+
 ## Available columns:
 ## Function,CPU Time,CPU Time:Effective Time,CPU Time:Spin Time,CPU Time:Spin Time:Imbalance or Serial Spinning,CPU Time:Spin Time:Lock Contention,CPU Time:Spin Time:Other,CPU Time:Overhead Time,CPU Time:Overhead Time:Creation,CPU Time:Overhead Time:Scheduling,CPU Time:Overhead Time:Reduction,CPU Time:Overhead Time:Atomics,CPU Time:Overhead Time:Other,Function (Full)
-.PHONY: vtune
+.PHONY: analyze_vtune
 VTUNEDATA = r000hs
-vtune :
+analyze_vtune :
 	@if [ ! -d "${VTUNEDATA}" ] ; then \
 	    echo "No data folder ${VTUNEDATA} found; first: vtune record yourprogram" \
 	     && exit 1 ; fi
-	@vtune -report hotspots -result-dir ${VTUNEDATA} \
+	@vtune -report hotspots -result-dir ${VTUNEDATA} -report-output=${VTUNEDATA}.out \
 	    -report-knob show-issues=false \
 	    -format csv -csv-delimiter tab \
-	    -column "Function,CPU Time:Effective" \
+	    -column "Function,CPU Time:Effective"
+display_vtune :
+	@if [ ! -f "${VTUNEDATA}.out" ] ; then \
+	    echo "No data file ${VTUNEDATA}.out found; first: vtune record yourprogram" \
+	     && exit 1 ; fi
+	@cat ${VTUNEDATA}.out \
 	 | awk --field-separator="\t" '{printf("%60s %7.5f\n", $$1 , $$2); }' \
 	    2>/dev/null \
 	 && echo
-clean ::
-	@rm -f vtune_*.vt
-
+localclean ::
+	@rm -f *.vt.out
