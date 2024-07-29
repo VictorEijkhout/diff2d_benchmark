@@ -450,6 +450,19 @@ central difference,
 despite the latter having more operations
 and more complicated memory access.
 
+VTune profiling tells us the same as Perf:
+\begin{lstlisting}[language=verbatim]
+std::ranges::cartesian_product_view< [...] >::_Iterator<(bool)1>::operator+= 12.06020
+ linalg::bordered_array_span<float>::central_difference_from 3.56001
+                  linalg::bordered_array_span<float>::l2norm 2.73990
+          linalg::bordered_array_span<float>::scale_interior 2.47995
+                                                    __divti3 2.28982
+                                               func@0x404390 2.26005
+                                                __udivmodti4 1.42006
+                     linalg::bordered_array_span<float>::set 0.23984
+     linalg::bordered_array_span<float>::bordered_array_span 0.23016  
+\end{lstlisting}
+
 \endinput
 
 %%%%
