@@ -60,7 +60,9 @@ cmake :
 	 ; done \
 	 && echo "Generated:" \
 	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done
-
+clean ::
+	@rm -rf bin/{include,lib64} ## why???
+	@for v in ${VARIANTS}; do rm -f bin/$${v} ; done
 ##
 ## Do scaling runs over all VARIANTS
 ## This calls "make run_scaling" in each directory;
