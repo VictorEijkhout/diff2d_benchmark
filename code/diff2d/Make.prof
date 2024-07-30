@@ -59,6 +59,7 @@ info ::
 	@echo "================ Profiling"
 	@echo "run_vtune : vtune on variants"
 	@echo "    [ NSIZE=123456 (default: ${NSIZE}) ]"
+	@echo "    [ NOCOMPILE= (nonzero for skip make) ]"
 	@echo "    [ NORUN= (nonzero for redisplay of vtune output) ]"
 NORUN =
 .PHONY: run_vtune
@@ -69,15 +70,19 @@ run_vtune :
 	@for v in ${VARIANTS} ; do \
 	  vtunedata=vtune_$${v}_${TACC_FAMILY_COMPILER}.vt \
 	   && if [ -z "${NORUN}" ] ; then \
-	        rm -rf bin/$${v} $${vtunedata} \
-	         && make --no-print-directory cmake VARIANTS=$${v} ECHO=${ECHO} \
+	        rm -rf $${vtunedata} \
+	         && if [ -z "${NOCOMPILE}" ] ; then \
+	            rm -rf bin/$${v} \
+	             && make --no-print-directory cmake VARIANTS=$${v} ECHO=${ECHO} \
+	            ; fi \
 	         && cmdline="vtune -collect hotspots --result-dir=$${vtunedata} \
 	                bin/$${v} -m ${NSIZE} -n ${NSIZE} -i 5 -t" \
 	         && echo && echo  "Vtune collect: $$cmdline" && echo \
 	         && eval $$cmdline \
 	      ; fi \
-	   && echo && echo "Displaying vtune results for $${v}" && echo \
+	   && echo && echo "Analyzing vtune results for $${v}" && echo \
 	   && make --no-print-directory analyze_vtune VTUNEDATA=$${vtunedata} \
+	   && echo && echo "Displaying vtune results for $${v}" && echo \
 	   && make --no-print-directory display_vtune VTUNEDATA=$${vtunedata} \
 	; done
 localclean ::
