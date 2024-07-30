@@ -1,6 +1,6 @@
-==== Run diff2d on 1 threads ====
-Execute program diff2d cores 1
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 1 threads ====
+Execute program ../bin/span cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:   1
@@ -11,12 +11,12 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  82788 msec
+Time:  82729 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 11 threads ====
-Execute program diff2d cores 11
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 11 threads ====
+Execute program ../bin/span cores 11
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  11
@@ -27,12 +27,12 @@ x norm: 13584.8955
 [ 2] y norm: 2.897532
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675358
-Time:   7721 msec
+Time:   7627 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 22 threads ====
-Execute program diff2d cores 22
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 22 threads ====
+Execute program ../bin/span cores 22
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  22
@@ -43,12 +43,12 @@ x norm: 19211.943
 [ 2] y norm: 2.897688
 [ 3] y norm: 3.197423
 [ 4] y norm: 3.3677886
-Time:   3884 msec
+Time:   3869 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 33 threads ====
-Execute program diff2d cores 33
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 33 threads ====
+Execute program ../bin/span cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  33
@@ -59,12 +59,12 @@ x norm: 23529.729
 [ 2] y norm: 2.8976772
 [ 3] y norm: 3.1973839
 [ 4] y norm: 3.367866
-Time:   2651 msec
+Time:   2627 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 44 threads ====
-Execute program diff2d cores 44
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 44 threads ====
+Execute program ../bin/span cores 44
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  44
@@ -75,12 +75,12 @@ x norm: 25000
 [ 2] y norm: 2.8977087
 [ 3] y norm: 3.1973436
 [ 4] y norm: 3.3679037
-Time:   2020 msec
+Time:   1999 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 56 threads ====
-Execute program diff2d cores 56
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 56 threads ====
+Execute program ../bin/span cores 56
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  56
@@ -91,12 +91,12 @@ x norm: 25000
 [ 2] y norm: 2.897722
 [ 3] y norm: 3.1973445
 [ 4] y norm: 3.3679004
-Time:   1584 msec
+Time:   1596 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 67 threads ====
-Execute program diff2d cores 67
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 67 threads ====
+Execute program ../bin/span cores 67
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  67
@@ -107,12 +107,12 @@ x norm: 25000
 [ 2] y norm: 2.897719
 [ 3] y norm: 3.1973388
 [ 4] y norm: 3.367935
-Time:   1335 msec
+Time:   1339 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 78 threads ====
-Execute program diff2d cores 78
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 78 threads ====
+Execute program ../bin/span cores 78
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  78
@@ -123,12 +123,12 @@ x norm: 25000
 [ 2] y norm: 2.8977227
 [ 3] y norm: 3.1973443
 [ 4] y norm: 3.3679435
-Time:   1161 msec
+Time:   1153 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 89 threads ====
-Execute program diff2d cores 89
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 89 threads ====
+Execute program ../bin/span cores 89
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads:  89
@@ -139,12 +139,12 @@ x norm: 25000
 [ 2] y norm: 2.8977246
 [ 3] y norm: 3.1973372
 [ 4] y norm: 3.367957
-Time:   1338 msec
+Time:   1020 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 100 threads ====
-Execute program diff2d cores 100
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 100 threads ====
+Execute program ../bin/span cores 100
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads: 100
@@ -155,12 +155,12 @@ x norm: 25000
 [ 2] y norm: 2.8977263
 [ 3] y norm: 3.1973321
 [ 4] y norm: 3.3679633
-Time:    923 msec
+Time:    916 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-==== Run diff2d on 112 threads ====
-Execute program diff2d cores 112
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/span on 112 threads ====
+Execute program ../bin/span cores 112
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/span -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: span
 Threads: 112
@@ -171,8 +171,6 @@ x norm: 25000
 [ 2] y norm: 2.8977337
 [ 3] y norm: 3.1973267
 [ 4] y norm: 3.3679688
-Time:    835 msec
+Time:    831 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
-================ This type of run:
-OpenMP over 1D index range with mdspan
