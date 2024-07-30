@@ -48,7 +48,6 @@ else()
 endif()
 target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
-target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.cpp )
 
 ##
