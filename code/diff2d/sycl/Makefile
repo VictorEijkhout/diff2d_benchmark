@@ -30,14 +30,13 @@ include ../Make.depend
 ## compilation
 ##
 include ../../../makefiles/Make.compile
-ifeq "${INTEL23}" "23"
-  CPPSTANDARD = 2b
-else
-  CPPSTANDARD = 23
-endif
-EXTRA_INCLUDES := \
-    $$( pkg-config --cflags cxxopts ) 
-EXTRA_LIBS = 
+CPPSTANDARD = 23
+#
+# sycl build for explicit target:
+# https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-2/ahead-of-time-compilation.html
+#
+EXTRA_OPTIONS = -fsycl-targets=spir64_x86_64
+EXTRA_LINK_FLAGS = -fsycl-targets=spir64_x86_64 -Xsycl-target-backend  "-march=avx2"
 
 ##
 ## Runs
