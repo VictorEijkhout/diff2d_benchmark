@@ -102,8 +102,18 @@ display_vtune :
 	@if [ ! -f "${VTUNEDATA}.out" ] ; then \
 	    echo "No data file ${VTUNEDATA}.out found; first: vtune record yourprogram" \
 	     && exit 1 ; fi
-	@cat ${VTUNEDATA}.out \
-	 | awk --field-separator="\t" '{printf("%60s %7.5f\n", $$1 , $$2); }' \
+	@t=$$( cat ${VTUNEDATA}.out \
+	 | awk --field-separator="\t" \
+	                '{ t=t+$$2; \
+	                  } \
+	                 END {print t} \
+	                ' \
+	    2>/dev/null ) \
+	 && cat ${VTUNEDATA}.out \
+	 | awk --field-separator="\t" -v time=$$t \
+	                '{ printf("%60s %7.5f\n", $$1 , 100*$$2/time); \
+	                  } \
+	                ' \
 	    2>/dev/null \
 	 && echo
 localclean ::
