@@ -450,17 +450,20 @@ central difference,
 despite the latter having more operations
 and more complicated memory access.
 
-VTune profiling tells us the same as Perf:
+VTune profiling tells us the same as Perf
+(with some post-processing):
 \begin{lstlisting}[language=verbatim]
-std::ranges::cartesian_product_view< [...] >::_Iterator<(bool)1>::operator+= 12.06020
- linalg::bordered_array_span<float>::central_difference_from 3.56001
-                  linalg::bordered_array_span<float>::l2norm 2.73990
-          linalg::bordered_array_span<float>::scale_interior 2.47995
-                                                    __divti3 2.28982
-                                               func@0x404390 2.26005
-                                                __udivmodti4 1.42006
-                     linalg::bordered_array_span<float>::set 0.23984
-     linalg::bordered_array_span<float>::bordered_array_span 0.23016  
+std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ranges::iota_view<long, long>>::_Iterator<(bool)1>::operator+= 44.15438
+ linalg::bordered_array_span<float>::central_difference_from 12.71539
+                  linalg::bordered_array_span<float>::l2norm 10.88307
+          linalg::bordered_array_span<float>::scale_interior 9.63805
+                                               func@0x404390 8.09852
+                                                    __divti3 8.09808
+                                                __udivmodti4 4.61700
+     linalg::bordered_array_span<float>::bordered_array_span 0.87979
+                     linalg::bordered_array_span<float>::set 0.87910
+                              __kmp_get_global_thread_id_reg 0.00000
+                     cfree 0.03664
 \end{lstlisting}
 
 \endinput
