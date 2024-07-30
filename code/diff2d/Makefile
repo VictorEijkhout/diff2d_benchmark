@@ -31,9 +31,10 @@ compile :
 	    ( echo "Making variant $${v}" \
 	       && cd $${v} \
 	       && make --no-print-directory diff2d \
+	       && cp diff2d ../bin/$${v} \
 	    ) \
 	    ; done 2>&1 | tee compile.log && echo "See: compile.log" \
-	 && ls -l $$( for v in $${variants} ; do echo $$v/diff2d ; done )
+	 && ls -l $$( for v in $${variants} ; do echo bin/$$v ; done )
 
 .PHONY: cmake
 info ::
