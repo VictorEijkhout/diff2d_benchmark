@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:   7765 msec
+Time:   7771 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 11 threads ====
@@ -27,7 +27,7 @@ x norm: 13584.8955
 [ 2] y norm: 2.8975317
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:    970 msec
+Time:    973 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 22 threads ====
@@ -36,19 +36,6 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/iota -m 25000 -n 250
 ==== Run ../bin/iota on 33 threads ====
 Execute program ../bin/iota cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
-Total cores available: 112
-Runtype: iota
-Threads:  33
-Vector size: 25000 x 25000
-x norm: 23529.729
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.236387
-[ 2] y norm: 2.8976774
-[ 3] y norm: 3.1973839
-[ 4] y norm: 3.3678668
-Time:    394 msec
-iota-BW: (estimated Gb/sec)       0
-iota-Flops:       0
 ==== Run ../bin/iota on 44 threads ====
 Execute program ../bin/iota cores 44
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
@@ -59,18 +46,31 @@ Total cores available: 112
 Runtype: iota
 Threads:  56
 Vector size: 25000 x 25000
-x norm: 24999.998
-[ 0] y norm: 306.19928
-[ 1] y norm: 2.2364125
-[ 2] y norm: 2.9000084
-[ 3] y norm: 3.2012339
-[ 4] y norm: 3.3878658
-Time:    290 msec
+x norm: 25000.002
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2363586
+[ 2] y norm: 2.8977215
+[ 3] y norm: 3.1973448
+[ 4] y norm: 3.3679006
+Time:    287 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 67 threads ====
 Execute program ../bin/iota cores 67
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  67
+Vector size: 25000 x 25000
+x norm: 24999.996
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2363493
+[ 2] y norm: 2.897719
+[ 3] y norm: 3.1973386
+[ 4] y norm: 3.367933
+Time:    268 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
 ==== Run ../bin/iota on 78 threads ====
 Execute program ../bin/iota cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
