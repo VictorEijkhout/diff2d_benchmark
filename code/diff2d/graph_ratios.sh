@@ -21,8 +21,6 @@ while [ $# -gt 0 ] ; do
 	shift && nsize=$1 && shift
     elif [ $1 = "-p" ] ; then
 	shift && cpu=$1 && shift
-    elif [ $1 = "-y" ] ; then
-	sycl=1 && shift
     elif [ $1 = "-t" ] ; then
 	test=1 && shift
     elif [ $1 = "-v" ] ; then
