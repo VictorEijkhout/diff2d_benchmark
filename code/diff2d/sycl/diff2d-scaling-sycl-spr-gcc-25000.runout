@@ -1,0 +1,22 @@
+==== Run ../bin/sycl on 1 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 11 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 22 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 33 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 44 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 56 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 67 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 78 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 89 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 100 threads ====
+Could not find executable PROGRAM=../bin/sycl
+==== Run ../bin/sycl on 112 threads ====
+Could not find executable PROGRAM=../bin/sycl
