@@ -21,6 +21,8 @@ pdf :
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
 	@export TEXINPUTS=../macros:../graphics:../snippets:../:${TEXINPUTS} \
 	 && pdflatex -shell-escape ${FILE}
+clean ::
+	@rm -f plots/*.{dep,dpth,idx,log,mw}
 
 include ../../makefiles/Make.clean
 MAKEFILESDIR := ../../${MAKEFILESDIR}
