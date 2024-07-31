@@ -10,7 +10,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:   7731 msec
+Time:   7732 msec
 omp-BW: (estimated Gb/sec)    12.3
 omp-Flops:    3.88
 ==== Run ../bin/oned on 11 threads ====
@@ -22,12 +22,12 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
-[ 2] y norm: 2.897532
+[ 2] y norm: 2.8975317
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:    700 msec
-omp-BW: (estimated Gb/sec)     136
-omp-Flops:    42.9
+Time:    702 msec
+omp-BW: (estimated Gb/sec)     135
+omp-Flops:    42.7
 ==== Run ../bin/oned on 22 threads ====
 Execute program ../bin/oned cores 22
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -37,12 +37,12 @@ Vector size: 25000 x 25000
 x norm: 19211.943
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2364159
-[ 2] y norm: 2.8976874
+[ 2] y norm: 2.8976877
 [ 3] y norm: 3.1974232
-[ 4] y norm: 3.367788
-Time:    356 msec
-omp-BW: (estimated Gb/sec)     267
-omp-Flops:    84.3
+[ 4] y norm: 3.3677883
+Time:    357 msec
+omp-BW: (estimated Gb/sec)     266
+omp-Flops:      84
 ==== Run ../bin/oned on 33 threads ====
 Execute program ../bin/oned cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -51,13 +51,13 @@ Threads:  33
 Vector size: 25000 x 25000
 x norm: 23529.729
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363873
+[ 1] y norm: 2.236387
 [ 2] y norm: 2.8976774
-[ 3] y norm: 3.197384
+[ 3] y norm: 3.1973839
 [ 4] y norm: 3.3678668
-Time:    240 msec
-omp-BW: (estimated Gb/sec)     396
-omp-Flops:     125
+Time:    241 msec
+omp-BW: (estimated Gb/sec)     394
+omp-Flops:     124
 ==== Run ../bin/oned on 44 threads ====
 Execute program ../bin/oned cores 44
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -67,12 +67,12 @@ Vector size: 25000 x 25000
 x norm: 25000.002
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363734
-[ 2] y norm: 2.8977084
+[ 2] y norm: 2.8977087
 [ 3] y norm: 3.1973433
 [ 4] y norm: 3.3679042
-Time:    184 msec
-omp-BW: (estimated Gb/sec)     516
-omp-Flops:     163
+Time:    185 msec
+omp-BW: (estimated Gb/sec)     514
+omp-Flops:     162
 ==== Run ../bin/oned on 56 threads ====
 Execute program ../bin/oned cores 56
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -85,9 +85,9 @@ x norm: 25000
 [ 2] y norm: 2.8977218
 [ 3] y norm: 3.197344
 [ 4] y norm: 3.3679
-Time:    150 msec
-omp-BW: (estimated Gb/sec)     633
-omp-Flops:     200
+Time:    151 msec
+omp-BW: (estimated Gb/sec)     629
+omp-Flops:     199
 ==== Run ../bin/oned on 67 threads ====
 Execute program ../bin/oned cores 67
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -100,9 +100,9 @@ x norm: 24999.996
 [ 2] y norm: 2.8977191
 [ 3] y norm: 3.1973386
 [ 4] y norm: 3.367933
-Time:    128 msec
-omp-BW: (estimated Gb/sec)     742
-omp-Flops:     234
+Time:    129 msec
+omp-BW: (estimated Gb/sec)     736
+omp-Flops:     233
 ==== Run ../bin/oned on 78 threads ====
 Execute program ../bin/oned cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -111,13 +111,13 @@ Threads:  78
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363422
+[ 1] y norm: 2.2363424
 [ 2] y norm: 2.8977237
 [ 3] y norm: 3.1973438
 [ 4] y norm: 3.367943
-Time:    122 msec
-omp-BW: (estimated Gb/sec)     779
-omp-Flops:     246
+Time:    123 msec
+omp-BW: (estimated Gb/sec)     772
+omp-Flops:     244
 ==== Run ../bin/oned on 89 threads ====
 Execute program ../bin/oned cores 89
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/oned -m 25000 -n 25000 -i 5 --trace
@@ -127,7 +127,7 @@ Vector size: 25000 x 25000
 x norm: 24999.998
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363389
-[ 2] y norm: 2.897725
+[ 2] y norm: 2.8977253
 [ 3] y norm: 3.1973352
 [ 4] y norm: 3.3679564
 Time:    109 msec
@@ -141,9 +141,9 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363365
+[ 1] y norm: 2.2363362
 [ 2] y norm: 2.8977246
-[ 3] y norm: 3.1973302
+[ 3] y norm: 3.1973305
 [ 4] y norm: 3.3679626
 Time:     96 msec
 omp-BW: (estimated Gb/sec)     990
@@ -159,7 +159,7 @@ x norm: 25000.006
 [ 1] y norm: 2.236333
 [ 2] y norm: 2.8977354
 [ 3] y norm: 3.1973264
-[ 4] y norm: 3.3679688
+[ 4] y norm: 3.367969
 Time:    111 msec
 omp-BW: (estimated Gb/sec)     856
 omp-Flops:     270

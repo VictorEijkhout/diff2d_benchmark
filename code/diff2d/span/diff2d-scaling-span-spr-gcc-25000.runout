@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  23190 msec
+Time:  23226 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 11 threads ====
@@ -24,10 +24,10 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
-[ 2] y norm: 2.8975322
+[ 2] y norm: 2.897532
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:   2382 msec
+Time:   2383 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 22 threads ====
@@ -38,12 +38,12 @@ Runtype: span
 Threads:  22
 Vector size: 25000 x 25000
 x norm: 19211.943
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2364159
-[ 2] y norm: 2.897688
-[ 3] y norm: 3.1974232
-[ 4] y norm: 3.367788
-Time:   1288 msec
+[ 0] y norm: 207.79797
+[ 1] y norm: 2.2363136
+[ 2] y norm: 2.8991206
+[ 3] y norm: 3.1989822
+[ 4] y norm: 3.3777692
+Time:   1254 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 33 threads ====
@@ -54,12 +54,12 @@ Runtype: span
 Threads:  33
 Vector size: 25000 x 25000
 x norm: 23529.729
-[ 0] y norm: 311.4097
-[ 1] y norm: 2.2366202
-[ 2] y norm: 2.8987806
-[ 3] y norm: 3.1979022
-[ 4] y norm: 3.3728333
-Time:    831 msec
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2363873
+[ 2] y norm: 2.897677
+[ 3] y norm: 3.197384
+[ 4] y norm: 3.3678668
+Time:    837 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 44 threads ====
@@ -72,10 +72,10 @@ Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363732
-[ 2] y norm: 2.897709
+[ 2] y norm: 2.8977091
 [ 3] y norm: 3.1973436
-[ 4] y norm: 3.3679037
-Time:    627 msec
+[ 4] y norm: 3.367904
+Time:    626 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 56 threads ====
@@ -87,11 +87,11 @@ Threads:  56
 Vector size: 25000 x 25000
 x norm: 24999.994
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236359
+[ 1] y norm: 2.2363584
 [ 2] y norm: 2.8977215
-[ 3] y norm: 3.197345
+[ 3] y norm: 3.1973445
 [ 4] y norm: 3.3679006
-Time:    491 msec
+Time:    490 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 67 threads ====
@@ -103,10 +103,10 @@ Threads:  67
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363489
-[ 2] y norm: 2.897719
-[ 3] y norm: 3.1973386
-[ 4] y norm: 3.3679335
+[ 1] y norm: 2.2363486
+[ 2] y norm: 2.8977191
+[ 3] y norm: 3.1973388
+[ 4] y norm: 3.3679342
 Time:    412 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
@@ -118,12 +118,12 @@ Runtype: span
 Threads:  78
 Vector size: 25000 x 25000
 x norm: 25000.002
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2363422
-[ 2] y norm: 2.8977237
-[ 3] y norm: 3.1973443
-[ 4] y norm: 3.3679438
-Time:    373 msec
+[ 0] y norm: 315.22372
+[ 1] y norm: 2.2358963
+[ 2] y norm: 2.8984315
+[ 3] y norm: 3.1981022
+[ 4] y norm: 3.3710687
+Time:    378 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 89 threads ====
@@ -134,12 +134,12 @@ Runtype: span
 Threads:  89
 Vector size: 25000 x 25000
 x norm: 24999.99
-[ 0] y norm: 315.3506
-[ 1] y norm: 2.2359846
-[ 2] y norm: 2.898833
-[ 3] y norm: 3.1980968
-[ 4] y norm: 3.3705173
-Time:    357 msec
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2363386
+[ 2] y norm: 2.897725
+[ 3] y norm: 3.1973374
+[ 4] y norm: 3.3679569
+Time:    359 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 100 threads ====
@@ -151,11 +151,11 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363353
+[ 1] y norm: 2.2363362
 [ 2] y norm: 2.8977253
-[ 3] y norm: 3.1973312
+[ 3] y norm: 3.197332
 [ 4] y norm: 3.3679626
-Time:    368 msec
+Time:    363 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 112 threads ====
@@ -166,11 +166,11 @@ Runtype: span
 Threads: 112
 Vector size: 25000 x 25000
 x norm: 24999.992
-[ 0] y norm: 302.52603
-[ 1] y norm: 2.2375476
-[ 2] y norm: 2.9017668
-[ 3] y norm: 3.2094188
-[ 4] y norm: 3.4160306
-Time:    367 msec
+[ 0] y norm: 314.82376
+[ 1] y norm: 2.2365842
+[ 2] y norm: 2.898076
+[ 3] y norm: 3.198202
+[ 4] y norm: 3.3743439
+Time:    375 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0

@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  83095 msec
+Time:  83177 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 11 threads ====
@@ -24,10 +24,10 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
-[ 2] y norm: 2.897532
+[ 2] y norm: 2.8975317
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:   7618 msec
+Time:   7613 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 22 threads ====
@@ -40,10 +40,10 @@ Vector size: 25000 x 25000
 x norm: 19211.943
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2364159
-[ 2] y norm: 2.8976874
+[ 2] y norm: 2.8976877
 [ 3] y norm: 3.1974232
 [ 4] y norm: 3.367788
-Time:   3813 msec
+Time:   3810 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 33 threads ====
@@ -55,11 +55,11 @@ Threads:  33
 Vector size: 25000 x 25000
 x norm: 23529.729
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236387
-[ 2] y norm: 2.897677
-[ 3] y norm: 3.1973839
+[ 1] y norm: 2.2363873
+[ 2] y norm: 2.8976772
+[ 3] y norm: 3.197384
 [ 4] y norm: 3.3678663
-Time:   2543 msec
+Time:   2541 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 44 threads ====
@@ -71,11 +71,11 @@ Threads:  44
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236373
+[ 1] y norm: 2.2363734
 [ 2] y norm: 2.8977087
-[ 3] y norm: 3.1973436
-[ 4] y norm: 3.3679037
-Time:   1911 msec
+[ 3] y norm: 3.1973433
+[ 4] y norm: 3.3679042
+Time:   1908 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 56 threads ====
@@ -89,9 +89,9 @@ x norm: 24999.994
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363586
 [ 2] y norm: 2.8977218
-[ 3] y norm: 3.1973443
-[ 4] y norm: 3.3679004
-Time:   1503 msec
+[ 3] y norm: 3.1973438
+[ 4] y norm: 3.3679001
+Time:   1500 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 67 threads ====
@@ -103,11 +103,11 @@ Threads:  67
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363489
+[ 1] y norm: 2.2363493
 [ 2] y norm: 2.8977191
 [ 3] y norm: 3.1973388
-[ 4] y norm: 3.367933
-Time:   1256 msec
+[ 4] y norm: 3.3679342
+Time:   1254 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 78 threads ====
@@ -119,11 +119,11 @@ Threads:  78
 Vector size: 25000 x 25000
 x norm: 25000.002
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363417
+[ 1] y norm: 2.2363422
 [ 2] y norm: 2.8977237
-[ 3] y norm: 3.1973448
-[ 4] y norm: 3.3679445
-Time:   1081 msec
+[ 3] y norm: 3.197344
+[ 4] y norm: 3.3679433
+Time:   1079 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 89 threads ====
@@ -135,11 +135,11 @@ Threads:  89
 Vector size: 25000 x 25000
 x norm: 24999.99
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363381
-[ 2] y norm: 2.8977246
-[ 3] y norm: 3.1973355
+[ 1] y norm: 2.2363384
+[ 2] y norm: 2.8977256
+[ 3] y norm: 3.1973367
 [ 4] y norm: 3.3679566
-Time:    947 msec
+Time:    946 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 100 threads ====
@@ -151,11 +151,11 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236334
-[ 2] y norm: 2.8977332
-[ 3] y norm: 3.1973312
-[ 4] y norm: 3.3679624
-Time:    847 msec
+[ 1] y norm: 2.2363355
+[ 2] y norm: 2.8977268
+[ 3] y norm: 3.1973314
+[ 4] y norm: 3.3679628
+Time:    844 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
 ==== Run ../bin/diy2d on 112 threads ====
@@ -167,10 +167,10 @@ Threads: 112
 Vector size: 25000 x 25000
 x norm: 24999.992
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363331
-[ 2] y norm: 2.8977344
-[ 3] y norm: 3.1973286
+[ 1] y norm: 2.236333
+[ 2] y norm: 2.8977356
+[ 3] y norm: 3.1973264
 [ 4] y norm: 3.367969
-Time:    759 msec
+Time:    756 msec
 diy-BW: (estimated Gb/sec)       0
 diy-Flops:       0
