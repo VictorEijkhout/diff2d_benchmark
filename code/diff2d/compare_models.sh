@@ -44,7 +44,7 @@ while [ $# -gt 0 ] ; do
 done
 codes=$1
 if [ ${codes} = "all" ] ; then
-    codes=oned,clps,kokkos,span,sycl,diy2d
+    codes=oned,clps,span,iota,kokkos,sycl,
 fi
 
 echo "================ Testing codes: ${codes}"
@@ -56,6 +56,7 @@ echo " queue $queue"
 for code in $( echo $codes | tr ',' ' ' ) ; do
     mask=$( python3 ../utils/maskgen.py ${procs} 1 )
     echo && echo "================ submit diff2d code=$code" && echo
+    if [ ! -f bin/${code} ] ; then continue ; fi
     ( cd ${code} \
        && if [ "${srun}" = "1" ] ; then \
 	     cmdline="srun -p $queue -t 0:30:0 -N 1 -n 1 -A A-ccsc \
