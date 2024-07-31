@@ -10,9 +10,9 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  11203 msec
-omp-BW: (estimated Gb/sec)    8.48
-omp-Flops:    2.68
+Time:  11242 msec
+omp-BW: (estimated Gb/sec)    8.45
+omp-Flops:    2.67
 ==== Run ../bin/clps on 11 threads ====
 Execute program ../bin/clps cores 11
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -23,11 +23,11 @@ x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
 [ 2] y norm: 2.897532
-[ 3] y norm: 3.1975744
+[ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:   1018 msec
-omp-BW: (estimated Gb/sec)    93.3
-omp-Flops:    29.5
+Time:   1019 msec
+omp-BW: (estimated Gb/sec)    93.2
+omp-Flops:    29.4
 ==== Run ../bin/clps on 22 threads ====
 Execute program ../bin/clps cores 22
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -39,10 +39,10 @@ x norm: 19211.943
 [ 1] y norm: 2.2364159
 [ 2] y norm: 2.8976874
 [ 3] y norm: 3.1974232
-[ 4] y norm: 3.3677886
-Time:    511 msec
-omp-BW: (estimated Gb/sec)     186
-omp-Flops:    58.7
+[ 4] y norm: 3.367788
+Time:    514 msec
+omp-BW: (estimated Gb/sec)     185
+omp-Flops:    58.4
 ==== Run ../bin/clps on 33 threads ====
 Execute program ../bin/clps cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -54,7 +54,7 @@ x norm: 23529.729
 [ 1] y norm: 2.2363875
 [ 2] y norm: 2.8976774
 [ 3] y norm: 3.197384
-[ 4] y norm: 3.3678668
+[ 4] y norm: 3.367867
 Time:    344 msec
 omp-BW: (estimated Gb/sec)     276
 omp-Flops:    87.2
@@ -66,13 +66,13 @@ Threads:  44
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363734
+[ 1] y norm: 2.2363732
 [ 2] y norm: 2.8977087
-[ 3] y norm: 3.1973436
-[ 4] y norm: 3.367904
-Time:    259 msec
-omp-BW: (estimated Gb/sec)     367
-omp-Flops:     116
+[ 3] y norm: 3.1973433
+[ 4] y norm: 3.3679042
+Time:    260 msec
+omp-BW: (estimated Gb/sec)     365
+omp-Flops:     115
 ==== Run ../bin/clps on 56 threads ====
 Execute program ../bin/clps cores 56
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -81,10 +81,10 @@ Threads:  56
 Vector size: 25000 x 25000
 x norm: 24999.994
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236359
+[ 1] y norm: 2.2363586
 [ 2] y norm: 2.8977215
 [ 3] y norm: 3.1973443
-[ 4] y norm: 3.3679004
+[ 4] y norm: 3.3679001
 Time:    208 msec
 omp-BW: (estimated Gb/sec)     457
 omp-Flops:     144
@@ -99,7 +99,7 @@ x norm: 25000
 [ 1] y norm: 2.2363498
 [ 2] y norm: 2.8977191
 [ 3] y norm: 3.1973388
-[ 4] y norm: 3.367933
+[ 4] y norm: 3.3679328
 Time:    175 msec
 omp-BW: (estimated Gb/sec)     543
 omp-Flops:     171
@@ -113,11 +113,11 @@ x norm: 25000.002
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363422
 [ 2] y norm: 2.8977237
-[ 3] y norm: 3.197344
+[ 3] y norm: 3.1973438
 [ 4] y norm: 3.3679433
-Time:    156 msec
-omp-BW: (estimated Gb/sec)     609
-omp-Flops:     192
+Time:    155 msec
+omp-BW: (estimated Gb/sec)     613
+omp-Flops:     194
 ==== Run ../bin/clps on 89 threads ====
 Execute program ../bin/clps cores 89
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -129,10 +129,10 @@ x norm: 24999.99
 [ 1] y norm: 2.2363389
 [ 2] y norm: 2.8977253
 [ 3] y norm: 3.197335
-[ 4] y norm: 3.3679562
-Time:    140 msec
-omp-BW: (estimated Gb/sec)     679
-omp-Flops:     214
+[ 4] y norm: 3.3679564
+Time:    139 msec
+omp-BW: (estimated Gb/sec)     683
+omp-Flops:     216
 ==== Run ../bin/clps on 100 threads ====
 Execute program ../bin/clps cores 100
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -145,9 +145,9 @@ x norm: 24999.982
 [ 2] y norm: 2.8977246
 [ 3] y norm: 3.19733
 [ 4] y norm: 3.3679626
-Time:    127 msec
-omp-BW: (estimated Gb/sec)     748
-omp-Flops:     236
+Time:    125 msec
+omp-BW: (estimated Gb/sec)     760
+omp-Flops:     240
 ==== Run ../bin/clps on 112 threads ====
 Execute program ../bin/clps cores 112
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/clps -m 25000 -n 25000 -i 5 --trace
@@ -160,6 +160,6 @@ x norm: 24999.992
 [ 2] y norm: 2.8977354
 [ 3] y norm: 3.1973264
 [ 4] y norm: 3.367969
-Time:    122 msec
-omp-BW: (estimated Gb/sec)     779
-omp-Flops:     246
+Time:    123 msec
+omp-BW: (estimated Gb/sec)     772
+omp-Flops:     244
