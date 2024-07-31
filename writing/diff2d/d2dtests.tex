@@ -290,13 +290,13 @@ compilers.
           title=Execution time,
           ylabel=time (msec), xlabel=cores,
           width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,diy2d,kokkos,},
+          legend entries={oned,clps,span,iota,kokkos,},
           legend pos=north east,
         ]
         \addplot table[y=oned]{plots/spr-ratios-gcc.csv};
         \addplot table[y=clps]{plots/spr-ratios-gcc.csv};
         \addplot table[y=span]{plots/spr-ratios-gcc.csv};
-        \addplot table[y=diy2d]{plots/spr-ratios-gcc.csv};
+        \addplot table[y=iota]{plots/spr-ratios-gcc.csv};
         \addplot table[y=kokkos]{plots/spr-ratios-gcc.csv};
       \end{semilogyaxis}
     \end{tikzpicture}
@@ -307,13 +307,13 @@ compilers.
           title=Ratio to oned,
           ylabel=ratio, ymax=12, xlabel=cores,
           width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,diy2d,kokkos,},
+          legend entries={oned,clps,span,iota,kokkos,},
           legend pos=north west,
         ]
         \addplot table[y=oned]{plots/spr-ratios-gcc-rat.csv};
         \addplot table[y=clps]{plots/spr-ratios-gcc-rat.csv};
         \addplot table[y=span]{plots/spr-ratios-gcc-rat.csv};
-        \addplot table[y=diy2d]{plots/spr-ratios-gcc-rat.csv};
+        \addplot table[y=iota]{plots/spr-ratios-gcc-rat.csv};
         \addplot table[y=kokkos]{plots/spr-ratios-gcc-rat.csv};
       \end{axis}
     \end{tikzpicture}
