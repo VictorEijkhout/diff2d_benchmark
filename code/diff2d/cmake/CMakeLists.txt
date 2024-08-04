@@ -35,6 +35,25 @@ endif()
 include( FetchContent )
 
 ##
+## kokkos handling
+##
+
+if( ${PROJECT_NAME} STREQUAL "kokkos" )
+  find_package( Kokkos QUIET )
+  if( Kokkos_FOUND )
+    message( STATUS "Thanks for installing kokkos yourself" )
+  else()
+    message( STATUS "Downloading kokkos for you" )
+    FetchContent_Declare(
+      Kokkos
+      GIT_REPOSITORY https://github.com/kokkos/kokkos.git
+      )
+    FetchContent_MakeAvailable( Kokkos )
+  endif()
+  target_link_libraries( ${PROJECT_NAME} PUBLIC Kokkos::kokkos )
+endif()
+
+##
 ## options handling
 ##
 
