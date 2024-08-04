@@ -1,6 +1,6 @@
-==== Run diff2d on 1 threads ====
-Execute program diff2d cores 1
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 1 threads ====
+Execute program ../bin/iota cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:   1
@@ -11,12 +11,12 @@ x norm: 24999.111
 [ 2] y norm: 2.898758
 [ 3] y norm: 3.1967068
 [ 4] y norm: 3.3692253
-Time:   5517 msec
+Time:   5745 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 11 threads ====
-Execute program diff2d cores 11
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 11 threads ====
+Execute program ../bin/iota cores 11
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  11
@@ -27,12 +27,12 @@ x norm: 25000
 [ 2] y norm: 2.8985915
 [ 3] y norm: 3.196819
 [ 4] y norm: 3.3687003
-Time:    825 msec
+Time:    838 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 22 threads ====
-Execute program diff2d cores 22
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 22 threads ====
+Execute program ../bin/iota cores 22
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  22
@@ -43,12 +43,12 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968098
 [ 4] y norm: 3.3687022
-Time:    564 msec
+Time:    573 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 33 threads ====
-Execute program diff2d cores 33
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 33 threads ====
+Execute program ../bin/iota cores 33
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  33
@@ -59,12 +59,12 @@ x norm: 25000
 [ 2] y norm: 2.898581
 [ 3] y norm: 3.1968086
 [ 4] y norm: 3.3686988
-Time:    429 msec
+Time:    426 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 44 threads ====
-Execute program diff2d cores 44
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 44 threads ====
+Execute program ../bin/iota cores 44
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  44
@@ -75,12 +75,12 @@ x norm: 25000
 [ 2] y norm: 2.8985784
 [ 3] y norm: 3.1968105
 [ 4] y norm: 3.3686976
-Time:    352 msec
+Time:    365 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 56 threads ====
-Execute program diff2d cores 56
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 56 threads ====
+Execute program ../bin/iota cores 56
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  56
@@ -91,12 +91,12 @@ x norm: 25000
 [ 2] y norm: 2.898576
 [ 3] y norm: 3.1968071
 [ 4] y norm: 3.3687072
-Time:    321 msec
+Time:    330 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 67 threads ====
-Execute program diff2d cores 67
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 67 threads ====
+Execute program ../bin/iota cores 67
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  67
@@ -107,12 +107,12 @@ x norm: 25000
 [ 2] y norm: 2.898574
 [ 3] y norm: 3.1968043
 [ 4] y norm: 3.3687155
-Time:    315 msec
+Time:    310 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 78 threads ====
-Execute program diff2d cores 78
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 78 threads ====
+Execute program ../bin/iota cores 78
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  78
@@ -123,12 +123,12 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.196802
 [ 4] y norm: 3.3687165
-Time:    324 msec
+Time:    329 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 89 threads ====
-Execute program diff2d cores 89
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 89 threads ====
+Execute program ../bin/iota cores 89
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads:  89
@@ -139,12 +139,12 @@ x norm: 25000
 [ 2] y norm: 2.8985724
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:    327 msec
+Time:    325 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 100 threads ====
-Execute program diff2d cores 100
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 100 threads ====
+Execute program ../bin/iota cores 100
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads: 100
@@ -155,12 +155,12 @@ x norm: 25000
 [ 2] y norm: 2.8985717
 [ 3] y norm: 3.1968012
 [ 4] y norm: 3.3687162
-Time:    342 msec
+Time:    343 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-==== Run diff2d on 112 threads ====
-Execute program diff2d cores 112
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./diff2d -m 25000 -n 25000 -i 5 --trace
+==== Run ../bin/iota on 112 threads ====
+Execute program ../bin/iota cores 112
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
 Total cores available: 112
 Runtype: iota
 Threads: 112
@@ -171,8 +171,6 @@ x norm: 25000
 [ 2] y norm: 2.898571
 [ 3] y norm: 3.1968057
 [ 4] y norm: 3.3687134
-Time:    359 msec
+Time:    356 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
-================ This type of run:
-OpenMP over 1D index range with mdspan
