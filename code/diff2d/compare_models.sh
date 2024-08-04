@@ -6,6 +6,14 @@
 ################################################################
 
 function usage () {
+    echo
+    echo "This generates commandlines:" && echo
+    echo "[ srun -p QUEUE -t ${runtime} -N 1 -n 1 -A ACCOUNT "
+    echo "      --cpu-bind=verbose,mask_cpu=MASK ]"
+    echo "make run_scaling ## complicated script!"
+    echo "    PROGRAM=../bin/VARIANT NSIZE=\${NSIZE} TACC_SYSTEM=\${CPU} CATEGORY=\${VARIANT}"
+    echo "    [ GITADD=1 ] "
+    echo && echo " where parameters can be set:" && echo
     echo "Usage: $0 "
     echo "    [ -c cpu ]"
     echo "    [ -n 123456 (default ${nsize}) ] [ -p 1123 (default=${cores}) ]"
@@ -20,7 +28,11 @@ procs=112
 gitadd=0
 srun=
 trace=
+runtime=0:30:0
+## TACC specific:
 queue=spr
+## Victor specific:
+account=A-ccsc
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then 
 	usage && exit 1
@@ -59,7 +71,7 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
     if [ ! -f bin/${code} ] ; then continue ; fi
     ( cd ${code} \
        && if [ "${srun}" = "1" ] ; then \
-	     cmdline="srun -p $queue -t 0:30:0 -N 1 -n 1 -A A-ccsc \
+	     cmdline="srun -p $queue -t ${runtime} -N 1 -n 1 -A ${account} \
                --cpu-bind=verbose,mask_cpu=${mask}" \
 	  ; else \
 	      cmdline="" \
