@@ -6,6 +6,7 @@ endif()
 project( ${VARIANT} VERSION 1.0 )
 message( STATUS "\n====   Building variant: ${PROJECT_NAME}" )
 
+set( CMAKE_BUILD_TYPE RelWithDebInfo )
 add_executable( ${PROJECT_NAME} )
 target_compile_features( ${PROJECT_NAME} PRIVATE cxx_std_23 )
 target_sources( ${PROJECT_NAME} PRIVATE diff2d.cpp )
@@ -16,7 +17,7 @@ target_sources( ${PROJECT_NAME} INTERFACE ../main.cpp )
 ##
 message( STATUS "\n====   setting backend" )
 # what variant are we doing?
-set( omp_backends "seq" "oned" "clps" "kokkos" "span" )
+set( omp_backends "seq" "oned" "clps" "iota" "kokkos" "span" )
 list( FIND omp_backends "${VARIANT}" index )
 # add OpenMP 
 if( ${index} GREATER 0 )
