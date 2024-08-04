@@ -4,12 +4,12 @@ Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CU
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
-[ 0] y norm: 941468.25
-[ 1] y norm: 970.29285
-[ 2] y norm: 31.149525
-[ 3] y norm: 5.581176
-[ 4] y norm: 2.3624513
-Time:  26183 msec
+[ 0] y norm: 322.15372
+[ 1] y norm: 18.082365
+[ 2] y norm: 4.2668686
+[ 3] y norm: 2.0823936
+[ 4] y norm: 1.5047483
+Time:  15449 msec
 ==== Run ../bin/sycl on 11 threads ====
 Execute program ../bin/sycl cores 11
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=11 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
@@ -21,7 +21,7 @@ Max Compute Units : 112
 [ 2] y norm: 4.2624397
 [ 3] y norm: 2.0815916
 [ 4] y norm: 1.5054775
-Time:   2614 msec
+Time:   1554 msec
 ==== Run ../bin/sycl on 22 threads ====
 Execute program ../bin/sycl cores 22
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=22 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
@@ -33,34 +33,46 @@ Max Compute Units : 112
 [ 2] y norm: 4.2668686
 [ 3] y norm: 2.0823936
 [ 4] y norm: 1.5047483
-Time:   1450 msec
+Time:    868 msec
 ==== Run ../bin/sycl on 33 threads ====
 Execute program ../bin/sycl cores 33
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=33 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
-[ 0] y norm: 941468.25
-[ 1] y norm: 970.29285
-[ 2] y norm: 31.149525
-[ 3] y norm: 5.581176
-[ 4] y norm: 2.3624513
-Time:    998 msec
+[ 0] y norm: 322.15372
+[ 1] y norm: 18.082365
+[ 2] y norm: 4.2668686
+[ 3] y norm: 2.0823936
+[ 4] y norm: 1.5047483
+Time:    613 msec
 ==== Run ../bin/sycl on 44 threads ====
 Execute program ../bin/sycl cores 44
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=44 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
-[ 0] y norm: 29761542
-[ 1] y norm: 5455.414
-[ 2] y norm: 73.86077
-[ 3] y norm: 8.594229
-[ 4] y norm: 2.9315915
-Time:    779 msec
+[ 0] y norm: 322.15372
+[ 1] y norm: 18.082365
+[ 2] y norm: 4.2668686
+[ 3] y norm: 2.0823936
+[ 4] y norm: 1.5047483
+Time:    488 msec
 ==== Run ../bin/sycl on 56 threads ====
 Execute program ../bin/sycl cores 56
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=56 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 112
+[ 0] y norm: 322.15372
+[ 1] y norm: 18.082365
+[ 2] y norm: 4.2668686
+[ 3] y norm: 2.0823936
+[ 4] y norm: 1.5047483
+Time:    414 msec
+==== Run ../bin/sycl on 67 threads ====
+Execute program ../bin/sycl cores 67
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=67 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
@@ -69,10 +81,10 @@ Max Compute Units : 112
 [ 2] y norm: 73.86077
 [ 3] y norm: 8.594229
 [ 4] y norm: 2.9315915
-Time:    630 msec
-==== Run ../bin/sycl on 67 threads ====
-Execute program ../bin/sycl cores 67
-Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=67 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
+Time:    370 msec
+==== Run ../bin/sycl on 78 threads ====
+Execute program ../bin/sycl cores 78
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=78 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
@@ -81,22 +93,22 @@ Max Compute Units : 112
 [ 2] y norm: 4.2624397
 [ 3] y norm: 2.0815916
 [ 4] y norm: 1.5054775
-Time:    569 msec
-==== Run ../bin/sycl on 78 threads ====
-Execute program ../bin/sycl cores 78
-Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=78 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
-Selecting host CPU
-Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 112
-[ 0] y norm: 29761542
-[ 1] y norm: 5455.414
-[ 2] y norm: 73.86077
-[ 3] y norm: 8.594229
-[ 4] y norm: 2.9315915
-Time:    547 msec
+Time:    365 msec
 ==== Run ../bin/sycl on 89 threads ====
 Execute program ../bin/sycl cores 89
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=89 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
+Selecting host CPU
+Device : Intel(R) Xeon(R) CPU Max 9480
+Max Compute Units : 112
+[ 0] y norm: 320.68387
+[ 1] y norm: 18.042902
+[ 2] y norm: 4.2624397
+[ 3] y norm: 2.0815916
+[ 4] y norm: 1.5054775
+Time:    366 msec
+==== Run ../bin/sycl on 100 threads ====
+Execute program ../bin/sycl cores 100
+Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=100 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
@@ -105,28 +117,16 @@ Max Compute Units : 112
 [ 2] y norm: 31.149525
 [ 3] y norm: 5.581176
 [ 4] y norm: 2.3624513
-Time:    553 msec
-==== Run ../bin/sycl on 100 threads ====
-Execute program ../bin/sycl cores 100
-Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=100 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
-Selecting host CPU
-Device : Intel(R) Xeon(R) CPU Max 9480
-Max Compute Units : 112
-[ 0] y norm: 322.15372
-[ 1] y norm: 18.082365
-[ 2] y norm: 4.2668686
-[ 3] y norm: 2.0823936
-[ 4] y norm: 1.5047483
-Time:    555 msec
+Time:    371 msec
 ==== Run ../bin/sycl on 112 threads ====
 Execute program ../bin/sycl cores 112
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=112 ./../bin/sycl -m 25000 -n 25000 -i 5 --trace
 Selecting host CPU
 Device : Intel(R) Xeon(R) CPU Max 9480
 Max Compute Units : 112
-[ 0] y norm: 322.15372
-[ 1] y norm: 18.082365
-[ 2] y norm: 4.2668686
-[ 3] y norm: 2.0823936
-[ 4] y norm: 1.5047483
-Time:    570 msec
+[ 0] y norm: 941468.25
+[ 1] y norm: 970.29285
+[ 2] y norm: 31.149525
+[ 3] y norm: 5.581176
+[ 4] y norm: 2.3624513
+Time:    354 msec
