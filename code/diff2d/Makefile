@@ -38,28 +38,35 @@ compile :
 
 .PHONY: cmake
 info ::
-	@echo "make cmake [ VARIANTS=.... ]"
+	@echo "make cmake [ VARIANTS=.... ] [ ECHO=1 for verbose compilation ]"
 cmake :
 	@if [ ! -z "${VARIANT}" ] ; then \
 	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
-	@for v in ${VARIANTS} ; do \
-	  if [ -d "$${v}" ] ; then \
-	    rm -rf build $${v}/CMakeLists.txt \
-	     && mkdir -p build && ln cmake/CMakeLists.txt $${v}/CMakeLists.txt \
-	     && ( cd build  \
-	         && cmake \
-	          $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
-	          -D CMAKE_VERBOSE_MAKEFILE=ON \
-	          -D VARIANT=$${v} \
-	          -D CMAKE_INSTALL_PREFIX=../bin \
-	          ../$${v} \
-	         && make V=1 && make install \
-	      ) \
-	  ; else echo "No such variant: <<$$v>>" && exit 1 \
-	  ; fi \
-	 ; done \
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	      buildlog=./build-$${compiler:-compiler}.log \
+	    ; else \
+	      buildlog=/tmp/build-$${compiler:-compiler}.log \
+	    ; fi \
+	 && for v in ${VARIANTS} ; do \
+	      if [ -d "$${v}" ] ; then \
+	        rm -rf build $${v}/CMakeLists.txt \
+	         && mkdir -p build && ln cmake/CMakeLists.txt $${v}/CMakeLists.txt \
+	         && ( cd build  \
+	             && cmake \
+	              -D CMAKE_INSTALL_PREFIX=../bin \
+	              $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
+	              $$( if [ "${ECHO}" = "1" ] ; then echo "-D CMAKE_VERBOSE_MAKEFILE=ON" ; fi ) \
+	              -D VARIANT=$${v} \
+	              ../$${v} \
+	             && make V=1 && make install \
+	          ) \
+	      ; else echo "No such variant: <<$$v>>" && exit 1 \
+	      ; fi \
+	     ; done 2>&1 | tee $${buildlog} \
 	 && echo "Generated:" \
-	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done
+	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done \
+	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${buildlog})" ; fi
 clean ::
 	@rm -rf bin/{include,lib64} ## why???
 	@for v in ${VARIANTS}; do rm -f bin/$${v} ; done
