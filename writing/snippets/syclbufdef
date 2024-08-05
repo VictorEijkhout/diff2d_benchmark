@@ -1,4 +1,0 @@
-// forloop.cxx
-std::vector<int> myArray(SIZE);
-  sycl::range<1> mySize{myArray.size()};
-  sycl::buffer<int, 1> bufferA(myArray.data(), myArray.size());

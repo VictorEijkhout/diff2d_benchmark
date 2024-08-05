@@ -23,6 +23,7 @@
 \newif\ifInBook \InBooktrue
 \input book.inex
 \input acromacs
+\input bookmacs
 \input articlemacs
 \input ../../../scientific-computing-private/macros/commonmacs
 \input ../../../introduction-scientific-programming-private/guide/macros/idxmacs
@@ -41,8 +42,6 @@
   }, Yojan Chitkara, Daksh Chaplot}
 \maketitle
 
-\part{Writeup}
-
 \input d2dtests
 
 \paragraph*{Acknowledgement}
@@ -50,85 +49,5 @@ This work was supported by
 the Intel OneAPI Center of Excellence, and the 
 TACC STAR Scholars program,
 funded by generous gifts from TACC industry partners, including Intel, Shell, Exxon, and Chevron.
-
-\part{Appendix}
-
-\Level 0 {Run scripts, settings, data}
-
-Compile:
-\begin{lstlisting}
-## delete all binaries
-make clean
-## rebuild all
-make cmake
-\end{lstlisting}
-You will get a listing of all binaries that have been built
-into the \lstinline{bin} directory.
-Some versions may be missing for perfectly legitimate reasons,
-such as sycl for gcc.
-
-The sofware relies on \lstinline{cxxopts}, \lstinline{mdspan}, \lstinline{kokkos}.
-You can install those yourself, or let cmake download~/ install them for you.
-
-Comparison of programming models:
-\begin{lstlisting}
-./compare_models.sh -c spr -q spr-dev -p 112 -s -t -g all
-\end{lstlisting}
-where
-\begin{itemize}
-\item \n{-c spr} names the \lstinline{spr} processor; this is purely for naming purposes.
-\end{itemize}
-This script is heavily SLURM-based.
-\begin{itemize}
-\item \n{-s} prepends \lstinline{srun} with various parameters to the run command;
-  the alternative is to run on a compute node.
-\item \n{-q spr-dev} names the SLURM queue if \lstinline{srun} is used.
-\item \n{-p 112} gives the core count for the node if \lstinline{srun} is used;
-  otherwise \lstinline{SLURM} parameters are queried.
-\end{itemize}
-The actual program run is done by another script that does a scaling study.
-As a result, a file with extension \lstinline{.out} is generated.
-\begin{itemize}
-\item \n{-t} prints out trace information.
-\item \n{-g} indicates that the \lstinline{.out} file 1.~is renamed to \lstinline{.runout},
-  and 2.~is added to the repository. This of course requires you to have a writable fork.
-\end{itemize}
-
-\Level 0 {Data}
-
-Table~\ref{fig:diff2d-variants} left.
-
-\lstinputlisting{plots/spr-models-intel.csv}
-
-Right.
-
-\lstinputlisting{plots/spr-models-intel-sp.csv}
-
-Table~\ref{fig:diff2d-variants} left.
-
-\lstinputlisting{plots/spr-models-gcc.csv}
-
-Right.
-
-\lstinputlisting{plots/spr-models-gcc-sp.csv}
-
-Table~\ref{fig:diff2d-procs} left.
-
-skx
-
-\lstinputlisting{plots/intel-skx.csv}
-
-csx
-
-\lstinputlisting{plots/intel-csx.csv}
-
-icx
-
-\lstinputlisting{plots/intel-icx.csv}
-
-spr
-
-\lstinputlisting{plots/intel-spr.csv}
-
 
 \end{document}

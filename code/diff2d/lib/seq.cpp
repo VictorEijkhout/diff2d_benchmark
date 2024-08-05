@@ -15,7 +15,7 @@
 
 #include "seq.hpp"
 
-//codesnippet d2dindexscale
+//codesnippet d2dseqindex
 #define IINDEX( i,j,b,n2b ) ((i)+b)*n2b + (j)+b
 //codesnippet end
 
@@ -65,7 +65,7 @@ namespace linalg {
     auto out = this->data();
     auto in = other.data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
-    //codesnippet d2dscaledseq
+    //codesnippet d2dscaleseq
     for ( int64_t i=0; i<m; i++ )
       for ( int64_t j=0; j<n; j++ )
         out[ IINDEX(i,j,b,n2b) ] = in[ IINDEX(i,j,b,n2b) ] * factor;

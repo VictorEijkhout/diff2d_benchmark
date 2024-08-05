@@ -1,5 +1,0 @@
-auto extensions_vector =
-	//plat.get_info<sycl::info::platform::extensions>();
-	plat.get_info<sycl::info::device::aspects>();
-for ( const auto& ext : extensions_vector ) 
-	std::cout << "Extension: " << ext << 'n';

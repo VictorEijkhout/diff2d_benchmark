@@ -16,11 +16,19 @@ info ::
 
 FILE = diff2d
 FILES= diff2d cppcon2024 ixpug24eijkhout
-pdf : 
+pdf : getfiles
 	@echo rsync ../../plots/*.csv ./plots/
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
 	@export TEXINPUTS=../macros:../graphics:${SNIPPETSDIR}:../:${TEXINPUTS} \
 	 && pdflatex -shell-escape ${FILE}
+.PHONY: getfiles
+STC = ../../../scientific-computing-private
+getfiles :
+	@if [ "$$(whoami)" = "eijkhout" ] ; then \
+	    rsync ../../../scientific-computing-private/scicompbook.aux . \
+	     && rsync ${STC}/macros/{book,common,idx}macs.tex \
+	                ../macros/ \
+	 ; fi
 clean ::
 	@rm -f plots/*.{dep,dpth,idx,log,mw}
 

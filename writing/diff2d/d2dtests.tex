@@ -11,7 +11,17 @@
 
 \Level 0 {Introduction}
 
-In this paper we consider the parallelization of the `power method'.
+In this paper we evaluate multiple parallel programming models
+with respect to both ease of expression, and resulting performance.
+We do this by implementing the mathematical algorithm
+known as the `power method' in a variety of ways,
+for the moment all in~C++.
+
+\Level 0 {Algorithm aspects}
+
+We briefly discuss the power method, mostly going into
+its computational aspects.
+For the mathematical side, see \HPSCref{app:power-method}.
 
 %%packtsnippet d2dpower
 Computationally, the power method is an attractive paradigmatic example
@@ -66,31 +76,37 @@ In our power method application
 %% (chapter~\ref{ch:parexample})
 a first example of a parallel loop is scaling an array by a factor.
 %
-\cxxverbatimsnippet{d2dscaleoned}
+\cxxverbatimsnippet{d2dscaleseq}
+%
+where \lstinline{m,n} are the size of the domain and \lstinline{b}~is the
+width of a halo region.
+
 
 Some remarks.
 \begin{enumerate}
 \item
-  The loop bounds are set to range only over the size of the interior
-  of the \lstinline{mdspan}.
-  Later we will explore using a range-based loop and
-  dispensing with indexing entirely.
-  However, that is not always possible.
-\item We are using a tradition macro to translate from two-dimensional
+  The loop bounds are set to range only over the size of the interior of the domain.
+  %% of the \lstinline{mdspan}.
+  %% Later we will explore using a range-based loop and
+  %% dispensing with indexing entirely.
+  %% However, that is not always possible.
+\item We are using a traditional macro to translate from two-dimensional
   to one-dimensional indexing, skipping the border points:
-  \cxxverbatimsnippet{d2donedindex}
+  \cxxverbatimsnippet{d2dseqindex}
   Later we will discuss other indexing schemes.
 \begin{packt}
     (For the macro idiom, see section~\ref{sec:cpp-mac-param}.)
 \end{packt}
 \item
-  The \lstinline{data2d} method gives an \lstinline{mdspan} object:
+  For the initial implementation, the \lstinline{out,in} data
+  are \lstinline{double*} pointers, for instance obtained
+  as the \lstinline{data} member of a \lstinline{std::vector}.
+  Later we will explore implementing the data as an \lstinline{mdspan} object:
   
   \twosnippetswithcaptions{Class data:}{d2dspan0}{Accessor:}{d2dspan2}
 
   so we can use the two-dimensional \lstinline{[i,j]} type indexing.
 \end{enumerate}
-
 %%packtsnippet end
 
 \Level 1 {Reduction in the example application}
@@ -99,7 +115,7 @@ Some remarks.
 The $\ell_2$ reduction of our example application
 looks in code like:
 %
-\cxxverbatimsnippet{d2dnormspan}
+\cxxverbatimsnippet{d2dnormseq}
 
 \begin{figure}[t]
   \includegraphics[scale=.1]{omp-reduct}
@@ -123,7 +139,7 @@ The evaluation of the 5-point difference operator is perfectly parallel
 in that there are no dependencies between the points of the output vector.
 However, the loop is more complicated than the scaling operation above:
 %
-\cxxverbatimsnippet{d2d5ptoned}
+\cxxverbatimsnippet{d2d5ptseq}
 
 While this operation is somewhat like a `transform' range operation,
 the complexity of the right-hand-side indexing precludes using

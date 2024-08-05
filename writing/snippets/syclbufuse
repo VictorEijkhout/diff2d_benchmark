@@ -1,3 +1,0 @@
-myqueue.submit( [&] ( sycl::handler &h ) {
-    auto deviceAccessorA =
-      bufferA.get_access<sycl::access::mode::read_write>(h);
