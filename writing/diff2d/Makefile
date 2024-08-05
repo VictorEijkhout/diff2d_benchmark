@@ -57,7 +57,7 @@ snippets : snippets-dir
 	      ; \
 	     done \
 	  && for s in `ls` ; do \
-	       python ../cutspace.py $$s ; \
+	       python $${pwd}/../../scripts/cutspace.py $$s ; \
 	     done \
 	 ) >snippets.log 2>&1
 	@echo "(see snippets.log)"
