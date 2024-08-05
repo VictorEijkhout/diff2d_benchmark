@@ -1,0 +1,123 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% `The Art of HPC, vol 1: The Science of Computing'
+%%%% by Victor Eijkhout, copyright 2012-2023
+%%%%
+%%%% This book is distributed under a Creative Commons Attribution 3.0
+%%%% Unported (CC BY 3.0) license and made possible by funding from
+%%%% The Saylor Foundation \url{http://www.saylor.org}.
+%%%%
+%%%% bookmacs : macros specifically for the book version
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifInBook \InBooktrue
+
+%% skip stuff that's only for the html version
+\excludecomment{htmlequation}
+
+%%
+%% refer to sections in the HPC book
+%% needed for the carpentry book
+%%
+\usepackage{xr-hyper}
+% only in tutorials \externaldocument[HPSC-]{scicompbook}
+\newcommand\HPSCref[2][section]{HPC book, #1~\ref{HPSC-#2}}
+% only in book \externaldocument[CARP-]{scicomptutorials}
+\newcommand\CARPref[2][section]{%
+        \textsl{Tutorials book, #1~\ref{CARP-#2}}}
+\externaldocument[PCSE-]{parcompbook}
+\newcommand\PCSEref[2][section]{%
+        \textsl{Parallel Programming book, #1~\ref{PCSE-#2}}}
+\externaldocument[ISP-]{ispbook}
+\newcommand\ISPref[2][section]{%
+        \textsl{Introduction to Scientific Programming book, #1~\ref{ISP-#2}}}
+
+\begin{notlulu}
+  \usepackage{hyperref}
+  % [xetex,colorlinks,pagebackref=true]
+  \hypersetup{bookmarksopen=true}
+  \newcommand*{\backref}[1]{}
+  \newcommand*{\backrefalt}[4]{[{\tiny%
+      \ifcase #1 Not cited.%
+      \or Cited on page~#2.%
+      \else Cited on pages #2.%
+      \fi%
+  }]}
+  \usepackage[all]{hypcap}
+\end{notlulu}
+\begin{lulu}
+  \usepackage{url}
+\end{lulu}
+
+%%%%
+%%%% layout and graphics
+%%%%
+\renewcommand\topfraction{.9}
+\usepackage{graphicx,wrapfig}
+\usepackage{makeidx}
+
+\newcounter{lesson} % for lesson tables
+\newcommand\furtherreading{\Level 0 {Further Reading}\label{sec:furtherreading-\chapshortname}}
+
+
+\newenvironment{specialnote}[1]
+               {\par\begin{raggedright}
+                 \leftskip=.5\unitindent
+                 \noindent\textsl{#1.}\kern1em\ignorespaces}
+               {\end{raggedright}\par}
+\newenvironment{taccnote}
+  {\begin{specialnote}{TACC note}}
+  {\end{specialnote}}
+\newenvironment{enrichment}
+  {\begin{specialnote}{Enrichment}}
+  {\end{specialnote}}
+\newenvironment{zshnote}
+  {\begin{specialnote}{Zsh note}}
+  {\end{specialnote}}
+\newenvironment{fortrannote}
+  {\begin{specialnote}{Fortran note}}
+  {\end{specialnote}}
+\newenvironment{pythonnote}
+  {\begin{specialnote}{Python note}}
+  {\end{specialnote}}
+
+%%
+%% #1 optional language
+%% #2 caption
+%% #3 path to file
+%% #4 file name
+%%
+\newcommand\ListNamedSource[4][bash]{
+  %% \message{Using language #1}
+  \begingroup \par \texttt{#2}
+  \lstset{language=#1}
+  \ListStrippedSource{#3}{#4}
+  \endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% more environments
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{stufflearned}[1][Commands learned in this section]{%
+\begin{tabular}{lp{3in}}
+  \toprule
+  #1\\
+  \midrule
+}{%
+  \bottomrule
+\end{tabular}
+}
+
+% this one should probably go?
+\newenvironment{fntable}[1]
+{\par\hbox\bgroup\kern\unitindent
+\begin{tabular}{#1}\toprule}
+{\bottomrule\end{tabular}\egroup\par}

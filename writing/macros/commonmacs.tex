@@ -1,0 +1,85 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% `The Art of HPC, vol 1: The Science of Computing'
+%%%% by Victor Eijkhout, copyright 2012-2024
+%%%%
+%%%% commonmacs : very common macros
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% regular formatting
+\newcommand\innocentcharacters{%
+  \catcode`\_=12 \catcode`\#=12
+  \catcode`\>=12 \catcode`\<=12
+  \catcode`\&=12 \catcode`\^=12
+  \catcode`\$=12 \catcode`\~=12
+}
+\def\n#{\bgroup
+  \innocentcharacters
+  \def\\{\char`\\}\relax
+  \tt \let\next=}
+\let\InnocentChars\innocentcharacters
+
+\newcommand\makeusletter{\catcode`\_=11 }
+\newcommand\makeusother{\catcode`\_=12 }
+
+\usepackage{listings,verbatim,xcolor}% needed for parsing some aux files
+\usepackage{booktabs}
+
+\newcommand\inv{^{-1}}
+\newcommand\invt{^{-t}}
+\newcommand\setspan[1]{[\![#1]\!]}
+\newcommand\fp[2]{#1\cdot10^{#2}}
+\newcommand\fxp[2]{\langle #1,#2\rangle}
+
+\newcommand\diag{\mathop{\mathrm {diag}}}
+\newcommand\argmin{\mathop{\mathrm {argmin}}}
+\newcommand\defined{
+  \mathrel{\lower 5pt \hbox{${\equiv\atop\mathrm{\scriptstyle D}}$}}}
+\newcommand\lulubreak{\message{Hard page break!}\pagebreak\relax}
+
+\newcommand\bbP{\mathbb{P}}
+\newcommand\bbR{\mathbb{R}}
+
+%%%%
+%%%% input file without header
+%%%%
+\newcommand\strippedinput[2]{
+  \immediate\write18{
+    cd #1 && ls #2 
+    && awk 'p==1 && !/codesnippet/ {print} NF==0 {p=1}' #2 > #2.stripped.out
+  }
+  \IfFileExists
+      {#1/#2.stripped.out}
+      {\lstinputlisting{#1/#2.stripped.out}}
+      {\message{Could not strip file #1/#2}
+        \lstset{basicstyle=\tiny\ttfamily}
+        \lstinputlisting{#1/#2}}
+}
+%% something similar
+\newcommand\ListStrippedSource[2]{
+  \begingroup \footnotesize
+  \IfFileExists{#1/#2.stripped}
+  {}
+  {\immediate \write 18
+    { cd #1 ; /Users/eijkhout/Current/istc/scientific-computing-private/stripsource #2 }}
+  \message{Inputting stripped source: #1/#2.stripped}
+  \verbatiminput{#1/#2.stripped}
+  
+  \endgroup
+}
+
+%%
+%% title page
+%%
+\newcommand\formattime{%
+  \begingroup
+  \count0=\time \divide\count0 by 60
+  \count1=\count0 \multiply\count1 by 60
+  \advance\time by -\count1 
+  last formatted \today, \the\count0\relax:\the\time\relax
+  \endgroup}
