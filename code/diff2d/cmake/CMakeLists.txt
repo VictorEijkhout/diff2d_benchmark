@@ -17,7 +17,7 @@ target_sources( ${PROJECT_NAME} INTERFACE ../main.cpp )
 ##
 message( STATUS "\n====   setting backend" )
 # what variant are we doing?
-set( omp_backends "seq" "oned" "clps" "iota" "kokkos" "span" )
+set( omp_backends "seq" "oned" "clps" "iota" "diy2e" "kokkos" "span" )
 list( FIND omp_backends "${VARIANT}" index )
 # add OpenMP 
 if( ${index} GREATER 0 )
