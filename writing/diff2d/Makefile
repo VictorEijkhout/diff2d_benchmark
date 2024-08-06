@@ -16,16 +16,24 @@ info ::
 
 FILE = diff2d
 FILES= diff2d cppcon2024 ixpug24eijkhout
+LATEX = pdflatex
+##xelatex
+.PHONY: pdf onepass
 pdf : getfiles
 	@echo rsync ../../plots/*.csv ./plots/
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
+	@make --no-print-directory onepass
+onepass :
 	@export TEXINPUTS=../macros:../graphics:${SNIPPETSDIR}:../:${TEXINPUTS} \
-	 && pdflatex -shell-escape ${FILE}
+	 && ${LATEX} -shell-escape ${FILE}
+
 .PHONY: getfiles
 STC = ../../../scientific-computing-private
 getfiles :
 	@if [ "$$(whoami)" = "eijkhout" ] ; then \
-	    rsync ../../../scientific-computing-private/scicompbook.aux . \
+	    if [ -f ../../../scientific-computing-private/scicompbook.aux ] ; then \
+	      rsync ../../../scientific-computing-private/scicompbook.aux . \
+	     ; fi \
 	     && rsync ${STC}/macros/{book,common,idx}macs.tex \
 	                ../macros/ \
 	 ; fi

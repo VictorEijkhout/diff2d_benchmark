@@ -38,11 +38,10 @@
         \textsl{Introduction to Scientific Programming book, #1~\ref{ISP-#2}}}
 
 \begin{notlulu}
-  \usepackage{hyperref}
-  % [xetex,colorlinks,pagebackref=true]
+  \usepackage[colorlinks,pagebackref=true]{hyperref}  
   \hypersetup{bookmarksopen=true}
-  \newcommand*{\backref}[1]{}
-  \newcommand*{\backrefalt}[4]{[{\tiny%
+  \renewcommand*{\backref}[1]{}
+  \renewcommand*{\backrefalt}[4]{[{\tiny%
       \ifcase #1 Not cited.%
       \or Cited on page~#2.%
       \else Cited on pages #2.%

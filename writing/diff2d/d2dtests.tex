@@ -263,13 +263,14 @@ compilers.
           title=Execution time,
           ylabel=time (msec), xlabel=cores,
           width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,kokkos,sycl,},
+          legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
           legend pos=north east,
         ]
         \addplot table[y=oned]{plots/spr-ratios-intel.csv};
         \addplot table[y=clps]{plots/spr-ratios-intel.csv};
         \addplot table[y=span]{plots/spr-ratios-intel.csv};
         \addplot table[y=iota]{plots/spr-ratios-intel.csv};
+        \addplot table[y=diy2e]{plots/spr-ratios-intel.csv};
         \addplot table[y=kokkos]{plots/spr-ratios-intel.csv};
         \addplot table[y=sycl]{plots/spr-ratios-intel.csv};
       \end{semilogyaxis}
@@ -281,13 +282,14 @@ compilers.
           title=Ratio to oned,
           ylabel=ratio, ymax=20, xlabel=cores,
           width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,kokkos,sycl,},
+          legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
           legend pos=north west,
         ]
         \addplot table[y=oned]{plots/spr-ratios-intel-rat.csv};
         \addplot table[y=clps]{plots/spr-ratios-intel-rat.csv};
         \addplot table[y=span]{plots/spr-ratios-intel-rat.csv};
         \addplot table[y=iota]{plots/spr-ratios-intel-rat.csv};
+        \addplot table[y=diy2e]{plots/spr-ratios-intel-rat.csv};
         \addplot table[y=kokkos]{plots/spr-ratios-intel-rat.csv};
         \addplot table[y=sycl]{plots/spr-ratios-intel-rat.csv};
       \end{axis}
