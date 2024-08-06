@@ -69,10 +69,17 @@ namespace linalg {
 	};
         //codesnippet end
         auto operator+( idxint dist ) const {
-          auto displaced(*this);
-          auto lin = ( i*m+j ) + dist;
-          displaced.i = lin/m; displaced.j = lin%m; 
-          return displaced;
+	  //std::cout << std::format("dist: {} ",dist);
+	  if ( dist==0 ) {
+	    return saved_iterator;
+	  } else if ( dist==saved_dist+1 ) {
+	    ++saved_dist; ++saved_iterator; return saved_iterator;
+	  } else {
+	    auto displaced(*this);
+	    auto lin = ( i*m+j ) + dist;
+	    displaced.i = lin/m; displaced.j = lin%m; 
+	    return displaced;
+	  }
         };
         // gcc needs +=, intel only +
         // auto& operator+=( idxint dist ) {
@@ -86,29 +93,20 @@ namespace linalg {
       };
       cartesian_product_diy( idxint m, idxint n,int b ) 
         : m(m),n(n),b(b) {};
+      static inline idxint saved_dist{0};
+      static inline cartesian_iterator saved_iterator{ cartesian_iterator( 0,0,0,0,0 ) };
       auto begin() {
+	saved_iterator = cartesian_iterator( m,n,b,0,0 );
         return cartesian_iterator(m,n,b, /* start */ 0,0); };
       auto end()   {
         return cartesian_iterator(m,n,b, /* end   */ m,0); };
-    };
+    }; // end: cartesian_product_diy 
     auto inner_diy() { 
       return cartesian_product_diy(this->m(),this->n(),this->border());
     };
   };
 };
 
-#endif
-
-#if 0
-        //codesnippet d2ediyiter
-        auto& operator++(  ) {
-	  c--;
-          j++; j *= (c>0);
-	  i += (c==0);
-	  c += m*(c==0);
-	  return *this;
-	};
-        //codesnippet end
 #endif
 
 #if 0
