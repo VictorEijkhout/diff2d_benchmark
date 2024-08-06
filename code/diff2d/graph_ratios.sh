@@ -39,7 +39,7 @@ python3 ../../scripts/ratio_graphs_extract.py \
 	--name ${cpu}-ratios-${compiler} \
 	$( if [ "${verbose}" = "1" ] ; then echo --verbose ; fi ) \
 	$( if [ "${test}" = "1" ] ; then echo --test ; fi ) \
-	$( for m in oned clps span iota kokkos sycl ; do \
+	$( for m in oned clps span iota diy2e kokkos sycl ; do \
 	       file=${m}/diff2d-scaling-${m}-${cpu}-${compiler}-${nsize}.runout \
 		   && if [ -f "${file}" ] ; then echo ${file}:${m} ; fi \
 	       ; done ) \
