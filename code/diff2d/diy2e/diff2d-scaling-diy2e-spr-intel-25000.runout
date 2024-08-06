@@ -5,13 +5,13 @@ Total cores available: 112
 Runtype: diz
 Threads:   1
 Vector size: 25000 x 25000
-x norm: 11585.237
+x norm: 4096
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.236641
-[ 2] y norm: 2.8978484
-[ 3] y norm: 3.1961644
-[ 4] y norm: 3.370536
-Time:  26340 msec
+[ 1] y norm: 2.2374504
+[ 2] y norm: 2.8954036
+[ 3] y norm: 3.197121
+[ 4] y norm: 3.3704336
+Time:  30486 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 11 threads ====
@@ -21,13 +21,13 @@ Total cores available: 112
 Runtype: diz
 Threads:  11
 Vector size: 25000 x 25000
-x norm: 24999.998
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2360952
-[ 2] y norm: 2.898607
-[ 3] y norm: 3.1968315
-[ 4] y norm: 3.368907
-Time:   2523 msec
+x norm: 13584.8955
+[ 0] y norm: 347.07492
+[ 1] y norm: 290.0541
+[ 2] y norm: 2.9426365
+[ 3] y norm: 3.462376
+[ 4] y norm: 3.6545477
+Time:   2951 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 22 threads ====
@@ -37,13 +37,13 @@ Total cores available: 112
 Runtype: diz
 Threads:  22
 Vector size: 25000 x 25000
-x norm: 24999.998
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361352
-[ 2] y norm: 2.8985593
-[ 3] y norm: 3.1968582
-[ 4] y norm: 3.3687148
-Time:   1307 msec
+x norm: 19211.943
+[ 0] y norm: 350.33554
+[ 1] y norm: 282.074
+[ 2] y norm: 2.9401815
+[ 3] y norm: 3.4908736
+[ 4] y norm: 3.6647809
+Time:   1509 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 33 threads ====
@@ -53,13 +53,13 @@ Total cores available: 112
 Runtype: diz
 Threads:  33
 Vector size: 25000 x 25000
-x norm: 24999.998
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.236142
-[ 2] y norm: 2.898569
-[ 3] y norm: 3.1968539
-[ 4] y norm: 3.3687165
-Time:    857 msec
+x norm: 23529.729
+[ 0] y norm: 351.4157
+[ 1] y norm: 279.37753
+[ 2] y norm: 2.9412773
+[ 3] y norm: 3.501089
+[ 4] y norm: 3.6706996
+Time:   1010 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 44 threads ====
@@ -70,12 +70,12 @@ Runtype: diz
 Threads:  44
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361457
-[ 2] y norm: 2.8985693
-[ 3] y norm: 3.1968558
-[ 4] y norm: 3.3687034
-Time:    644 msec
+[ 0] y norm: 351.95596
+[ 1] y norm: 278.0177
+[ 2] y norm: 2.9417558
+[ 3] y norm: 3.5047457
+[ 4] y norm: 3.6767645
+Time:    752 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 56 threads ====
@@ -86,12 +86,12 @@ Runtype: diz
 Threads:  56
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361495
-[ 2] y norm: 2.8985684
-[ 3] y norm: 3.1968575
-[ 4] y norm: 3.3686974
-Time:    503 msec
+[ 0] y norm: 352.2996
+[ 1] y norm: 277.14233
+[ 2] y norm: 2.942414
+[ 3] y norm: 3.5086024
+[ 4] y norm: 3.6786344
+Time:    591 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 67 threads ====
@@ -102,12 +102,12 @@ Runtype: diz
 Threads:  67
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361522
-[ 2] y norm: 2.8985689
-[ 3] y norm: 3.1968563
-[ 4] y norm: 3.368697
-Time:    415 msec
+[ 0] y norm: 352.50958
+[ 1] y norm: 276.6114
+[ 2] y norm: 2.9432242
+[ 3] y norm: 3.510269
+[ 4] y norm: 3.6791205
+Time:    483 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 78 threads ====
@@ -118,12 +118,12 @@ Runtype: diz
 Threads:  78
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361536
-[ 2] y norm: 2.8985698
-[ 3] y norm: 3.1968515
-[ 4] y norm: 3.368696
-Time:    369 msec
+[ 0] y norm: 352.65704
+[ 1] y norm: 276.23157
+[ 2] y norm: 2.9430795
+[ 3] y norm: 3.511155
+[ 4] y norm: 3.6813333
+Time:    426 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 89 threads ====
@@ -134,12 +134,12 @@ Runtype: diz
 Threads:  89
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.236152
-[ 2] y norm: 2.898571
-[ 3] y norm: 3.196852
-[ 4] y norm: 3.368694
-Time:    322 msec
+[ 0] y norm: 352.76764
+[ 1] y norm: 275.95267
+[ 2] y norm: 2.942704
+[ 3] y norm: 3.5134137
+[ 4] y norm: 3.6817198
+Time:    371 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 100 threads ====
@@ -150,12 +150,12 @@ Runtype: diz
 Threads: 100
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361531
-[ 2] y norm: 2.8985715
-[ 3] y norm: 3.1968527
-[ 4] y norm: 3.3686929
-Time:    302 msec
+[ 0] y norm: 352.85974
+[ 1] y norm: 275.70435
+[ 2] y norm: 2.9420383
+[ 3] y norm: 3.5130336
+[ 4] y norm: 3.67435
+Time:    343 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 112 threads ====
@@ -166,11 +166,11 @@ Runtype: diz
 Threads: 112
 Vector size: 25000 x 25000
 x norm: 25000
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2361567
-[ 2] y norm: 2.8985717
-[ 3] y norm: 3.1968486
-[ 4] y norm: 3.3686945
-Time:    281 msec
+[ 0] y norm: 352.93484
+[ 1] y norm: 275.5284
+[ 2] y norm: 2.9416652
+[ 3] y norm: 3.516206
+[ 4] y norm: 3.681243
+Time:    321 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
