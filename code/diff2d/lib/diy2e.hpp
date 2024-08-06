@@ -70,10 +70,10 @@ namespace linalg {
         //codesnippet end
         auto operator+( idxint dist ) const {
 	  //std::cout << std::format("dist: {} ",dist);
-	  if ( dist==0 ) {
-	    return saved_iterator;
-	  } else if ( dist==saved_dist+1 ) {
+	  if ( dist==saved_dist+1 ) {
 	    ++saved_dist; ++saved_iterator; return saved_iterator;
+	  } else if ( dist==0 ) {
+	    return saved_iterator;
 	  } else {
 	    auto displaced(*this);
 	    auto lin = ( i*m+j ) + dist;
