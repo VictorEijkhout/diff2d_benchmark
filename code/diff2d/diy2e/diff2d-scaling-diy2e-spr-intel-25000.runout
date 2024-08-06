@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  30486 msec
+Time:  30574 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 11 threads ====
@@ -24,10 +24,10 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 347.07492
 [ 1] y norm: 290.0541
-[ 2] y norm: 2.9426365
-[ 3] y norm: 3.462376
-[ 4] y norm: 3.6545477
-Time:   2951 msec
+[ 2] y norm: 2.9421148
+[ 3] y norm: 3.4628298
+[ 4] y norm: 3.654643
+Time:   2943 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 22 threads ====
@@ -43,7 +43,7 @@ x norm: 19211.943
 [ 2] y norm: 2.9401815
 [ 3] y norm: 3.4908736
 [ 4] y norm: 3.6647809
-Time:   1509 msec
+Time:   1503 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 33 threads ====
@@ -59,7 +59,7 @@ x norm: 23529.729
 [ 2] y norm: 2.9412773
 [ 3] y norm: 3.501089
 [ 4] y norm: 3.6706996
-Time:   1010 msec
+Time:   1006 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 44 threads ====
@@ -72,10 +72,10 @@ Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 351.95596
 [ 1] y norm: 278.0177
-[ 2] y norm: 2.9417558
-[ 3] y norm: 3.5047457
-[ 4] y norm: 3.6767645
-Time:    752 msec
+[ 2] y norm: 2.9417064
+[ 3] y norm: 3.5046625
+[ 4] y norm: 3.6766222
+Time:    749 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 56 threads ====
@@ -88,10 +88,10 @@ Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 352.2996
 [ 1] y norm: 277.14233
-[ 2] y norm: 2.942414
-[ 3] y norm: 3.5086024
-[ 4] y norm: 3.6786344
-Time:    591 msec
+[ 2] y norm: 2.9423542
+[ 3] y norm: 3.5087457
+[ 4] y norm: 3.6782372
+Time:    588 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 67 threads ====
@@ -107,7 +107,7 @@ x norm: 25000
 [ 2] y norm: 2.9432242
 [ 3] y norm: 3.510269
 [ 4] y norm: 3.6791205
-Time:    483 msec
+Time:    479 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 78 threads ====
@@ -123,7 +123,7 @@ x norm: 25000
 [ 2] y norm: 2.9430795
 [ 3] y norm: 3.511155
 [ 4] y norm: 3.6813333
-Time:    426 msec
+Time:    420 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 89 threads ====
@@ -135,11 +135,11 @@ Threads:  89
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 352.76764
-[ 1] y norm: 275.95267
-[ 2] y norm: 2.942704
-[ 3] y norm: 3.5134137
-[ 4] y norm: 3.6817198
-Time:    371 msec
+[ 1] y norm: 275.94543
+[ 2] y norm: 2.9425313
+[ 3] y norm: 3.5146673
+[ 4] y norm: 3.6797838
+Time:    367 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 100 threads ====
@@ -153,9 +153,9 @@ x norm: 25000
 [ 0] y norm: 352.85974
 [ 1] y norm: 275.70435
 [ 2] y norm: 2.9420383
-[ 3] y norm: 3.5130336
+[ 3] y norm: 3.5130334
 [ 4] y norm: 3.67435
-Time:    343 msec
+Time:    339 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
 ==== Run ../bin/diy2e on 112 threads ====
@@ -171,6 +171,6 @@ x norm: 25000
 [ 2] y norm: 2.9416652
 [ 3] y norm: 3.516206
 [ 4] y norm: 3.681243
-Time:    321 msec
+Time:    311 msec
 diz-BW: (estimated Gb/sec)       0
 diz-Flops:       0
