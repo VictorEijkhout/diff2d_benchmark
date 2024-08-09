@@ -80,9 +80,9 @@ namespace linalg {
 
   
   template< typename real >
-  std::vector<std::int64_t> distributed_array<real>::segmentize
-      (std::int64_t size,int psize,bool trace) {
-    vector<std::int64_t> segments(psize+1);
+  std::vector<std::idxint> distributed_array<real>::segmentize
+      (std::idxint size,int psize,bool trace) {
+    vector<std::idxint> segments(psize+1);
     for ( int pi=0; pi<=psize; pi++ )
       segments.at(pi) = pi*size/psize;
     if (trace and rank==0) 

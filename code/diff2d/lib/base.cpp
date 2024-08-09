@@ -21,7 +21,7 @@ namespace linalg {
    */
     //codesnippet d2dspan1
   template< typename real >
-  bordered_array_base<real>::bordered_array_base( int64_t m,int64_t n,int border )
+  bordered_array_base<real>::bordered_array_base( idxint m,idxint n,int border )
     : _m(m),_n(n),_border(border)
     , _data( new real[ (m+2*border)*(n+2*border) ] )
     , data_owned(true)
@@ -34,7 +34,7 @@ namespace linalg {
 
   //! Constructor from data. This uses a zero border.
   template< typename real >
-  bordered_array_base<real>::bordered_array_base( int64_t m,int64_t n,real *data )
+  bordered_array_base<real>::bordered_array_base( idxint m,idxint n,real *data )
     : _m(m),_n(n),_border(0)
     , _data(data)
     , data_owned(false)
@@ -50,8 +50,8 @@ namespace linalg {
     // auto m = this->m(), n = this->n(), n2b = this->n2b();
     // auto b = this->border();
     auto [m,n,b] = outer_sizes();
-    for ( int64_t i=0; i<m; i++ ) {
-      for ( int64_t j=0; j<n; j++ ) {
+    for ( idxint i=0; i<m; i++ ) {
+      for ( idxint j=0; j<n; j++ ) {
         char c = ( j<n-1 ? ' ' : '\n' );
         cout << std::format("{:5.2}{}",out[ oindex(i,j) ],c);
       }

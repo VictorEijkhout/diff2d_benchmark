@@ -29,7 +29,7 @@ namespace linalg {
     bordered_array_span( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 
-    void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
+    void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) const override;
     void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
     void set( real value,bool trace=false ) override;

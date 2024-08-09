@@ -23,11 +23,11 @@ using std::format;
 namespace linalg {
 
   template< typename real >
-  bordered_array_span<real>::bordered_array_span( int64_t m,int64_t n,int border )
+  bordered_array_span<real>::bordered_array_span( idxint m,idxint n,int border )
     : bordered_array_base<real>(m,n,border) {
     auto out = this->data();
-    for ( int64_t i=0; i<m+2*border; i++ ) {
-      for ( int64_t j=0; j<n+2*border; j++ ) {
+    for ( idxint i=0; i<m+2*border; i++ ) {
+      for ( idxint j=0; j<n+2*border; j++ ) {
 	out[ this->oindex(i,j) ] = static_cast<real>(0);
       }
     }
@@ -37,11 +37,11 @@ namespace linalg {
   //codesnippet d2d5ptspan
   template< typename real >
   void bordered_array_span<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const linalg::bordered_array_base<real>& _other,bool trace ) const {
     const auto& other =
       dynamic_cast<const linalg::bordered_array_span<real>&>(_other);
     auto out = this->data2d();
-    auto in = other.data2d();
+    const auto in = other.data2d();
     #pragma omp parallel for 
     for ( auto ij : this->inner() ) {
       auto [i,j] = ij;
@@ -112,8 +112,8 @@ namespace linalg {
     auto out = this->data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    for ( int64_t i=0; i<m+2*border; i++ ) {
-      for ( int64_t j=0; j<n+2*border; j++ ) {
+    for ( idxint i=0; i<m+2*border; i++ ) {
+      for ( idxint j=0; j<n+2*border; j++ ) {
         char c = ( j<n+2*border-1 ? ' ' : '\n' );
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }

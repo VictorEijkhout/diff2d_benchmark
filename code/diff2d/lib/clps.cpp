@@ -21,7 +21,7 @@
 namespace linalg {
 
   template< typename real >
-  bordered_array_1d<real>::bordered_array_1d( int64_t m,int64_t n,int border )
+  bordered_array_1d<real>::bordered_array_1d( idxint m,idxint n,int border )
     : bordered_array_base<real>(m,n,border) {
     auto out = this->data();
     auto b = this->border();
@@ -42,8 +42,8 @@ namespace linalg {
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
     #pragma omp parallel for collapse(2)
-    for ( int64_t i=0; i<m; i++ ) {
-      for ( int64_t j=0; j<n; j++ ) {
+    for ( idxint i=0; i<m; i++ ) {
+      for ( idxint j=0; j<n; j++ ) {
         out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
           - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ]
           - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
@@ -63,8 +63,8 @@ namespace linalg {
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
     #pragma omp parallel for collapse(2)
-    for ( int64_t i=0; i<m; i++ )
-      for ( int64_t j=0; j<n; j++ )
+    for ( idxint i=0; i<m; i++ )
+      for ( idxint j=0; j<n; j++ )
         out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*3 );
   };
@@ -77,8 +77,8 @@ namespace linalg {
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
     #pragma omp parallel for collapse(2) reduction(+:sum_of_squares)
-    for ( int64_t i=0; i<m; i++ )
-      for ( int64_t j=0; j<n; j++ ) {
+    for ( idxint i=0; i<m; i++ )
+      for ( idxint j=0; j<n; j++ ) {
         auto v = out[ IINDEX(i,j) ];
         sum_of_squares += v*v;
       }
@@ -93,8 +93,8 @@ namespace linalg {
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
     #pragma omp parallel for collapse(2)
-    for ( int64_t i=0; i<m; i++ )
-      for ( int64_t j=0; j<n; j++ ) {
+    for ( idxint i=0; i<m; i++ )
+      for ( idxint j=0; j<n; j++ ) {
         auto ij = IINDEX(i,j);
         out[ ij ] = value;
       }
@@ -107,8 +107,8 @@ namespace linalg {
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
     #pragma omp parallel for 
-    for ( int64_t i=0; i<m; i++ )
-      for ( int64_t j=0; j<n; j++ )
+    for ( idxint i=0; i<m; i++ )
+      for ( idxint j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
           out[ IINDEX(i,j) ] = 1.;
   };
@@ -120,8 +120,8 @@ namespace linalg {
     auto out = this->data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    for ( int64_t i=0; i<m+2*border; i++ ) {
-      for ( int64_t j=0; j<n+2*border; j++ ) {
+    for ( idxint i=0; i<m+2*border; i++ ) {
+      for ( idxint j=0; j<n+2*border; j++ ) {
         char c = ( j<n+2*border-1 ? ' ' : '\n' );
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }
