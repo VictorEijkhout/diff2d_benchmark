@@ -64,7 +64,9 @@ The operations then are:
 \item Finally, for the operator $A$ we assume a sparse matrix,
   for instance a \acf{FD} stencil for a \ac{PDE}, or a \indexterm{convolution} kernel.
   This is characterized by each component $y_i$ of the output needing several
-  components $x_j$ of the input.
+  components $x_j$ of the input. In our case, putting a two-dimensional
+  indexing on the vectors:
+  \[ y_{ij} = 4x_{ij} - x_{i-1,j} -x_{i+1,j} - x_{i,j-1} - x_{i,j+1} \]
 \end{itemize}
 %%packtsnippet end
 
@@ -101,15 +103,12 @@ Some remarks.
   For the initial implementation, the \lstinline{out,in} data
   are \lstinline{double*} pointers, for instance obtained
   as the \lstinline{data} member of a \lstinline{std::vector}.
-  Later we will explore implementing the data as an \lstinline{mdspan} object:
-  
-  \twosnippetswithcaptions{Class data:}{d2dspan0}{Accessor:}{d2dspan2}
-
+  Later we will explore implementing the data as an \lstinline{mdspan} object
   so we can use the two-dimensional \lstinline{[i,j]} type indexing.
 \end{enumerate}
 %%packtsnippet end
 
-\Level 1 {Reduction in the example application}
+\Level 1 {Reduction}
 %%packtsnippet d2dreduction
 
 The $\ell_2$ reduction of our example application
@@ -149,7 +148,7 @@ the indices, rather than the actual data.
 
 %%packtsnippet end
 
-\Level 0 {Example application: tests and discussion}
+\Level 0 {Parallelization strategies}
 
 There are various ways we can parallelize our example application.
 
@@ -161,10 +160,14 @@ we loop two-dimensionally over the index space,
 and translate that through a \ac{CPP} macro
 to one-dimensional indexing in a traditional container.
 The loops are then parallelized by OpenMP.
+%
+In graphs to follow we indicate this mode by~`\n{oned}'.
 
-In graphs to follow we indicate this mode by~\n{oned}.
+For instance, the norm calculation is:
+%
+\cxxverbatimsnippet{d2dnormomp}
 
-We designate by \n{clps} this same code, but adding
+We designate by `\n{clps}' this same code, but adding
 \lstinline{collapse(2)} to each OpenMP loop nest.
 
 \Level 1 {\texttt{mdspan} indexing}
@@ -172,10 +175,13 @@ We designate by \n{clps} this same code, but adding
 While the scaling and the norm calculation can be expressed as range algorithms,
 doing so for the five-point stencil update is trickier,
 so we take a two-step approach:
+
+  
 \begin{enumerate}
 \item We access data through an \lstinline{mdspan}, so that have multidimensional indexing:
 
-  \twosnippets{d2dspan0}{d2dspan2}
+  \twosnippetswithcaptions{Class data:}{d2dspan0}{Accessor:}{d2dspan2}
+
 
 \item We define the iteration space as a \indexc{cartesian_product} range view:
 
@@ -185,7 +191,7 @@ so we take a two-step approach:
 This allows us to write, cleanly and compactly:
 \cxxverbatimsnippet{d2d5ptspan}
 
-In graphs to follow we indicate this mode by~\n{span}.
+In graphs to follow we indicate this mode by~`\n{span}'.
 
 \Level 1 {DIY cartesian product}
 
@@ -195,13 +201,13 @@ We write a custom iterator over a contiguous domain.
 It maintains internally \lstinline{i,j} coordinates
 which are updated as follows:
 %
-\cxxverbatimsnippet{d2ddiyiter}
+\twosnippetswithcaptions{Simple}{d2ddiyiter}{Optimized}{d2ediyiter}
 
 \Level 1 {Kokkos and Sycl}
 
 We also use the Kokkos and Sycl libraries in their `host' mode.
 In graphs to follow we indicate these modes
-by \n{kokkos} and \n{sycl} respectively.
+by `\n{kokkos}' and `\n{sycl}' respectively.
 
 \Level 2 {Sycl}
 
@@ -232,7 +238,7 @@ in order to range over the interior of the index space.
 
 Kokkos is the execution layer of the Trilinos project.
 It is, like Sycl, a data-parallel programming mode
-that supports by host and device execution with the same code.
+that supports host and device execution with the same code.
 Unlike Sycl there is no explicit queue; instead,
 objects are explicitly associated with the host or device data space.
 
@@ -245,7 +251,7 @@ and the lambda expression to apply at each index.
 
 \cxxverbatimsnippet{kokkosbufaccess}
 
-\Level 1 {Timing comparison}
+\Level 0 {Timing comparison and discussion}
 
 Let's compare various implementation strategies.
 Test given here are on an \indextermbus{Intel}{Sapphire Rapids}

@@ -23,6 +23,11 @@ pdf : getfiles
 	@echo rsync ../../plots/*.csv ./plots/
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
 	@make --no-print-directory onepass
+	@make --no-print-directory onepass
+	@if [ "$$(whoami)" = "eijkhout" ] ; then \
+	    echo " .. copy to dropbox" \
+	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/ \
+	 ; fi
 onepass :
 	@export TEXINPUTS=../macros:../graphics:${SNIPPETSDIR}:../:${TEXINPUTS} \
 	 && ${LATEX} -shell-escape ${FILE}
