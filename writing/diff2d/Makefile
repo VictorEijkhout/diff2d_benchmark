@@ -18,12 +18,14 @@ FILE = diff2d
 FILES= diff2d cppcon2024 ixpug24eijkhout
 LATEX = pdflatex
 ##xelatex
-.PHONY: pdf onepass
+.PHONY: pdf onepass upload
 pdf : getfiles
 	@echo rsync ../../plots/*.csv ./plots/
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
 	@make --no-print-directory onepass
 	@make --no-print-directory onepass
+	@make --no-print-directory upload FILE="${FILE}"
+upload :
 	@if [ "$$(whoami)" = "eijkhout" ] ; then \
 	    echo " .. copy to dropbox" \
 	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/ \
