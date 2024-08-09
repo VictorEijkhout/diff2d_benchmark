@@ -57,7 +57,8 @@ namespace linalg {
           return std::make_pair( (i+b), (j+b) ); };
         //codesnippet d2ddiyiter
         auto& operator++(  ) {
-          j++; i+= (j/m); j = j%m; return *this; };
+          j++; i+= (j/m); j = j%m;
+          return *this; };
         //codesnippet end
         auto operator+( idxint dist ) const {
           auto displaced(*this);

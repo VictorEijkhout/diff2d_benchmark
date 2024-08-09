@@ -1,85 +1,99 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -*- latex -*-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%
-%%%% This text file is part of the source of 
-%%%% `The Art of HPC, vol 1: Science of Computing & vol 4: HPC Carpentry
-%%%% by Victor Eijkhout, copyright 2012-2024
+%%%% This TeX file is part of the course
+%%%% Introduction to Scientific Programming in C++/Fortran2003
+%%%% copyright 2017-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
-%%%% indexing macros
-%%%% (this also gets included in vol5)
+%%%% idxmacs.tex : macros for indexing
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%
-%% multiple indexes
-%% (not used in vol4, but just for orthogonality)
-%%
 
 \usepackage{morewrites}
-\usepackage[original]{imakeidx}
+\usepackage[original,nonewpage]{imakeidx}
 %\indexsetup{noclearpage,toclevel=chapter}
 
-\makeindex %%[columns=1]
-\makeindex[name=def] %% ,columns=2
+\makeindex
+\makeindex[name=def]
 \makeindex[name=cpp]
 \makeindex[name=f90]
 \makeindex[name=jul]
+\makeindex[name=gsl]
 \def\idxset#1{\def\currentindex{#1}}
 \idxset{def}
 
-\newcommand\cppstandard[1]{C++#1\index{C++!C++#1}}
-\newcommand\cstandard[1]{C#1\index{C!C#1}}
-\newcommand\fstandard[1]{Fortran#1\index{Fortran!Fortran#1}}
-\newcommand\cmakestandard[1]{CMake-#1\index{CMake!version #1}}
+\newcommand{\indexterm}[1]{\emph{#1}\index{#1}}
+\newcommand{\indexgdb}[1]{{\ttfamily\slshape #1}\index{gdb!#1@\texttt{#1}}}
+\newcommand{\indextermdef}[1]{\emph{#1}\index{#1|textbf}}
+\newcommand{\indextermdefp}[1]{\emph{#1s}\index{#1|textbf}}
+\newcommand{\indextermp}[1]{\emph{#1s}\index{#1}}
+\newcommand{\indextermsub}[2]{\emph{#1 #2}\index{#2!#1}}
+\newcommand{\indextermsubdef}[2]{\emph{#1 #2}\index{#2!#1|textbf}}
+\newcommand{\indextermsubp}[2]{\emph{#1 #2s}\index{#2!#1}}
+\newcommand{\indextermbus}[2]{\emph{#1 #2}\index{#1!#2}}
+\newcommand{\indextermbusp}[2]{\emph{#1 #2s}\index{#1!#2}}
+\newcommand{\indextermbusdef}[2]{\emph{#1 #2}\index{#1!#2|textbf}}
+\newcommand{\indextermstart}[1]{\emph{#1}\index{#1|(}}
+\newcommand{\indextermend}[1]{\index{#1|)}}
+\newcommand{\indexstart}[1]{\index{#1|(}}
+\newcommand{\indexend}[1]{\index{#1|)}}
 
-%%
-%% C indexing
-%%
+\newcommand{\indextermunixdef}[1]
+           {{\ttfamily\slshape #1}\index{#1@\texttt{#1}!(unix command)|textbf}}
+
+%% \newcommand{\indexpragma}[1]{%
+%%   \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
+%%   \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
+%% }
+
 \def\idxprefix{}
 \def\indexc   {\bgroup \idxset{cpp}\indextermttgroup} % these had #{
 \def\indexcdef{\bgroup \idxset{cpp}\indextermttbgroup} % these had #{
 \def\indexcstd{\bgroup \idxset{cpp}\def\idxprefix{std::}\indextermttgroup}
+\def\indexcstddef{\bgroup \idxset{cpp}\def\idxprefix{std::}\indextermttbgroup}
 \def\indexcrng{\bgroup \idxset{cpp}\def\idxprefix{ranges::}\indextermttgroup}
 \def\indexcdefstd
               {\bgroup \idxset{cpp}\def\idxprefix{std::}\indextermttbgroup}
 \def\indexf   {\bgroup \idxset{f90}\indextermttgroup}
 \def\indexfnote{\bgroup \idxset{f90}\indextermttgroup}
 \def\indexj   {\bgroup \idxset{jul}\indextermttgroup}
+% default
+\def\indextermunix
+              {\bgroup \idxset{def}\indextermttgroup}
+\let\indexunix\indextermunix
+\def\indexg   {\bgroup \idxset{def}\indextermttgroup}
 
-\newcommand{\indexgdb}[1]{{\ttfamily\slshape #1}\index{gdb!#1@\texttt{#1}}}
-
-%% % default
-%% \def\indextermunix
-%%               {\bgroup \idxset{def}\indextermttgroup}
-%% \let\indexunix\indextermunix
-%% \def\indexg   {\bgroup \idxset{def}\indextermttgroup}
-
-\newcommand{\indexterm}[1]{\emph{#1}\index{#1}}
-%% \newcommand{\indexterm}{\bgroup \idxset{def}\indextermgroup}
-
-\def\indextermtt#{\bgroup \innocentcharacters
+% regular formatting
+\def\indextermtt#{\bgroup \innocentcharacters 
   \afterassignment\cmdtoindex\edef\indexedcmd}
+%% \newcommand{\indextermttsub}[2]{%
+%%     \emph{#1} \texttt{#2}%
+%%     \index{#1@\makeusletter\texttt{#2}\makeusother!#1}}
+
 \def\indextermheader#{\bgroup \innocentcharacters
+  \def\subtext{!(header)}%
   \afterassignment\cmdtoindex\edef\indexedcmd}
 \let\indexheader\indextermheader
-\def\indexheaderdef#{\bgroup \innocentcharacters
+\def\indexheaderdef#{\bgroup \innocentcharacters 
   \afterassignment\cmdtoindexb\edef\indexedcmd}
-\def\indextermttgroup#{\innocentcharacters
+\def\indextermttgroup#{\innocentcharacters 
   \afterassignment\cmdtoindex\edef\indexedcmd}
-\def\indextermttbgroup#{\innocentcharacters
+\def\indextermttbgroup#{\innocentcharacters 
   \afterassignment\cmdtoindexb\edef\indexedcmd}
 
 %% a language command to the current index
 %% this assumes the macro \indexedcmd contains the command
+\def\indexsubtext{}
 \def\cmdtoindex{%
+  \message{Indexing command: \indexedcmd}%
   \ttfamily
   \edef\idxtmp{%
     \noexpand\lstinline{\idxprefix\indexedcmd}%
     \noexpand\index[\currentindex]{%
-      \indexedcmd@{\catcode95=12 \noexpand\texttt{\indexedcmd}}}%
+      \indexedcmd@{\catcode95=12 \noexpand\texttt{\indexedcmd}\indexsubtext}}%
   }%
   \idxtmp
+  \def\indexsubtext{}%
   \egroup
 }
 \def\cmdtoindexb{%
@@ -95,28 +109,64 @@
 
 \def\indexfdef#{\bgroup \idxset{f90}\indextermttgroupbf}
 
-%%
-%% various types of indexterm
-%%
+% textbf formatting
+\def\indextermttgroupbf#{\innocentcharacters 
+  \afterassignment\cmdtoindexbf\edef\indexedcmd}
+\def\indextermttdef#{\bgroup \innocentcharacters
+  \afterassignment\cmdtoindexbf\edef\indexedcmd}
 
-%% \newcommand{\indextermtt}% begin term with underscore
-%%            {\bgroup\catcode`\_=12 \indextermtteg}
-\let\indexmpishow\indextermtt
-\newcommand{\indextermtteg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother}\egroup
-           }
-\newcommand{\indextermttdef}% begin term with underscore
-           {\bgroup\catcode`\_=12 \indextermttdefeg}
-\newcommand{\indextermttdefeg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother|textbf}\egroup
-           }
+\def\cmdtoindexbf{%
+  \expandafter\lstinline\expandafter$\indexedcmd$%
+  \edef\idxtmp{%
+    \noexpand\index[\currentindex]{%
+      \indexedcmd@{\catcode95=12 \noexpand\texttt{\indexedcmd}}|textbf}%
+  }%
+  \idxtmp
+  \egroup
+}
+
 \newcommand{\indextermttsub}[2]{%
     \emph{#1} \texttt{#2}%
     \index{#1@\makeusletter\texttt{#2}\makeusother!#1}}
+\newcommand{\indextermttbus}[2]{\emph{\texttt{#1} #2}%
+  \index{#1@\texttt{#1}!#2}}
 
-%% \newcommand{\indextermttdef}[1]{{\ttfamily\slshape #1}\index{#1@\texttt{#1}|textbf}}
+%%
+%% Fortran special case
+%%
+\let\indextermfort\indextermtt
+\let\indextermfortdef\indextermttdef
+
+\newcommand\indexac[1]{\emph{\ac{#1}}%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname%
+    @\acl{#1} (#1)}}\tmp}
+\newcommand\indexacp[1]{\emph{\ac{#1}}%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname%
+    @\aclp{#1} (#1)}}\tmp}
+\newcommand\indexacf[1]{\emph{\acf{#1}}%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname
+    @\acl{#1} (#1)}}\tmp}
+\newcommand\indexacstart[1]{%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname
+    @\acl{#1} (#1)|(}}\tmp}
+\newcommand\indexacend[1]{%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname
+    @\acl{#1} (#1)|)}}\tmp}
+\newcommand\indexacdef[1]{\emph{\acf{#1}}%
+  \edef\tmp{\noexpand\index{%
+    \expandafter\expandafter\expandafter
+        \@secondoftwo\csname fn@#1\endcsname%
+    @\acl{#1} (#1)|textbf}}\tmp}
 
 %%
 %% cmake indexing
@@ -139,75 +189,4 @@
             \index{#1@\makeusletter\texttt{#1}\makeusother\ (git command)}\egroup
            }
 \let\indextermgit\indexgit
-
-\newcommand{\indextermunix}% begin term with underscore
-           {\bgroup\catcode`\_=12 \indextermunixeg}
-\newcommand{\indextermunixeg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother\ (unix command)}\egroup
-           }
-\newcommand{\indextermunixdef}[1]
-           {{\ttfamily\slshape #1}\index{#1@\texttt{#1}!(unix command)|textbf}}
-\newcommand{\indextermunixdefus}% begin term with underscore
-           {\bgroup\catcode`\_=12 \indextermunixdefeg}
-\newcommand{\indextermunixdefeg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother\ (unix command)|textbf}\egroup
-           }
-\let\indexunix\indextermunix
-\let\indexunixdef\indextermunixdef
-
-\newcommand{\indextermp}[1]{\emph{#1s}\index{#1}}
-\newcommand{\indextermdef}[1]{\emph{#1}\index{#1|textbf}}
-\newcommand{\indextermdefp}[1]{\emph{#1s}\index{#1|textbf}}
-\newcommand{\indextermsub}[2]{\emph{#1 #2}\index{#2!#1}}
-\newcommand{\indextermsubdef}[2]{\emph{#1 #2}\index{#2!#1|textbf}}
-\newcommand{\indextermsubp}[2]{\emph{#1 #2s}\index{#2!#1}}
-\newcommand{\indextermbus}[2]{\emph{#1 #2}\index{#1!#2}}
-\let\indextermbusp\indextermbus
-\newcommand{\indextermbusdef}[2]{\emph{#1 #2}\index{#1!#2|textbf}}
-\newcommand{\indextermstart}[1]{\emph{#1}\index{#1|(}}
-\newcommand{\indextermend}[1]{\index{#1|)}}
-\newcommand{\indexstart}[1]{\index{#1|(}}
-\newcommand{\indexend}[1]{\index{#1|)}}
-
-\newcommand{\indexpragma}[1]{%
-  \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
-  \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
-}
-
-\makeatletter
-\newcommand\indexac[1]{\emph{\ac{#1}}%
-  \expandafter \let \csname ifneed#1\endcsname \iftrue
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname%
-    @\acl{#1} (#1)}}\tmp}
-\newcommand\indexacdef[1]{\emph{\ac{#1}}%
-  \expandafter \let \csname ifneed#1\endcsname \iftrue
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname%
-    @\acl{#1} (#1)|\noexpand\textbf}}\tmp}
-\newcommand\indexacp[1]{\emph{\ac{#1}}%
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname%
-    @\aclp{#1} (#1)}}\tmp}
-\newcommand\indexacf[1]{\emph{\acf{#1}}%
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname
-    @\acl{#1} (#1)}}\tmp}
-\newcommand\indexacstart[1]{%
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname
-    @\acl{#1} (#1)|(}}\tmp}
-\newcommand\indexacend[1]{%
-  \edef\tmp{\noexpand\index{%
-    \expandafter\expandafter\expandafter
-        \@secondoftwo\csname fn@#1\endcsname
-    @\acl{#1} (#1)|)}}\tmp}
-\makeatother
 

@@ -47,7 +47,7 @@ namespace linalg {
       private:
         idxint m, n; int b; /* global domain description */
         idxint i{0}, j{0};  /* local iteration point */
-	idxint c{-1};
+        idxint c{-1};
       public:
         cartesian_iterator\
             ( idxint m, idxint n, int b, idxint i, idxint j )
@@ -57,35 +57,35 @@ namespace linalg {
         auto operator*() const {
           return std::make_pair( (i+b), (j+b) ); };
         // auto& operator++(  ) {
-	//   std::cout << i << "," << j << "pp " << '\n';
+        //   std::cout << i << "," << j << "pp " << '\n';
         //   j++; i+= (j/m); j = j%m; return *this; };
         //codesnippet d2ediyiter
         auto& operator++(  ) {
-	  c--;
+          c--;
           j++; j *= (c>0);
-	  i += (c==0);
-	  c += m*(c==0);
-	  return *this;
-	};
+          i += (c==0);
+          c += m*(c==0);
+          return *this;
+        };
         //codesnippet end
         auto operator+( idxint dist ) const {
-	  //std::cout << std::format("dist: {} ",dist);
-	  if ( dist==saved_dist+1 ) {
-	    ++saved_dist; return ++saved_iterator;
-	  } else if ( dist==0 ) {
-	    return saved_iterator;
-	  } else {
-	    auto displaced(*this);
-	    auto lin = ( i*m+j ) + dist;
-	    displaced.i = lin/m; displaced.j = lin%m; 
-	    return displaced;
-	  }
+          //std::cout << std::format("dist: {} ",dist);
+          if ( dist==saved_dist+1 ) {
+            ++saved_dist; return ++saved_iterator;
+          } else if ( dist==0 ) {
+            return saved_iterator;
+          } else {
+            auto displaced(*this);
+            auto lin = ( i*m+j ) + dist;
+            displaced.i = lin/m; displaced.j = lin%m; 
+            return displaced;
+          }
         };
         // gcc needs +=, intel only +
         // auto& operator+=( idxint dist ) {
-	//   std::cout << dist << " " << '\n';
-	//   auto lin = ( i*m+j ) + dist;
-	//   i = lin/m; j = lin%m; 
+        //   std::cout << dist << " " << '\n';
+        //   auto lin = ( i*m+j ) + dist;
+        //   i = lin/m; j = lin%m; 
         //   return *this;
         // };
         idxint operator-( const cartesian_iterator& other ) const {
@@ -96,7 +96,7 @@ namespace linalg {
       static inline idxint saved_dist{0};
       static inline cartesian_iterator saved_iterator{ cartesian_iterator( 0,0,0,0,0 ) };
       auto begin() {
-	saved_iterator = cartesian_iterator( m,n,b,0,0 );
+        saved_iterator = cartesian_iterator( m,n,b,0,0 );
         return cartesian_iterator(m,n,b, /* start */ 0,0); };
       auto end()   {
         return cartesian_iterator(m,n,b, /* end   */ m,0); };
@@ -110,18 +110,18 @@ namespace linalg {
 #endif
 
 #if 0
-	  if ( dist==1 ) {
-	    j++; auto t = (j==m); j *= t; i+=t;
-	  } else if (dist==m) {
-	    i++; j *= (i<n);
-	  } else {
-	    auto lin = ( i*m+j ) + dist;
-	    i = lin/m; j = lin%m; 
-	  }
-	  // attmempt1
-	  // while( dist>=m ) { i++; dist -= m; }
-	  // j += dist;
-	  // if (j>m) { i++; j -= m; }
-	  // if (i==n) j=0;
+          if ( dist==1 ) {
+            j++; auto t = (j==m); j *= t; i+=t;
+          } else if (dist==m) {
+            i++; j *= (i<n);
+          } else {
+            auto lin = ( i*m+j ) + dist;
+            i = lin/m; j = lin%m; 
+          }
+          // attmempt1
+          // while( dist>=m ) { i++; dist -= m; }
+          // j += dist;
+          // if (j>m) { i++; j -= m; }
+          // if (i==n) j=0;
 #endif
 

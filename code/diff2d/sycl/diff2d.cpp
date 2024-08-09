@@ -62,7 +62,6 @@ int main(int argc,char *argv[])
     //codesnippet syclbufaccess
     q.submit([&] (handler &h) {
       accessor D_a(Buf_a,h,write_only);
-
       h.parallel_for
         (range<2>(msize-2,nsize-2),
          [=](auto index){

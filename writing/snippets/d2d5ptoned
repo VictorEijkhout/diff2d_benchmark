@@ -8,8 +8,8 @@ void bordered_array_1d<real>::central_difference_from
   auto m = this->m(), n = this->n(), n2b = this->n2b();
   auto border = this->border();
   #pragma omp parallel for
-  for ( int64_t i=0; i<m; i++ ) {
-    for ( int64_t j=0; j<n; j++ ) {
+  for ( idxint i=0; i<m; i++ ) {
+    for ( idxint j=0; j<n; j++ ) {
       out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
         - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ]
         - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];

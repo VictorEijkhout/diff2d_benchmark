@@ -70,7 +70,7 @@ The operations then are:
 \end{itemize}
 %%packtsnippet end
 
-\Level 1 {Loop parallelism in our example}
+\Level 1 {Loop parallelisme}
 %%packtsnippet d2dloops
 \label{sec:d2d-omp1d}
 
@@ -86,8 +86,11 @@ width of a halo region.
 
 Some remarks.
 \begin{enumerate}
+\item We use template parameters \lstinline{idxint} and \lstinline{real}
+  for integers and floating point quantities, respectively.
 \item
-  The loop bounds are set to range only over the size of the interior of the domain.
+  The loops range only over the $m\times n$ interior part of the domain,
+  which is allocated with size $(m+b)\times(n+b)$.
   %% of the \lstinline{mdspan}.
   %% Later we will explore using a range-based loop and
   %% dispensing with indexing entirely.
@@ -152,7 +155,7 @@ the indices, rather than the actual data.
 
 There are various ways we can parallelize our example application.
 
-\Level 1 {Indexing mode 1D}
+\Level 1 {OpenMP loop parallelism}
 
 Above in section~\ref{sec:d2d-omp1d}
 we already showed the simplest parallelization scheme:
@@ -160,9 +163,9 @@ we loop two-dimensionally over the index space,
 and translate that through a \ac{CPP} macro
 to one-dimensional indexing in a traditional container.
 The loops are then parallelized by OpenMP.
-%
-In graphs to follow we indicate this mode by~`\n{oned}'.
 
+In graphs to follow we indicate by~`\n{oned}'
+the mode where we only parallelize the outer loop.
 For instance, the norm calculation is:
 %
 \cxxverbatimsnippet{d2dnormomp}
@@ -189,7 +192,12 @@ so we take a two-step approach:
 
 \end{enumerate}
 This allows us to write, cleanly and compactly:
+%
 \cxxverbatimsnippet{d2d5ptspan}
+%
+Unlike the OpenMP double loop, we now have a single loop
+spanning the two-dimensional domain.
+Also, note that this domain is the interior of a larger domain.
 
 In graphs to follow we indicate this mode by~`\n{span}'.
 
@@ -213,13 +221,17 @@ by `\n{kokkos}' and `\n{sycl}' respectively.
 
 Sycl is an open standard that targets
 heterogeneous parallelism through strict standard C++.
+It has mechanisms for memory management between host CPU
+and devices (both GPU and FPGA),
+and for expressing common parallel algorithms.
 
 The preferred mechanism for handling memory coherence is through buffers.
 Host memory is wrapped in a buffer structure:
 \cxxverbatimsnippet{syclbufcreate}
 
-This memory can then transparently be accessed in a kernel, where
-coherence is ensured by the runtime.
+This memory can then transparently be accessed in a kernel,
+whether run on host or device,
+where coherence is ensured by the runtime.
 This turns out to be as efficient as more explicit mechanisms.
 %
 \cxxverbatimsnippet{syclbufaccess}
@@ -231,7 +243,8 @@ resembles a C++ range algorithm: it combines
 a range --~though of the index space, not the data space~--
 and a lambda expression to be applied at each point.
 
-Note the, somewhat contrived, index shifting that we have to apply
+Sycl is alone among the models studied here
+in that it requires index shifting 
 in order to range over the interior of the index space.
 
 \Level 2 {Kokkos}
@@ -252,6 +265,15 @@ and the lambda expression to apply at each index.
 \cxxverbatimsnippet{kokkosbufaccess}
 
 \Level 0 {Timing comparison and discussion}
+
+We perform different comparisons:
+\begin{itemize}
+\item different parallelization models on a given compiler and CPU;
+\item different Intel processor generations, given a model and compiler;
+\item different compilers, given a model and CPU.
+\end{itemize}
+
+\Level 1 {Comparing parallelization models}
 
 Let's compare various implementation strategies.
 Test given here are on an \indextermbus{Intel}{Sapphire Rapids}
@@ -387,6 +409,28 @@ compilers.
   \label{fig:diff2d-procs}
 \end{figure}
 
+We make the following observations.
+
+First of all, we see that the naive `\n{oned}' OpenMP implementation
+is clearly the fastest.
+All of the schemes that use two-dimensional iteration are slower.
+An indication of the reason for this is outlined in section~\ref{sec:d2d-profile}:
+much of the computing time actually goes into incrementing the
+two-dimensional iterator.
+
+If we accept a constant loss of efficiency for these schemes,
+we see that most schemes even have a descending efficiency
+with increasing core count.
+The reason for this is not clear, especially since the
+`\n{clps}' and `\n{diy}' implementations do not show this.
+
+Interestingly, on low core counts the `\n{sycl}' and `\n{kokkos}'
+implementations are relatively competitive.
+They probably employ an efficient translation to an OpenMP backend,
+but this makes their gradual loss of efficiency all the more puzzling.
+
+\Level 1 {Comparing processor generations}
+
 In figure~\ref{fig:diff2d-procs} we compare three generations of Intel processors:
 \begin{itemize}
 \item \indextermbus{Intel}{Sky Lake} in the \indextermbus{TACC}{Stampede2} cluster,
@@ -432,6 +476,7 @@ but with the Ice Lake we see it scaling quite far.
 \end{tabular}
 
 \Level 1 {Analysis}
+\label{sec:d2d-profile}
 
 One immediate conclusion from the above tests is that it's
 hard to beat the simple-minded OpenMP implementation
