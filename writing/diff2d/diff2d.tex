@@ -13,24 +13,7 @@
 
 \documentclass[11pt,fleqn]{artikel3}
 
-\usepackage{geometry,fancyhdr,wrapfig}
-\usepackage{amssymb,amsmath,verbatim,graphicx,pslatex,multicol}
-
-\usepackage{comment}
-\newif\ifInBook \InBooktrue
-\input book.inex
-\input acromacs
-\input commonmacs
-\def\latexengine{}
-\input bookmacs
-\input articlemacs
-%% \input ../../../introduction-scientific-programming-private/guide/macros/idxmacs
-\input idxpkgmacs
-\input listingmacs
-\newcommand\codesnippetsdir{../snippets}
-\input snippetmacs
-\input ../../../scientific-computing-private/macros/tikzplot
-\excludecomment{packt}
+\input macroload
 
 \begin{document}
 \title{Performance analysis of a stencil power method}
