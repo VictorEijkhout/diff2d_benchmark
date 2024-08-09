@@ -35,14 +35,19 @@ onepass :
 	 && ${LATEX} -shell-escape ${FILE}
 
 .PHONY: getfiles
-STC = ../../../scientific-computing-private
+ISP  = ../../../introduction-scientific-programming-private/guide
+PCSE = ../../../parallel-programming-private
+STC  = ../../../scientific-computing-private
 getfiles :
 	@if [ "$$(whoami)" = "eijkhout" ] ; then \
 	    if [ -f ../../../scientific-computing-private/scicompbook.aux ] ; then \
 	      rsync ../../../scientific-computing-private/scicompbook.aux . \
 	     ; fi \
-	     && rsync ${STC}/macros/{book,common,idx}macs.tex \
-	                ../macros/ \
+	     && rsync \
+	            ${ISP}/macros/idxmacs.tex \
+	            ${STC}/macros/{book,common,idx}macs.tex \
+	            ${PCSE}/macros/idxpkgmacs.tex \
+	            ../macros/ \
 	 ; fi
 clean ::
 	@rm -f plots/*.{dep,dpth,idx,log,mw}
