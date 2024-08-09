@@ -71,7 +71,7 @@ namespace linalg {
         auto operator+( idxint dist ) const {
 	  //std::cout << std::format("dist: {} ",dist);
 	  if ( dist==saved_dist+1 ) {
-	    ++saved_dist; ++saved_iterator; return saved_iterator;
+	    ++saved_dist; return ++saved_iterator;
 	  } else if ( dist==0 ) {
 	    return saved_iterator;
 	  } else {
