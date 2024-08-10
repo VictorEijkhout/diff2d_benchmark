@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:   7761 msec
+Time:   7772 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 11 threads ====
@@ -27,12 +27,25 @@ x norm: 13584.8955
 [ 2] y norm: 2.8975317
 [ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:    969 msec
+Time:    966 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 22 threads ====
 Execute program ../bin/iota cores 22
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  22
+Vector size: 25000 x 25000
+x norm: 19211.943
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2364159
+[ 2] y norm: 2.897688
+[ 3] y norm: 3.197423
+[ 4] y norm: 3.367788
+Time:    538 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
 ==== Run ../bin/iota on 33 threads ====
 Execute program ../bin/iota cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
@@ -44,9 +57,9 @@ x norm: 23529.729
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.236387
 [ 2] y norm: 2.8976774
-[ 3] y norm: 3.1973839
-[ 4] y norm: 3.3678665
-Time:    406 msec
+[ 3] y norm: 3.197384
+[ 4] y norm: 3.3678668
+Time:    405 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 44 threads ====
@@ -58,19 +71,45 @@ Threads:  44
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363734
-[ 2] y norm: 2.8977087
+[ 1] y norm: 2.2363732
+[ 2] y norm: 2.897709
 [ 3] y norm: 3.1973436
 [ 4] y norm: 3.3679037
-Time:    335 msec
+Time:    345 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 56 threads ====
 Execute program ../bin/iota cores 56
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  56
+Vector size: 25000 x 25000
+x norm: 25000.004
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.236359
+[ 2] y norm: 2.8977215
+[ 3] y norm: 3.197345
+[ 4] y norm: 3.3679006
+Time:    288 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
 ==== Run ../bin/iota on 67 threads ====
 Execute program ../bin/iota cores 67
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  67
+Vector size: 25000 x 25000
+x norm: 24999.996
+[ 0] y norm: 316.24042
+[ 1] y norm: 2.2363493
+[ 2] y norm: 2.897719
+[ 3] y norm: 3.1973386
+[ 4] y norm: 3.367933
+Time:    264 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
 ==== Run ../bin/iota on 78 threads ====
 Execute program ../bin/iota cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/iota -m 25000 -n 25000 -i 5 --trace
@@ -78,13 +117,13 @@ Total cores available: 112
 Runtype: iota
 Threads:  78
 Vector size: 25000 x 25000
-x norm: 24999.996
+x norm: 24999.998
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363417
 [ 2] y norm: 2.8977234
 [ 3] y norm: 3.197345
-[ 4] y norm: 3.3679435
-Time:    310 msec
+[ 4] y norm: 3.367944
+Time:    260 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 89 threads ====
@@ -100,7 +139,7 @@ x norm: 24999.998
 [ 2] y norm: 2.8977253
 [ 3] y norm: 3.1973355
 [ 4] y norm: 3.3679564
-Time:    305 msec
+Time:    261 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 100 threads ====
@@ -112,11 +151,11 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363355
-[ 2] y norm: 2.897726
-[ 3] y norm: 3.1973317
+[ 1] y norm: 2.2363353
+[ 2] y norm: 2.8977263
+[ 3] y norm: 3.197332
 [ 4] y norm: 3.3679626
-Time:    262 msec
+Time:    263 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
 ==== Run ../bin/iota on 112 threads ====
@@ -130,8 +169,8 @@ x norm: 25000.004
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2363334
 [ 2] y norm: 2.8977337
-[ 3] y norm: 3.1973267
+[ 3] y norm: 3.197327
 [ 4] y norm: 3.367969
-Time:    268 msec
+Time:    266 msec
 iota-BW: (estimated Gb/sec)       0
 iota-Flops:       0
