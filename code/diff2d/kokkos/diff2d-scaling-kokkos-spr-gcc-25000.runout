@@ -6,7 +6,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./../bin/kokkos -m 25000 -n 25
 [ 2] y norm: 2.8952987
 [ 3] y norm: 3.197103
 [ 4] y norm: 3.3706274
-Time:  11444 msec
+Time:  11456 msec
 ==== Run ../bin/kokkos on 11 threads ====
 Execute program ../bin/kokkos cores 11
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -15,7 +15,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.8975832
 [ 3] y norm: 3.198263
 [ 4] y norm: 3.367141
-Time:   1315 msec
+Time:   1311 msec
 ==== Run ../bin/kokkos on 22 threads ====
 Execute program ../bin/kokkos cores 22
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -24,7 +24,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.8976855
 [ 3] y norm: 3.1981325
 [ 4] y norm: 3.367346
-Time:    800 msec
+Time:    805 msec
 ==== Run ../bin/kokkos on 33 threads ====
 Execute program ../bin/kokkos cores 33
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -33,7 +33,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.897677
 [ 3] y norm: 3.198155
 [ 4] y norm: 3.3674276
-Time:    628 msec
+Time:    631 msec
 ==== Run ../bin/kokkos on 44 threads ====
 Execute program ../bin/kokkos cores 44
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -42,7 +42,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.8977237
 [ 3] y norm: 3.1981463
 [ 4] y norm: 3.367418
-Time:    549 msec
+Time:    562 msec
 ==== Run ../bin/kokkos on 56 threads ====
 Execute program ../bin/kokkos cores 56
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -51,7 +51,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.8977315
 [ 3] y norm: 3.198123
 [ 4] y norm: 3.367438
-Time:    482 msec
+Time:    483 msec
 ==== Run ../bin/kokkos on 67 threads ====
 Execute program ../bin/kokkos cores 67
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -60,7 +60,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.897743
 [ 3] y norm: 3.1980789
 [ 4] y norm: 3.367472
-Time:    473 msec
+Time:    472 msec
 ==== Run ../bin/kokkos on 78 threads ====
 Execute program ../bin/kokkos cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -69,7 +69,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.8977473
 [ 3] y norm: 3.1980731
 [ 4] y norm: 3.3674831
-Time:    455 msec
+Time:    450 msec
 ==== Run ../bin/kokkos on 89 threads ====
 Execute program ../bin/kokkos cores 89
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -78,7 +78,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/kokkos -m 25000 -n 2
 [ 2] y norm: 2.897748
 [ 3] y norm: 3.1980724
 [ 4] y norm: 3.3674865
-Time:    453 msec
+Time:    456 msec
 ==== Run ../bin/kokkos on 100 threads ====
 Execute program ../bin/kokkos cores 100
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -87,7 +87,7 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/kokkos -m 25000 -n 
 [ 2] y norm: 2.897748
 [ 3] y norm: 3.1980743
 [ 4] y norm: 3.3674827
-Time:    486 msec
+Time:    479 msec
 ==== Run ../bin/kokkos on 112 threads ====
 Execute program ../bin/kokkos cores 112
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/kokkos -m 25000 -n 25000 -i 5 --trace
@@ -96,4 +96,4 @@ Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/kokkos -m 25000 -n 
 [ 2] y norm: 2.8977513
 [ 3] y norm: 3.1980689
 [ 4] y norm: 3.367505
-Time:    496 msec
+Time:    488 msec
