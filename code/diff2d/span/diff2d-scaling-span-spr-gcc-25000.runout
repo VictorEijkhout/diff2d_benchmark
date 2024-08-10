@@ -11,7 +11,7 @@ x norm: 4096
 [ 2] y norm: 2.8954036
 [ 3] y norm: 3.197121
 [ 4] y norm: 3.3704336
-Time:  23184 msec
+Time:  23212 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 11 threads ====
@@ -24,10 +24,10 @@ Vector size: 25000 x 25000
 x norm: 13584.8955
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2365203
-[ 2] y norm: 2.8975317
-[ 3] y norm: 3.1975744
+[ 2] y norm: 2.897532
+[ 3] y norm: 3.1975741
 [ 4] y norm: 3.3675356
-Time:   2438 msec
+Time:   2437 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 22 threads ====
@@ -40,10 +40,10 @@ Vector size: 25000 x 25000
 x norm: 19211.943
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.2364159
-[ 2] y norm: 2.8976882
-[ 3] y norm: 3.197423
+[ 2] y norm: 2.897688
+[ 3] y norm: 3.1974232
 [ 4] y norm: 3.3677886
-Time:   1267 msec
+Time:   1274 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 33 threads ====
@@ -56,10 +56,10 @@ Vector size: 25000 x 25000
 x norm: 23529.729
 [ 0] y norm: 316.24042
 [ 1] y norm: 2.236387
-[ 2] y norm: 2.8976772
-[ 3] y norm: 3.1973839
+[ 2] y norm: 2.8976774
+[ 3] y norm: 3.197384
 [ 4] y norm: 3.3678668
-Time:    843 msec
+Time:    844 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 44 threads ====
@@ -75,7 +75,7 @@ x norm: 25000
 [ 2] y norm: 2.897709
 [ 3] y norm: 3.1973436
 [ 4] y norm: 3.367904
-Time:    633 msec
+Time:    634 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 56 threads ====
@@ -86,11 +86,11 @@ Runtype: span
 Threads:  56
 Vector size: 25000 x 25000
 x norm: 24999.994
-[ 0] y norm: 316.24042
-[ 1] y norm: 2.2363586
-[ 2] y norm: 2.897722
-[ 3] y norm: 3.1973445
-[ 4] y norm: 3.3679001
+[ 0] y norm: 309.10516
+[ 1] y norm: 2.2364204
+[ 2] y norm: 2.8998437
+[ 3] y norm: 3.2006135
+[ 4] y norm: 3.3814898
 Time:    496 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
@@ -103,16 +103,29 @@ Threads:  67
 Vector size: 25000 x 25000
 x norm: 25000
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363489
+[ 1] y norm: 2.2363486
 [ 2] y norm: 2.8977191
 [ 3] y norm: 3.1973388
 [ 4] y norm: 3.3679338
-Time:    613 msec
+Time:    426 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 78 threads ====
 Execute program ../bin/span cores 78
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/span -m 25000 -n 25000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  78
+Vector size: 25000 x 25000
+x norm: 25000.002
+[ 0] y norm: 314.20694
+[ 1] y norm: 2.236389
+[ 2] y norm: 2.898465
+[ 3] y norm: 3.1976926
+[ 4] y norm: 3.3739903
+Time:    383 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
 ==== Run ../bin/span on 89 threads ====
 Execute program ../bin/span cores 89
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/span -m 25000 -n 25000 -i 5 --trace
@@ -125,26 +138,13 @@ Threads: 100
 Vector size: 25000 x 25000
 x norm: 24999.982
 [ 0] y norm: 316.24042
-[ 1] y norm: 2.2363353
-[ 2] y norm: 2.8977246
-[ 3] y norm: 3.1973412
-[ 4] y norm: 3.3679624
-Time:    384 msec
+[ 1] y norm: 2.236336
+[ 2] y norm: 2.8977253
+[ 3] y norm: 3.1973302
+[ 4] y norm: 3.3679626
+Time:    383 msec
 span-BW: (estimated Gb/sec)       0
 span-Flops:       0
 ==== Run ../bin/span on 112 threads ====
 Execute program ../bin/span cores 112
 Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/span -m 25000 -n 25000 -i 5 --trace
-Total cores available: 112
-Runtype: span
-Threads: 112
-Vector size: 25000 x 25000
-x norm: 24999.992
-[ 0] y norm: 306.18948
-[ 1] y norm: 2.236669
-[ 2] y norm: 2.9011378
-[ 3] y norm: 3.2051432
-[ 4] y norm: 3.39939
-Time:    382 msec
-span-BW: (estimated Gb/sec)       0
-span-Flops:       0
