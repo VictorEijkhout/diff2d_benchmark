@@ -10,7 +10,6 @@
 namespace linalg {
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2d5ptomp
   template< typename real >
   void bordered_array_1d<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -38,10 +37,8 @@ namespace linalg {
     }
     log_flops(m*n*5); log_bytes( sizeof(real)*m*n*7 );
   };
-  //codesnippet end
 
   //! Copy the interior of another bordered array, but leave border alone
-  //codesnippet d2dcopyomp
   template< typename real >
   void bordered_array_1d<real>::copy_interior_from
       ( const linalg::bordered_array_base<real>& _other ) {
@@ -57,10 +54,8 @@ namespace linalg {
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*3 );
   };
-  //codesnippet end
 
   //! Scale the interior, leaving the border alone
-  //codesnippet d2dscaleomp
   template< typename real >
   void bordered_array_1d<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
@@ -75,10 +70,8 @@ namespace linalg {
         out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
   };
-  //codesnippet end
 
   //! Compute the L2 norm of the interior
-  //codesnippet d2dnormomp
   template< typename real >
   real bordered_array_1d<real>::l2norm() {
     real sum_of_squares{0};
@@ -93,7 +86,6 @@ namespace linalg {
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 );
     return std::sqrt(sum_of_squares);
   };
-  //codesnippet end
 
   //! Set the interior to a value
   template< typename real >
