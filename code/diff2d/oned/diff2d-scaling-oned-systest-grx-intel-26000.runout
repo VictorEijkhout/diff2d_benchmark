@@ -1,0 +1,165 @@
+==== Run ../bin/oned on 1 threads ====
+Execute program ../bin/oned cores 1
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:   1
+Vector size: 26000 x 26000
+x norm: 25995.176
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2360244
+[ 2] y norm: 2.8992674
+[ 3] y norm: 3.196595
+[ 4] y norm: 3.368655
+Time:   6670 msec
+omp-BW: (estimated Gb/sec)    15.4
+omp-Flops:    4.86
+==== Run ../bin/oned on 24 threads ====
+Execute program ../bin/oned cores 24
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=24 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  24
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236207
+[ 2] y norm: 2.8984776
+[ 3] y norm: 3.1967752
+[ 4] y norm: 3.368624
+Time:    297 msec
+omp-BW: (estimated Gb/sec)     346
+omp-Flops:     109
+==== Run ../bin/oned on 48 threads ====
+Execute program ../bin/oned cores 48
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=48 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  48
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236192
+[ 2] y norm: 2.898572
+[ 3] y norm: 3.1966848
+[ 4] y norm: 3.3686333
+Time:    159 msec
+omp-BW: (estimated Gb/sec)     646
+omp-Flops:     204
+==== Run ../bin/oned on 72 threads ====
+Execute program ../bin/oned cores 72
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=72 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  72
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.23619
+[ 2] y norm: 2.8985784
+[ 3] y norm: 3.1966803
+[ 4] y norm: 3.3686368
+Time:    115 msec
+omp-BW: (estimated Gb/sec)     893
+omp-Flops:     282
+==== Run ../bin/oned on 96 threads ====
+Execute program ../bin/oned cores 96
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=96 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  96
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361891
+[ 2] y norm: 2.8985786
+[ 3] y norm: 3.1966777
+[ 4] y norm: 3.368646
+Time:     98 msec
+omp-BW: (estimated Gb/sec) 1.05e+03
+omp-Flops:     331
+==== Run ../bin/oned on 120 threads ====
+Execute program ../bin/oned cores 120
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=120 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 120
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361887
+[ 2] y norm: 2.8985791
+[ 3] y norm: 3.1966758
+[ 4] y norm: 3.368646
+Time:     89 msec
+omp-BW: (estimated Gb/sec) 1.15e+03
+omp-Flops:     365
+==== Run ../bin/oned on 144 threads ====
+Execute program ../bin/oned cores 144
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=144 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 144
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361884
+[ 2] y norm: 2.8985794
+[ 3] y norm: 3.1966743
+[ 4] y norm: 3.3686466
+Time:     81 msec
+omp-BW: (estimated Gb/sec) 1.27e+03
+omp-Flops:     401
+==== Run ../bin/oned on 168 threads ====
+Execute program ../bin/oned cores 168
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=168 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 168
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361884
+[ 2] y norm: 2.89858
+[ 3] y norm: 3.196673
+[ 4] y norm: 3.3686464
+Time:     72 msec
+omp-BW: (estimated Gb/sec) 1.43e+03
+omp-Flops:     451
+==== Run ../bin/oned on 192 threads ====
+Execute program ../bin/oned cores 192
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=192 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 192
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361882
+[ 2] y norm: 2.8985806
+[ 3] y norm: 3.1966727
+[ 4] y norm: 3.3686464
+Time:     68 msec
+omp-BW: (estimated Gb/sec) 1.51e+03
+omp-Flops:     477
+==== Run ../bin/oned on 216 threads ====
+Execute program ../bin/oned cores 216
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=216 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 216
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361882
+[ 2] y norm: 2.898581
+[ 3] y norm: 3.1966722
+[ 4] y norm: 3.3686466
+Time:     65 msec
+omp-BW: (estimated Gb/sec) 1.58e+03
+omp-Flops:     499
+==== Run ../bin/oned on 240 threads ====
+Execute program ../bin/oned cores 240
+Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=240 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 240
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361884
+[ 2] y norm: 2.8985815
+[ 3] y norm: 3.196672
+[ 4] y norm: 3.3686466
+Time:     62 msec
+omp-BW: (estimated Gb/sec) 1.66e+03
+omp-Flops:     523
