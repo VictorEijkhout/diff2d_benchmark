@@ -1,0 +1,3 @@
+for ( idxint i=0; i<m; i++ )
+  for ( idxint j=0; j<n; j++ )
+    out[ IINDEX(i,j,b,n2b) ] = in[ IINDEX(i,j,b,n2b) ] * factor;
