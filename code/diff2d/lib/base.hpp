@@ -191,7 +191,7 @@ namespace linalg {
     // essential functionality
     //codesnippet d2dvirtualfunc
     virtual void central_difference_from
-      ( const linalg::bordered_array_base<real>&,bool=false ) const = 0;
+      ( const linalg::bordered_array_base<real>&,bool=false ) = 0;
     virtual void scale_interior( const linalg::bordered_array_base<real>&, real )
         = 0;
     virtual real l2norm() = 0;
