@@ -13,26 +13,74 @@
 
 import re
 import sys
-args = sys.argv
-script = args[0]
-args = args[1:]
-if len( sys.argv )<2:
-    print("Usage: {script} infile outfile")
-    sys.exit(1)
 
-file = args[0]
-csvfile = args[1]
-print(f"Processing file: <<{file}>> into <<{csvfile}>>")
-keys = args[2:]
-graphs = {}; fields = {}; columns = []
+import argparse
+
+parser = argparse.ArgumentParser(description="Extract single graph from multiple files")
+
+# Optional test and verbose flags
+parser.add_argument('-t', '--test', action='store_true', help='set test mode')
+parser.add_argument('-v', '--verbose', action='store_true', help='set verbose mode')
+
+# Destination path
+parser.add_argument('-n', '--name', type=str, default='graphs', help='Base name of the csv file')
+parser.add_argument('-p', '--path', type=str, default='.', help='Path to the directory')
+
+# Positional arguments
+parser.add_argument('colonlist', nargs='*', help='List of items')
+
+# Parse arguments
+parsed_args = parser.parse_args()
+
+verbose = parsed_args.verbose
+destpath = parsed_args.path
+destname = parsed_args.name
+
+if parsed_args.colonlist:
+    args = parsed_args.colonlist
+else:
+    print("No positional arguments were provided."); sys.exit(1)
+
+##
+## first bunch of arguments is filename:key
+## parse until something isn't a filename anymore
+##
+print("================")
+graphs = {}; files = {}; firstfile = False; filekeys = []
+while len(args)>0:
+    fk = args[0]; fk = fk.split(":"); f = fk[0]; k = fk[1]
+    if verbose:
+        print( f"Testing <<{f}>> : <<{k}>>" )
+    if os.path.isfile(f):
+        print(f"File: {f}")
+        if not firstfile: firstfile = f
+        filekeys.append(k)
+        ## store file handle for `k'
+        files[k] = open(f,"r")
+        ## create an empty graph for `k'
+        graphs[k] = []
+        ## parse next argument
+        args = args[1:]
+    else: break
+if len(files)==0:
+    print("No files found"); sys.exit(1)
+else:
+    print(f"Processing files: <<{files.keys()}>>")
+
+##
+## Remaning arguments are searchkey:column
+## First key will the x axis, others are multiple graphs
+##
+keys = args
+fields = {}; columns = []
 xaxis = None
 for k in keys:
-    cf = k.split(":"); c = cf[0]; f = cf[1]
+    fc = k.split(":"); f = fc[0]; c = fc[1]
     print(f"Retrieving column <<{c}>> at field <<{f}>>")
-    if not xaxis: xaxis = c
-    columns.append(c)
-    fields[c] = int(f)
-    graphs[c] = []
+    if not xaxis: xaxis = f
+    columns.append(f)
+    fields[f] = int(c)
+    graphs[f] = []
 
 with open(file,"r") as data:
     for line in data:

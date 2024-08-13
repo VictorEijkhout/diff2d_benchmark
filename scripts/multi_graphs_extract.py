@@ -111,8 +111,6 @@ for f in files.keys():
 ## write all data to csv file
 ## this is probably timing 
 ##
-# firstfile = re.sub(r'.*/','',firstfile)
-# csvfile = re.sub('runout','csv',firstfile)
 csvfile = f"{destpath}/{destname}.csv"
 print(f"Writing to csv file <<{csvfile}>>>")
 with open(csvfile,"w") as csv:

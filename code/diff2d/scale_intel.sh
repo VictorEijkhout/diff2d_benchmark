@@ -5,11 +5,13 @@ function usage () {
     echo "    [ -g (gnu, otherwise intel) ]"
     echo "    [ -n 12345 (default: ${nsize}) ] "
     echo "    [ -v variant (default: ${variant}) ]"
+    echo "    [ -x extension (default: ${extension}) ]"
 }
 
 nsize=20000
 variant=oned
 compiler=intel
+extension=sp
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -29,8 +31,15 @@ for queue in skx clx icx spr grx ; do
     if [ ! -f ${file} ] ; then
 	echo "ERROR could not find file ${file}" && exit 1
     fi
-    python3 ../../scripts/multi_graphs_extract.py \
+    if [ "${extension}" = "bw" ] ; then
+	python3 ../../scripts/multi_graphs_extract.py \
+	    -p ../../writing/plots -n ${compiler}-${variant}-${queue}-${nsize}-bw \
+	    ${file}:${queue} \
+	    Execute:4 omp-BW:3
+    else
+	python3 ../../scripts/multi_graphs_extract.py \
 	    -p ../../writing/plots -n ${compiler}-${variant}-${queue}-${nsize} \
 	    ${file}:${queue} \
 	    Execute:4 Time:1
+    fi
 done
