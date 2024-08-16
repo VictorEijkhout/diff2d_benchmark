@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# tikz stuff
+*.dep
+*.dpth
+*.idx
+*.md5
+*.mw
+
+# TeX stuff
+*.aux
+*.log
+*.cut

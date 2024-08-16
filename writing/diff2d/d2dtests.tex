@@ -70,12 +70,14 @@ The operations then are:
 \end{itemize}
 %%packtsnippet end
 
-\Level 1 {Loop parallelisme}
+\Level 1 {Loop parallelism}
 %%packtsnippet d2dloops
 \label{sec:d2d-omp1d}
 
 In our power method application
-%% (chapter~\ref{ch:parexample})
+\begin{packt}
+  (chapter~\ref{ch:parexample})
+\end{packt}
 a first example of a parallel loop is scaling an array by a factor.
 %
 \cxxverbatimsnippet{d2dscaleseq}
@@ -83,8 +85,7 @@ a first example of a parallel loop is scaling an array by a factor.
 where \lstinline{m,n} are the size of the domain and \lstinline{b}~is the
 width of a halo region.
 
-
-Some remarks.
+Some remarks:
 \begin{enumerate}
 \item We use template parameters \lstinline{idxint} and \lstinline{real}
   for integers and floating point quantities, respectively.
@@ -207,7 +208,9 @@ The \lstinline{cartesian_product} view is quite general
 so one could wonder about overhead.
 We write a custom iterator over a contiguous domain.
 It maintains internally \lstinline{i,j} coordinates
-which are updated as follows:
+which are updated by the \lstinline{operator++}.
+A~naive implementation uses integer division, so we also
+make an optimized implementation without division or branching.
 %
 \twosnippetswithcaptions{Simple}{d2ddiyiter}{Optimized}{d2ediyiter}
 
@@ -368,48 +371,9 @@ compilers.
   \label{fig:diff2d-variants-gcc}
 \end{figure}
 
-\begin{figure}[t]
-  %% diff2d-scaling-span-skx-intel-20000.csv diff2d-scaling-span-skx-intel-20000-sp.csv
-  \pgfplotsset{table/col sep=comma}
-  \hbox\bgroup %%\begin{multicols}{2}
-    \tikzsetnextfilename{diff2d-procs}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Runtime,
-          ylabel=time (msec), xlabel=cores,
-          width=.55\textwidth, height=.5\textwidth,
-          legend entries={skx,icx,spr,grx},
-        ]
-        \addplot table[y=skx]{plots/intel-oned-skx-32000.csv};
-        %%\addplot table[y=csx]{plots/intel-oned-csx-32000.csv};
-        \addplot table[y=icx]{plots/intel-oned-icx-32000.csv};
-        \addplot table[y=spr]{plots/intel-oned-spr-32000.csv};
-        \addplot table[y=grx]{plots/intel-oned-grx-32000.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-    %% \columnbreak
-    \tikzsetnextfilename{diff2d-procs-bw}
-    \begin{tikzpicture}
-      \begin{axis}[
-          title=Speedup,
-          ylabel=$S_p$, xlabel=cores,
-          width=.55\textwidth, height=.5\textwidth,
-          legend entries={skx,icx,spr,grx},
-          legend pos=north west,
-        ]
-        \addplot table[y=skx]{plots/intel-oned-skx-32000-sp.csv};
-        %%\addplot table[y=csx]{plots/intel-oned-csx-32000-sp.csv};
-        \addplot table[y=icx]{plots/intel-oned-icx-32000-sp.csv};
-        \addplot table[y=spr]{plots/intel-oned-spr-32000-sp.csv};
-        \addplot table[y=grx]{plots/intel-oned-grx-32000-sp.csv};
-      \end{axis}
-    \end{tikzpicture}
-  \egroup %%\end{multicols}
-  \caption{Generations of Intel processors (OpenMP)}
-  \label{fig:diff2d-procs}
-\end{figure}
-
 We make the following observations.
+
+\Level 2 {Intel compiler}
 
 First of all, we see that the naive `\n{oned}' OpenMP implementation
 is clearly the fastest.
@@ -429,24 +393,74 @@ implementations are relatively competitive.
 They probably employ an efficient translation to an OpenMP backend,
 but this makes their gradual loss of efficiency all the more puzzling.
 
+\Level 2 {GNU compiler}
+
+For the GNU compiler the differences between the various models
+are much smaller.
+Moreover, most models have constant efficiency, kokkos being the exception.
+
 \Level 1 {Comparing processor generations}
 
-In figure~\ref{fig:diff2d-procs} we compare three generations of Intel processors:
+\begin{figure}[t]
+  \pgfplotsset{table/col sep=comma}
+  \hbox\bgroup %%\begin{multicols}{2}
+    \tikzsetnextfilename{diff2d-procs}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Runtime,
+          ylabel=time (msec), xlabel=cores,
+          width=.55\textwidth, height=.5\textwidth,
+          legend entries={skx,clx,icx,spr,grx},
+        ]
+        \addplot table[y=skx]{plots/gcc-oned-skx-26000.csv};
+        \addplot table[y=clx]{plots/gcc-oned-clx-26000.csv};
+        \addplot table[y=icx]{plots/gcc-oned-icx-26000.csv};
+        \addplot table[y=spr]{plots/gcc-oned-spr-26000.csv};
+        \addplot table[y=grx]{plots/gcc-oned-grx-26000.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
+    %% \columnbreak
+    \tikzsetnextfilename{diff2d-procs-sp}
+    \begin{tikzpicture}
+      \begin{loglogaxis}[
+          title=Speedup,
+          ylabel=$S_p$, xlabel=cores,
+          width=.55\textwidth, height=.5\textwidth,
+          legend entries={skx,clx,icx,spr,grx},
+          legend pos=north west,
+        ]
+        \addplot table[y=skx]{plots/gcc-oned-skx-26000-sp.csv};
+        \addplot table[y=clx]{plots/gcc-oned-clx-26000-sp.csv};
+        \addplot table[y=icx]{plots/gcc-oned-icx-26000-sp.csv};
+        \addplot table[y=spr]{plots/gcc-oned-spr-26000-sp.csv};
+        \addplot table[y=grx]{plots/gcc-oned-grx-26000-sp.csv};
+      \end{loglogaxis}
+    \end{tikzpicture}
+  \egroup %%\end{multicols}
+  \caption{Generations of Intel processors (OpenMP). Time (left) and speedup (right) as function of core count.}
+  \label{fig:diff2d-procs}
+\end{figure}
+
+In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel processors:
 \begin{itemize}
 \item \indextermbus{Intel}{Sky Lake} in the \indextermbus{TACC}{Stampede2} cluster,
-  in a two-socket configuration with a total of 40 cores;
+  in a two-socket configuration with a total of 48 cores;
 \item \indextermbus{Intel}{Cascade Lake} in the \indextermbus{TACC}{Frontera} cluster,
   in a two-socket configuration with a total of 56 cores;
 \item \indextermbus{Intel}{Ice Lake} in the \indextermbus{TACC}{Stampede3} cluster,
   in a two-socket configuration with a total of 80 cores;
+\item \indextermbus{Intel}{Sapphire Rapids} in the \indextermbus{TACC}{Stampede3} cluster,
+  in a two-socket configuration with a total of 112 cores;
+\item \indextermbus{Intel}{Granite Rapids} in the \indextermbus{TACC}{Stampede3} cluster,
+  in a two-socket configuration with a total of 240 cores;
 \end{itemize}
 In the left graph we see that the runtimes are roughly equal for low core counts;
 the main difference is that Sky Lake and Cascade Lake reach their maximum performance
 well short of the total core count, while Ice Lake does not show this behavior.
+The Ice Lake and later generations keep scaling with increasing core count,
+the both Rapids generations even almost linearly.
 
-In the right graph we read out the maximum bandwidth that is reached.
-
-We need to start by explaining how we measure the bandwdith.
+We need to start by explaining how we measure the bandwidth.
 We do this indirectly:
 \begin{itemize}
 \item The five-point stencil application loads 5~elements from the input,
@@ -497,29 +511,32 @@ version (Intel 24 compiler):
 \end{lstlisting}
 We see that more than half of the time goes into index calculations,
 and in particular integer division.
-This makes send if we consider our `diy' implementation:
-\cxxverbatimsnippet{d2ddiyiter}
-Unfortunately it's not the plus-plus operator but the plus-and-is,
-which is the bottlenect.
-For the former we can come up with trickery to lose the divisions:
-\cxxverbatimsnippet{d2ddiziter}
-for the latter that's much harder.
-(Note that the tricked code has no conditionals that could give branch mispredictions!)
 
-Unfortunately, \indexterm{perf} does not help us much here:
-\begin{lstlisting}[language=verbatim]
+\begin{comment}
+  This makes send if we consider our `diy' implementation:
+  \cxxverbatimsnippet{d2ddiyiter}
+  Unfortunately it's not the plus-plus operator but the plus-and-is,
+  which is the bottlenect.
+  For the former we can come up with trickery to lose the divisions:
+  \cxxverbatimsnippet{d2ddiziter}
+  for the latter that's much harder.
+  (Note that the tricked code has no conditionals that could give branch mispredictions!)
+
+  Unfortunately, \indexterm{perf} does not help us much here:
+  \begin{lstlisting}[language=verbatim]
     35.25%  [.] linalg::bordered_array_diy2e<float>::l2norm
     31.39%  [.] linalg::bordered_array_diy2e<float>::central_difference_from
     30.46%  [.] linalg::bordered_array_diy2e<float>::scale_interior
-     2.29%  [.] linalg::bordered_array_diy2e<float>::set
-\end{lstlisting}
-We get no timings for the embedded iterator.
-Note the counterintuitive result that the norm computation takes more time than the
-central difference,
-despite the latter having more operations
-and more complicated memory access.
+    2.29%  [.] linalg::bordered_array_diy2e<float>::set
+  \end{lstlisting}
+  We get no timings for the embedded iterator.
+  Note the counterintuitive result that the norm computation takes more time than the
+  central difference,
+  despite the latter having more operations
+  and more complicated memory access.
+\end{comment}
 
-VTune profiling tells us the same as Perf
+VTune profiling tells us something similar
 (with some post-processing):
 \begin{lstlisting}[language=verbatim]
 std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ranges::iota_view<long, long>>::_Iterator<(bool)1>::operator+= 44.15438

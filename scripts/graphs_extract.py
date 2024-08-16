@@ -6,20 +6,20 @@
 #### `Parallel Programming in MPI and OpenMP'
 #### by Victor Eijkhout, copyright 2012-2024
 ####
-#### multi_graphs_extract.py : extract graphs from multiple files
+#### graphs_extract.py : extract multiple graphs from a single file.
 ####
 ################################################################
 ################################################################
 
-import os
 import re
 import sys
 
 import argparse
 
-parser = argparse.ArgumentParser(description="Extract graphs from multiple files")
+parser = argparse.ArgumentParser(description="Extract single graph from multiple files")
 
-# Optional verbose flag
+# Optional test and verbose flags
+parser.add_argument('-t', '--test', action='store_true', help='set test mode')
 parser.add_argument('-v', '--verbose', action='store_true', help='set verbose mode')
 
 # Destination path
@@ -82,79 +82,62 @@ for k in keys:
     fields[f] = int(c)
     graphs[f] = []
 
-##
-## Go through the files
-##
-for fk,fh in files.items():
-    xaxis = False
-    for line in fh:
+with open(file,"r") as data:
+    for line in data:
         line = line.strip()
-        for fc in fields.items():
-            f = fc[0]; c = fc[1]
-            if key_line:=re.match(f'{f}.*$',line):
-                ##
-                ## find field 'f' starting the current line
-                ## if found, extract column 'c'
-                ## and append to 'graphs[fk]
-                ##
+        ## print(line)
+        for c in fields:
+            f = fields[c]
+            if key_line:=re.match(f'{c}.*$',line):
+                #print(f"Found <<{c}>> in line <<{line}>>")
                 key_line = key_line.group().split()
-                #print(f"Found <<{f}>>=<<{key_line[c]}>> in line <<{line}>>")
-                if not xaxis:
-                    xaxis = int( key_line[c] )
-                else:
-                    graphs[fk].append( [xaxis,key_line[c]] )
-                    xaxis = False
-for f in files.keys():
-    print(f"Graph <<{f}>>: <<{graphs[f]}>>")
+                val = int( float( key_line[f] ) )
+                graphs[c].append(val)
 
-##
-## write all data to csv file
-## this is probably timing 
-##
-csvfile = f"{destpath}/{destname}.csv"
-print(f"Writing to csv file <<{csvfile}>>>")
+    for c in fields:
+        print(f"Graph <<{c}>>: <<{graphs[c]}>>")
+
+## this should really test any extension
+# csvfile = re.sub('runout','csv',file)
+# if csvfile==file:
+#     print(f"Could not generate csv name from: <<{file}>>")
+#     sys.exit(2)
 with open(csvfile,"w") as csv:
     ## column names
-    for c in ["cores"]+[ k for k in files.keys() ]:
+    for c in columns:
         csv.write(c+", ")
     csv.write("\n")
-    for kvs in zip( *[ graphs[k] for k in files.keys() ] ):
-        pvalue = False
-        values_for_p = [] # time values for specific p value and all files
-        #print(kvs)
-        for k,v in kvs:
-            #print(f"{k}:{v}")
-            if not pvalue: pvalue = k
-            values_for_p.append(v)
-        for v in [ pvalue ] + values_for_p:
-            csv.write( f"{v}, " )
+    for values in zip( *[ graphs[c] for c in columns ] ):
+        #
+        # values = [ xaxis, yval1, yval2, ...]
+        #
+        csv.write( f"{values[0]}, " ); values = values[1:]
+        for v in values:
+            csv.write(f"{v}, ")
         csv.write("\n")
 print(f"Written plottable data: <<{csvfile}>>")
 
-## sys.exit(0)
+sys.exit(0)
 
-##
-## assuming above plots times,
-## this plots speedup
-##
-csvfile = re.sub('.csv','-sp.csv',csvfile)
+csvfile = re.sub('.csv','-eff.csv',csvfile)
+if csvfile==file:
+    print(f"Could not generate eff.csv name from: <<{file}>>")
+    sys.exit(2)
 with open(csvfile,"w") as csv:
     ## column names
-    for c in ["cores"]+[ k for k in files.keys() ]:
+    for c in columns:
         csv.write(c+", ")
     ## values, first x axis, then all y values
     csv.write("\n")
-    t1 = False; p1 = False
-    for kvs in zip( *[ graphs[k] for k in files.keys() ] ):
-        values_for_p = [] # time values for specific p value and all files
-        pvalue = False
-        for k,v in kvs:
-            if not p1: p1 = k
-            if not pvalue: pvalue = k
-            values_for_p.append(v)
-        if not t1: t1 = values_for_p
-        csv.write( f"{pvalue}, " )
-        for v1,vp in zip( t1,values_for_p ):
-            csv.write(f"{float(p1)*float(v1)/float(vp)}, ")
+    reference_values = False
+    for values in zip( *[ graphs[c] for c in columns ] ):
+        #
+        # values = [ xaxis, yval1, yval2, ...]
+        #
+        xvalue = values[0]
+        csv.write( f"{xvalue}, " ); values = values[1:]
+        if not reference_values: reference_values = values
+        for col,yvalue in enumerate(values):
+            csv.write(f"{yvalue*xvalue/reference_values[col]}, ")
         csv.write("\n")
-print(f"Written speedup data: <<{csvfile}>>")
+print(f"Written plottable data: <<{csvfile}>>")

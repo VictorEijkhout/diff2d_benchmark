@@ -66,3 +66,26 @@ The following code variants are available:
  - `dist` : MPI implementation through MPL. 
 
  Not yet compilable with CMake: kokkos, sycl, dist.
+
+ ## Running
+
+ ### single program run
+
+ Run `bin/oned` or any other variant. Commandline options:
+  - `-m 100 -n 200` : domain size;
+  - `-t` : trace output;
+  - `-i 5` : run only five iterations, not until full convergence which can take forever.
+
+### scaling study
+
+Run `./compare_models.py` with arguments as below. 
+This is somewhat TACC-dependent;
+for instance it interrogates `SLRUM_CPUS_ON_NODE` to find the core count.
+If you're not on a SLURM cluster, set this by hand.
+
+Other options:
+ - `-c cpuname` : only for outputfile naming;
+ - `-n 123456` : the `-m -n` options above;
+ - `-t` : iteration trace output;
+ - `variant1,variant2,variant3` or `all` to run specific codes.
+

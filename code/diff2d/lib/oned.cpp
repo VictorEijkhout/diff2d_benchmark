@@ -83,7 +83,7 @@ namespace linalg {
     auto out = this->data();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-  //codesnippet d2dnormomp
+    //codesnippet d2dnormomp
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {

@@ -34,12 +34,12 @@ namespace linalg {
   };
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2d5ptspan
   template< typename real >
   void bordered_array_span<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) const {
     const auto& other =
       dynamic_cast<const linalg::bordered_array_span<real>&>(_other);
+    //codesnippet d2d5ptspan
     auto out = this->data2d();
     const auto in = other.data2d();
     #pragma omp parallel for 
@@ -48,8 +48,8 @@ namespace linalg {
       out[ i,j ] = 4*in[ i,j ]
 	- in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
     }
+    //codesnippet end
   };
-  //codesnippet end
 
   //! Scale the interior, leaving the border alone
   //codesnippet d2dscalespan
