@@ -13,7 +13,7 @@ function usage () {
     echo && echo "srun a code on multiple procs" && echo
     echo "Usage: $0 "
     echo "    [ -c c1,c2,c3 (default: ${codes}) ] }"
-    echo "    [ -q q1,q2,q3 (default: ${procs}) ]"
+    echo "    [ -p p1,p2,p3 (default: ${procs}) ]"
     echo "        ( known procs: ${allprocs} )"
     echo "    [ -n 12345 (default: ${nsize} ]"
     echo "    [ -g (git add ) ] [ -t (trace) ]"
