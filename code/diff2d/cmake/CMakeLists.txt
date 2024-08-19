@@ -9,6 +9,7 @@ message( STATUS "\n====   Building variant: ${PROJECT_NAME}" )
 set( CMAKE_BUILD_TYPE RelWithDebInfo )
 add_executable( ${PROJECT_NAME} )
 target_compile_features( ${PROJECT_NAME} PRIVATE cxx_std_23 )
+## set_target_properties(${PROJECT_NAME}_c PROPERTIES CXX_STANDARD 23)
 target_sources( ${PROJECT_NAME} PRIVATE diff2d.cpp )
 target_sources( ${PROJECT_NAME} INTERFACE ../main.cpp )
 
