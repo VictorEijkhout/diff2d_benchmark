@@ -15,3 +15,11 @@
 \input snippetmacs
 \input ../../../scientific-computing-private/macros/tikzplot
 \excludecomment{packt}
+
+%%
+%% refer to sections in the HPC book
+%%
+\usepackage{xr-hyper}
+% vol 1
+\externaldocument[HPSC-]{scicompbook}
+%%\newcommand\HPSCref[2][section]{HPC book~\cite{ISTCwebpage}, #1~\ref{HPSC-#2}}

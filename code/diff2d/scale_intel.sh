@@ -21,6 +21,8 @@ while [ $# -gt 0 ] ; do
 	shift && nsize=$1 && shift
     elif [ $1 = "-v" ] ; then 
 	shift && variant=$1 && shift
+    elif [ $1 = "-x" ] ; then 
+	shift && extension=$1 && shift
     else
 	echo "Unknown option: <<$1>>" && exit 1
     fi
