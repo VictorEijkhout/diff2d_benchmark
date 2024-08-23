@@ -15,10 +15,14 @@ In this paper we evaluate multiple parallel programming models
 with respect to both ease of expression, and resulting performance.
 We do this by implementing the mathematical algorithm
 known as the `power method' in a variety of ways,
-for the moment all in~C++.
+using modern C++ technniques.
 
 \Level 0 {Algorithm aspects}
 
+%% ALGORITHM DISCUSSION REMOVED TO SATSIFY SC PAGE LIMIT.
+%% THIS CAN BE REINSTATED FOR FINAL SUBMISSION.
+
+%% \begin{comment}
 We briefly discuss the power method, mostly going into
 its computational aspects.
 For the mathematical side, see \HPSCref{app:power-method}.
@@ -69,6 +73,8 @@ The operations then are:
   \[ y_{ij} = 4x_{ij} - x_{i-1,j} -x_{i+1,j} - x_{i,j-1} - x_{i,j+1} \]
 \end{itemize}
 %%packtsnippet end
+
+%% \end{comment}
 
 \Level 1 {Loop parallelism}
 %%packtsnippet d2dloops
@@ -183,10 +189,14 @@ so we take a two-step approach:
 
   
 \begin{enumerate}
-\item We access data through an \lstinline{mdspan}, so that have multidimensional indexing:
+\item We access data through an \lstinline{mdspan}, so that have multidimensional indexing;
+  see figure~\ref{fig:data2d}
 
+\begin{figure*}[h]
   \twosnippetswithcaptions{Class data:}{d2dspan0}{Accessor:}{d2dspan2}
-
+  \caption{Use of \texttt{mdspan} for 2D data access}
+  \label{fig:data2d}
+\end{figure*}
 
 \item We define the iteration space as a \indexc{cartesian_product} range view:
 
@@ -293,7 +303,7 @@ We compare the Intel~2024 (figure~\ref{fig:diff2d-variants-intel})
 and GCC~13 (figure~\ref{fig:diff2d-variants-gcc})
 compilers.
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-ratios-intel-spr}
@@ -336,9 +346,9 @@ compilers.
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Intel 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-intel}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-ratios-gcc-spr}
@@ -377,7 +387,7 @@ compilers.
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Gcc 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-gcc}
-\end{figure}
+\end{figure*}
 
 We make the following observations.
 
@@ -409,7 +419,12 @@ Moreover, most models have constant efficiency, kokkos being the exception.
 
 \Level 1 {Comparing processor generations}
 
-\begin{figure}[t]
+%% RESULTS SHOWING COMPARISONS BETWEEN INTEL PROCESSOR GENERATIONS
+%% REMOVED TO SATISFY PAGE LIMITS. THIS CAN BE REINSTATED FOR FINAL SUBMISSION.
+
+%% \begin{comment}
+
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \hbox\bgroup %%\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-procs}
@@ -447,7 +462,7 @@ Moreover, most models have constant efficiency, kokkos being the exception.
   \egroup %%\end{multicols}
   \caption{Generations of Intel processors (OpenMP). Time (left) and speedup (right) as function of core count.}
   \label{fig:diff2d-procs}
-\end{figure}
+\end{figure*}
 
 In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel processors:
 \begin{itemize}
@@ -473,17 +488,6 @@ the both Rapids generations even almost linearly.
 
 \Level 2 {Bandwidth}
 
-The right graph of figure~\ref{fig:diff2d-procs} shows a \emph{a~posteriori}
-measure for attained bandwidth.
-We see that the Sky Lake and Cascade Lake processors bear out the
-old truism that the total bandwidth is less than 
-each core's individual bandwidth summed over the cores.
-
-However, newer processor generations scale further, and
-for the Sapphire Rapids and Granite Rapids even fairly linear.
-The SPR node has Intel's `High Bandwidth Memory',
-given a much higher absolute number.
-
 Our bandwidth measure is not observed directly, but
 rather derived by considering the amount of data loads
 in the algorithm:
@@ -504,9 +508,23 @@ in the algorithm:
   doesn't need to be counted.
 \end{itemize}
 
+The right graph of figure~\ref{fig:diff2d-procs} shows a \emph{a~posteriori}
+measure for attained bandwidth.
+
+%% \end{comment}
+
+We see that the Sky Lake and Cascade Lake processors bear out the
+old truism that the total bandwidth is less than 
+each core's individual bandwidth summed over the cores.
+
+However, newer processor generations scale further, and
+for the Sapphire Rapids and Granite Rapids even fairly linear.
+The SPR node has Intel's `High Bandwidth Memory',
+given a much higher absolute number.
+
 \Level 1 {Comparing compilers}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{oned-ratios-spr-sp}
@@ -544,9 +562,9 @@ in the algorithm:
   \endgroup %\end{multicols}
   \caption{Comparing Intel to GCC on `oned' (left) and `clps' (right) scheme}
   \label{fig:compiler-compare-oned}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{span-ratios-spr-sp}
@@ -584,7 +602,7 @@ in the algorithm:
   \endgroup %\end{multicols}
   \caption{Comparing Intel to GCC on `span' (left) and `kokkos' (right) scheme}
   \label{fig:compiler-compare-span}
-\end{figure}
+\end{figure*}
 
 Figures \ref{fig:compiler-compare-oned} and \ref{fig:compiler-compare-span}
 show a comparison between the Intel 2024 and GCC 13 compilers.
