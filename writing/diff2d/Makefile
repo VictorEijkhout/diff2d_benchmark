@@ -15,7 +15,7 @@ info ::
 	@echo "make pdf [ FILE= (from ${FILES}, default=${FILE}) ]"
 
 FILE = diff2d
-FILES= diff2d cppcon2024 ixpug24eijkhout
+FILES= diff2d cppcon2024proposal cppcon2024slides ixpug24eijkhout
 LATEX = pdflatex
 ##xelatex
 .PHONY: pdf onepass upload
@@ -31,7 +31,7 @@ upload :
 	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/ \
 	 ; fi
 onepass :
-	@export TEXINPUTS=../macros:../graphics:${SNIPPETSDIR}:../:${TEXINPUTS} \
+	@export TEXINPUTS=../macros:../graphics:../beamer:${SNIPPETSDIR}:../:${TEXINPUTS} \
 	 && ${LATEX} -shell-escape ${FILE}
 
 .PHONY: getfiles
