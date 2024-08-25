@@ -15,10 +15,14 @@ In this paper we evaluate multiple parallel programming models
 with respect to both ease of expression, and resulting performance.
 We do this by implementing the mathematical algorithm
 known as the `power method' in a variety of ways,
-for the moment all in~C++.
+using modern C++ technniques.
 
 \Level 0 {Algorithm aspects}
 
+%% ALGORITHM DISCUSSION REMOVED TO SATSIFY SC PAGE LIMIT.
+%% THIS CAN BE REINSTATED FOR FINAL SUBMISSION.
+
+%% \begin{comment}
 We briefly discuss the power method, mostly going into
 its computational aspects.
 For the mathematical side, see \HPSCref{app:power-method}.
@@ -70,6 +74,8 @@ The operations then are:
 \end{itemize}
 %%packtsnippet end
 
+%% \end{comment}
+
 \Level 1 {Loop parallelism}
 %%packtsnippet d2dloops
 \label{sec:d2d-omp1d}
@@ -91,7 +97,7 @@ Some remarks:
   for integers and floating point quantities, respectively.
 \item
   The loops range only over the $m\times n$ interior part of the domain,
-  which is allocated with size $(m+b)\times(n+b)$.
+  which is allocated with size $(m+2b)\times(n+2b)$.
   %% of the \lstinline{mdspan}.
   %% Later we will explore using a range-based loop and
   %% dispensing with indexing entirely.
@@ -131,6 +137,7 @@ looks in code like:
 OpenMP resolves the race condition on the reduction variable
 by giving each thread a local copy of \lstinline{sum_of_squares},
 summing into that, and adding the local copies together in the end.
+This is illustrated in figure~\ref{fig:omp-reduct}.
 
 %%packtsnippet end
 
@@ -182,10 +189,14 @@ so we take a two-step approach:
 
   
 \begin{enumerate}
-\item We access data through an \lstinline{mdspan}, so that have multidimensional indexing:
+\item We access data through an \lstinline{mdspan}, so that have multidimensional indexing;
+  see figure~\ref{fig:data2d}
 
+\begin{figure*}[h]
   \twosnippetswithcaptions{Class data:}{d2dspan0}{Accessor:}{d2dspan2}
-
+  \caption{Use of \texttt{mdspan} for 2D data access}
+  \label{fig:data2d}
+\end{figure*}
 
 \item We define the iteration space as a \indexc{cartesian_product} range view:
 
@@ -201,6 +212,13 @@ spanning the two-dimensional domain.
 Also, note that this domain is the interior of a larger domain.
 
 In graphs to follow we indicate this mode by~`\n{span}'.
+
+In the tests below it will become apparent that the two-dimensional
+iteration space is not without performance problems.
+We tackle this by having a variant, `\n{iota}',
+which splits the space orthogonally:
+%
+\cxxverbatimsnippet{d2dnormiota}
 
 \Level 1 {DIY cartesian product}
 
@@ -285,7 +303,7 @@ We compare the Intel~2024 (figure~\ref{fig:diff2d-variants-intel})
 and GCC~13 (figure~\ref{fig:diff2d-variants-gcc})
 compilers.
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-ratios-intel-spr}
@@ -328,9 +346,9 @@ compilers.
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Intel 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-intel}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-ratios-gcc-spr}
@@ -369,7 +387,7 @@ compilers.
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Gcc 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-gcc}
-\end{figure}
+\end{figure*}
 
 We make the following observations.
 
@@ -401,7 +419,12 @@ Moreover, most models have constant efficiency, kokkos being the exception.
 
 \Level 1 {Comparing processor generations}
 
-\begin{figure}[t]
+%% RESULTS SHOWING COMPARISONS BETWEEN INTEL PROCESSOR GENERATIONS
+%% REMOVED TO SATISFY PAGE LIMITS. THIS CAN BE REINSTATED FOR FINAL SUBMISSION.
+
+%% \begin{comment}
+
+\begin{figure*}[t]
   \pgfplotsset{table/col sep=comma}
   \hbox\bgroup %%\begin{multicols}{2}
     \tikzsetnextfilename{diff2d-procs}
@@ -420,26 +443,26 @@ Moreover, most models have constant efficiency, kokkos being the exception.
       \end{semilogyaxis}
     \end{tikzpicture}
     %% \columnbreak
-    \tikzsetnextfilename{diff2d-procs-sp}
+    \tikzsetnextfilename{diff2d-procs-bw}
     \begin{tikzpicture}
-      \begin{loglogaxis}[
-          title=Speedup,
-          ylabel=$S_p$, xlabel=cores,
+      \begin{axis}[
+          title=Bandwidth,
+          ylabel=BW (Gb/s), xlabel=cores,
           width=.55\textwidth, height=.5\textwidth,
           legend entries={skx,clx,icx,spr,grx},
           legend pos=north west,
         ]
-        \addplot table[y=skx]{plots/gcc-oned-skx-26000-sp.csv};
-        \addplot table[y=clx]{plots/gcc-oned-clx-26000-sp.csv};
-        \addplot table[y=icx]{plots/gcc-oned-icx-26000-sp.csv};
-        \addplot table[y=spr]{plots/gcc-oned-spr-26000-sp.csv};
-        \addplot table[y=grx]{plots/gcc-oned-grx-26000-sp.csv};
-      \end{loglogaxis}
+        \addplot table[y=skx]{plots/gcc-oned-skx-26000-bw.csv};
+        \addplot table[y=clx]{plots/gcc-oned-clx-26000-bw.csv};
+        \addplot table[y=icx]{plots/gcc-oned-icx-26000-bw.csv};
+        \addplot table[y=spr]{plots/gcc-oned-spr-26000-bw.csv};
+        \addplot table[y=grx]{plots/gcc-oned-grx-26000-bw.csv};
+      \end{axis}
     \end{tikzpicture}
   \egroup %%\end{multicols}
   \caption{Generations of Intel processors (OpenMP). Time (left) and speedup (right) as function of core count.}
   \label{fig:diff2d-procs}
-\end{figure}
+\end{figure*}
 
 In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel processors:
 \begin{itemize}
@@ -454,14 +477,20 @@ In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel p
 \item \indextermbus{Intel}{Granite Rapids} in the \indextermbus{TACC}{Stampede3} cluster,
   in a two-socket configuration with a total of 240 cores;
 \end{itemize}
+
+\Level 2 {Runtime}
+
 In the left graph we see that the runtimes are roughly equal for low core counts;
 the main difference is that Sky Lake and Cascade Lake reach their maximum performance
 well short of the total core count, while Ice Lake does not show this behavior.
 The Ice Lake and later generations keep scaling with increasing core count,
 the both Rapids generations even almost linearly.
 
-We need to start by explaining how we measure the bandwidth.
-We do this indirectly:
+\Level 2 {Bandwidth}
+
+Our bandwidth measure is not observed directly, but
+rather derived by considering the amount of data loads
+in the algorithm:
 \begin{itemize}
 \item The five-point stencil application loads 5~elements from the input,
   loads the output vector, and writes it; this would come to 7~data accesses per
@@ -479,22 +508,116 @@ We do this indirectly:
   doesn't need to be counted.
 \end{itemize}
 
-The interesting figure here is the aggregate bandwidth.
-Usually this is less than the single-core bandwidth times the number of cores,
-but with the Ice Lake we see it scaling quite far.
+The right graph of figure~\ref{fig:diff2d-procs} shows a \emph{a~posteriori}
+measure for attained bandwidth.
 
-\begin{tabular}{ccc}
-  Processor& single core bw attained/peak&aggregate bandwidth attained/peak\\
-  Cascade Lake & 13/xx & 230/281\\
-  Ice Lake     & 14/xx & 307/409\\
-\end{tabular}
+%% \end{comment}
+
+We see that the Sky Lake and Cascade Lake processors bear out the
+old truism that the total bandwidth is less than 
+each core's individual bandwidth summed over the cores.
+
+However, newer processor generations scale further, and
+for the Sapphire Rapids and Granite Rapids even fairly linear.
+The SPR node has Intel's `High Bandwidth Memory',
+given a much higher absolute number.
+
+\Level 1 {Comparing compilers}
+
+\begin{figure*}[t]
+  \pgfplotsset{table/col sep=comma}
+  \begingroup %\begin{multicols}{2}
+    \tikzsetnextfilename{oned-ratios-spr-sp}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Ratio GCC to Intel on oned,
+          xlabel=cores,
+          ylabel=ratio, ymin=.1, ymax=10, 
+          ytickten={-1,-.5,0,0.5,1},
+          yticklabels={1/10,1/3,1,3,10},
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={intel,gnu,},
+          legend pos=north west,
+        ]
+        \addplot table[y=intel]{plots/oned-ratios-iccgcc-rat.csv};
+        \addplot table[y=gnu]{plots/oned-ratios-iccgcc-rat.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
+    \tikzsetnextfilename{clps-ratios-spr-sp}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Ratio GCC to Intel on clps,
+          xlabel=cores,
+          ylabel=ratio, ymin=.1, ymax=10, 
+          ytickten={-1,-.5,0,0.5,1},
+          yticklabels={1/10,1/3,1,3,10},
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={intel,gnu,},
+          legend pos=north west,
+        ]
+        \addplot table[y=intel]{plots/clps-ratios-iccgcc-rat.csv};
+        \addplot table[y=gnu]{plots/clps-ratios-iccgcc-rat.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
+  \endgroup %\end{multicols}
+  \caption{Comparing Intel to GCC on `oned' (left) and `clps' (right) scheme}
+  \label{fig:compiler-compare-oned}
+\end{figure*}
+
+\begin{figure*}[t]
+  \pgfplotsset{table/col sep=comma}
+  \begingroup %\begin{multicols}{2}
+    \tikzsetnextfilename{span-ratios-spr-sp}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Ratio GCC to Intel on span,
+          xlabel=cores,
+          ylabel=ratio, ymin=.1, ymax=10, 
+          ytickten={-1,-.5,0,0.5,1},
+          yticklabels={1/10,1/3,1,3,10},
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={intel,gnu,},
+          legend pos=north west,
+        ]
+        \addplot table[y=intel]{plots/span-ratios-iccgcc-rat.csv};
+        \addplot table[y=gnu]{plots/span-ratios-iccgcc-rat.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
+    \tikzsetnextfilename{kokkos-ratios-spr-sp}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Ratio GCC to Intel on kokkos,
+          xlabel=cores,
+          ylabel=ratio, ymin=.1, ymax=10, 
+          ytickten={-1,-.5,0,0.5,1},
+          yticklabels={1/10,1/3,1,3,10},
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={intel,gnu,},
+          legend pos=north west,
+        ]
+        \addplot table[y=intel]{plots/kokkos-ratios-iccgcc-rat.csv};
+        \addplot table[y=gnu]{plots/kokkos-ratios-iccgcc-rat.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
+  \endgroup %\end{multicols}
+  \caption{Comparing Intel to GCC on `span' (left) and `kokkos' (right) scheme}
+  \label{fig:compiler-compare-span}
+\end{figure*}
+
+Figures \ref{fig:compiler-compare-oned} and \ref{fig:compiler-compare-span}
+show a comparison between the Intel 2024 and GCC 13 compilers.
+While sometimes Intel has a slight edge over GCC, it sometimes
+performs considerably worse.
+Inspection of the generated code would be needed to determine the cause of this.
 
 \Level 1 {Analysis}
 \label{sec:d2d-profile}
 
 One immediate conclusion from the above tests is that it's
 hard to beat the simple-minded OpenMP implementation
-with only the outer loop parallelized.
+with only the outer loop parallelized,
+although differences are less pronounced for the Gnu compiler
+than the Intel one.
 
 Doing profiling gives us a clue.
 Here is the output of running the \indexc{mdspan}~/ \indexc{cartesian_product}
@@ -552,88 +675,13 @@ std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ran
                      cfree 0.03664
 \end{lstlisting}
 
-\Level 1 {Comparing compilers}
+\Level 0 {Conclusion}
 
-\begin{figure}[t]
-  \pgfplotsset{table/col sep=comma}
-  \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{oned-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on oned,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/oned-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/oned-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-    \tikzsetnextfilename{clps-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on clps,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/clps-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/clps-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-  \endgroup %\end{multicols}
-  \caption{Comparing Intel to GCC on `oned' (left) and `clps' (right) scheme}
-  \label{fig:compiler-compare-oned}
-\end{figure}
-
-\begin{figure}[t]
-  \pgfplotsset{table/col sep=comma}
-  \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{span-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on span,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/span-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/span-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-    \tikzsetnextfilename{kokkos-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on kokkos,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/kokkos-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/kokkos-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-  \endgroup %\end{multicols}
-  \caption{Comparing Intel to GCC on `span' (left) and `kokkos' (right) scheme}
-  \label{fig:compiler-compare-oned}
-\end{figure}
-
+We have implemented a stencil code, which stands for many scientific applications,
+using various modern C++ mechanisms.
+The tentative conclusion is that the modern mechanisms may be simpler to code,
+but this elegance comes with a certain perforance penalty,
+more so for the Intel compiler than the GCC compiler.
 
 \endinput
 

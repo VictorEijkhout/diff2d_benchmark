@@ -67,11 +67,11 @@ namespace linalg {
   //codesnippet end
 
   //! Compute the L2 norm of the interior
-  //codesnippet d2dnormiota
   template< typename real >
   real bordered_array_iota<real>::l2norm() {
     real sum_of_squares{0};
     auto array = this->data2d();
+  //codesnippet d2dnormiota
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() ) {

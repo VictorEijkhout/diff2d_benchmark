@@ -38,9 +38,6 @@
 \newcommand{\indexstart}[1]{\index{#1|(}}
 \newcommand{\indexend}[1]{\index{#1|)}}
 
-\newcommand{\indextermunixdef}[1]
-           {{\ttfamily\slshape #1}\index{#1@\texttt{#1}!(unix command)|textbf}}
-
 %% \newcommand{\indexpragma}[1]{%
 %%   \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
 %%   \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
@@ -57,10 +54,18 @@
 \def\indexf   {\bgroup \idxset{f90}\indextermttgroup}
 \def\indexfnote{\bgroup \idxset{f90}\indextermttgroup}
 \def\indexj   {\bgroup \idxset{jul}\indextermttgroup}
+
 % default
-\def\indextermunix
-              {\bgroup \idxset{def}\indextermttgroup}
+\newcommand\indextermunix
+    {\bgroup\indextermttgroup}% \idxset{def}
 \let\indexunix\indextermunix
+\newcommand\indextermunixdef
+    {\bgroup\indextermttgroup}% \idxset{def}
+%%    {{\ttfamily\slshape #1}\index{#1@\texttt{#1}!(unix command)|textbf}}
+
+%% \def\indextermunix
+%%               {\bgroup \idxset{def}\indextermttgroup}
+%% \let\indexunix\indextermunix
 \def\indexg   {\bgroup \idxset{def}\indextermttgroup}
 
 % regular formatting

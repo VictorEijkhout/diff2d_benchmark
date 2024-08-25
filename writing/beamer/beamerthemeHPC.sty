@@ -1,0 +1,30 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% `The Science of Computing'
+%%%% vol 1 of The Art of HPC
+%%%%
+%%%% by Victor Eijkhout, copyright 2012-2023
+%%%%
+%%%% beamer style file
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mode<presentation>
+
+\useinnertheme{HPC}
+\useoutertheme{HPC}
+\usecolortheme{HPC}
+
+\mode<all>
+
+\newcommand{\event}[1]{%
+  \makeatletter%
+  \def\HPC@eventname{#1}%
+  \makeatother}
+
+\newcommand{\sectionframe}[1]{\section{#1}\frame{\Large\textbf{#1}}}
+\newcommand{\subsectionframe}[1]{\subsection{#1}\frame{\large\textbf{#1}}}

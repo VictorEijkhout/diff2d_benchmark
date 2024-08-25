@@ -1,0 +1,95 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% `The Science of Computing'
+%%%% vol 1 of The Art of HPC
+%%%%
+%%%% by Victor Eijkhout, copyright 2012-2023
+%%%%
+%%%% beamer style file
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% https://tex.stackexchange.com/questions/146529/design-a-custom-beamer-theme-from-scratch
+%%
+
+\setbeamertemplate{navigation symbols}{}
+
+\RequirePackage{tikz}
+\newlength{\marginedPaperWidth}{\paperwidth - 0.2cm}
+
+\newdimen\numberblockwidth \numberblockwidth=.08\paperwidth %% 1cm
+\newdimen\bannerblockwidth \bannerblockwidth=\paperwidth
+\advance\bannerblockwidth by -\numberblockwidth
+
+\newcommand\bannerline[4]{
+  %% #1 : height
+  %% #2 : beamer font
+  %% #3 : block contents
+  %% #4 : banner contents
+  \hbox to \paperwidth {%
+    \begin{beamercolorbox}[wd=\numberblockwidth,ht=#1]{bannerleft}%
+      \hbox to \numberblockwidth{\usebeamerfont{#2}#3}%
+    \end{beamercolorbox}%
+    \hfil
+    \begin{beamercolorbox}[wd=\bannerblockwidth,ht=#1]{banner}%
+      \hbox to \bannerblockwidth {\usebeamerfont{#2}#4}%
+    \end{beamercolorbox}%
+    \hss
+  }
+}
+
+\defbeamertemplate*{frametitle}{HPC}[1][]{
+  \moveleft 1cm
+  \bannerline{1.1cm}{banner}
+             {\hfil}
+             {%
+               \raise .4cm \hbox{\kern .5em \insertframetitle}
+               \hfill
+               \vbox to 0pt {
+                 \vskip -1.6cm
+                 \hbox{\includegraphics[scale=.3]{tacc-logo-white}}
+                 \vss }
+             }
+}
+
+\defbeamertemplate*{footline}{HPC}{
+  \bannerline{.8cm}{subbanner}
+             {\raise .3cm \hbox to \numberblockwidth {\kern .5em \insertframenumber \hss}}
+             {%
+               \raise .3cm \hbox{\kern .5em
+                 \insertshortauthor\ / \insertshorttitle\ / \insertshortdate}
+               \hfill
+               \includegraphics[scale=.06]{\qrcode.png}
+             }
+}
+
+% Deck title
+
+\defbeamertemplate*{title page}{HPC}[1]{
+  \vbox to \textheight {
+  \vskip0.0cm%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm]{banner}
+    \begin{tikzpicture}
+      \useasboundingbox(0,0) rectangle(\the\paperwidth,1.2);
+          {\usebeamercolor[fg]{bannerleft}}
+          \fill[color=bannerleft.fg] (0.2,0) rectangle(\the\marginedPaperWidth,1.2);
+          \node[anchor=east] at (12,.61) {
+               \hbox to 0pt {\hss\includegraphics[scale=.3]{tacc-logo-white}} };
+    \end{tikzpicture}
+  \end{beamercolorbox}
+  \vskip .5in
+  \usebeamerfont{banner}
+  \hbox{\huge \inserttitle}
+  \vskip.5in
+  \hbox{\huge \insertauthor}
+  \vskip.5in
+  \hbox{\huge \insertdate}
+  \vss
+  }
+}
+
