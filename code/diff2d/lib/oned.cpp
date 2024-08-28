@@ -17,7 +17,7 @@
 #include "oned.hpp"
 
 //codesnippet d2donedindex
-#define IINDEX( i,j ) ((i)+border)*n2b + (j)+border
+#define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b
 //codesnippet end
 
 namespace linalg {
@@ -42,14 +42,14 @@ namespace linalg {
     const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
     #pragma omp parallel for
     for ( idxint i=0; i<m; i++ ) {
       for ( idxint j=0; j<n; j++ ) {
-        out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
-          - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ]
-          - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
+        out[ IINDEX(i,j,m,n,b) ] = 4*in[ IINDEX(i,j,m,n,b) ]
+          - in[ IINDEX(i-1,j,m,n,b) ] - in[ IINDEX(i+1,j,m,n,b) ]
+          - in[ IINDEX(i,j-1,m,n,b) ] - in[ IINDEX(i,j+1,m,n,b) ];
       }
     }
   //codesnippet end
@@ -66,12 +66,12 @@ namespace linalg {
       dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
     #pragma omp parallel for 
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
-        out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
+        out[ IINDEX(i,j,m,n,b) ] = in[ IINDEX(i,j,m,n,b) ] * factor;
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*3 );//snippetskip
   };
   //codesnippet end
@@ -81,13 +81,13 @@ namespace linalg {
   real bordered_array_1d<real>::l2norm() {
     real sum_of_squares{0};
     auto out = this->data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
     //codesnippet d2dnormomp
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto v = out[ IINDEX(i,j) ];
+        auto v = out[ IINDEX(i,j,m,n,b) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip
@@ -99,12 +99,12 @@ namespace linalg {
   template< typename real >
   void bordered_array_1d<real>::set( real value, bool trace ) {
     auto out = this->data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
     #pragma omp parallel for 
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto ij = IINDEX(i,j);
+        auto ij = IINDEX(i,j,m,n,b);
         out[ ij ] = value;
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*2 );
@@ -113,13 +113,13 @@ namespace linalg {
   template< typename real >
   void bordered_array_1d<real>::set_bc( bool down,bool right, bool trace ) {
     auto out = this->data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
     #pragma omp parallel for 
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
-          out[ IINDEX(i,j) ] = 1.;
+          out[ IINDEX(i,j,m,n,b) ] = 1.;
   };
 
   template< typename real >
@@ -127,11 +127,11 @@ namespace linalg {
     if (caption!="")
       std::cout << format("{}:\n",caption);
     auto out = this->data();
-    auto m = this->m(), n = this->n(), n2b = this->n2b();
-    auto border = this->border();
-    for ( idxint i=0; i<m+2*border; i++ ) {
-      for ( idxint j=0; j<n+2*border; j++ ) {
-        char c = ( j<n+2*border-1 ? ' ' : '\n' );
+    auto m = this->m(), n = this->n();
+    auto b = this->border();
+    for ( idxint i=0; i<m+2*b; i++ ) {
+      for ( idxint j=0; j<n+2*b; j++ ) {
+        char c = ( j<n+2*b-1 ? ' ' : '\n' );
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }
     }
