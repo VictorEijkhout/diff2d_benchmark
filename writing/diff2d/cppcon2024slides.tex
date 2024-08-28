@@ -14,7 +14,36 @@
 \documentclass[10pt]{beamer}
 
 \input courseformat
-  
+
+\usepackage{geometry,fancyhdr,wrapfig}
+\usepackage{amssymb,amsmath,verbatim,graphicx,pslatex,multicol}
+\usepackage{comment}
+\newif\ifInBook \InBooktrue
+\input book.inex
+\input acromacs
+\def\latexengine{}
+%% \input bookmacs
+%% \input articlemacs
+%% \input ../../../scientific-computing-private/macros/commonmacs
+%% \input idxmacs
+%% \input idxpkgmacs
+\input listingmacs
+%% \input snippetmacs
+\input ../../../scientific-computing-private/macros/tikzplot
+\excludecomment{packt}
+
+\lstset{ keywordstyle=\usebeamercolor*[fg]{palette primary} }
+\newcommand\codesnippetsdir{../snippets}
+
+%%
+%% refer to sections in the HPC book
+%%
+\usepackage{xr-hyper}
+% vol 1
+\externaldocument[HPSC-]{scicompbook}
+%%\newcommand\HPSCref[2][section]{HPC book~\cite{ISTCwebpage}, #1~\ref{HPSC-#2}}
+%% \input macroload
+
 \def\qrcode{}
 \begin{document}
 \input lang
@@ -22,129 +51,164 @@
 \author[Eijkhout]{Victor Eijkhout}
 \date[CppCon2024]{CppCon 2024}
 %% \normalsize last formatted \today}
-\title[C++ Parallel]{Modern C++ for Parallelism}
+\title[C++ Parallel]{Modern C++ for Parallelism\\ in Scientific Computing}
 \maketitle
 
-\begin{frame}{Justification}
-  The MPI library is the main tool
-  for parallel programming on a large scale.
-  This course introduces the main concepts
-  through lecturing and exercises.
-\end{frame}
-
-\end{document}
-
-\Level 0 {Basics}
-
-\renewcommand\standardversion{3}
-
-%% \coursesection
-\Level 1 {The SPMD model}
-\label{sec:spmd}
-\input SPMD-slides
-
-%% \coursesection
-\Level 1 {Collectives}
-\label{sec:collectives}
-\input Collective-slides
-
-%% \end{document}
-%% \coursesection
-\Level 1 {Point-to-point communication}
-\label{sec:ptp}
-\input PTP-slides
-
-\iffalse
-\begin{exerciseframe}[serialsend]
-  \input ex:serialsend
-\end{exerciseframe}
-\fi
-
-\begin{frame}[containsverbatim]\frametitle{Where to go from here\ldots}
+\begin{frame}{Scientific computing parallelism}
   \begin{itemize}
-  \item Derived data types: send strided/irregular/inhomogeneous data
-  \item Sub-communicators: work with subsets of \indexmpishow{MPI_COMM_WORLD}
-  \item I/O: efficient file operations
-  \item One-sided communication: `just' put/get the data somewhere
-  \item Process management
-  \item Non-blocking collectives
-  \item Graph topology and neighborhood collectives
-  \item Shared memory
+  \item Large amounts of data: \\
+    often cartesian multi-dimensional arrays, sometimes unstructured data
+  \item Large amounts of parallelism:\\
+    each element of output array independent.
+  \item No explicit threading\\
+    parallelism created by some runtime
+  \item Range algorithm notion:\\
+    do some operation on each element of a dataset
   \end{itemize}
 \end{frame}
 
-\renewcommand\standardversion{}
-
-%% \coursepart
-\Level 0 {Intermediate topics}
-
-\begin{frame}{Justification}
-  MPI basic concepts suffice for many applications.  The Intermediate
-  Topics section deals with more complicated data, process groups,
-  file I/O, and the basics of one-sided communication.
+\begin{frame}[containsverbatim]{Power method}
+  \begin{quote}
+    \begin{tabbing}
+      Let $A$ a matrix of interest\\
+      Let $x$ be a random vector\\
+      For \=iterations until convergence\\
+      \> compute the product $y\leftarrow Ax$\\
+      \> compute the norm $\gamma=\| y \|$\\
+      \> normalize $x\leftarrow y/\gamma$\\
+    \end{tabbing}
+  \end{quote}
+  \begin{itemize}
+  \item Method for computing largest eigenvalue of a matrix
+  \item Also Google Pagerank
+  \item Stands for many scientific codes: Krylov methods, eigenvalues
+  \end{itemize}
 \end{frame}
 
-%% \coursesection
-\Level 1 {Derived Datatypes}
-\label{sec:derived}
-\input Data-slides
-
-%% \coursesection
-\Level 1 {Communicator manipulations}
-\label{sec:comm}
-\input Subcomm-slides
-
-%% \coursesection
-\Level 1 {MPI File I/O}
-\label{sec:io}
-\input MPIO-slides
-
-%% \coursesection
-\Level 1 {One-sided communication}
-\label{sec:1side}
-\input Onesided-slides 
-\input Atomic-slides
-
-%% \coursesection
-\Level 1 {Big data communication}
-\label{sec:bigdata}
-\input Bigdata-slides
-
-%% \coursepart
-\Level 0 {Advanced (MPI-3/4) topics}
-
-\begin{frame}{Justification}
-  Recent additions to the MPI standard allow your 
-  code to deal with unusual scenarios or very large scale runs.
+\begin{frame}[containsverbatim]{Array parallelism}
+  Traditional C implementation:
+  
+  \cxxverbatimsnippet{d2dscaleseq}
+  \cxxverbatimsnippet{d2dseqindex}
+  \begin{itemize}
+  \item Two~/ three-dimensional loop
+  \item all dimensions large
+  \item every output element independent
+  \end{itemize}
 \end{frame}
 
-%% \coursesection
-\Level 1 {Advanced collectives}
-\label{sec:coll2}
-\input Highercollective-slides
+\begin{frame}[containsverbatim]{Reductions}
+  $\ell_2$ reduction:%
+  \cxxverbatimsnippet{d2dnormseq}
+  \begin{itemize}
+  \item Parallel except for the accumulation
+  \item Obviously should not be done through atomic operation
+  \end{itemize}
+\end{frame}
 
-%% \coursesection
-\Level 1 {Shared memory}
-\label{sec:shared}
-\input Sharedmemory-slides
+\begin{frame}[containsverbatim]{Stencil computation}
+  \cxxverbatimsnippet{d2d5ptseq}
+  \begin{itemize}
+  \item Differential operator~/ image convolution
+  \item Structure can be more complicated in scientific codes
+  \end{itemize}
+\end{frame}
 
-%% \coursesection
-\Level 1 {Process management}
-\label{sec:process}
-\input Spawn-slides
+\begin{frame}[containsverbatim]{OpenMP parallelism}
+  Annotate loops as parallel and/or reduction:
+  \cxxverbatimsnippet{d2dnormomp}
+  \begin{itemize}
+  \item Static assigment of iterations to threads by default
+  \item Highly controlled affinity
+  \item `\n{oned}' as above, `\n{clps}' for both loops collapsed
+  \end{itemize}
+\end{frame}
 
-%% \coursesection
-\Level 1 {Process topologies}
-\label{sec:topo}
-\input Graph-slides
+\begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
+  \hbox\bgroup
+  \cxxverbatimsnippet{d2dspan0}
+  \cxxverbatimsnippet{d2dspan2}
+  \egroup
 
-%% \coursepart
-\Level 0 {Other}
+  \cxxverbatimsnippet{d2dinner}
+  %% \begin{itemize}
+  %% \item 
+  %% \end{itemize}
+\end{frame}
 
-%% \coursesection
-\Level 1 {Tracing, performance, and such}
-\label{sec:trace}
-\input Performance-slides
+\begin{frame}[containsverbatim]{}
+\cxxverbatimsnippet{d2d5ptspan}
+  %% \begin{itemize}
+  %% \item 
+  %% \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Sycl}
+  Open standard, but mostly pushed by Intel
+  \cxxverbatimsnippet{syclbufaccess}
+  \begin{itemize}
+  \item Heterogeneous CPU/GPU code,\\
+    transparent data movement
+  \item Range algorithm-like syntax,\\
+    but explicit task queue
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Kokkos}
+  Open Source heterogeneous execution layer
+  \cxxverbatimsnippet{kokkosbufaccess}
+  \begin{itemize}
+  \item Implicit task queue
+  \item Two-dimensional indexing
+  \item Range algorithm-like philosophy
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Comparing models (Intel)}
+  \input d2dimodeltime
+
+  Intel compiler. C-style variant fastest.
+\end{frame}
+
+\begin{frame}[containsverbatim]{Ratio to fastest (Intel)}
+  \input d2dimodelratio
+\end{frame}
+
+\begin{frame}[containsverbatim]{Comparing models (Gcc)}
+  \input d2dgmodeltime
+
+  Gcc compiler. less variance between variants
+\end{frame}
+
+\begin{frame}[containsverbatim]{Ratio to fastest (Gcc)}
+  \input d2dgmodelratio
+\end{frame}
+
+\begin{frame}[containsverbatim]{Can we use execution policies?}
+  \begin{itemize}
+  \item Last time I tried there was a compiler issue
+  \item That 5-point stencil is hard to express in range views!
+  \end{itemize}
+\end{frame}
 
 \end{document}
+
+\begin{frame}[containsverbatim]{}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
+
 

@@ -31,7 +31,7 @@ upload :
 	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/ \
 	 ; fi
 onepass :
-	@export TEXINPUTS=../macros:../graphics:../beamer:${SNIPPETSDIR}:../:${TEXINPUTS} \
+	@export TEXINPUTS=../macros:../graphics:../beamer:../graphs:${SNIPPETSDIR}:../:${TEXINPUTS} \
 	 && ${LATEX} -shell-escape ${FILE}
 
 .PHONY: getfiles

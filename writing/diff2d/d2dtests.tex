@@ -304,86 +304,20 @@ and GCC~13 (figure~\ref{fig:diff2d-variants-gcc})
 compilers.
 
 \begin{figure*}[t]
-  \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{diff2d-ratios-intel-spr}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Execution time,
-          ylabel=time (msec), xlabel=cores,
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
-          legend pos=north east,
-        ]
-        \addplot table[y=oned]{plots/spr-ratios-intel.csv};
-        \addplot table[y=clps]{plots/spr-ratios-intel.csv};
-        \addplot table[y=span]{plots/spr-ratios-intel.csv};
-        \addplot table[y=iota]{plots/spr-ratios-intel.csv};
-        \addplot table[y=diy2e]{plots/spr-ratios-intel.csv};
-        \addplot table[y=kokkos]{plots/spr-ratios-intel.csv};
-        \addplot table[y=sycl]{plots/spr-ratios-intel.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
+  \input d2dimodeltime
     %\columnbreak
-    \tikzsetnextfilename{diff2d-ratios-intel-spr-sp}
-    \begin{tikzpicture}
-      \begin{axis}[
-          title=Ratio to oned,
-          ylabel=ratio, ymax=20, xlabel=cores,
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
-          legend pos=north west,
-        ]
-        \addplot table[y=oned]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=clps]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=span]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=iota]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=diy2e]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=kokkos]{plots/spr-ratios-intel-rat.csv};
-        \addplot table[y=sycl]{plots/spr-ratios-intel-rat.csv};
-      \end{axis}
-    \end{tikzpicture}
+  \input d2dimodelratio
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Intel 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-intel}
 \end{figure*}
 
 \begin{figure*}[t]
-  \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{diff2d-ratios-gcc-spr}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Execution time,
-          ylabel=time (msec), xlabel=cores,
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,kokkos,},
-          legend pos=north east,
-        ]
-        \addplot table[y=oned]{plots/spr-ratios-gcc.csv};
-        \addplot table[y=clps]{plots/spr-ratios-gcc.csv};
-        \addplot table[y=span]{plots/spr-ratios-gcc.csv};
-        \addplot table[y=iota]{plots/spr-ratios-gcc.csv};
-        \addplot table[y=kokkos]{plots/spr-ratios-gcc.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
+  \input d2dgmodeltime
     %\columnbreak
-    \tikzsetnextfilename{diff2d-ratios-gcc-spr-sp}
-    \begin{tikzpicture}
-      \begin{axis}[
-          title=Ratio to oned,
-          ylabel=ratio, ymax=12, xlabel=cores,
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,kokkos,},
-          legend pos=north west,
-        ]
-        \addplot table[y=oned]{plots/spr-ratios-gcc-rat.csv};
-        \addplot table[y=clps]{plots/spr-ratios-gcc-rat.csv};
-        \addplot table[y=span]{plots/spr-ratios-gcc-rat.csv};
-        \addplot table[y=iota]{plots/spr-ratios-gcc-rat.csv};
-        \addplot table[y=kokkos]{plots/spr-ratios-gcc-rat.csv};
-      \end{axis}
-    \end{tikzpicture}
+  \input d2dgmodelratio
   \endgroup %\end{multicols}
   \caption{Comparing implementation strategies, Gcc 2024 compiler on a 112-core Sapphire Rapids node.}
   \label{fig:diff2d-variants-gcc}

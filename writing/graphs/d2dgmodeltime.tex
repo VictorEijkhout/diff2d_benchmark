@@ -1,0 +1,17 @@
+  \pgfplotsset{table/col sep=comma}
+    \tikzsetnextfilename{diff2d-ratios-gcc-spr}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Execution time,
+          ylabel=time (msec), xlabel=cores,
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={oned,clps,span,iota,kokkos,},
+          legend pos=north east,
+        ]
+        \addplot table[y=oned]{plots/spr-ratios-gcc.csv};
+        \addplot table[y=clps]{plots/spr-ratios-gcc.csv};
+        \addplot table[y=span]{plots/spr-ratios-gcc.csv};
+        \addplot table[y=iota]{plots/spr-ratios-gcc.csv};
+        \addplot table[y=kokkos]{plots/spr-ratios-gcc.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
