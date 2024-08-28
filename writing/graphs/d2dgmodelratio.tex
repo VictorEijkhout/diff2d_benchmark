@@ -1,0 +1,17 @@
+  \pgfplotsset{table/col sep=comma}
+    \tikzsetnextfilename{diff2d-ratios-gcc-spr-sp}
+    \begin{tikzpicture}
+      \begin{axis}[
+          title=Ratio to oned,
+          ylabel=ratio, ymax=12, xlabel=cores,
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={oned,clps,span,iota,kokkos,},
+          legend pos=north west,
+        ]
+        \addplot table[y=oned]{plots/spr-ratios-gcc-rat.csv};
+        \addplot table[y=clps]{plots/spr-ratios-gcc-rat.csv};
+        \addplot table[y=span]{plots/spr-ratios-gcc-rat.csv};
+        \addplot table[y=iota]{plots/spr-ratios-gcc-rat.csv};
+        \addplot table[y=kokkos]{plots/spr-ratios-gcc-rat.csv};
+      \end{axis}
+    \end{tikzpicture}
