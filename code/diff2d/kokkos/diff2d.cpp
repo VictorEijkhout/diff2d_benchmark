@@ -83,7 +83,8 @@ int main(int argc, char *argv[]) {
       //codesnippet kokkosbufaccess
       Kokkos::parallel_for
         ("Update x",
-         Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
+         Kokkos::MDRangePolicy<Kokkos::Rank<2>>
+             ({1, 1}, {msize-1, nsize-1}),
          KOKKOS_LAMBDA(int i, int j) {
           x(i, j) = Ax(i, j) / norm;
         });

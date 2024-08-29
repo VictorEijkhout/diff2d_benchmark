@@ -4,8 +4,8 @@
       \begin{axis}[
           title=Ratio to oned,
           ylabel=ratio, ymax=12, xlabel=cores,
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={oned,clps,span,iota,kokkos,},
+          width=\graphwidth\textwidth, height=\graphheight\textwidth,
+           legend entries={oned,clps,span,iota,kokkos,},
           legend pos=north west,
         ]
         \addplot table[y=oned]{plots/spr-ratios-gcc-rat.csv};

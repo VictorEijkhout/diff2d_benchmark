@@ -34,7 +34,6 @@ namespace linalg {
   };
 
   //! Compute the 5-point Laplace stencil from an input array
-  //codesnippet d2e5ptspan
   template< typename real >
   void bordered_array_diy2e<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -49,10 +48,8 @@ namespace linalg {
 	- in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
     }
   };
-  //codesnippet end
 
   //! Scale the interior, leaving the border alone
-  //codesnippet d2escalespan
   template< typename real >
   void bordered_array_diy2e<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
@@ -65,10 +62,8 @@ namespace linalg {
       out[ i,j ] = in[ i,j] * factor;
     }
   };
-  //codesnippet end
 
   //! Compute the L2 norm of the interior
-  //codesnippet d2enormspan
   template< typename real >
   real bordered_array_diy2e<real>::l2norm() {
     real sum_of_squares{0};
@@ -81,7 +76,6 @@ namespace linalg {
     }
     return std::sqrt(sum_of_squares);
   };
-  //codesnippet end
 
   //! Set the interior to a value
   template< typename real >

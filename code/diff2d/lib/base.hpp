@@ -115,13 +115,13 @@ namespace linalg {
      * \todo we should really use _m,_n instead of the extents
      * \todo we really want cbegin / cend but not yet available
      */
-    //codesnippet d2dinner
-    mutable std::optional< decltype( rng::views::cartesian_product
+     mutable std::optional< decltype( rng::views::cartesian_product
                              ( rng::views::iota(idxint{0},idxint{0}),
                                rng::views::iota(idxint{0},idxint{0}) ) ) >
             range2d = {};
     auto inner() const {
       if (not range2d.has_value()) {
+        //codesnippet d2dinner
         const auto& s = data2d();
         int b = this->border();
         idxint
@@ -131,10 +131,10 @@ namespace linalg {
           hi_n = static_cast<idxint>(s.extent(1)-b);
         range2d = rng::views::cartesian_product
           ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
+        //codesnippet end
       }
       return *range2d;
     };
-    //codesnippet end
 
     mutable std::optional< decltype( rng::views::iota(idxint{0},idxint{0}) ) >
             range2di = {};

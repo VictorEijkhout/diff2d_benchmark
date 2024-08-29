@@ -32,8 +32,18 @@
 \input ../../../scientific-computing-private/macros/tikzplot
 \excludecomment{packt}
 
-\lstset{ keywordstyle=\usebeamercolor*[fg]{palette primary} }
+%% \lstset{
+%%    keywordstyle=\usebeamercolor*[fg]{palette primary},
+%%    commentstyle=\usebeamercolor*[fg]{palette secondary},
+%%    stringstyle=\usebeamercolor*[fg]{palette tertiary}
+%% }
+
+%%\lstset{ keywordstyle=\usebeamercolor*[fg]{palette primary} }
+
 \newcommand\codesnippetsdir{../snippets}
+%% tikz graph customization
+\def\graphwidth{.85}
+\def\graphheight{.65}
 
 %%
 %% refer to sections in the HPC book
@@ -48,7 +58,10 @@
 \begin{document}
 \input lang
 
-\author[Eijkhout]{Victor Eijkhout}
+\author[Eijkhout]{Victor Eijkhout\\
+  Texas Advanced Computing Center\\
+  \texttt{eijkhout@tacc.utexas.edu}
+}
 \date[CppCon2024]{CppCon 2024}
 %% \normalsize last formatted \today}
 \title[C++ Parallel]{Modern C++ for Parallelism\\ in Scientific Computing}
@@ -129,14 +142,13 @@
   \cxxverbatimsnippet{d2dspan0}
   \cxxverbatimsnippet{d2dspan2}
   \egroup
-
-  \cxxverbatimsnippet{d2dinner}
-  %% \begin{itemize}
-  %% \item 
-  %% \end{itemize}
 \end{frame}
 
-\begin{frame}[containsverbatim]{}
+\begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
+  \cxxverbatimsnippet{d2dinner}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Stencil operation}
 \cxxverbatimsnippet{d2d5ptspan}
   %% \begin{itemize}
   %% \item 
@@ -158,6 +170,7 @@
   Open Source heterogeneous execution layer
   \cxxverbatimsnippet{kokkosbufaccess}
   \begin{itemize}
+  \item Same code for CPU and GPU
   \item Implicit task queue
   \item Two-dimensional indexing
   \item Range algorithm-like philosophy
@@ -191,13 +204,23 @@
   \end{itemize}
 \end{frame}
 
-\end{document}
-
-\begin{frame}[containsverbatim]{}
+\begin{frame}[containsverbatim]{Conclusion and Acknowledgement}
   \begin{itemize}
-  \item 
+  \item This work was supported by
+    the Intel OneAPI Center of Excellence, and the 
+    TACC STAR Scholars program,
+    funded by generous gifts from TACC industry partners, including Intel, Shell, Exxon,
+    and Chevron.
+  \item Code contributed by Yojan Chitkara
   \end{itemize}
+  \hbox to \textwidth{
+    \includegraphics[scale=.4]{TACC-formal-Black-1c}
+    \hfill
+    \includegraphics[scale=.12]{STAR@4x}
+    }
 \end{frame}
+
+\end{document}
 
 \begin{frame}[containsverbatim]{}
   \begin{itemize}
