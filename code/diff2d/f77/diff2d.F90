@@ -3,16 +3,20 @@ Program diff2d
 
 #define REAL real*4
 
-  integer :: m=4,n=4
+  integer :: m=4,n=4,b=1
   REAL,dimension(:,:),allocatable :: X,Y
-
+  REAL :: norm
+  
   allocate( X(-b:m+b-1,-b:n+b-1), Y(-b:m+b-1,-b:n+b-1) )
 
-  do it=0,itcount-1
-     call central_difference_from(x,y,m,n,b)
-     norm = l2norm(x,m,n,b)
-     call scale_interior(x,y,norm,m,n,b)
-  end do
+  block
+    integer :: it,itcount
+    do it=0,itcount-1
+       call central_difference_from(x,y,m,n,b)
+       norm = l2norm(x,m,n,b)
+       call scale_interior(x,y,norm,m,n,b)
+    end do
+  end block
 
 contains
 
