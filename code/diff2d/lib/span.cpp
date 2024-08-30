@@ -36,7 +36,7 @@ namespace linalg {
   //! Compute the 5-point Laplace stencil from an input array
   template< typename real >
   void bordered_array_span<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) const {
+      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
     const auto& other =
       dynamic_cast<const linalg::bordered_array_span<real>&>(_other);
     //codesnippet d2d5ptspan
