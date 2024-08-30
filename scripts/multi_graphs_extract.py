@@ -21,6 +21,8 @@ parser = argparse.ArgumentParser(description="Extract graphs from multiple files
 
 # Optional verbose flag
 parser.add_argument('-v', '--verbose', action='store_true', help='set verbose mode')
+# Optional test flag
+parser.add_argument('-t', '--test', action='store_true', help='test only')
 
 # Destination path
 parser.add_argument('-n', '--name', type=str, default='graphs', help='Base name of the csv file')
@@ -32,6 +34,7 @@ parser.add_argument('colonlist', nargs='*', help='List of items')
 # Parse arguments
 parsed_args = parser.parse_args()
 
+test = parsed_args.test
 verbose = parsed_args.verbose
 destpath = parsed_args.path
 destname = parsed_args.name
@@ -106,6 +109,8 @@ for fk,fh in files.items():
                     xaxis = False
 for f in files.keys():
     print(f"Graph <<{f}>>: <<{graphs[f]}>>")
+
+if test: sys.exit(0)
 
 ##
 ## write all data to csv file
