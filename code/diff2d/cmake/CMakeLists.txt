@@ -2,16 +2,24 @@ cmake_minimum_required( VERSION 3.20 )
 if( NOT DEFINED VARIANT )
   message( FATAL_ERROR "\nYou need to set the VARIANT variable\n" )
 endif()
+if( DEFINED USEFORTRAN)
+  enable_language( Fortran )
+  set( EXT F90 )
+else()
+  set( EXT cpp )
+endif()
 
 project( ${VARIANT} VERSION 1.0 )
 message( STATUS "\n====   Building variant: ${PROJECT_NAME}" )
 
 set( CMAKE_BUILD_TYPE RelWithDebInfo )
 add_executable( ${PROJECT_NAME} )
-target_compile_features( ${PROJECT_NAME} PRIVATE cxx_std_23 )
+if( NOT DEFINED USEFORTRAN)
+  target_compile_features( ${PROJECT_NAME} PRIVATE cxx_std_23 )
+endif()
 ## set_target_properties(${PROJECT_NAME}_c PROPERTIES CXX_STANDARD 23)
-target_sources( ${PROJECT_NAME} PRIVATE diff2d.cpp )
-target_sources( ${PROJECT_NAME} INTERFACE ../main.cpp )
+target_sources( ${PROJECT_NAME} PRIVATE diff2d.${EXT} )
+target_sources( ${PROJECT_NAME} INTERFACE ../main.${EXT} )
 
 ##
 ## parallelism
@@ -69,7 +77,7 @@ else()
 endif()
 target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
-target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.cpp )
+target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.${EXT} )
 
 ##
 ## span handling
@@ -88,7 +96,7 @@ else()
 endif()
 target_link_libraries( ${PROJECT_NAME} PUBLIC std::mdspan )
 
-target_sources( ${PROJECT_NAME} PRIVATE ../lib/${VARIANT}.cpp ../lib/base.cpp )
+target_sources( ${PROJECT_NAME} PRIVATE ../lib/${VARIANT}.${EXT} ../lib/base.${EXT} )
 target_include_directories( ${PROJECT_NAME} PRIVATE ../lib )
 
 install( TARGETS ${PROJECT_NAME} DESTINATION . )

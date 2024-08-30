@@ -14,7 +14,7 @@ info ::
 # list cxx last because that's sequential 
 # and we're not terribly interested
 VARIANTS = oned clps kokkos span iota sycl diy2d diy2e \
-    seq
+    seq f77
 .PHONY: variants
 variants: 
 	@echo ${VARIANTS}
@@ -57,6 +57,7 @@ cmake :
 	              -D CMAKE_INSTALL_PREFIX=../bin \
 	              $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
 	              $$( if [ "${ECHO}" = "1" ] ; then echo "-D CMAKE_VERBOSE_MAKEFILE=ON" ; fi ) \
+	              $$( if [ "$${v}" = "f77" ] ; then echo "-D USEFORTRAN=ON" ; fi ) \
 	              -D VARIANT=$${v} \
 	              ../$${v} \
 	             && make V=1 && make install \
