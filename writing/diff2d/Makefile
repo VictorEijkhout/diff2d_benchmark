@@ -28,7 +28,7 @@ pdf : getfiles
 upload :
 	@if [ "$$(whoami)" = "eijkhout" ] ; then \
 	    echo " .. copy to dropbox" \
-	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/ \
+	     && cp "${FILE}.pdf" ${HOME}/Dropbox/Scicomp/diff2d/ \
 	 ; fi
 onepass :
 	@export TEXINPUTS=../macros:../graphics:../beamer:../graphs:${SNIPPETSDIR}:../:${TEXINPUTS} \
