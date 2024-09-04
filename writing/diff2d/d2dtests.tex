@@ -459,80 +459,18 @@ given a much higher absolute number.
 \Level 1 {Comparing compilers}
 
 \begin{figure*}[t]
-  \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{oned-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on oned,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/oned-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/oned-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-    \tikzsetnextfilename{clps-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on clps,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/clps-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/clps-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
+  \input d2donedratio
+  \input d2dclpsratio
   \endgroup %\end{multicols}
   \caption{Comparing Intel to GCC on `oned' (left) and `clps' (right) scheme}
   \label{fig:compiler-compare-oned}
 \end{figure*}
 
 \begin{figure*}[t]
-  \pgfplotsset{table/col sep=comma}
   \begingroup %\begin{multicols}{2}
-    \tikzsetnextfilename{span-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on span,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/span-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/span-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
-    \tikzsetnextfilename{kokkos-ratios-spr-sp}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Ratio GCC to Intel on kokkos,
-          xlabel=cores,
-          ylabel=ratio, ymin=.1, ymax=10, 
-          ytickten={-1,-.5,0,0.5,1},
-          yticklabels={1/10,1/3,1,3,10},
-          width=.5\textwidth, height=.5\textwidth,
-          legend entries={intel,gnu,},
-          legend pos=north west,
-        ]
-        \addplot table[y=intel]{plots/kokkos-ratios-iccgcc-rat.csv};
-        \addplot table[y=gnu]{plots/kokkos-ratios-iccgcc-rat.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
+  \input d2dspanratio
+  \input d2dkokkosratio
   \endgroup %\end{multicols}
   \caption{Comparing Intel to GCC on `span' (left) and `kokkos' (right) scheme}
   \label{fig:compiler-compare-span}

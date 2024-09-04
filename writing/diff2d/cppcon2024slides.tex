@@ -235,12 +235,27 @@
   \input d2dgmodelratio
 \end{frame}
 
-\begin{frame}[containsverbatim]{Can we use execution policies?}
-  \begin{itemize}
-  \item Last time I tried there was a compiler issue
-  \item That 5-point stencil is hard to express in range views!
-  \end{itemize}
+\begin{frame}[containsverbatim]{Where do we lose performance?}
+  Hint: \n{perf} output on the `span' variant:
+\begin{lstlisting}[language=verbatim]
+    55.60%  [.] std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ranges::iota_view<long, long> >::_Iterator<true>::operator+=
+    18.73%  [.] __divti3
+    11.33%  [.] linalg::bordered_array_span<float>::central_difference_from
+     5.37%  [.] linalg::bordered_array_span<float>::scale_interior
+     5.01%  [.] linalg::bordered_array_span<float>::l2norm
+     2.69%  [.] __divti3@plt
+\end{lstlisting}
+Index calculations take lots of time.
 \end{frame}
+
+\begin{comment}
+  \begin{frame}[containsverbatim]{Can we use execution policies?}
+    \begin{itemize}
+    \item Last time I tried there was a compiler issue
+    \item That 5-point stencil is hard to express in range views!
+    \end{itemize}
+  \end{frame}
+\end{comment}
 
 \begin{frame}[containsverbatim]{Conclusion and Acknowledgement}
   \begin{itemize}
