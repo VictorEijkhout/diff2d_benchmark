@@ -1,6 +1,9 @@
 #!/bin/bash
 
 function usage () {
+    echo
+    echo "This makes for all models on a given cpu"
+    echo
     echo "$0 [ -h ] [ -n 123456 ] "
     echo "    [ -c cpu (default: ${cpu}) ] [ -g (gcc, otherwise intel) ]"
 }
