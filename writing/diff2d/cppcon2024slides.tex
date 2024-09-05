@@ -98,6 +98,30 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}[containsverbatim]{Stencil operations}
+  \vbox{\leavevmode
+    \lower40pt\hbox{\includegraphics[scale=.35]{5pt_stencil_ij}}
+    \hfill 
+    \(
+    \begin{array}{|r|r|r|}
+      \hline
+      \cdot&-1&\cdot\\
+      \hline
+      -1&4&-1\\
+      \hline
+      \cdot&-1&\cdot\\
+      \hline
+    \end{array}
+    \)
+    \hfill 
+    }
+  \begin{itemize}
+  \item This rectangular $m\times n$ thing is the vector
+  \item The $4,-1,\ldots$ stencil is~/ stands for the matrix.
+  \item Goes by: difference stencil, convolution, Toeplitz matrix
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[containsverbatim]{Array parallelism}
   Traditional C implementation:
   
@@ -127,17 +151,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[containsverbatim]{OpenMP parallelism}
-  Annotate loops as parallel and/or reduction:
-  \cxxverbatimsnippet{d2dnormomp}
-  \begin{itemize}
-  \item Static assigment of iterations to threads by default
-  \item Highly controlled affinity
-  \item `\n{oned}' as above, `\n{clps}' for both loops collapsed
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
+\begin{frame}[containsverbatim]{Tools: \texttt{mdspan} and \texttt{cartesian\_product}}
   \hbox\bgroup
   \cxxverbatimsnippet{d2dspan0}
   \cxxverbatimsnippet{d2dspan2}
@@ -146,16 +160,40 @@
 
 \begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
   \cxxverbatimsnippet{d2dinner}
+  \begin{itemize}
+  \item Vector allocated with size $(m+2b)\times(n+2b)$ to include border
+  \item for handling of boundary conditions~/ halo regions in PDEs.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Implementation 1: OpenMP parallelism}
+  Annotate loops as parallel and/or reduction:
+  \cxxverbatimsnippet{d2dnormomp}
+  \begin{itemize}
+  \item Static assigment of iterations to threads by default
+  \item Highly controlled affinity
+  \item `\n{oned}' as above, `\n{clps}' for both loops collapsed
+  \item Can be formulated as range algorithm.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[containsverbatim]{Implementation 2: range over indices}
+  \cxxverbatimsnippet{d2dnormspan}
+  \begin{itemize}
+  \item Range over indices, not over data
+  \item Indices are a subset of the full data!
+  \end{itemize}
 \end{frame}
 
 \begin{frame}[containsverbatim]{Stencil operation}
 \cxxverbatimsnippet{d2d5ptspan}
-  %% \begin{itemize}
-  %% \item 
-  %% \end{itemize}
+  \begin{itemize}
+  \item Hard to formulate as range algorithm
+  \item Performance not necessarily determined by floating point operations.
+  \end{itemize}
 \end{frame}
 
-\begin{frame}[containsverbatim]{Sycl}
+\begin{frame}[containsverbatim]{Implementation 3: Sycl}
   Open standard, but mostly pushed by Intel
   \cxxverbatimsnippet{syclbufaccess}
   \begin{itemize}
@@ -166,7 +204,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}[containsverbatim]{Kokkos}
+\begin{frame}[containsverbatim]{Implementation 4: Kokkos}
   Open Source heterogeneous execution layer
   \cxxverbatimsnippet{kokkosbufaccess}
   \begin{itemize}
@@ -197,27 +235,44 @@
   \input d2dgmodelratio
 \end{frame}
 
-\begin{frame}[containsverbatim]{Can we use execution policies?}
-  \begin{itemize}
-  \item Last time I tried there was a compiler issue
-  \item That 5-point stencil is hard to express in range views!
-  \end{itemize}
+\begin{frame}[containsverbatim]{Where do we lose performance?}
+  Hint: \n{perf} output on the `span' variant:
+\begin{lstlisting}[language=verbatim]
+    55.60%  [.] std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ranges::iota_view<long, long> >::_Iterator<true>::operator+=
+    18.73%  [.] __divti3
+    11.33%  [.] linalg::bordered_array_span<float>::central_difference_from
+     5.37%  [.] linalg::bordered_array_span<float>::scale_interior
+     5.01%  [.] linalg::bordered_array_span<float>::l2norm
+     2.69%  [.] __divti3@plt
+\end{lstlisting}
+Index calculations take lots of time.
 \end{frame}
+
+\begin{comment}
+  \begin{frame}[containsverbatim]{Can we use execution policies?}
+    \begin{itemize}
+    \item Last time I tried there was a compiler issue
+    \item That 5-point stencil is hard to express in range views!
+    \end{itemize}
+  \end{frame}
+\end{comment}
 
 \begin{frame}[containsverbatim]{Conclusion and Acknowledgement}
   \begin{itemize}
   \item This work was supported by
-    the Intel OneAPI Center of Excellence, and the 
+    the Intel oneAPI Center of Excellence, and the 
     TACC STAR Scholars program,
     funded by generous gifts from TACC industry partners, including Intel, Shell, Exxon,
-    and Chevron.
-  \item Code contributed by Yojan Chitkara
-  \end{itemize}
+    and Chevron.\par
   \hbox to \textwidth{
     \includegraphics[scale=.4]{TACC-formal-Black-1c}
     \hfill
+    \raise 5pt \hbox{\includegraphics[scale=.12]{intel_cropped_t}}
+    \hfill
     \includegraphics[scale=.12]{STAR@4x}
     }
+  \item Sycl code contributed by Yojan Chitkara
+  \end{itemize}
 \end{frame}
 
 \end{document}
@@ -227,11 +282,4 @@
   \item 
   \end{itemize}
 \end{frame}
-
-\begin{frame}[containsverbatim]{}
-  \begin{itemize}
-  \item 
-  \end{itemize}
-\end{frame}
-
 

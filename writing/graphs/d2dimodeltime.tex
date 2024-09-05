@@ -1,19 +1,21 @@
-  \pgfplotsset{table/col sep=comma}
-  \tikzsetnextfilename{diff2d-ratios-intel-spr}
-  \begin{tikzpicture}
-    \begin{semilogyaxis}[
-        title=Execution time,
-        ylabel=time (msec), xlabel=cores,
-        width=\graphwidth\textwidth, height=\graphheight\textwidth,
-        legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
-        legend pos=north east,
-      ]
-      \addplot table[y=oned]{plots/spr-ratios-intel.csv};
-      \addplot table[y=clps]{plots/spr-ratios-intel.csv};
-      \addplot table[y=span]{plots/spr-ratios-intel.csv};
-      \addplot table[y=iota]{plots/spr-ratios-intel.csv};
-      \addplot table[y=diy2e]{plots/spr-ratios-intel.csv};
-      \addplot table[y=kokkos]{plots/spr-ratios-intel.csv};
-      \addplot table[y=sycl]{plots/spr-ratios-intel.csv};
-    \end{semilogyaxis}
-  \end{tikzpicture}
+% -*- latex -*-
+
+\pgfplotsset{table/col sep=comma}
+\tikzsetnextfilename{diff2d-ratios-intel-spr}
+\begin{tikzpicture}
+  \begin{semilogyaxis}[
+      title=Execution time,
+      ylabel=time (msec), xlabel=cores,
+      width=\graphwidth\textwidth, height=\graphheight\textwidth,
+      legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
+      legend pos=outer north east,
+    ]
+    \addplot table[y=oned]{plots/spr-ratios-intel.csv};
+    \addplot table[y=clps]{plots/spr-ratios-intel.csv};
+    \addplot table[y=span]{plots/spr-ratios-intel.csv};
+    \addplot table[y=iota]{plots/spr-ratios-intel.csv};
+    \addplot table[y=diy2e]{plots/spr-ratios-intel.csv};
+    \addplot table[y=kokkos]{plots/spr-ratios-intel.csv};
+    \addplot table[y=sycl]{plots/spr-ratios-intel.csv};
+  \end{semilogyaxis}
+\end{tikzpicture}

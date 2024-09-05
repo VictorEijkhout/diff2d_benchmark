@@ -8,6 +8,7 @@ function usage () {
 nsize=25000
 compiler=intel
 cpu=spr
+test=0
 while [ $# -gt 0 ] ; do
     if [ $1 = "-h" ] ; then
 	usage && exit 0
@@ -17,6 +18,8 @@ while [ $# -gt 0 ] ; do
 	compiler=gcc && shift
     elif [ $1 = "-n" ] ; then
 	shift && nsize=$1 && shift
+    elif [ $1 = "-t" ] ; then
+	test=1 && shift
     elif [ $1 = "-y" ] ; then
 	sycl=1 && shift
     else
@@ -31,6 +34,7 @@ fi
 python3 ../../scripts/multi_graphs_extract.py \
 	-p ${plotdir} \
 	-n ${cpu}-models-${compiler} \
+	$( if [ "${test}" = "1" ] ; then echo --test ; fi ) \
 	$( for m in oned clps span iota kokkos sycl ; do \
 	       file=${m}/diff2d-scaling-${m}-${cpu}-${compiler}-${nsize}.runout \
 		   && if [ -f "${file}" ] ; then echo ${file}:${m} ; fi \

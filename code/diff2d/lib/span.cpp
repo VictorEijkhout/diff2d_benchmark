@@ -68,10 +68,10 @@ namespace linalg {
   //codesnippet end
 
   //! Compute the L2 norm of the interior
-  //codesnippet d2dnormspan
   template< typename real >
   real bordered_array_span<real>::l2norm() {
     real sum_of_squares{0};
+    //codesnippet d2dnormspan
     auto array = this->data2d();
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( auto ij : this->inner() ) {
@@ -80,8 +80,8 @@ namespace linalg {
       sum_of_squares += v*v;
     }
     return std::sqrt(sum_of_squares);
+    //codesnippet end
   };
-  //codesnippet end
 
   //! Set the interior to a value
   template< typename real >

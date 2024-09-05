@@ -1,0 +1,17 @@
+    \pgfplotsset{table/col sep=comma}
+    \tikzsetnextfilename{clps-ratios-spr-sp}
+    \begin{tikzpicture}
+      \begin{semilogyaxis}[
+          title=Ratio GCC to Intel on clps,
+          xlabel=cores,
+          ylabel=ratio, ymin=.1, ymax=10, 
+          ytickten={-1,-.5,0,0.5,1},
+          yticklabels={1/10,1/3,1,3,10},
+          width=.5\textwidth, height=.5\textwidth,
+          legend entries={intel,gnu,},
+          legend pos=north west,
+        ]
+        \addplot table[y=intel]{plots/clps-ratios-iccgcc-rat.csv};
+        \addplot table[y=gnu]{plots/clps-ratios-iccgcc-rat.csv};
+      \end{semilogyaxis}
+    \end{tikzpicture}
