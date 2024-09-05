@@ -11,7 +11,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[10pt]{beamer}
+\documentclass[10pt,t]{beamer}
 
 \input courseformat
 
@@ -81,6 +81,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Power method}
+  \hbox{}
   \begin{quote}
     \begin{tabbing}
       Let $A$ a matrix of interest\\
@@ -99,8 +100,9 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Stencil operations}
-  \vbox{\leavevmode
-    \lower40pt\hbox{\includegraphics[scale=.35]{5pt_stencil_ij}}
+  \hbox{}
+  \vbox {\leavevmode \hsize=.8\textwidth
+    \lower40pt\hbox{\includegraphics[scale=.22]{5pt_stencil_ij}}
     \hfill 
     \(
     \begin{array}{|r|r|r|}
@@ -144,6 +146,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Stencil computation}
+  Apply stencil to each $(i,j)$ index:
   \cxxverbatimsnippet{d2d5ptseq}
   \begin{itemize}
   \item Differential operator~/ image convolution
@@ -152,6 +155,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Tools: \texttt{mdspan} and \texttt{cartesian\_product}}
+  Data is declared as \lstinline{mdspan}:
   \hbox\bgroup
   \cxxverbatimsnippet{d2dspan0}
   \cxxverbatimsnippet{d2dspan2}
@@ -159,6 +163,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
+  Index range is declared as \lstinline{range::views::cartesian_product}:
   \cxxverbatimsnippet{d2dinner}
   \begin{itemize}
   \item Vector allocated with size $(m+2b)\times(n+2b)$ to include border
@@ -178,6 +183,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Implementation 2: range over indices}
+  Range-based for loop:
   \cxxverbatimsnippet{d2dnormspan}
   \begin{itemize}
   \item Range over indices, not over data
@@ -186,6 +192,7 @@
 \end{frame}
 
 \begin{frame}[containsverbatim]{Stencil operation}
+  Most complicated operation of the bunch:
 \cxxverbatimsnippet{d2d5ptspan}
   \begin{itemize}
   \item Hard to formulate as range algorithm
@@ -259,6 +266,8 @@ Index calculations take lots of time.
 
 \begin{frame}[containsverbatim]{Conclusion and Acknowledgement}
   \begin{itemize}
+  \item `Fancy' schemes suffer from indexing overhead\\
+    strongly implementation and compiler dependent.
   \item This work was supported by
     the Intel oneAPI Center of Excellence, and the 
     TACC STAR Scholars program,

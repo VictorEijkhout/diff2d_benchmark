@@ -353,46 +353,11 @@ Moreover, most models have constant efficiency, kokkos being the exception.
 
 \Level 1 {Comparing processor generations}
 
-%% RESULTS SHOWING COMPARISONS BETWEEN INTEL PROCESSOR GENERATIONS
-%% REMOVED TO SATISFY PAGE LIMITS. THIS CAN BE REINSTATED FOR FINAL SUBMISSION.
-
-%% \begin{comment}
-
 \begin{figure*}[t]
-  \pgfplotsset{table/col sep=comma}
   \hbox\bgroup %%\begin{multicols}{2}
-    \tikzsetnextfilename{diff2d-procs}
-    \begin{tikzpicture}
-      \begin{semilogyaxis}[
-          title=Runtime,
-          ylabel=time (msec), xlabel=cores,
-          width=.55\textwidth, height=.5\textwidth,
-          legend entries={skx,clx,icx,spr,grx},
-        ]
-        \addplot table[y=skx]{plots/gcc-oned-skx-26000.csv};
-        \addplot table[y=clx]{plots/gcc-oned-clx-26000.csv};
-        \addplot table[y=icx]{plots/gcc-oned-icx-26000.csv};
-        \addplot table[y=spr]{plots/gcc-oned-spr-26000.csv};
-        \addplot table[y=grx]{plots/gcc-oned-grx-26000.csv};
-      \end{semilogyaxis}
-    \end{tikzpicture}
+  \input d2dprocs
     %% \columnbreak
-    \tikzsetnextfilename{diff2d-procs-bw}
-    \begin{tikzpicture}
-      \begin{axis}[
-          title=Bandwidth,
-          ylabel=BW (Gb/s), xlabel=cores,
-          width=.55\textwidth, height=.5\textwidth,
-          legend entries={skx,clx,icx,spr,grx},
-          legend pos=north west,
-        ]
-        \addplot table[y=skx]{plots/gcc-oned-skx-26000-bw.csv};
-        \addplot table[y=clx]{plots/gcc-oned-clx-26000-bw.csv};
-        \addplot table[y=icx]{plots/gcc-oned-icx-26000-bw.csv};
-        \addplot table[y=spr]{plots/gcc-oned-spr-26000-bw.csv};
-        \addplot table[y=grx]{plots/gcc-oned-grx-26000-bw.csv};
-      \end{axis}
-    \end{tikzpicture}
+  \input d2dprocsbw
   \egroup %%\end{multicols}
   \caption{Generations of Intel processors (OpenMP). Time (left) and speedup (right) as function of core count.}
   \label{fig:diff2d-procs}
