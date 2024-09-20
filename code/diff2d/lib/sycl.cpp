@@ -1,163 +1,133 @@
-#include <sycl/sycl.hpp>
-#include<sys/sysinfo.h>
-#include<sys/time.h>
-//#include "tbb/tbb.h"
+/****************************************************************
+ *  ****
+ *  **** This file belongs with the course
+ *  **** Parallel Programming in MPI and OpenMP
+ *  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ *  ****
+ *  **** sycl.cpp : 2D diffusion in parallel through SYCL 
+ *  ****
+ *****************************************************************/
 
-#define INDEX(N,i,j) (i*N + j)
+#include <cmath>
+#include <format>
+#include <iostream>
+#include <string>
 
-//using namespace hipsycl::sycl;
-using namespace sycl;
+#include "sycl.hpp"
 
-unsigned long long rdtsc(void)
-{
-    unsigned long hi, lo;
-    __asm__ __volatile__ ("xorl %%eax, %%eax \n  cpuid" ::: "%eax", "%ebx", "%ecx", "%edx");
-    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi));
-    return ( (unsigned long long)lo)|( ((unsigned long long)hi)<<32 );
-}
+//codesnippet d2dsyclindex
+#define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b
+//codesnippet end
 
-static inline unsigned long long int GetTickCount()
-{
-#ifdef WIN32
-    /* TODO find similar function on Windows */
-#else
-    struct timeval tp;
-    gettimeofday(&tp,NULL);
-    return tp.tv_sec*1000+tp.tv_usec/1000;
-}
-#endif
+namespace linalg {
 
-void Calibrate(unsigned long long int *ClkPerSec,double NSecClk)
-{
-    unsigned long long int start,stop,diff;
-    unsigned long long int starttick,stoptick,difftick;
+  template< typename real >
+  bordered_array_sycl<real>::bordered_array_sycl( idxint m,idxint n,int border, queue q )
+    : bordered_array_base<real>(m,n,border) {
+    auto out = this->data();
+    const auto [m,n,b] = this->outer_sizes();
 
-    stoptick = GetTickCount();
-    while(stoptick == (starttick=GetTickCount()));
+    auto q = this->q;
+    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
 
-    start = rdtsc();
-    while((stoptick=GetTickCount())<(starttick+500));
-    stop  = rdtsc();
+    q.submit([&](sycl::handler &h) {
+      sycl::accessor D_a(Buf_a, h, sycl::write_only);
 
-    diff = stop-start;
-    difftick = stoptick-starttick;
+      h.parallel_for(sycl::range<2>(m, n), [=](auto index) {
+        auto row = index.get_id(0) + 1;
+        auto col = index.get_id(1) + 1;
+        D_a[row][col] = static_cast<real>(0);
+      });
+    }).wait();
+  };
 
-    *ClkPerSec = ( diff * (unsigned long long int)1000 )/ (unsigned long long int)(difftick);
-    NSecClk = (double)1000000000 / (double)(__int64_t)*ClkPerSec;
-}
+  template< typename real >
+  void bordered_array_sycl<real>::central_difference_from
+      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+    const auto& other = dynamic_cast<const linalg::bordered_array_sycl<real>&>(_other);
 
-int main(int argc,char *argv[])
-{
-    const int N=atoi(argv[3]),M=atoi(argv[4]);
-    int index;
-    unsigned long long int ClkPerSec;
-    double NSecClk;
-    unsigned long int start,end;
-    double elapsed_count[10],Average = 0.0;
-    float FNorm = 0.0;
-
-
-    queue cpu_selector(cpu_selector_v);
-    queue gpu_selector(gpu_selector_v);
-    queue q;
-    if(strcmp(argv[2],"cpu") == 0)
-        q = cpu_selector;
-    else
-        q = gpu_selector;
-
-    //oneapi::tbb::task_group tg;
-    //auto mp = tbb::global_control::max_allowed_parallelism;
-    //oneapi::tbb::global_control gc(mp,atoi(argv[2]));
-
-
-    std::cout << "Device : " << q.get_device().get_info<info::device::name>() << "\n";
-    std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
-
-    std::vector<float> Mat_A(N*M,10.0);
-    std::vector<float> Mat_Stencil(N*M,0.0);
-
-    /*std::cout << "Original Square Domain : \n";
-    for(int i=0;i<M;i++)
+    auto out = this->data();
+    auto in = other.data();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
+    auto q = this->q;
+    //codesnippet d2d5ptsycl
+    q.submit([&] (handler &h)
     {
-        for(int j=0;j<N;j++)
-            std::cout << Mat_A[(i*N) + j] << "\t";
+      accessor D_a(Buf_a,h,read_only);
+      accessor D_b(Buf_b,h,write_only);
 
-        std::cout << "\n";
-    }*/
+      h.parallel_for(range<2>(other.m - 2,other.n - 2) [=](item<2> index){
+        auto row = index.get_id(0) + 1;
+        auto col = index.get_id(1) + 1;
 
-    buffer<float,2> Buf_a(Mat_A.data(),range<2>(N,M));
-    buffer<float,2> Buf_b(Mat_Stencil.data(),range<2>(N,M));
-    buffer<float,1> Buf_Fn(&FNorm, range<1>(1));
+        real stencil_value =
+          4*D_a[row][col]
+          - D_a[row-1][col] - D_a[row+1][col]
+          - D_a[row][col-1] - D_a[row][col+1];
+        D_b[row-1][col-1] = stencil_value;
+      });
+    }).wait();    
+  };
 
-    Calibrate(&ClkPerSec,NSecClk);
+  template < typename real >
+  void bordered_array_sycl<real>::set( real value, bool trace ) {
+    auto &A = this;
+    buffer<real,2> Buf_a(A.internal_data().data(), sycl::range<2>(A.m(),A.n()));
+    auto q = this->q;
 
-    for(int count = 0;count < atoi(argv[1]);count++)
-    {
-        start = rdtsc();
-        if(FNorm == 0.0f)
-          FNorm = 1.0f;
-        else
-          FNorm = 1.0f;
+    q.submit([&](sycl::handler &h) {
+      sycl::accessor D_a(Buf_a, h, sycl::write_only);
 
-        // Kernel to compute the 5pt stencil and simultaneously the L2Norm
-        q.submit([&] (handler &h)
-        {
-            accessor D_a(Buf_a,h);
-            accessor D_b(Buf_b,h);
-            auto D_Fn = reduction(Buf_Fn, h, std::plus<float>());
+      h.parallel_for(sycl::range<2>(A.m()-2, A.n()-2), [=](auto index) {
+        auto row = index.get_id(0) + 1;
+        auto col = index.get_id(1) + 1;
+        D_a[row][col] = value;
+      });
+    }).wait();
+  };
 
-            h.parallel_for(range<2>(N-2,M-2), D_Fn, [=](item<2> index, auto &sum){
-              int row = index.get_id(0) + 1;
-              int col = index.get_id(1) + 1;
+  template < typename real >
+  real bordered_array_sycl<real>::l2norm() {
+    real norm = 0.0;
+    auto &A = this;
+    buffer<real,2> Buf_a(A.internal_data().data(), sycl::range<2>(A.m(),A.n()));
+    buffer<real,1> Buf_n(&norm, range<1>(1));
 
-              float stencil_value = (4*D_a[row][col] - D_a[row-1][col] - D_a[row+1][col] - D_a[row][col-1] - D_a[row][col+1]);
-              D_b[row-1][col-1] = stencil_value;
-              sum += (stencil_value * stencil_value);
-            });
-	}).wait();
+    auto q = this->q;
+    q.submit([&](handler &h) {
+      accessor D_a(Buf_a, h, read_only);
+      auto D_f = sycl::reduction(&Buf_n, std::plus<real>());
 
-	FNorm = std::sqrt(FNorm);
-	
-        q.submit([&] (handler &h)
-        {
-            accessor D_a(Buf_a,h);
-            accessor D_b(Buf_b,h);
-            accessor D_Fn(Buf_Fn,h);
+      h.parallel_for(range<2>(A.m() - 2, A.n() - 2), D_f, [=](item<2> index, auto &sum) {
+        auto row = index.get_id(0) + 1;
+        auto col = index.get_id(1) + 1;
 
-            h.parallel_for(range<2>(N-2,M-2), [=](auto index){
-              int row = index.get_id(0) + 1;
-              int col = index.get_id(1) + 1;
+        sum += (D_a[row-1][col-1] * D_a[row-1][col-1]);
+      });
+    }).wait();    
 
-              D_a[row][col] = (D_b[row-1][col-1]/D_Fn[0]);
-            });
-        }).wait();
+    norm = std::sqrt(norm);
+    return norm;
+  };
 
-        end = rdtsc();
-    
-        elapsed_count[count] = (double)(end - start)/ClkPerSec;
-        printf("TTC : %.12f\n",elapsed_count[count]);
+  template < typename real >
+  void bordered_array_sycl<real>::view( string caption ) {
+    if (caption!="")
+      cout << format("{}:\n",caption);
+
+    auto out = this->data();
+    auto m = this->m(), n = this->n(), n2b = this->n2b();
+    auto border = this->border();
+    for ( idxint i=0; i<m+2*border; i++ ) {
+      for ( idxint j=0; j<n+2*border; j++ ) {
+        char c = ( j<n+2*border-1 ? ' ' : '\n' );
+        std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
+      }
     }
+  };
+};
 
-    // Print updated Vector1 after Sum
-
-    //std::cout << "\nUpdated after 5pt Stencil : \n";
-    //for(int i=0;i<N*M;i+=M)
-    //{
-    //    for(int j=i;j<(i+M);j++)
-    //        std::cout << Mat_A[j] << "\t";
-    //    std::cout << "\n";
-    //}
-
-
-    for(int count=1;count<(atoi(argv[1]));count++)
-        Average += elapsed_count[count];
-   
-    std::cout << "\nTime to compute 5pt-Stencil + Power Method (Total) = " << Average << "\n"; 
-    Average = Average/(atoi(argv[1]) -1);
-    std::cout << "\nTime to compute (Avg over " << atoi(argv[1]) << " loops) = " << Average << "\n";
-
-    //free(Mat_A,q);
-    //free(Mat_Stencil,q);
-    //free(H_a);
-    //free(FNorm,q);
-}
+namespace linalg {
+  template class bordered_array_sycl<float>;
+  template vlass bordered_array_sycl<double>
+};
