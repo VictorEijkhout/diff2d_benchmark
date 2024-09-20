@@ -44,13 +44,14 @@ cmake :
 	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
 	@compiler=${TACC_FAMILY_COMPILER} \
 	 && if [ "${ECHO}" = "1" ] ; then \
-	      buildlog=./build-$${compiler:-compiler}.log \
+	      cmakelog=./build-$${compiler:-compiler}.log \
 	    ; else \
-	      buildlog=/tmp/build-$${compiler:-compiler}.log \
+	      cmakelog=/tmp/build-$${compiler:-compiler}.log \
 	    ; fi \
 	 && for v in ${VARIANTS} ; do \
 	      if [ -d "$${v}" ] ; then \
-	        rm -rf build $${v}/CMakeLists.txt \
+	        buildlog=bin/build_$${v}_$${compiler}.log \
+	         && rm -rf build $${v}/CMakeLists.txt $${buildlog} \
 	         && mkdir -p build && ln cmake/CMakeLists.txt $${v}/CMakeLists.txt \
 	         && ( cd build  \
 	             && cmake \
@@ -59,15 +60,16 @@ cmake :
 	              $$( if [ "${ECHO}" = "1" ] ; then echo "-D CMAKE_VERBOSE_MAKEFILE=ON" ; fi ) \
 	              $$( if [ "$${v}" = "f77" ] ; then echo "-D USEFORTRAN=ON" ; fi ) \
 	              -D VARIANT=$${v} \
+	              -D CMAKE_VERBOSE_MAKEFILE=ON \
 	              ../$${v} \
 	             && make V=1 && make install \
-	          ) \
+	          ) 2>&1 | tee $${buildlog} \
 	      ; else echo "No such variant: <<$$v>>" && exit 1 \
 	      ; fi \
-	     ; done 2>&1 | tee $${buildlog} \
+	     ; done 2>&1 | tee $${cmakelog} \
 	 && echo "Generated:" \
 	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done \
-	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${buildlog})" ; fi
+	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${cmakelog})" ; fi
 clean ::
 	@rm -rf bin/{include,lib64} ## why???
 	@for v in ${VARIANTS}; do rm -f bin/$${v} ; done
