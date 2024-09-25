@@ -9,13 +9,61 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\begin{abstract}
+  In this paper we evaluate multiple C++ shared memory
+  programming models
+  with respect to both ease of expression, and resulting performance.
+  We do this by implementing the mathematical algorithm
+  known as the `power method' in a variety of ways,
+  especially focusing on using modern C++ technniques.
+\end{abstract}
+
 \Level 0 {Introduction}
 
-In this paper we evaluate multiple parallel programming models
-with respect to both ease of expression, and resulting performance.
-We do this by implementing the mathematical algorithm
-known as the `power method' in a variety of ways,
-using modern C++ technniques.
+In high performance scientific computing,
+parallelization of loop-based codes is an important
+step towards efficient execution,
+and OpenMP has proved a valuable tool for this.
+While for C++ programmers it is certainly possible
+to write OpenMP in a C-like style,
+recent versions of the C++ standard,
+and certain libraries,
+have made it possible to code in a more modern style.
+We can characterize this mode as `separation of concerns',
+where the data set
+and the data-parallel operation applied to each element
+are specified separately.
+In this report we test various modes of expressing
+a common operation.
+
+For our sample `mini-application' we use the power method
+(commonly used in eigenvalue calculations, but also
+\emph{mutatis mutandis} standing for such algorithms
+as Krylov methods)
+on the matrix of a Finite Difference stencil.
+Computational stencils on a Cartesian domain are probably the minimal realistic
+example of the PDE code; they also stand for convolutions
+in graphics and Machine Learning applications.
+
+This papers explores such different expressions of the power method
+in various ways.
+First of all, we use recent C++ mechanisms
+such as \indexc{mdspan} and the \indexc{cartesian_product}
+of the range library to formulate the power method
+as a separation of the algorithm and data-space concern.
+Then we explore the Kokkos library and the Sycl
+library~/ compiler extension, both of which
+bear out our separation of concerns
+in that they explicitly apply a lambda expression to an index set.
+
+For our practical tests we primarily compare the different programming models
+on a modern Intel processor. The results show that the modern C++
+mechanisms carry a certain performance disadvantage.
+Interestingly, this seems to be less for the GNU compiler than
+for the Intel compiler.
+We also test the `C-style' code on a number of different processors.
+Here the results show that modern processors increasingly
+mitigate the traditional limitations of a bandwidth-bound code.
 
 \Level 0 {Algorithm aspects}
 
@@ -127,7 +175,7 @@ looks in code like:
 \cxxverbatimsnippet{d2dnormseq}
 
 \begin{figure}[t]
-  \includegraphics[scale=.1]{omp-reduct}
+  \includegraphics[scale=.06]{omp-reduct}
   \caption{Structure of a reduction of four items on two threads,
     where $u$ is the user-supplied initial value,
     and $i$~is the natural initial value for the reduction operator.}
@@ -293,6 +341,17 @@ We perform different comparisons:
 \item different Intel processor generations, given a model and compiler;
 \item different compilers, given a model and CPU.
 \end{itemize}
+Throughout, the compiler options used are fairly vanilla:
+\begin{verbatim}
+// GCC:
+-O2 -g -DNDEBUG -std=gnu++23 -fopenmp
+// Intel
+-O2 -g -DNDEBUG -std=gnu++2b -fiopenmp
+\end{verbatim}
+This was largely done to accomodate the tests
+on multiple processor types.
+Optimizing compiler options would introduce
+another level of complication to our tests.
 
 \Level 1 {Comparing parallelization models}
 
@@ -359,11 +418,13 @@ Moreover, most models have constant efficiency, kokkos being the exception.
     %% \columnbreak
   \input d2dprocsbw
   \egroup %%\end{multicols}
-  \caption{Comparing different processors (OpenMP). Time (left) and speedup (right) as function of core count.}
+  \caption{Comparing different processors (OpenMP). Time (left)
+    and bandwidth (right) as function of core count.}
   \label{fig:diff2d-procs}
 \end{figure*}
 
-In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel processors:
+In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel
+(and one NVidia) processors:
 \begin{itemize}
 \item \indextermbus{Intel}{Sky Lake} in the \indextermbus{TACC}{Stampede2} cluster,
   in a two-socket configuration with a total of 48 cores;
@@ -372,10 +433,18 @@ In figure~\ref{fig:diff2d-procs} we compare the following generations of Intel p
 \item \indextermbus{Intel}{Ice Lake} in the \indextermbus{TACC}{Stampede3} cluster,
   in a two-socket configuration with a total of 80 cores;
 \item \indextermbus{Intel}{Sapphire Rapids} in the \indextermbus{TACC}{Stampede3} cluster,
-  in a two-socket configuration with a total of 112 cores;
+  in a two-socket configuration with a total of 112 cores and
+  High Bandwidth Memory;
 \item \indextermbus{Intel}{Granite Rapids} in the \indextermbus{TACC}{Stampede3} cluster,
   in a two-socket configuration with a total of 240 cores;
+\item \indextermbus{NVidia}{Grace} in the \indextermbus{TACC}{Vista} cluster
+  in a two-socket configuration with 144 cores total.
 \end{itemize}
+We see that older processor generations stop scaling at approximately half the full core count.
+Newer processors do not suffer from this limitation.
+Also they have a higher bandwidth.
+Interestingly, the new NVidia `Grace' superchip has a similar bandwidth
+as the high bandwidth Intel Sapphire Rapids.
 
 \Level 2 {Runtime}
 
@@ -471,6 +540,9 @@ version (Intel 24 compiler):
 \end{lstlisting}
 We see that more than half of the time goes into index calculations,
 and in particular integer division.
+On the other hand, benchmarks of the \indexc{mdspan} construct
+by itself~\cite{Hollman:mdspan} show that it performs
+as well as the linearized indexing scheme.
 
 \begin{comment}
   This makes send if we consider our `diy' implementation:
@@ -519,6 +591,12 @@ using various modern C++ mechanisms.
 The tentative conclusion is that the modern mechanisms may be simpler to code,
 but this elegance comes with a certain perforance penalty,
 more so for the Intel compiler than the GCC compiler.
+Profiling suggests that the major obstacle is the computation
+of the $(i,j)$ coordinates from the index range.
+Close inspection of the generated assembly code
+would be needed to find how the models (and compilers)
+differ in this respect, and how the common case
+of a Cartesian grid can be optimized.
 
 \endinput
 

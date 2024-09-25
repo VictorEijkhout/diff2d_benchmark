@@ -23,6 +23,7 @@ pdf : getfiles
 	@echo rsync ../../plots/*.csv ./plots/
 	@if [ ! -d plots ] ; then ln -s ../plots . ; fi 
 	@make --no-print-directory onepass
+	@bibtex "${FILE}"
 	@make --no-print-directory onepass
 	@make --no-print-directory upload FILE="${FILE}"
 upload :
@@ -44,9 +45,9 @@ getfiles :
 	      rsync ../../../scientific-computing-private/scicompbook.aux . \
 	     ; fi \
 	     && rsync \
-	            ${ISP}/macros/idxmacs.tex \
+	            ${ISP}/macros/ispidxmacs.tex \
 	            ${STC}/macros/{book,common,idx}macs.tex \
-	            ${PCSE}/macros/idxpkgmacs.tex \
+	            ${PCSE}/macros/pcseidxmacs.tex \
 	            ../macros/ \
 	 ; fi
 clean ::

@@ -7,9 +7,18 @@
 \def\latexengine{}
 \input bookmacs
 \input articlemacs
-\input ../../../scientific-computing-private/macros/commonmacs
-\input idxmacs
-\input idxpkgmacs
+\input commonmacs
+
+%%
+%% indexing
+%%
+\usepackage{morewrites}
+\usepackage[original,nonewpage]{imakeidx}
+\makeindex % default index
+%%\input idxmacs
+\input ispidxmacs
+\input pcseidxmacs
+
 \input listingmacs
 \newcommand\codesnippetsdir{../snippets}
 \input snippetmacs

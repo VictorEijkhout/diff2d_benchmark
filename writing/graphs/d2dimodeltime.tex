@@ -6,9 +6,10 @@
   \begin{semilogyaxis}[
       title=Execution time,
       ylabel=time (msec), xlabel=cores,
+          yminorticks=true,
       width=\graphwidth\textwidth, height=\graphheight\textwidth,
       legend entries={oned,clps,span,iota,diy2e,kokkos,sycl,},
-      legend pos=outer north east,
+      legend pos=north east,
     ]
     \addplot table[y=oned]{plots/spr-ratios-intel.csv};
     \addplot table[y=clps]{plots/spr-ratios-intel.csv};

@@ -83,3 +83,15 @@
   \advance\time by -\count1 
   last formatted \today, \the\count0\relax:\the\time\relax
   \endgroup}
+
+%%
+%% cmake
+%%
+\begin{packt}
+\newcommand\cmakeExampleFiles[1]{}
+\end{packt}
+\begin{nopackt}
+\newcommand\cmakeExampleFiles[1]{%
+  (The files for this example are in \n{#1}.)
+}
+\end{nopackt}
