@@ -31,6 +31,9 @@ compile :
 	    ( echo "Making variant $${v}" \
 	       && cd $${v} \
 	       && make --no-print-directory diff2d \
+	            ECHO=${ECHO} \
+	            EXTRA_OPTIONS=${EXTRA_OPTIONS} \
+	            EXTRA_LIBS=${EXTRA_LIBS} \
 	       && cp diff2d ../bin/$${v} \
 	    ) \
 	    ; done 2>&1 | tee compile.log && echo "See: compile.log" \
