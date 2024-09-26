@@ -1,0 +1,19 @@
+    \pgfplotsset{table/col sep=comma}
+    \tikzsetnextfilename{diff2d-procs-bw}
+    \begin{tikzpicture}
+      \begin{axis}[
+          title=Bandwidth,
+          ylabel=BW (Gb/s), xlabel=cores,
+          yminorticks=true,
+          width=\graphwidth\textwidth, height=\graphheight\textwidth,
+          legend entries={skx,clx,icx,spr,grx,grace},
+          legend pos=north west,
+        ]
+        \addplot table[y=skx]{plots/gcc-oned-skx-26000-bw.csv};
+        \addplot table[y=clx]{plots/gcc-oned-clx-26000-bw.csv};
+        \addplot table[y=icx]{plots/gcc-oned-icx-26000-bw.csv};
+        \addplot table[y=spr]{plots/gcc-oned-spr-26000-bw.csv};
+        \addplot table[y=grx]{plots/gcc-oned-grx-26000-bw.csv};
+        \addplot table[y=grace]{plots/gcc-oned-grace-26000-bw.csv};
+      \end{axis}
+    \end{tikzpicture}
