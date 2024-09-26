@@ -42,3 +42,4 @@
 *.aux
 *.log
 *.cut
+writing/plots/*.pdf
