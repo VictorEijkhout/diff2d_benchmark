@@ -32,7 +32,7 @@ compile :
 	       && cd $${v} \
 	       && make --no-print-directory diff2d \
 	            ECHO=${ECHO} \
-	            EXTRA_OPTIONS=${EXTRA_OPTIONS} \
+	            EXTRA_OPTIONS="$$( if [ $${v} = sycl ] ; then echo -fsycl ; fi ) ${EXTRA_OPTIONS}" \
 	            EXTRA_LIBS=${EXTRA_LIBS} \
 	       && cp diff2d ../bin/$${v} \
 	    ) \
