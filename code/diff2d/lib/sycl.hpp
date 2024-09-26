@@ -8,8 +8,8 @@
  *  ****
  *  ****************************************************************/
 
-#ifndef LINALG_SEQ_H
-#define LINALG_SEQ_H
+#ifndef LINALG_SYCL_H
+#define LINALG_SYCL_H
 
 #include <tuple>
 #include <vector>
