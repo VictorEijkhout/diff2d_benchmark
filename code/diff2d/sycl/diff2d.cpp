@@ -13,9 +13,11 @@
 #include <iostream>
 using std::cout;
 #include <format>
+#include <memory>
+using std::unique_ptr,std::make_unique;
 
-#include <sycl/sycl.hpp>
-
+#include "../lib/sycl.hpp"
+using namespace sycl;
 #include "../lib/options.hpp"
 using real = float;
 
@@ -32,8 +34,8 @@ int main(int argc,char *argv[])
   * SYCL setup  
   */
   // codesnippet syclqueue
-  queue q =
-    [=] () -> queue {
+  sycl::queue q =
+    [=] () -> sycl::queue {
       if (gpu) {
         cout << "Selecting device GPU\n";
         return queue(gpu_selector_v);

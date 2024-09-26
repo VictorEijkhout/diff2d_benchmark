@@ -125,6 +125,11 @@ namespace linalg {
       }
     }
   };
+
+  template< typename real >
+  void bordered_array_seq<real>::set_bc( bool down,bool right, bool trace ) {
+
+  };
 };
 
 namespace linalg {

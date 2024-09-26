@@ -24,7 +24,7 @@ namespace linalg {
 
   //codesnippet d2dbordered
   template< typename real >
-  class bordered_array_seq : public bordered_array_base<real> {
+  class bordered_array_sycl : public bordered_array_base<real> {
     friend class distributed_array<real>;
   public:
     using bordered_array_base<real>::log_flops;
@@ -42,7 +42,8 @@ namespace linalg {
     void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
     void set( real value,bool trace=false ) override;
-    void view(string caption) override;
+    void view(std::string caption) override;
+    void set_bc(bool down, bool right, bool trace=false) override;
 
     std::vector<real> internal_data();
   };
