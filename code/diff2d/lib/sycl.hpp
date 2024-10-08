@@ -44,7 +44,6 @@ namespace linalg {
     void set( real value,bool trace=false ) override;
     void view(std::string caption) override;
     void set_bc(bool down, bool right, bool trace=false) override;
-
     std::vector<real> internal_data();
   };
 };
