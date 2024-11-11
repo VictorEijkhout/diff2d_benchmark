@@ -7,6 +7,8 @@
 ####
 #### Make include file for omp test runs
 ####
+#### MODIFIED FOR DIFF2D BENCHMARK!
+####
 ################################################################
 
 info ::
@@ -48,13 +50,16 @@ omp_run :
 	          command="DPCPP_CPU_NUM_CUS=$$np $$command" \
 	        ; else \
 	          command="OMP_NUM_THREADS=$$np $$command" \
+	           && if [ "${TACC_FAMILY_COMPILER}" = "intel" ] ; then \
+	                command="KMP_BLOCKTIME=infinite $$command" \
+	              ; fi \
 	        ; fi \
 	    ; fi \
 	 && echo "Execute program ${PROGRAM} cores $${np}" \
 	 && if [ "${THREADSYSTEM}" = "dpcpp" ] ; then \
 	      command="DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores $$command" \
 	    ; else \
-	      command="OMP_PROC_BIND=${BIND} $$command" \
+	      command="OMP_PROC_BIND=${BIND} KMP_BLOCKTIME=infinite $$command" \
 	    ; fi \
 	 && if [ ${ACTIVE} -gt 1 ] ; then \
 	         command="OMP_MAX_ACTIVE_LEVELS=${ACTIVE} $$command" ; fi \
