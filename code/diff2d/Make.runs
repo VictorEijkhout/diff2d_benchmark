@@ -7,7 +7,6 @@
 #### by Victor Eijkhout, copyright 2013-2024
 ####
 #### make include file for diff2d scaling runs
-#### AT THE MOMENT ONLY FOR OPENMP
 ####
 ################################################################
 ################################################################
