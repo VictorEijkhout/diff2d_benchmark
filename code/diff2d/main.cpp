@@ -60,7 +60,7 @@ if ( procno==0 )
 auto [flops,bytes] = X->log_report();
 if ( procno==0 )
   std::cout << std::format("{}-BW: (estimated Gb/sec) {:7.3}\n",
-	prefix,bytes/(msec/1.e3)*1.e-9);
+        prefix,bytes/(msec/1.e3)*1.e-9);
 if ( procno==0 )
   std::cout << std::format("{}-Flops: {:7.3}\n",
-	prefix,flops/(msec/1.e3)*1.e-9);
+        prefix,flops/(msec/1.e3)*1.e-9);
