@@ -8,6 +8,10 @@
 ####
 #### make include file for diff2d scaling runs
 ####
+#### This is included from code/diff2d/<mode> directories
+####
+#### MODIFIED FOR DIFF2D BENCHMARK!
+####
 ################################################################
 ################################################################
 

@@ -13,7 +13,7 @@ info ::
 
 # list cxx last because that's sequential 
 # and we're not terribly interested
-VARIANTS = oned clps kokkos span iota sycl diy2d diy2e \
+VARIANTS = oned clps kokkos2d span iota sycl diy2d diy2e \
     seq f77
 .PHONY: variants
 variants: 
@@ -44,14 +44,17 @@ info ::
 	@echo "make cmake [ VARIANTS=.... ] [ ECHO=1 for verbose compilation ]"
 cmake :
 	@if [ ! -z "${VARIANT}" ] ; then \
-	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
-	@compiler=${TACC_FAMILY_COMPILER} \
+	    variants="${VARIANT}" \
+	 ; else \
+	    variants="${VARIANTS}" \
+	 ; fi \
+	 && compiler=${TACC_FAMILY_COMPILER} \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	      cmakelog=./build-$${compiler:-compiler}.log \
 	    ; else \
 	      cmakelog=/tmp/build-$${compiler:-compiler}.log \
 	    ; fi \
-	 && for v in ${VARIANTS} ; do \
+	 && for v in $${variants} ; do \
 	      if [ -d "$${v}" ] ; then \
 	        buildlog=bin/build_$${v}_$${compiler}.log \
 	         && rm -rf build $${v}/CMakeLists.txt $${buildlog} \

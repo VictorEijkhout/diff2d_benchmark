@@ -26,7 +26,7 @@ target_sources( ${PROJECT_NAME} INTERFACE ../main.${EXT} )
 ##
 message( STATUS "\n====   setting backend" )
 # what variant are we doing?
-set( omp_backends "seq" "oned" "clps" "iota" "diy2e" "kokkos" "span" )
+set( omp_backends "seq" "oned" "clps" "iota" "diy2e" "kokkos2d" "span" )
 list( FIND omp_backends "${VARIANT}" index )
 # add OpenMP 
 if( ${index} GREATER 0 )
@@ -47,10 +47,11 @@ include( FetchContent )
 ## kokkos handling
 ##
 
-if( ${PROJECT_NAME} STREQUAL "kokkos" )
+if( ${PROJECT_NAME} STREQUAL "kokkos2d" )
   find_package( Kokkos QUIET )
   if( Kokkos_FOUND )
     message( STATUS "Thanks for installing kokkos yourself" )
+    target_include_directories( ${PROJECT_NAME} PUBLIC $ENV( "TACC_KOKKOS_INC" ) )
   else()
     message( STATUS "Downloading kokkos for you" )
     FetchContent_Declare(
@@ -75,7 +76,7 @@ else()
     cxxopts GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git )
   FetchContent_MakeAvailable( cxxopts )
 endif()
-target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
+# target_include_directories( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_link_libraries( ${PROJECT_NAME} PUBLIC cxxopts::cxxopts )
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/options.${EXT} )
 
@@ -97,6 +98,7 @@ endif()
 target_link_libraries( ${PROJECT_NAME} PUBLIC std::mdspan )
 
 target_sources( ${PROJECT_NAME} PRIVATE ../lib/${VARIANT}.${EXT} ../lib/base.${EXT} )
-target_include_directories( ${PROJECT_NAME} PRIVATE ../lib )
+target_include_directories( ${PROJECT_NAME}
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../lib )
 
 install( TARGETS ${PROJECT_NAME} DESTINATION . )
