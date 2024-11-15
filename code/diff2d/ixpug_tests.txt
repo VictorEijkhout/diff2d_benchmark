@@ -1,4 +1,6 @@
-1. compilation for sycl fails: needs make instead of cmake
+1. cmake compilation for sycl fails: needs
+
+make compile VARIANT=sycl
 
 2. slurm problems with -s option so run in idev
 

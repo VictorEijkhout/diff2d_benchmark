@@ -25,8 +25,11 @@ info ::
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
 compile :
 	@if [ ! -z "${VARIANT}" ] ; then \
-	    echo "The option is VARIANTS, not VARIANT" && exit 1 ; fi
-	@variants="$$( echo ${VARIANTS} | tr ',' ' ' )" \
+	    variants="${VARIANT}" \
+	 ; else \
+	    variants="${VARIANTS}" \
+	 ; fi \
+	 && variants="$$( echo $${variants} | tr ',' ' ' )" \
 	 && for v in $$variants ; do \
 	    ( echo "Making variant $${v}" \
 	       && cd $${v} \
