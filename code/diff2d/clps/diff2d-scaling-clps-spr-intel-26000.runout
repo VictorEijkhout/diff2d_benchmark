@@ -1,0 +1,165 @@
+==== Run ../bin/clps on 1 threads ====
+Execute program ../bin/clps cores 1
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=1 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:   1
+Vector size: 26000 x 26000
+x norm: 11585.237
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2367423
+[ 2] y norm: 2.8974867
+[ 3] y norm: 3.1970692
+[ 4] y norm: 3.367639
+Time:  27367 msec
+omp-BW: (estimated Gb/sec)    3.75
+omp-Flops:    1.19
+==== Run ../bin/clps on 11 threads ====
+Execute program ../bin/clps cores 11
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  11
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361252
+[ 2] y norm: 2.8987708
+[ 3] y norm: 3.1966326
+[ 4] y norm: 3.368655
+Time:   2481 msec
+omp-BW: (estimated Gb/sec)    41.4
+omp-Flops:    13.1
+==== Run ../bin/clps on 22 threads ====
+Execute program ../bin/clps cores 22
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=22 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  22
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361488
+[ 2] y norm: 2.8987122
+[ 3] y norm: 3.1966126
+[ 4] y norm: 3.3687856
+Time:   1244 msec
+omp-BW: (estimated Gb/sec)    82.6
+omp-Flops:    26.1
+==== Run ../bin/clps on 33 threads ====
+Execute program ../bin/clps cores 33
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=33 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  33
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361565
+[ 2] y norm: 2.898693
+[ 3] y norm: 3.19661
+[ 4] y norm: 3.3687716
+Time:    830 msec
+omp-BW: (estimated Gb/sec)     124
+omp-Flops:    39.1
+==== Run ../bin/clps on 44 threads ====
+Execute program ../bin/clps cores 44
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  44
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361593
+[ 2] y norm: 2.8986905
+[ 3] y norm: 3.1966097
+[ 4] y norm: 3.3687644
+Time:    624 msec
+omp-BW: (estimated Gb/sec)     165
+omp-Flops:      52
+==== Run ../bin/clps on 56 threads ====
+Execute program ../bin/clps cores 56
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  56
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361596
+[ 2] y norm: 2.8986883
+[ 3] y norm: 3.1966162
+[ 4] y norm: 3.368761
+Time:    491 msec
+omp-BW: (estimated Gb/sec)     209
+omp-Flops:    66.1
+==== Run ../bin/clps on 67 threads ====
+Execute program ../bin/clps cores 67
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=67 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  67
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361612
+[ 2] y norm: 2.8986828
+[ 3] y norm: 3.1966174
+[ 4] y norm: 3.3687603
+Time:    412 msec
+omp-BW: (estimated Gb/sec)     249
+omp-Flops:    78.8
+==== Run ../bin/clps on 78 threads ====
+Execute program ../bin/clps cores 78
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=78 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  78
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361598
+[ 2] y norm: 2.8986804
+[ 3] y norm: 3.1966186
+[ 4] y norm: 3.3687587
+Time:    353 msec
+omp-BW: (estimated Gb/sec)     291
+omp-Flops:    91.9
+==== Run ../bin/clps on 89 threads ====
+Execute program ../bin/clps cores 89
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  89
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361603
+[ 2] y norm: 2.898678
+[ 3] y norm: 3.196617
+[ 4] y norm: 3.3687587
+Time:    310 msec
+omp-BW: (estimated Gb/sec)     331
+omp-Flops:     105
+==== Run ../bin/clps on 100 threads ====
+Execute program ../bin/clps cores 100
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=100 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 100
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361603
+[ 2] y norm: 2.898679
+[ 3] y norm: 3.1966188
+[ 4] y norm: 3.368756
+Time:    276 msec
+omp-BW: (estimated Gb/sec)     372
+omp-Flops:     118
+==== Run ../bin/clps on 112 threads ====
+Execute program ../bin/clps cores 112
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin/clps -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 112
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2361612
+[ 2] y norm: 2.8986757
+[ 3] y norm: 3.1966183
+[ 4] y norm: 3.3687565
+Time:    247 msec
+omp-BW: (estimated Gb/sec)     416
+omp-Flops:     131
