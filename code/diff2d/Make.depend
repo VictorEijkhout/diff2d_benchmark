@@ -22,7 +22,10 @@ diff2d.o : ../main.cpp ../lib/options.hpp ../lib/${CATEGORY}.hpp ../lib/base.hpp
 diff2d.o : ${EXTRA_OBJS}
 ../lib/${CATEGORY}.o : ../lib/${CATEGORY}.cpp ../lib/${CATEGORY}.hpp
 	@cd ../lib \
-	 && make --no-print-directory ECHO=${ECHO} CATEGORY=${CATEGORY} \
+	 && make --no-print-directory ECHO=${ECHO} \
+	      OPTLEVEL=${OPTLEVEL} CPPSTANDARD=${CPPSTANDARD} \
+	      EXTRA_OPTIONS="${EXTRA_OPTIONS}" \
+	      CATEGORY=${CATEGORY} MODE=${MODE} \
 	      ${CATEGORY}.o
 ../lib/base.o : ../lib/base.cpp ../lib/base.hpp
 	@cd ../lib \

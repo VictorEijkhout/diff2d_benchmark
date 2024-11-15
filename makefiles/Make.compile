@@ -20,7 +20,7 @@ info ::
 	    echo "Please set MODE variable" && echo \
 	 ; else \
 	    case ${MODE} in \
-	        ( cuda | mpi | mpl | omp | ompg | hybrid | petsc | slepc | tbb | 1api ) \
+	        ( cuda | mpi | mpl | omp | ompg | hybrid | petsc | slepc | sycl | tbb | 1api ) \
 	            echo "using mode=${MODE}" ;; \
 	        ( * ) echo && echo "Unknown MODE=${MODE}" && echo ;; \
 	    esac \
@@ -34,7 +34,9 @@ info ::
 	@echo "    [ ECHO=0/1 : echo commandline ]"
 	@if [ "${MODE}" = "omp" ] ; then \
 	    echo "    [ OMPFLAGS=... (default: ${OMPFLAGS}) ]" ; fi
-OPTLEVEL = 2
+ifeq "${OPTLEVEL}" ""
+  OPTLEVEL = 2
+endif
 
 EXT_c = c
 EXT_C = c
@@ -48,7 +50,6 @@ EXT_mpl = cxx
 EXT = ${EXT_${LANGUAGE}}
 
 CFLAGS =
-CXXFLAGS = 
 FFLAGS =
 
 INTEL19 := $(findstring 19,${TACC_FAMILY_COMPILER_VERSION})
@@ -64,12 +65,9 @@ else
     C_STD_FLAGS = -std=c99
 endif
 CFLAGS   += ${C_STD_FLAGS}
-
-CPPSTANDARD = 17
 CXX_STD_FLAGS = -std=c++${CPPSTANDARD}
-CXXFLAGS += ${CXX_STD_FLAGS}
 
-OPTFLAGS := -O${OPTLEVEL} -g
+OPTFLAGS = -O${OPTLEVEL} -g
 ifeq "${MODE}" "cuda"
   OPTFLAGS += -allow-unsupported-compiler
 else
@@ -79,10 +77,6 @@ else
     OPTFLAGS += "-Wno-psabi"
   endif
 endif
-
-CFLAGS   += ${OPTFLAGS}
-CXXFLAGS += ${OPTFLAGS}
-FFLAGS   += ${OPTFLAGS}
 
 ## there are bugs in the qopenmp backend of Intel23
 ifdef INTEL_OMP_FLAG
@@ -106,13 +100,11 @@ endif
 
 # these conditionals are not executed. why?
 ifeq "${MODE}" "omp"
-  CFLAGS   += ${OMPFLAGS}
-  CXXFLAGS += ${OMPFLAGS}
-  FFLAGS   += ${OMPFLAGS}
+  PARALLEL_FLAGS = ${OMPFLAGS}
 else ifeq "${MODE}" "ompg"
-  CFLAGS   += ${OMPFLAGS}
-  CXXFLAGS += ${OMPFLAGS}
-  FFLAGS   += ${OMPFLAGS}
+  PARALLEL_FLAGS = ${OMPFLAGS}
+else ifeq "${MODE}" "sycl"
+  PARALLEL_FLAGS = -fsycl
 else ifeq "${MODE}" "tbb"
   CFLAGS   += ${OMPFLAGS}
   CXXFLAGS += ${OMPFLAGS}
@@ -122,7 +114,7 @@ else ifeq "${MODE}" "hybrid"
   CXXFLAGS += ${OMPFLAGS}
   FFLAGS   += ${OMPFLAGS}
 else ifeq "${MODE}" "mpl"
-  CXXFLAGS += -I${TACC_MPL_INC}
+  PARALLEL_FLAGS = -I${TACC_MPL_INC}
 endif
 
 MPI_C_COMPILER = mpicc
@@ -154,10 +146,6 @@ else ifeq "${MODE}" "mpl"
   CXX_COMPILER = ${MPI_CXX_COMPILER}
   F_COMPILER   = ${MPI_F_COMPILER}
   F08_COMPILER   = ${MPI_F08_COMPILER}
-else ifeq "${MODE}" "sycl"
-    CXX_COMPILER = icpx
-    CXXFLAGS +=  -fsycl
-    LINK_FLAGS += -fsycl
 else ifeq "${MODE}" "1api"
     CXX_COMPILER = icpx
     CXXFLAGS +=  -fsycl
@@ -203,7 +191,7 @@ else # regular compiler modes
     else 
       C_HOST_COMPILER   = no_such_compiler
       CXX_HOST_COMPILER = no_such_compiler
-	endif
+    endif
   else ifdef TACC_CXX
     C_COMPILER=${TACC_CC}
     CXX_COMPILER=${TACC_CXX}
@@ -256,11 +244,6 @@ else # regular compiler modes
   endif # end of non-mpi compiler setting
 
 endif
-
-# we need extra options with all compilers
-CFLAGS   += ${EXTRA_OPTIONS}
-CXXFLAGS += ${EXTRA_OPTIONS}
-FFLAGS   += ${EXTRA_OPTIONS}
 
 ##
 ## Module detection
@@ -316,22 +299,25 @@ modules :
 	    -c $<" \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	        echo "Compiling: $$cmdline" \
+	         && echo "with MODE=${MODE}" \
 	         && echo "with ${CXX_COMPILER}=$$( which ${CXX_COMPILER} )" \
 	         && if [ "${MODE}" = "mpi" ] ; then \
 	                echo "where ${CXX_COMPILER}=$$( ${CXX_COMPILER} -show )" \
 	            ; fi \
 	    ; fi \
 	 && eval $$cmdline
+CXXFLAGS = ${OPTFLAGS} ${CXX_STD_FLAGS} ${PARALLEL_FLAGS}
 %.o : %.cpp 
 	@make --no-print-directory modules
 	@if [ -z "${CXX_COMPILER}" ] ; then \
 	    echo "Variable CXX_COMPILER not set" && exit 1 ; fi
-	@cmdline="${CXX_COMPILER} -g \
-	    -DCXXEXTRAINCSTART ${EXTRA_INCLUDES} -DCXXEXTRAINCSTOP \
-	    -DCXXFLAGSSTART    ${CXXFLAGS}       -DCXXFLAGSSTOP\
+	@cmdline="${CXX_COMPILER} \
+	    -DCXXEXTRAINCSTART ${EXTRA_INCLUDES}            -DCXXEXTRAINCSTOP \
+	    -DCXXFLAGSSTART ${CXXFLAGS} ${EXTRA_OPTIONS} -DCXXFLAGSSTOP\
 	    -c $<" \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	        echo "Compiling: $$cmdline" \
+	         && echo "with MODE=${MODE}" \
 	         && echo "with ${CXX_COMPILER}=$$( which ${CXX_COMPILER} )" \
 	         && if [ "${MODE}" = "mpi" ] ; then \
 	                echo "where ${CXX_COMPILER}=$$( ${CXX_COMPILER} -show )" \
@@ -447,7 +433,7 @@ ${APPS} ${EXERCISES} ${PROGRAMS} ${WRONGS} :: $$@.o ${EXTRA_OBJS}
 	      ; done \
 	    ; fi \
 	 && cmd="${LINKER} -o $@ $^ \
-	        ${LINK_FLAGS} ${EXTRA_LINK_FLAGS} \
+	        ${LINK_FLAGS} ${PARALLEL_FLAGS} ${EXTRA_LINK_FLAGS} \
 	        ${EXTRA_LIBS} $$rpath " \
 	 && if [ "${ECHO}" = "1" ] ; then echo "Linking: $$cmd" ; fi \
 	 && eval $$cmd
