@@ -1,6 +1,6 @@
 ==== Run ../bin/oned on 1 threads ====
 Execute program ../bin/oned cores 1
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=1 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=1 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:   1
 Vector size: 26000 x 26000
@@ -10,12 +10,12 @@ x norm: 25995.176
 [ 2] y norm: 2.8992674
 [ 3] y norm: 3.196595
 [ 4] y norm: 3.368655
-Time:   6175 msec
-omp-BW: (estimated Gb/sec)    16.6
-omp-Flops:    5.25
+Time:   6149 msec
+omp-BW: (estimated Gb/sec)    16.7
+omp-Flops:    5.28
 ==== Run ../bin/oned on 11 threads ====
 Execute program ../bin/oned cores 11
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=11 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  11
 Vector size: 26000 x 26000
@@ -25,12 +25,12 @@ x norm: 26000
 [ 2] y norm: 2.8984447
 [ 3] y norm: 3.19681
 [ 4] y norm: 3.368604
-Time:    559 msec
+Time:    558 msec
 omp-BW: (estimated Gb/sec)     184
-omp-Flops:      58
+omp-Flops:    58.2
 ==== Run ../bin/oned on 22 threads ====
 Execute program ../bin/oned cores 22
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=22 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=22 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  22
 Vector size: 26000 x 26000
@@ -45,7 +45,7 @@ omp-BW: (estimated Gb/sec)     366
 omp-Flops:     115
 ==== Run ../bin/oned on 33 threads ====
 Execute program ../bin/oned cores 33
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=33 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=33 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  33
 Vector size: 26000 x 26000
@@ -60,7 +60,7 @@ omp-BW: (estimated Gb/sec)     544
 omp-Flops:     172
 ==== Run ../bin/oned on 44 threads ====
 Execute program ../bin/oned cores 44
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=44 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  44
 Vector size: 26000 x 26000
@@ -75,7 +75,7 @@ omp-BW: (estimated Gb/sec)     719
 omp-Flops:     227
 ==== Run ../bin/oned on 56 threads ====
 Execute program ../bin/oned cores 56
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=56 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  56
 Vector size: 26000 x 26000
@@ -90,7 +90,7 @@ omp-BW: (estimated Gb/sec)     878
 omp-Flops:     277
 ==== Run ../bin/oned on 67 threads ====
 Execute program ../bin/oned cores 67
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=67 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=67 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  67
 Vector size: 26000 x 26000
@@ -100,12 +100,12 @@ x norm: 26000
 [ 2] y norm: 2.8985782
 [ 3] y norm: 3.196681
 [ 4] y norm: 3.3686357
-Time:     99 msec
-omp-BW: (estimated Gb/sec) 1.04e+03
-omp-Flops:     328
+Time:    100 msec
+omp-BW: (estimated Gb/sec) 1.03e+03
+omp-Flops:     324
 ==== Run ../bin/oned on 78 threads ====
 Execute program ../bin/oned cores 78
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=78 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=78 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  78
 Vector size: 26000 x 26000
@@ -115,12 +115,12 @@ x norm: 26000
 [ 2] y norm: 2.8985786
 [ 3] y norm: 3.1966794
 [ 4] y norm: 3.3686376
-Time:     86 msec
-omp-BW: (estimated Gb/sec) 1.19e+03
-omp-Flops:     377
+Time:     87 msec
+omp-BW: (estimated Gb/sec) 1.18e+03
+omp-Flops:     373
 ==== Run ../bin/oned on 89 threads ====
 Execute program ../bin/oned cores 89
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=89 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads:  89
 Vector size: 26000 x 26000
@@ -130,12 +130,12 @@ x norm: 26000
 [ 2] y norm: 2.8985786
 [ 3] y norm: 3.1966786
 [ 4] y norm: 3.3686454
-Time:     76 msec
-omp-BW: (estimated Gb/sec) 1.35e+03
-omp-Flops:     427
+Time:     77 msec
+omp-BW: (estimated Gb/sec) 1.33e+03
+omp-Flops:     421
 ==== Run ../bin/oned on 100 threads ====
 Execute program ../bin/oned cores 100
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=100 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=100 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads: 100
 Vector size: 26000 x 26000
@@ -145,12 +145,12 @@ x norm: 26000
 [ 2] y norm: 2.8985786
 [ 3] y norm: 3.1966774
 [ 4] y norm: 3.368646
-Time:     69 msec
-omp-BW: (estimated Gb/sec) 1.49e+03
-omp-Flops:     470
+Time:     71 msec
+omp-BW: (estimated Gb/sec) 1.45e+03
+omp-Flops:     457
 ==== Run ../bin/oned on 112 threads ====
 Execute program ../bin/oned cores 112
-Commandline: OMP_PROC_BIND=true OMP_NUM_THREADS=112 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
 Runtype: omp
 Threads: 112
 Vector size: 26000 x 26000
@@ -160,6 +160,6 @@ x norm: 26000
 [ 2] y norm: 2.8985784
 [ 3] y norm: 3.1966765
 [ 4] y norm: 3.3686461
-Time:     66 msec
-omp-BW: (estimated Gb/sec) 1.56e+03
-omp-Flops:     492
+Time:     67 msec
+omp-BW: (estimated Gb/sec) 1.53e+03
+omp-Flops:     484

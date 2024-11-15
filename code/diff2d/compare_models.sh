@@ -54,9 +54,12 @@ while [ $# -gt 0 ] ; do
 	break
     fi
 done
+if [ $# -eq 0 ] ; then
+    usage && exit 0
+fi
 codes=$1
 if [ ${codes} = "all" ] ; then
-    codes=oned,clps,span,iota,kokkos,sycl,
+    codes=oned,clps,span,iota,kokkos2d,sycl,
 fi
 
 echo "================ Testing codes: ${codes}"

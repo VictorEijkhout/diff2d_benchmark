@@ -1,0 +1,8 @@
+1. cmake compilation for sycl fails: needs
+
+make compile VARIANT=sycl
+
+2. slurm problems with -s option so run in idev
+
+./compare_models.sh -c spr -n 26000 -g -t all
+
