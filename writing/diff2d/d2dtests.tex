@@ -89,7 +89,7 @@ The method is given by
   \begin{tabbing}
     Let $A$ a matrix of interest\\
     Let $x$ be a random vector\\
-    For \=iterations until convergence\\
+    Iter\=ate until convergence\\
     \> compute the product $y\leftarrow Ax$\\
     \> compute the norm $\gamma=\| y \|$\\
     \> normalize $x\leftarrow y/\gamma$\\
@@ -170,9 +170,13 @@ Some remarks:
 %%packtsnippet d2dreduction
 
 The $\ell_2$ reduction of our example application
-looks in code like:
+looks in simple OpenMP code like:
 %
-\cxxverbatimsnippet{d2dnormseq}
+\cxxverbatimsnippet{d2dnormomp}
+%
+which parallelizes the outer loop only.
+Adding a directive \lstinline[language=omp]{collapse(2)}
+parallelizes both simultaneously.
 
 \begin{figure}[t]
   \includegraphics[scale=.06]{omp-reduct}
@@ -182,12 +186,12 @@ looks in code like:
   \label{fig:omp-reduct}
 \end{figure}
 
+%%packtsnippet end
+
 OpenMP resolves the race condition on the reduction variable
 by giving each thread a local copy of \lstinline{sum_of_squares},
 summing into that, and adding the local copies together in the end.
 This is illustrated in figure~\ref{fig:omp-reduct}.
-
-%%packtsnippet end
 
 \Level 1 {Five-point stencil}
 %%packtsnippet d2d5pt
@@ -227,7 +231,7 @@ For instance, the norm calculation is:
 \cxxverbatimsnippet{d2dnormomp}
 
 We designate by `\n{clps}' this same code, but adding
-\lstinline{collapse(2)} to each OpenMP loop nest.
+\lstinline[language=omp]{collapse(2)} to each OpenMP loop nest.
 
 \Level 1 {\texttt{mdspan} indexing}
 

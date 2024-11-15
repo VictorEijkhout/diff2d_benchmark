@@ -12,6 +12,7 @@
 \makeindex[columns=2,title=General Index of Terms]
 \makeindex[name=cpp,columns=2,title=Index of C++ Keywords]
 \makeindex[name=f90,columns=2,title=Index of Fortran Keywords]
+\makeindex[name=head,columns=2,title=Index of C++ headers]
 \makeindex[name=jul]
 \makeindex[name=gsl,columns=1,title=List of Core Guidelines]
 \def\idxset#1{\def\currentindex{#1}}
@@ -33,10 +34,10 @@
 \newcommand{\indexstart}[1]{\index{#1|(}}
 \newcommand{\indexend}[1]{\index{#1|)}}
 
-%% \newcommand{\indexpragma}[1]{%
-%%   \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
-%%   \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
-%% }
+\newcommand{\indexpragma}[1]{%
+  \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
+  \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
+}
 
 \def\idxprefix{}
 \def\indexc   {\bgroup \idxset{cpp}\indextermttgroup} % these had #{
@@ -71,8 +72,8 @@
 %%     \emph{#1} \texttt{#2}%
 %%     \index{#1@\makeusletter\texttt{#2}\makeusother!#1}}
 
-\def\indextermheader#{\bgroup \innocentcharacters
-  \def\subtext{!(header)}%
+\def\indextermheader#{\bgroup \idxset{head}\innocentcharacters
+  %% \def\subtext{!(header)}%
   \afterassignment\cmdtoindex\edef\indexedcmd}
 \let\indexheader\indextermheader
 \def\indexheaderdef#{\bgroup \innocentcharacters 
@@ -172,11 +173,20 @@
 %%
 %% cmake indexing
 %%
+% obvious cmake keyword
+\newcommand{\indexcmakekw}
+           {\bgroup\catcode`\_=12 \indextermcmegkw}
+\newcommand{\indextermcmegkw}[1]%
+           {{\lstinline[language=CMake]+#1+}%
+            \index{#1@\makeusletter\texttt{#1}makeusother}\egroup
+           }
+\let\indextermcmakekw\indexcmakekw
+% non-obivous cmake kw
 \newcommand{\indexcmake}
            {\bgroup\catcode`\_=12 \indextermcmeg}
-\newcommand{\indextermcmeg}[1]%end term with underscore
-           {{\lstinline+#1+}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother\ (cmake command)}\egroup
+\newcommand{\indextermcmeg}[1]%
+           {{\lstinline[language=CMake]+#1+}%
+            \index{#1@\makeusletter\texttt{#1}\makeusother\ (cmake)}\egroup
            }
 \let\indextermcmake\indexcmake
 

@@ -34,24 +34,19 @@
 \def\idxprefix{}
 \def\indexc   {\bgroup \idxset{cpp}\indextermttgroup} % these had #{
 \def\indexcdef{\bgroup \idxset{cpp}\indextermttbgroup} % these had #{
-\def\indexcstd{\bgroup \idxset{cpp}\def\idxprefix{std::}\indextermttgroup}
-\def\indexcrng{\bgroup \idxset{cpp}\def\idxprefix{ranges::}\indextermttgroup}
-\def\indexcdefstd
-              {\bgroup \idxset{cpp}\def\idxprefix{std::}\indextermttbgroup}
+\def\indexcstd{\bgroup
+    \lstset{language=cpp}\idxset{cpp}\def\idxprefix{std::}\indextermttgroup}
+\def\indexcrng{\bgroup
+    \lstset{language=cpp}\idxset{cpp}\def\idxprefix{ranges::}\indextermttgroup}
+\def\indexcdefstd{\bgroup
+    \lstset{language=cpp}\idxset{cpp}\def\idxprefix{std::}\indextermttbgroup}
 \def\indexf   {\bgroup \idxset{f90}\indextermttgroup}
 \def\indexfnote{\bgroup \idxset{f90}\indextermttgroup}
 \def\indexj   {\bgroup \idxset{jul}\indextermttgroup}
 
 \newcommand{\indexgdb}[1]{{\ttfamily\slshape #1}\index{gdb!#1@\texttt{#1}}}
 
-%% % default
-%% \def\indextermunix
-%%               {\bgroup \idxset{def}\indextermttgroup}
-%% \let\indexunix\indextermunix
-%% \def\indexg   {\bgroup \idxset{def}\indextermttgroup}
-
 \newcommand{\indexterm}[1]{\emph{#1}\index{#1}}
-%% \newcommand{\indexterm}{\bgroup \idxset{def}\indextermgroup}
 
 \def\indextermtt#{\bgroup \innocentcharacters
   \afterassignment\cmdtoindex\edef\indexedcmd}
@@ -115,11 +110,20 @@
 %%
 %% cmake indexing
 %%
+% obvious cmake keyword
+\newcommand{\indexcmakekw}
+           {\bgroup\catcode`\_=12 \indextermcmegkw}
+\newcommand{\indextermcmegkw}[1]%
+           {{\lstinline[language=CMake]+#1+}%
+            \index{#1@\makeusletter\texttt{#1}makeusother}\egroup
+           }
+\let\indextermcmakekw\indexcmakekw
+% non-obivous cmake kw
 \newcommand{\indexcmake}
            {\bgroup\catcode`\_=12 \indextermcmeg}
-\newcommand{\indextermcmeg}[1]%end term with underscore
-           {{\lstinline+#1+}%
-            \index{#1@\makeusletter\texttt{#1}\makeusother\ (cmake command)}\egroup
+\newcommand{\indextermcmeg}[1]%
+           {{\lstinline[language=CMake]+#1+}%
+            \index{#1@\makeusletter\texttt{#1}\makeusother\ (cmake)}\egroup
            }
 \let\indextermcmake\indexcmake
 

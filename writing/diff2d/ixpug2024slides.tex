@@ -6,7 +6,7 @@
 %%%% `Parallel Computing'
 %%%% by Victor Eijkhout, copyright 2012-2024
 %%%%
-%%%% cppcon2024slidesispux2024slides.tex : master file for CppCon 2024 presentation
+%%%% ispux2024slides.tex : master file IXPUG presentation at SC2024
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,8 +51,6 @@
 \usepackage{xr-hyper}
 % vol 1
 \externaldocument[HPSC-]{scicompbook}
-%%\newcommand\HPSCref[2][section]{HPC book~\cite{ISTCwebpage}, #1~\ref{HPSC-#2}}
-%% \input macroload
 
 \def\qrcode{}
 \begin{document}
@@ -62,7 +60,7 @@
   Texas Advanced Computing Center\\
   \texttt{eijkhout@tacc.utexas.edu}
 }
-\date[CppCon2024]{CppCon 2024}
+\date{IxPUG2024@SC24}
 %% \normalsize last formatted \today}
 \title[C++ Parallel]{Modern C++ for Parallelism\\ in Scientific Computing}
 \maketitle
@@ -156,10 +154,14 @@
 
 \begin{frame}[containsverbatim]{Tools: \texttt{mdspan} and \texttt{cartesian\_product}}
   Data is declared as \lstinline{mdspan}:
-  \hbox\bgroup
+  \begin{multicols}{2}
   \cxxverbatimsnippet{d2dspan0}
+  \columnbreak
   \cxxverbatimsnippet{d2dspan2}
-  \egroup
+  \end{multicols}
+  \cxxverbatimsnippet{d2dspan1}
+
+  No performance loss~\cite{Hollman:mdspan}.
 \end{frame}
 
 \begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
@@ -282,6 +284,11 @@ Index calculations take lots of time.
     }
   \item Sycl code contributed by Yojan Chitkara
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliography}
+  \bibliography{vle}
+  \bibliographystyle{plain}
 \end{frame}
 
 \end{document}
