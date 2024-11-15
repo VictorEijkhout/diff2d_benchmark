@@ -10,9 +10,9 @@ x norm: 25995.176
 [ 2] y norm: 2.8992674
 [ 3] y norm: 3.196595
 [ 4] y norm: 3.368655
-Time:   6154 msec
+Time:   6149 msec
 omp-BW: (estimated Gb/sec)    16.7
-omp-Flops:    5.27
+omp-Flops:    5.28
 ==== Run ../bin/oned on 11 threads ====
 Execute program ../bin/oned cores 11
 Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
@@ -40,8 +40,8 @@ x norm: 26000
 [ 2] y norm: 2.8984737
 [ 3] y norm: 3.1967778
 [ 4] y norm: 3.3686228
-Time:    282 msec
-omp-BW: (estimated Gb/sec)     364
+Time:    281 msec
+omp-BW: (estimated Gb/sec)     366
 omp-Flops:     115
 ==== Run ../bin/oned on 33 threads ====
 Execute program ../bin/oned cores 33
@@ -55,9 +55,9 @@ x norm: 26000
 [ 2] y norm: 2.8985066
 [ 3] y norm: 3.196724
 [ 4] y norm: 3.3686495
-Time:    190 msec
-omp-BW: (estimated Gb/sec)     541
-omp-Flops:     171
+Time:    189 msec
+omp-BW: (estimated Gb/sec)     544
+omp-Flops:     172
 ==== Run ../bin/oned on 44 threads ====
 Execute program ../bin/oned cores 44
 Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
@@ -70,9 +70,9 @@ x norm: 26000
 [ 2] y norm: 2.8985116
 [ 3] y norm: 3.1967268
 [ 4] y norm: 3.3686576
-Time:    144 msec
-omp-BW: (estimated Gb/sec)     714
-omp-Flops:     225
+Time:    143 msec
+omp-BW: (estimated Gb/sec)     719
+omp-Flops:     227
 ==== Run ../bin/oned on 56 threads ====
 Execute program ../bin/oned cores 56
 Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
@@ -115,9 +115,9 @@ x norm: 26000
 [ 2] y norm: 2.8985786
 [ 3] y norm: 3.1966794
 [ 4] y norm: 3.3686376
-Time:     86 msec
-omp-BW: (estimated Gb/sec) 1.19e+03
-omp-Flops:     377
+Time:     87 msec
+omp-BW: (estimated Gb/sec) 1.18e+03
+omp-Flops:     373
 ==== Run ../bin/oned on 89 threads ====
 Execute program ../bin/oned cores 89
 Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
@@ -145,9 +145,9 @@ x norm: 26000
 [ 2] y norm: 2.8985786
 [ 3] y norm: 3.1966774
 [ 4] y norm: 3.368646
-Time:     70 msec
-omp-BW: (estimated Gb/sec) 1.47e+03
-omp-Flops:     464
+Time:     71 msec
+omp-BW: (estimated Gb/sec) 1.45e+03
+omp-Flops:     457
 ==== Run ../bin/oned on 112 threads ====
 Execute program ../bin/oned cores 112
 Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin/oned -m 26000 -n 26000 -i 5 --trace
