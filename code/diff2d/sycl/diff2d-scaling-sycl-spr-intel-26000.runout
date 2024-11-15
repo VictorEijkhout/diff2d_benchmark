@@ -1,33 +1,176 @@
 ==== Run ../bin/sycl on 1 threads ====
 Execute program ../bin/sycl cores 1
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=1 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:  18129 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 11 threads ====
 Execute program ../bin/sycl cores 11
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=11 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   5012 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 22 threads ====
 Execute program ../bin/sycl cores 22
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=22 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3956 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 33 threads ====
 Execute program ../bin/sycl cores 33
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=33 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3796 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 44 threads ====
 Execute program ../bin/sycl cores 44
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=44 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3922 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 56 threads ====
 Execute program ../bin/sycl cores 56
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=56 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   4027 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 67 threads ====
 Execute program ../bin/sycl cores 67
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=67 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3887 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 78 threads ====
 Execute program ../bin/sycl cores 78
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=78 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3780 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 89 threads ====
 Execute program ../bin/sycl cores 89
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=89 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3847 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 100 threads ====
 Execute program ../bin/sycl cores 100
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=100 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   3965 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
 ==== Run ../bin/sycl on 112 threads ====
 Execute program ../bin/sycl cores 112
 Commandline: DPCPP_CPU_CU_AFFINITY=close DPCPP_CPU_PLACES=cores DPCPP_CPU_NUM_CUS=112 ./../bin/sycl -m 26000 -n 26000 -i 5 --trace
+Selecting host CPU
+Runtype: sycl
+Threads: 1 obviously
+Vector size: 26000 x 26000
+x norm: 25996.996
+[ 0] y norm: 0
+[ 1] y norm: 0
+[ 2] y norm: 0
+[ 3] y norm: 0
+[ 4] y norm: 0
+Time:   4013 msec
+sycl-BW: (estimated Gb/sec)       0
+sycl-Flops:       0
