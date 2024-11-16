@@ -55,6 +55,7 @@ variants_list :
 	 && echo $${variants} | tr ',' ' ' 
 make_log :
 	@mkdir -p logs \
+	 && compiler=$${COMPILER} \
 	 && echo logs/build-$${compiler:-compiler}.log
 clean ::
 	@rm -rf logs
