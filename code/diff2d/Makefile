@@ -11,50 +11,64 @@
 .PHONY: info
 info ::
 
-# list cxx last because that's sequential 
-# and we're not terribly interested
 VARIANTS = oned clps kokkos2d span iota sycl diy2d diy2e \
     seq f77
 .PHONY: variants
 variants: 
 	@echo ${VARIANTS}
-# clps tile tbb 
+# tile tbb 
 .PHONY: compile
 info ::
 	@echo "================ Program building"
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
 compile :
-	@if [ ! -z "${VARIANT}" ] ; then \
-	    variants="${VARIANT}" \
-	 ; else \
-	    variants="${VARIANTS}" \
-	 ; fi \
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && bindir=bin_$${compiler} \
+	 && mkdir -p $${bindir} \
+	 && if [ ! -z "${VARIANT}" ] ; then \
+	      variants="${VARIANT}" \
+	    ; else \
+	      variants="${VARIANTS}" \
+	    ; fi \
 	 && variants="$$( echo $${variants} | tr ',' ' ' )" \
+	 \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	      makelog=./build-$${compiler:-compiler}.log \
+	    ; else \
+	      makelog=/tmp/build-$${compiler:-compiler}.log \
+	    ; fi \
 	 && for v in $$variants ; do \
-	    ( echo "Making variant $${v}" \
+	    ( echo && echo "Making variant $${v}" \
 	       && cd $${v} \
 	       && make --no-print-directory diff2d \
-	            ECHO=${ECHO} \
+	            LIBDIR=$${libdir} ECHO=1 \
 	            EXTRA_LIBS=${EXTRA_LIBS} \
-	       && cp diff2d ../bin/$${v} \
+	          2>&1 | tee ../$${bindir}/$${v}_build.txt \
+	       && cp diff2d ../$${bindir}/$${v} \
 	    ) \
-	    ; done 2>&1 | tee compile.log && echo "See: compile.log" \
-	 && ls -l $$( for v in $${variants} ; do echo bin/$$v ; done )
+	    ; done 2>&1 | tee $${makelog} \
+	 && echo "Generated:" \
+	 && ls -l $$( for v in $${variants} ; do echo $${bindir}/$$v ; done ) || /bin/true
+	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${makelog})" ; fi
 
 .PHONY: cmake
 info ::
 	@echo "make cmake [ VARIANTS=.... ] [ ECHO=1 for verbose compilation ]"
 cmake :
-	@if [ ! -z "${VARIANT}" ] ; then \
-	    variants="${VARIANT}" \
-	 ; else \
-	    variants="${VARIANTS}" \
-	 ; fi \
-	 && compiler=${TACC_FAMILY_COMPILER} \
-	 && if [ "${ECHO}" = "1" ] ; then \
-	      cmakelog=./build-$${compiler:-compiler}.log \
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && bindir=bin_$${compiler} \
+	 && mkdir -p $${bindir} \
+	 && if [ ! -z "${VARIANT}" ] ; then \
+	      variants="${VARIANT}" \
 	    ; else \
-	      cmakelog=/tmp/build-$${compiler:-compiler}.log \
+	      variants="${VARIANTS}" \
+	    ; fi \
+	 && variants="$$( echo $${variants} | tr ',' ' ' )" \
+	 \
+	 && if [ "${ECHO}" = "1" ] ; then \
+	      makelog=./build-$${compiler:-compiler}.log \
+	    ; else \
+	      makelog=/tmp/build-$${compiler:-compiler}.log \
 	    ; fi \
 	 && for v in $${variants} ; do \
 	      if [ -d "$${v}" ] ; then \
@@ -63,24 +77,31 @@ cmake :
 	         && mkdir -p build && ln cmake/CMakeLists.txt $${v}/CMakeLists.txt \
 	         && ( cd build  \
 	             && cmake \
-	              -D CMAKE_INSTALL_PREFIX=../bin \
+	              -D CMAKE_INSTALL_PREFIX=../$${bindir} \
 	              $$( if [ ! -z "${TACC_CXX}" ] ; then echo "-D CMAKE_CXX_COMPILER=${TACC_CXX}" ; fi ) \
-	              $$( if [ "${ECHO}" = "1" ] ; then echo "-D CMAKE_VERBOSE_MAKEFILE=ON" ; fi ) \
 	              $$( if [ "$${v}" = "f77" ] ; then echo "-D USEFORTRAN=ON" ; fi ) \
 	              -D VARIANT=$${v} \
 	              -D CMAKE_VERBOSE_MAKEFILE=ON \
 	              ../$${v} \
-	             && make V=1 && make install \
+	             && make V=1 2>&1 | tee ../$${bindir}/$${v}_build.txt \
+	             && make install \
 	          ) 2>&1 | tee $${buildlog} \
 	      ; else echo "No such variant: <<$$v>>" && exit 1 \
 	      ; fi \
-	     ; done 2>&1 | tee $${cmakelog} \
+	     ; done 2>&1 | tee $${makelog} \
 	 && echo "Generated:" \
-	 && for v in ${VARIANTS} ; do ls -l bin/$$v ; done \
-	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${cmakelog})" ; fi
+	 && ls -l $$( for v in $${variants} ; do echo $${bindir}/$$v ; done ) || /bin/true \
+	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${makelog})" ; fi
 clean ::
 	@rm -rf bin/{include,lib64} ## why???
-	@for v in ${VARIANTS}; do rm -f bin/$${v} ; done
+clean_installation : clean 
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && bindir=bin_$${compiler} \
+	 && echo " .. removing bin dir <<$${bindir}>>" \
+	 && rm -rf $${bindir}
+total_clean :: 
+	@rm -rf bin_*
+
 ##
 ## Do scaling runs over all VARIANTS
 ## This calls "make run_scaling" in each directory;

@@ -79,6 +79,8 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
 	  ; else \
 	      cmdline="" \
 	  ; fi \
+       && if [ ! -f "../bin/${code}" ] ; then \
+	    echo "Skipping executable <<${code}>>" && continue ; fi \
        && cmdline="$cmdline \
 	    make run_scaling PROGRAM=../bin/${code} NSIZE=${nsize} GITADD=${gitadd} \
 	      TACC_SYSTEM=${cpu} \

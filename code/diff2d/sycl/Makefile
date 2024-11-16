@@ -37,8 +37,9 @@ include ../../../makefiles/Make.compile
 # https://www.intel.com/content/www/us/en/docs/dpcpp-cpp-compiler/developer-guide-reference/2024-2/ahead-of-time-compilation.html
 #
 EXTRA_OPTIONS = -fsycl-targets=spir64
-## EXTRA_LINK_FLAGS = -fsycl-targets=spir64_x86_64 -Xsycl-target-backend  "-march=avx2"
-EXTRA_LINK_FLAGS = -fsycl-targets=spir64 -Xsycl-target-backend  "-march=avx2"
+## removed: _x86_64 
+EXTRA_LINK_FLAGS = -fsycl-targets=spir64
+## -Xsycl-target-backend "-march=avx2"
 
 ##
 ## Runs

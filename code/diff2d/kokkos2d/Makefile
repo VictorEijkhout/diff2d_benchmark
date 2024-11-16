@@ -21,7 +21,7 @@ WRONGS =
 
 MODE = omp
 LANGUAGE = CXX
-CATEGORY = kokkos
+CATEGORY = kokkos2d
 MODULES = cxxopts kokkos
 
 include ../Make.depend
