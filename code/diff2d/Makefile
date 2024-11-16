@@ -57,7 +57,9 @@ variants_list :
 make_logfile :
 	@mkdir -p logs \
 	 && compiler=${COMPILER} && stage=${STAGE} \
-	 && echo logs/$${stage:-stage}-$${compiler:-compiler}.log
+	 && logfile=logs/$${stage:-stage}-$${compiler:-compiler}.log \
+	 && rm -f $${logfile} \
+	 && echo $${logfile}
 clean ::
 	@rm -rf logs
 build_summary :

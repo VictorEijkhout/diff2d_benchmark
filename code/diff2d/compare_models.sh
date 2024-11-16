@@ -80,6 +80,8 @@ fi
 for code in $( echo $codes | tr ',' ' ' ) ; do
     mask=$( python3 ../utils/maskgen.py ${procs} 1 )
     codebin=${bindir}/${code}
+    runlog=$( make --no-print-directory make_logfile \
+		   COMPILER=${compiler} STAGE=run-${code}-${nsize} )
     echo && echo "================ Run diff2d code=${codebin}" && echo
     if [ ! -f ${bindir}/${code} ] ; then continue ; fi
     ( cd ${code} \
@@ -102,8 +104,10 @@ for code in $( echo $codes | tr ',' ' ' ) ; do
        && echo $cmdline \
        && eval $cmdline \
        ) \
-	| awk -v s=${summary} \
+	| awk -v s=${summary} -v logfile=${runlog} \
 	      '\
+	        { p=0 } $2=="Run" { p=1 } $1=="Commandline:" { p=1 } $1=="Time:" { p=1 } \
+		p==1 { print >> logfile } \
 		{ if (s==0) print ;} \
 		/Time:/ {times=times " " $2 } \
 		END { print "Time:" times }'
