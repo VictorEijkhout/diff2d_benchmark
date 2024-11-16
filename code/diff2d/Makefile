@@ -22,7 +22,7 @@ info ::
 	@echo "================ Program building"
 	@echo "make compile : [ VARIANTS=... (default: ${VARIANTS}) ]"
 compile :
-	@compiler=${TACC_FAMILY_COMPILER} \
+	@compiler=$$( make --no-print-directory set_compiler ) \
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
 	 && variants="$$( make --no-print-directory variants_list )" \
@@ -44,7 +44,12 @@ compile :
 	    ; done 2>&1 | tee $${makelog} \
 	 && make --no-print-directory build_summary \
 	      ECHO=${ECHO} MAKELOG=$${makelog}
-.PHONY: variants_list build_summary
+.PHONY: set_compiler variants_list build_summary
+set_compiler :
+	@if [ -z "${TACC_FAMILY_COMPILER}" ] ; then \
+	    echo "IMPORTANT set TACC_FAMILY_COMPILER to your compiler name" && exit 1 \
+	 ; fi \
+	 && echo ${TACC_FAMILY_COMPILER}
 variants_list :
 	@if [ ! -z "${VARIANT}" ] ; then \
 	      variants="${VARIANT}" \
@@ -63,15 +68,10 @@ build_summary :
 info ::
 	@echo "make cmake [ VARIANTS=.... ] [ ECHO=1 for verbose compilation ]"
 cmake :
-	@compiler=${TACC_FAMILY_COMPILER} \
+	@compiler=$$( make --no-print-directory set_compiler ) \
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
-	 && if [ ! -z "${VARIANT}" ] ; then \
-	      variants="${VARIANT}" \
-	    ; else \
-	      variants="${VARIANTS}" \
-	    ; fi \
-	 && variants="$$( echo $${variants} | tr ',' ' ' )" \
+	 && variants="$$( make --no-print-directory variants_list )" \
 	 \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	      makelog=./build-$${compiler:-compiler}.log \
