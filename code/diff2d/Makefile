@@ -26,12 +26,8 @@ compile :
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
 	 && variants="$$( make --no-print-directory variants_list )" \
+	 && makelog="$$( make --no-print-directory make_log COMPILER=$${compiler} )" \
 	 \
-	 && if [ "${ECHO}" = "1" ] ; then \
-	      makelog=./build-$${compiler:-compiler}.log \
-	    ; else \
-	      makelog=/tmp/build-$${compiler:-compiler}.log \
-	    ; fi \
 	 && for v in $$variants ; do \
 	    ( echo && echo "Making variant $${v}" \
 	       && cd $${v} \
@@ -44,7 +40,7 @@ compile :
 	    ; done 2>&1 | tee $${makelog} \
 	 && make --no-print-directory build_summary \
 	      ECHO=${ECHO} MAKELOG=$${makelog}
-.PHONY: set_compiler variants_list build_summary
+.PHONY: set_compiler variants_list make_log build_summary
 set_compiler :
 	@if [ -z "${TACC_FAMILY_COMPILER}" ] ; then \
 	    echo "IMPORTANT set TACC_FAMILY_COMPILER to your compiler name" && exit 1 \
@@ -57,6 +53,11 @@ variants_list :
 	      variants="${VARIANTS}" \
 	    ; fi \
 	 && echo $${variants} | tr ',' ' ' 
+make_log :
+	@mkdir -p logs \
+	 && echo logs/build-$${compiler:-compiler}.log
+clean ::
+	@rm -rf logs
 build_summary :
 	@compiler=${TACC_FAMILY_COMPILER} \
 	 && bindir=bin_$${compiler} \
@@ -72,12 +73,8 @@ cmake :
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
 	 && variants="$$( make --no-print-directory variants_list )" \
+	 && makelog="$$( make --no-print-directory make_log COMPILER=$${compiler} )" \
 	 \
-	 && if [ "${ECHO}" = "1" ] ; then \
-	      makelog=./build-$${compiler:-compiler}.log \
-	    ; else \
-	      makelog=/tmp/build-$${compiler:-compiler}.log \
-	    ; fi \
 	 && for v in $${variants} ; do \
 	      if [ -d "$${v}" ] ; then \
 	        buildlog=bin/build_$${v}_$${compiler}.log \
@@ -100,19 +97,6 @@ cmake :
 	     ; done 2>&1 | tee $${makelog} \
 	 && make --no-print-directory build_summary \
 	      ECHO=${ECHO} MAKELOG=$${makelog}
-
-clean_installation : clean 
-	@compiler=${TACC_FAMILY_COMPILER} \
-	 && bindir=bin_$${compiler} \
-	 && if [ -z "${VARIANT}" ] ; then \
-	      echo " .. removing bin dir <<$${bindir}>>" \
-	       && rm -rf $${bindir} \
-	    ; else \
-	      echo " .. removing variant <<$${bindir}/${VARIANT}>>" \
-	       &&  rm -f $${bindir}/${VARIANT} \
-	    ; fi
-total_clean :: 
-	@rm -rf bin_*
 
 ##
 ## Do scaling runs over all VARIANTS
@@ -194,6 +178,21 @@ clean ::
 ##
 
 include ../../makefiles/Make.clean
+.PHONY: clean_installation
+info ::
+	@echo "make clean_installation [VARIANT=] : clean for compiler [variant only]"
+clean_installation : clean 
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && bindir=bin_$${compiler} \
+	 && if [ -z "${VARIANT}" ] ; then \
+	      echo " .. removing bin dir <<$${bindir}>>" \
+	       && rm -rf $${bindir} \
+	    ; else \
+	      echo " .. removing variant <<$${bindir}/${VARIANT}>>" \
+	       &&  rm -f $${bindir}/${VARIANT} \
+	    ; fi
+total_clean :: 
+	@rm -rf bin_*
 clean :: recursive_clean
 	@echo " .. local clean"
 	@rm -rf build
