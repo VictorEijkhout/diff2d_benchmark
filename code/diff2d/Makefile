@@ -100,35 +100,11 @@ cmake :
 	      ECHO=${ECHO} MAKELOG=$${makelog}
 
 ##
-## Do scaling runs over all VARIANTS
-## This calls "make run_scaling" in each directory;
-## that rule is in Make.runs
-##
-info ::
-	@echo "================ Running"
-	@echo "run_scaling : big run across all variants"
-	@echo "    [ NSIZE= (default: ${NSIZE}) ]"
-	@echo "    [ GITADD= (1 to rename as runout and add to repo)"
-NSIZE = 40000
-.PHONY: run_scaling
-run_scaling :
-	@if [ -z "${TACC_PROC_CODE}" ] ; then \
-	    echo "Set variable: TACC_PROC_CODE" && exit 1 ; fi 
-	@for v in ${VARIANTS} ; do \
-	  ( cd $${v} \
-	     && make --no-print-directory run_scaling PROGRAM=../bin/$${v} \
-	          TACC_SYSTEM=${TACC_PROC_CODE} \
-	          NDIV=10 NSIZE=${NSIZE} ECHO=1 GITADD=${GITADD} \
-	  ) \
-	 ; done 2>&1 | tee run.log && echo "See: run.log"
-
-include Make.prof
-
-##
 ## GPROF profiling
 ## here we loop over models,
 ## do profiling on each
 ##
+include Make.prof
 info ::
 	@echo "================ Profiling"
 	@echo "run_gprof : gprof on variants"
