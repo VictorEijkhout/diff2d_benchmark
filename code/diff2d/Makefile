@@ -26,7 +26,8 @@ compile :
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
 	 && variants="$$( make --no-print-directory variants_list )" \
-	 && makelog="$$( make --no-print-directory make_log COMPILER=$${compiler} )" \
+	 && makelog="$$( make --no-print-directory make_logfile \
+	                STAGE=build COMPILER=$${compiler} )" \
 	 \
 	 && for v in $$variants ; do \
 	    ( echo && echo "Making variant $${v}" \
@@ -40,7 +41,7 @@ compile :
 	    ; done 2>&1 | tee $${makelog} \
 	 && make --no-print-directory build_summary \
 	      ECHO=${ECHO} MAKELOG=$${makelog}
-.PHONY: set_compiler variants_list make_log build_summary
+.PHONY: set_compiler variants_list make_logfile build_summary
 set_compiler :
 	@if [ -z "${TACC_FAMILY_COMPILER}" ] ; then \
 	    echo "IMPORTANT set TACC_FAMILY_COMPILER to your compiler name" && exit 1 \
@@ -53,10 +54,10 @@ variants_list :
 	      variants="${VARIANTS}" \
 	    ; fi \
 	 && echo $${variants} | tr ',' ' ' 
-make_log :
+make_logfile :
 	@mkdir -p logs \
-	 && compiler=$${COMPILER} \
-	 && echo logs/build-$${compiler:-compiler}.log
+	 && compiler=${COMPILER} && stage=${STAGE} \
+	 && echo logs/$${stage:-stage}-$${compiler:-compiler}.log
 clean ::
 	@rm -rf logs
 build_summary :
@@ -74,7 +75,8 @@ cmake :
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
 	 && variants="$$( make --no-print-directory variants_list )" \
-	 && makelog="$$( make --no-print-directory make_log COMPILER=$${compiler} )" \
+	 && makelog="$$( make --no-print-directory make_logfile \
+	                STAGE=build COMPILER=$${compiler} )" \
 	 \
 	 && for v in $${variants} ; do \
 	      if [ -d "$${v}" ] ; then \
