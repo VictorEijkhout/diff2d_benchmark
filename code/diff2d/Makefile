@@ -25,12 +25,7 @@ compile :
 	@compiler=${TACC_FAMILY_COMPILER} \
 	 && bindir=bin_$${compiler} \
 	 && mkdir -p $${bindir} \
-	 && if [ ! -z "${VARIANT}" ] ; then \
-	      variants="${VARIANT}" \
-	    ; else \
-	      variants="${VARIANTS}" \
-	    ; fi \
-	 && variants="$$( echo $${variants} | tr ',' ' ' )" \
+	 && variants="$$( make --no-print-directory variants_list )" \
 	 \
 	 && if [ "${ECHO}" = "1" ] ; then \
 	      makelog=./build-$${compiler:-compiler}.log \
@@ -47,9 +42,22 @@ compile :
 	       && cp diff2d ../$${bindir}/$${v} \
 	    ) \
 	    ; done 2>&1 | tee $${makelog} \
+	 && make --no-print-directory build_summary \
+	      ECHO=${ECHO} MAKELOG=$${makelog}
+.PHONY: variants_list build_summary
+variants_list :
+	@if [ ! -z "${VARIANT}" ] ; then \
+	      variants="${VARIANT}" \
+	    ; else \
+	      variants="${VARIANTS}" \
+	    ; fi \
+	 && echo $${variants} | tr ',' ' ' 
+build_summary :
+	@compiler=${TACC_FAMILY_COMPILER} \
+	 && bindir=bin_$${compiler} \
 	 && echo "Generated:" \
-	 && ls -l $$( for v in $${variants} ; do echo $${bindir}/$$v ; done ) || /bin/true
-	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${makelog})" ; fi
+	 && ls -l $$( for v in ${VARIANTS} ; do echo $${bindir}/$$v ; done ) || /bin/true \
+	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also ${MAKELOG})" ; fi
 
 .PHONY: cmake
 info ::
@@ -83,22 +91,26 @@ cmake :
 	              -D VARIANT=$${v} \
 	              -D CMAKE_VERBOSE_MAKEFILE=ON \
 	              ../$${v} \
-	             && make V=1 2>&1 | tee ../$${bindir}/$${v}_build.txt \
-	             && make install \
+	             && make --no-print-directory V=1 \
+	                  2>&1 | tee ../$${bindir}/$${v}_build.txt \
+	             && make --no-print-directory install \
 	          ) 2>&1 | tee $${buildlog} \
 	      ; else echo "No such variant: <<$$v>>" && exit 1 \
 	      ; fi \
 	     ; done 2>&1 | tee $${makelog} \
-	 && echo "Generated:" \
-	 && ls -l $$( for v in $${variants} ; do echo $${bindir}/$$v ; done ) || /bin/true \
-	 && if [ "${ECHO}"  = "1" ] ; then echo "(see also $${makelog})" ; fi
-clean ::
-	@rm -rf bin/{include,lib64} ## why???
+	 && make --no-print-directory build_summary \
+	      ECHO=${ECHO} MAKELOG=$${makelog}
+
 clean_installation : clean 
 	@compiler=${TACC_FAMILY_COMPILER} \
 	 && bindir=bin_$${compiler} \
-	 && echo " .. removing bin dir <<$${bindir}>>" \
-	 && rm -rf $${bindir}
+	 && if [ -z "${VARIANT}" ] ; then \
+	      echo " .. removing bin dir <<$${bindir}>>" \
+	       && rm -rf $${bindir} \
+	    ; else \
+	      echo " .. removing variant <<$${bindir}/${VARIANT}>>" \
+	       &&  rm -f $${bindir}/${VARIANT} \
+	    ; fi
 total_clean :: 
 	@rm -rf bin_*
 
