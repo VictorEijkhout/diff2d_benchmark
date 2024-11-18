@@ -77,12 +77,12 @@ namespace linalg {
   template< typename real >
   real bordered_array_seq<real>::l2norm() {
     real sum_of_squares{0};
-    auto out = this->data();
+    auto in = this->data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
   //codesnippet d2dnormseq
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto v = out[ IINDEX(i,j,m,n,b) ];
+        auto v = in[ IINDEX(i,j,m,n,b) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip

@@ -38,7 +38,7 @@ python3 ../../scripts/multi_graphs_extract.py \
 	-p ${plotdir} \
 	-n ${cpu}-models-${compiler}-${nsize} \
 	$( if [ "${test}" = "1" ] ; then echo --test ; fi ) \
-	$( for m in oned clps span iota kokkos sycl ; do \
+	$( for m in oned clps span iota kokkos2d sycl ; do \
 	       file=${m}/diff2d-scaling-${m}-${cpu}-${compiler}-${nsize}.runout \
 		   && if [ -f "${file}" ] ; then echo ${file}:${m} ; fi \
 	       ; done ) \

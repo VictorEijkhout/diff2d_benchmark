@@ -21,7 +21,8 @@ namespace linalg {
    */
     //codesnippet d2dspan1
   template< typename real >
-  bordered_array_base<real>::bordered_array_base( idxint m,idxint n,int border )
+  bordered_array_base<real>::bordered_array_base
+        ( idxint m,idxint n,int border )
     : _m(m),_n(n),_border(border)
     , _data( new real[ (m+2*border)*(n+2*border) ] )
     , data_owned(true)

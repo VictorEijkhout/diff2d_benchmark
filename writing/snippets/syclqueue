@@ -1,17 +1,6 @@
-// diff2d.cpp
-queue q =
-  [=] () -> queue {
-    if (gpu) {
-      cout << "Selecting device GPU\n";
-      return queue(gpu_selector_v);
-    } else {
-      cout << "Selecting host CPU\n";
-      return queue(cpu_selector_v);
-    }
-  }();
-//codesnippet syclqueue
 
-std::cout << "Device : " << q.get_device().get_info<info::device::name>() << "\n";
-std::cout << "Max Compute Units : " << q.get_device().get_info<info::device::max_compute_units>() << std::endl;
+  std::cout << std::format("Runtype: {}\n",prefix);
+  std::cout << std::format("Threads: 1 obviously\n");
+  std::cout << std::format("Vector size: {} x {}\n",msize,nsize);
 
-//codesnippet syclbufcreate
+//codesnippet d2duniquesycl

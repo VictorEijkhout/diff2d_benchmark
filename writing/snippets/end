@@ -1,19 +1,19 @@
  /* code omitted */ 
 
-// constructors
-  bordered_array_span( idxint m,idxint n,int border );
-  bordered_array_span( idxint m,idxint n,real *data )
+//constructors
+  bordered_array_sycl( idxint m,idxint n,int border,sycl::queue q );
+  bordered_array_sycl( idxint m,idxint n,real *data )
     : bordered_array_base<real>(m,n,data) {};
 
-  void central_difference_from
-      ( const linalg::bordered_array_base<real>&,bool=false ) override;
+//required functionality
+  void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
   void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
   real l2norm() override;
   void set( real value,bool trace=false ) override;
+  void view(std::string caption) override;
   void set_bc(bool down, bool right, bool trace=false) override;
-  void view( std::string="" ) override;
+  std::vector<real> internal_data();
 };
-
 };
 
 #endif

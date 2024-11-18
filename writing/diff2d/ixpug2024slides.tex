@@ -11,7 +11,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[10pt,t]{beamer}
+\documentclass[10pt]{beamer}
 
 \input courseformat
 
@@ -65,7 +65,7 @@
 \title[C++ Parallel]{Modern C++ for Parallelism\\ in Scientific Computing}
 \maketitle
 
-\begin{frame}{Scientific computing parallelism}
+\begin{numberedframe}{Scientific computing parallelism}
   \begin{itemize}
   \item Large amounts of data: \\
     often cartesian multi-dimensional arrays, sometimes unstructured data
@@ -76,9 +76,20 @@
   \item Range algorithm notion:\\
     do some operation on each element of a dataset
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Power method}
+\begin{numberedframe}{Why modern C++}
+  \begin{itemize}
+  \item Support for multi-D arrays
+  \item `Range algorithms': iteration without indices or bound checking
+  \item Native support for parallelism. Ish.
+  \item Libraries~/ language extensions for heterogeneous CPU/GPU/FPGA computing.
+  \end{itemize}
+\end{numberedframe}
+
+\sectionframe{Basic algorithm}
+
+\begin{numberedframe}{Power method}
   \hbox{}
   \begin{quote}
     \begin{tabbing}
@@ -95,9 +106,9 @@
   \item Also Google Pagerank
   \item Stands for many scientific codes: Krylov methods, eigenvalues
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Stencil operations}
+\begin{numberedframe}{Stencil operations}
   \hbox{}
   \vbox {\leavevmode \hsize=.8\textwidth
     \lower40pt\hbox{\includegraphics[scale=.22]{5pt_stencil_ij}}
@@ -120,9 +131,9 @@
   \item The $4,-1,\ldots$ stencil is~/ stands for the matrix.
   \item Goes by: difference stencil, convolution, Toeplitz matrix
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Array parallelism}
+\begin{numberedframe}{Array parallelism}
   Traditional C implementation:
   
   \cxxverbatimsnippet{d2dscaleseq}
@@ -132,27 +143,40 @@
   \item all dimensions large
   \item every output element independent
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Reductions}
+\begin{numberedframe}{Reductions}
   $\ell_2$ reduction:%
   \cxxverbatimsnippet{d2dnormseq}
   \begin{itemize}
   \item Parallel except for the accumulation
   \item Obviously should not be done through atomic operation
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Stencil computation}
+\begin{numberedframe}{Stencil computation}
   Apply stencil to each $(i,j)$ index:
   \cxxverbatimsnippet{d2d5ptseq}
   \begin{itemize}
   \item Differential operator~/ image convolution
   \item Structure can be more complicated in scientific codes
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Tools: \texttt{mdspan} and \texttt{cartesian\_product}}
+\sectionframe{Implementations}
+
+\begin{numberedframe}{Implementation 1: OpenMP parallelism}
+  Annotate loops as parallel and/or reduction:
+  \cxxverbatimsnippet{d2dnormomp}
+  \begin{itemize}
+  \item Static assigment of iterations to threads by default
+  \item Highly controlled affinity
+  \item `\n{oned}' as above, `\n{clps}' for both loops collapsed
+  \item Can be formulated as range algorithm.
+  \end{itemize}
+\end{numberedframe}
+
+\begin{numberedframe}{Tools: \texttt{mdspan} and \texttt{cartesian\_product}}
   Data is declared as \lstinline{mdspan}:
   \begin{multicols}{2}
   \cxxverbatimsnippet{d2dspan0}
@@ -162,58 +186,37 @@
   \cxxverbatimsnippet{d2dspan1}
 
   No performance loss~\cite{Hollman:mdspan}.
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{\texttt{mdspan} and \texttt{cartesian\_product}}
+\begin{numberedframe}{\texttt{mdspan} and \texttt{cartesian\_product}}
   Index range is declared as \lstinline{range::views::cartesian_product}:
   \cxxverbatimsnippet{d2dinner}
   \begin{itemize}
   \item Vector allocated with size $(m+2b)\times(n+2b)$ to include border
   \item for handling of boundary conditions~/ halo regions in PDEs.
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Implementation 1: OpenMP parallelism}
-  Annotate loops as parallel and/or reduction:
-  \cxxverbatimsnippet{d2dnormomp}
-  \begin{itemize}
-  \item Static assigment of iterations to threads by default
-  \item Highly controlled affinity
-  \item `\n{oned}' as above, `\n{clps}' for both loops collapsed
-  \item Can be formulated as range algorithm.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[containsverbatim]{Implementation 2: range over indices}
+\begin{numberedframe}{Implementation 2: range over indices}
   Range-based for loop:
   \cxxverbatimsnippet{d2dnormspan}
   \begin{itemize}
-  \item Range over indices, not over data
-  \item Indices are a subset of the full data!
+  \item Range over indices, not over data\\
+    (Indices are a subset of the full data!)
+  \item OpenMP can handle iterators.
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Stencil operation}
+\begin{numberedframe}{Stencil operation}
   Most complicated operation of the bunch:
 \cxxverbatimsnippet{d2d5ptspan}
   \begin{itemize}
   \item Hard to formulate as range algorithm
   \item Performance not necessarily determined by floating point operations.
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Implementation 3: Sycl}
-  Open standard, but mostly pushed by Intel
-  \cxxverbatimsnippet{syclbufaccess}
-  \begin{itemize}
-  \item Heterogeneous CPU/GPU code,\\
-    transparent data movement
-  \item Range algorithm-like syntax,\\
-    but explicit task queue
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[containsverbatim]{Implementation 4: Kokkos}
+\begin{numberedframe}{Implementation 3: Kokkos}
   Open Source heterogeneous execution layer
   \cxxverbatimsnippet{kokkosbufaccess}
   \begin{itemize}
@@ -222,29 +225,63 @@
   \item Two-dimensional indexing
   \item Range algorithm-like philosophy
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Comparing models (Intel)}
+\begin{numberedframe}{Implementation 4: Sycl}
+  Open standard, but mostly pushed by Intel
+  \cxxverbatimsnippet{syclbufaccess}
+  \begin{itemize}
+  \item Heterogeneous CPU/GPU code,\\
+    transparent data movement
+  \item Range algorithm-like syntax,\\
+    but explicit task queue
+  \end{itemize}
+\end{numberedframe}
+
+\begin{numberedframe}{Implementation X: ranges}
+\begin{lstlisting}
+#include <range>
+std::ranges::for_each
+  ( std::execution::par_unseq,
+    some_container,
+    [] ( /* ... */ ) { /* ... */ }
+  );
+\end{lstlisting}
+  \begin{itemize}
+  \item `Apply this point function to each element of this range'
+  \item Elegant, trivially parallelized
+  \item Eh~\ldots 1.~relies too much on TBB and such: no affinity control
+  \item Eh~\ldots 2.~hard to account for the halo region
+  \item Eh~\ldots 3.~hard to express stencil operations\\
+    (although see \url{https://www.youtube.com/watch?v=ImM7f5IQOaw})
+  \item Eh~\ldots 4. compiler bug prevented parallel execution
+    of the cartesian product iterator.
+  \end{itemize}
+\end{numberedframe}
+
+\sectionframe{Tests}
+
+\begin{numberedframe}{Comparing models (Intel)}
   \input d2dimodeltime
 
   Intel compiler. C-style variant fastest.
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Ratio to fastest (Intel)}
+\begin{numberedframe}{Ratio to fastest (Intel)}
   \input d2dimodelratio
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Comparing models (Gcc)}
+\begin{numberedframe}{Comparing models (Gcc)}
   \input d2dgmodeltime
 
   Gcc compiler. less variance between variants
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Ratio to fastest (Gcc)}
+\begin{numberedframe}{Ratio to fastest (Gcc)}
   \input d2dgmodelratio
-\end{frame}
+\end{numberedframe}
 
-\begin{frame}[containsverbatim]{Where do we lose performance?}
+\begin{numberedframe}{Where do we lose performance?}
   Hint: \n{perf} output on the `span' variant:
 \begin{lstlisting}[language=verbatim]
     55.60%  [.] std::ranges::cartesian_product_view<std::ranges::iota_view<long, long>, std::ranges::iota_view<long, long> >::_Iterator<true>::operator+=
@@ -255,18 +292,18 @@
      2.69%  [.] __divti3@plt
 \end{lstlisting}
 Index calculations take lots of time.
-\end{frame}
+\end{numberedframe}
 
 \begin{comment}
-  \begin{frame}[containsverbatim]{Can we use execution policies?}
+  \begin{numberedframe}{Can we use execution policies?}
     \begin{itemize}
     \item Last time I tried there was a compiler issue
     \item That 5-point stencil is hard to express in range views!
     \end{itemize}
-  \end{frame}
+  \end{numberedframe}
 \end{comment}
 
-\begin{frame}[containsverbatim]{Conclusion and Acknowledgement}
+\begin{numberedframe}{Conclusion and Acknowledgement}
   \begin{itemize}
   \item `Fancy' schemes suffer from indexing overhead\\
     strongly implementation and compiler dependent.
@@ -284,18 +321,19 @@ Index calculations take lots of time.
     }
   \item Sycl code contributed by Yojan Chitkara
   \end{itemize}
-\end{frame}
+  \includegraphics[width=50pt]{repoqr}
+\end{numberedframe}
 
-\begin{frame}{Bibliography}
+\begin{numberedframe}{Bibliography}
   \bibliography{vle}
   \bibliographystyle{plain}
-\end{frame}
+\end{numberedframe}
 
 \end{document}
 
-\begin{frame}[containsverbatim]{}
+\begin{numberedframe}{}
   \begin{itemize}
   \item 
   \end{itemize}
-\end{frame}
+\end{numberedframe}
 

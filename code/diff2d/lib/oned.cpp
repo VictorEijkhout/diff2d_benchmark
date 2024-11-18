@@ -80,14 +80,14 @@ namespace linalg {
   template< typename real >
   real bordered_array_1d<real>::l2norm() {
     real sum_of_squares{0};
-    auto out = this->data();
+    auto in = this->data();
     auto m = this->m(), n = this->n();
     auto b = this->border();
     //codesnippet d2dnormomp
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto v = out[ IINDEX(i,j,m,n,b) ];
+        auto v = in[ IINDEX(i,j,m,n,b) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip
