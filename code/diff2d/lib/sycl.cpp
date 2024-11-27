@@ -5,6 +5,7 @@
  *  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  *  ****
  *  **** sycl.cpp : 2D diffusion in parallel through SYCL 
+ *  **** code contributed by Yojan Chitkara
  *  ****
  *****************************************************************/
 
@@ -69,6 +70,7 @@ namespace linalg {
         D_b[row-1][col-1] = stencil_value;
       });
     }).wait();
+    //codesnippet end
 
   };
 

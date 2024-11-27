@@ -5,6 +5,7 @@
  *  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
  *  ****
  *  **** sycl.hpp : headers for sycl implementation for diff2d
+ *  **** code contributed by Yojan Chitkara
  *  ****
  *  ****************************************************************/
 

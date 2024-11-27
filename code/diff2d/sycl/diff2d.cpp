@@ -44,7 +44,7 @@ int main(int argc,char *argv[])
         return queue(cpu_selector_v);
       }
     }();
-   //codesnippet syclqueue
+   //codesnippet end
 
   std::cout << std::format("Runtype: {}\n",prefix);
   std::cout << std::format("Threads: 1 obviously\n");
