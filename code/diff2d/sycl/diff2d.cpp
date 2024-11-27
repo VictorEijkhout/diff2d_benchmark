@@ -33,7 +33,7 @@ int main(int argc,char *argv[])
  /*
   * SYCL setup  
   */
-  // codesnippet syclqueue
+  //codesnippet syclqueue
   sycl::queue q =
     [=] () -> sycl::queue {
       if (gpu) {
