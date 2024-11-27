@@ -22,20 +22,20 @@ using namespace sycl;
 
 namespace linalg {
 
-  //codesnippet d2dbordered
+  //codesnippet d2dborderedsycl
   template< typename real >
   class bordered_array_sycl : public bordered_array_base<real> {
     friend class distributed_array<real>;
   public:
-    using bordered_array_base<real>::log_flops;
-    using bordered_array_base<real>::log_bytes;
     sycl::queue q;
-    //codesnippet end
-
-    //constructors
     bordered_array_sycl( idxint m,idxint n,int border,sycl::queue q );
+    //codesnippet end
     bordered_array_sycl( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
+
+    // bookkeeping
+    using bordered_array_base<real>::log_flops;
+    using bordered_array_base<real>::log_bytes;
 
     //required functionality
     void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;

@@ -92,6 +92,7 @@ namespace linalg {
     }).wait();
   };
 
+  //codesnippet d2dnormsycl
   template < typename real >
   real bordered_array_sycl<real>::l2norm() {
     real norm = 0.0;
@@ -106,19 +107,21 @@ namespace linalg {
       accessor D_a(Buf_a, h, read_only);
       auto D_Fn = reduction(Buf_n, h, std::plus<real>());
 
-      h.parallel_for(range<2>(m - 2, n - 2), D_Fn, [=](item<2> index, auto &sum) {
-
-        auto row = index.get_id(0) + 1;
-        auto col = index.get_id(1) + 1;
-
-	real value = D_a[row-1][col-1];
-        sum += (value*value);
+      h.parallel_for
+        (range<2>(m - 2, n - 2),
+         D_Fn,
+         [=](item<2> index, auto &sum) {
+           auto row = index.get_id(0) + 1;
+           auto col = index.get_id(1) + 1;
+           real value = D_a[row-1][col-1];
+           sum += (value*value);
       });
     }).wait();
 
     norm = std::sqrt(norm);
     return norm;
   };
+  //codesnippet end
 
   template < typename real >
   void bordered_array_sycl<real>::view( std::string caption ) {
