@@ -44,7 +44,7 @@ namespace linalg {
     //codesnippet end    
 
     //codesnippet d2distarraydata
-    //! orthogonal sizes of processor subdomains
+    // orthogonal sizes of processor subdomains
     std::vector<idxint> proc_start_m,proc_start_n;
     std::map<char,int> neighbors;
     // temp array, just for the central difference routine. somewhat wasteful

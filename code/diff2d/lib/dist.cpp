@@ -70,12 +70,14 @@ namespace linalg {
     auto
       sm = proc_start_m[pm+1]-proc_start_m[pm],
       sn = proc_start_n[pn+1]-proc_start_n[pn];
+    //codesnippet end
+    //codesnippet d2ddistributed4
     subdomain = unique_ptr<bordered_array_base<real>>
       ( make_unique<bordered_array_seq<real>>(sm,sn,border) );
+    //codesnippet end
     tmp = unique_ptr<bordered_array_base<real>>
       ( make_unique<bordered_array_seq<real>>(sm,sn,border) );
     set_neighbors(trace);
-    //codesnippet end
   };
 
   

@@ -1,8 +1,7 @@
-// sycl.hpp
+// span.hpp
 template< typename real >
-class bordered_array_sycl : public bordered_array_base<real> {
+class bordered_array_span : public bordered_array_base<real> {
   friend class distributed_array<real>;
 public:
   using bordered_array_base<real>::log_flops;
   using bordered_array_base<real>::log_bytes;
-  sycl::queue q;
