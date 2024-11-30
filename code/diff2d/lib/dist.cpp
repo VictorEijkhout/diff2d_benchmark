@@ -39,10 +39,10 @@ namespace linalg {
   template< typename real >
   distributed_array<real>::distributed_array
       ( const mpl::cartesian_communicator& comm,size_t m,size_t n,int border,
-	bool trace )
+        bool trace )
         : comm(comm)
-	, rank( comm.rank() )
-	, m_global(m),n_global(n)
+        , rank( comm.rank() )
+        , m_global(m),n_global(n)
   {
     //codesnippet end
     /*
@@ -89,9 +89,9 @@ namespace linalg {
       segments.at(pi) = pi*size/psize;
     if (trace and rank==0) 
       rng::for_each( segments,
-		     [init=true] ( auto p ) mutable {
-		       if (init) { init=false; cout << format("pstarts: {}",p); } 
-		       else cout << format(", {}",p); } ); cout << format("\n");
+                     [init=true] ( auto p ) mutable {
+                       if (init) { init=false; cout << format("pstarts: {}",p); } 
+                       else cout << format(", {}",p); } ); cout << format("\n");
     return segments;
   };
 
@@ -254,11 +254,11 @@ namespace linalg {
       subdomain->data() + 2*subdomain->n2b() + 2*subdomain->border();
     auto proc_inner_layout =
       [ this ] ( auto rank,auto n2b ) { 
-	auto coord = this->comm.coordinates(rank);
-	auto pm = coord[0], pn = coord[1];
-	auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
-	auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
-	return mpl::strided_vector_layout<real>( msize, bs, n2b );
+        auto coord = this->comm.coordinates(rank);
+        auto pm = coord[0], pn = coord[1];
+        auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
+        auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
+        return mpl::strided_vector_layout<real>( msize, bs, n2b );
       };
     mpl::layout<real> send_layout = proc_inner_layout(comm.rank(),subdomain->n2b());
     subdomain->view( std::format("[{}] {}",myrank,caption) );
@@ -270,16 +270,16 @@ namespace linalg {
       mpl::layouts<real> recv_layouts(nprocs);
       mpl::displacements recv_displs(nprocs);
       for ( auto iproc=0; iproc<nprocs; iproc++ ) {
-	auto coord = comm.coordinates(iproc);
-	auto pm = coord[0], pn = coord[1];
-	auto msize = proc_start_m[pm+1]-proc_start_m[pm];
-	auto bs    = proc_start_n[pn+1]-proc_start_n[pn];
-	recv_layouts[iproc] = proc_inner_layout(iproc,global_n2b());
-	recv_displs[iproc] = proc_start_m[pm]*n_global + proc_start_n[pm];
+        auto coord = comm.coordinates(iproc);
+        auto pm = coord[0], pn = coord[1];
+        auto msize = proc_start_m[pm+1]-proc_start_m[pm];
+        auto bs    = proc_start_n[pn+1]-proc_start_n[pn];
+        recv_layouts[iproc] = proc_inner_layout(iproc,global_n2b());
+        recv_displs[iproc] = proc_start_m[pm]*n_global + proc_start_n[pm];
       }
     //   // comm.gatherv
     //   //   ( 0,
-    //   // 	  first_data_point,send_layout,
+    //   //           first_data_point,send_layout,
     //   //     gathered_data->data(),recv_layouts,recv_displs );
     //   // view as zero-border array
     //   bordered_array_seq<real>( m_global,n_global,gathered_data->data() ).view(caption);

@@ -29,7 +29,7 @@ namespace linalg {
     , cartesian_data
       ( md::mdspan
         ( _data,md::extents{m+2*border,n+2*border} )
-	) 
+        ) 
     //codesnippet end
       {};
 

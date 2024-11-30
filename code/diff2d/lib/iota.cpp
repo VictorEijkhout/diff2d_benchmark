@@ -28,7 +28,7 @@ namespace linalg {
     auto out = this->data();
     for ( idxint i=0; i<m+2*border; i++ ) {
       for ( idxint j=0; j<n+2*border; j++ ) {
-	out[ this->oindex(i,j) ] = static_cast<real>(0);
+        out[ this->oindex(i,j) ] = static_cast<real>(0);
       }
     }
   };
@@ -45,8 +45,8 @@ namespace linalg {
     #pragma omp parallel for 
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() )
-	out[ i,j ] = 4*in[ i,j ]
-	  - in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
+        out[ i,j ] = 4*in[ i,j ]
+          - in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
   };
   //codesnippet end
 
@@ -61,7 +61,7 @@ namespace linalg {
     #pragma omp parallel for
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() )
-	out[ i,j ] = in[ i,j] * factor;
+        out[ i,j ] = in[ i,j] * factor;
     
   };
   //codesnippet end
@@ -75,8 +75,8 @@ namespace linalg {
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() ) {
-	auto v = array[i,j];
-	sum_of_squares += v*v;
+        auto v = array[i,j];
+        sum_of_squares += v*v;
       }
     return std::sqrt(sum_of_squares);
   };
@@ -88,7 +88,7 @@ namespace linalg {
     auto out = this->data2d();
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() )
-	out[i,j] = value;
+        out[i,j] = value;
   };
 
   template< typename real >
@@ -99,8 +99,8 @@ namespace linalg {
     #pragma omp parallel for 
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() )
-	if ( i==m-1 or j==n-1 )
-	  out[ i,j ] = 1.;
+        if ( i==m-1 or j==n-1 )
+          out[ i,j ] = 1.;
   };
 
   template< typename real >

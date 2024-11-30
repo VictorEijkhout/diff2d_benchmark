@@ -28,7 +28,7 @@ namespace linalg {
     auto out = this->data();
     for ( idxint i=0; i<m+2*border; i++ ) {
       for ( idxint j=0; j<n+2*border; j++ ) {
-	out[ this->oindex(i,j) ] = static_cast<real>(0);
+        out[ this->oindex(i,j) ] = static_cast<real>(0);
       }
     }
   };
@@ -45,7 +45,7 @@ namespace linalg {
     for ( auto ij : this->inner_diy() ) {
       auto [i,j] = ij;
       out[ i,j ] = 4*in[ i,j ]
-	- in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
+        - in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
     }
   };
 
@@ -95,8 +95,8 @@ namespace linalg {
     #pragma omp parallel for 
     for ( int i=0; i<m; i++ )
       for ( int j=0; j<n; j++ )
-	if ( i==m-1 or j==n-1 )
-	  out[ i,j ] = 1.;
+        if ( i==m-1 or j==n-1 )
+          out[ i,j ] = 1.;
   };
 
   template< typename real >
