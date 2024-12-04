@@ -1,7 +1,7 @@
 template< typename real >
 void bordered_array_1d<real>::scale_interior
     ( const linalg::bordered_array_base<real>& _other, real factor ) {
-// upcast base to derived type
+  // upcast base to derived type
   const auto& other =
     dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
   auto out = this->data();

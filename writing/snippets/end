@@ -2,11 +2,11 @@
   bordered_array_sycl( idxint m,idxint n,real *data )
     : bordered_array_base<real>(m,n,data) {};
 
-// bookkeeping
+  // bookkeeping
   using bordered_array_base<real>::log_flops;
   using bordered_array_base<real>::log_bytes;
 
-//required functionality
+  //required functionality
   void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
   void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
   real l2norm() override;
