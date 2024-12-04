@@ -194,7 +194,8 @@ namespace linalg {
    */
   //codesnippet d2dexchange
   template< typename real >
-  void distributed_array<real>::halo_exchange( bordered_array_base<real>& data, bool trace ) {
+  void distributed_array<real>::halo_exchange
+      ( bordered_array_base<real>& data, bool trace ) {
     for ( auto [f,t] : { make_pair('W','E'),{'E','W'},{'N','S'},{'S','N'} } ) {
       // inner edge to send in the `to' direction
       auto [snd_ptr,snd_layout] = get_edge(data,t);

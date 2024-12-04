@@ -109,16 +109,17 @@ The operations then are:
   each component $y_i=x_i/\gamma$ can be independently computed,
   so each process~$p$ can compute $y_i$ for~$i\in I_p$ fully independently;
 \item Computing $\gamma$ is a all-reduction:
-  each processing element $p$ first computes $\gamma_p=\sqrt{\sum_{i\in I_p}y_i^2}$
+  each processing element $p$ first computes $\gamma_p=\surd\sum_{i\in I_p}y_i^2$
   independently,
-  and $\gamma=\sqrt{\sum_p\gamma_p}$ is then formed by combination, and
+  and $\gamma=\surd\sum_p\gamma_p$ is then formed by combination, and
   made available to all~$p$;
 \item Finally, for the operator $A$ we assume a sparse matrix,
   for instance a \acf{FD} stencil for a \ac{PDE}, or a \indexterm{convolution} kernel.
   This is characterized by each component $y_i$ of the output needing several
   components $x_j$ of the input. In our case, putting a two-dimensional
   indexing on the vectors:
-  \[ y_{ij} = 4x_{ij} - x_{i-1,j} -x_{i+1,j} - x_{i,j-1} - x_{i,j+1} \]
+  \[ \forall_{i,j}\colon
+  y_{ij} = 4x_{ij} - x_{i-1,j} -x_{i+1,j} - x_{i,j-1} - x_{i,j+1} \]
 \end{itemize}
 %%packtsnippet end
 

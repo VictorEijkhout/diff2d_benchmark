@@ -25,16 +25,12 @@ for ( int it=0; it<itcount; it++ ) {
    * Matrix-vector product
    */
   Y->central_difference_from( *X,trace );
-  //omitbegin
   if (view)
     Y->view("Operator applied");
-  //omitend
   // norm computation
   auto bnorm = Y->l2norm();
-  //omitbegin
   if ( trace and procno==0 )
     std::cout << std::format("[{:>2}] y norm: {}\n",it,bnorm);
-  //omitend
   // scale
   X->scale_interior( *Y,1./bnorm );
   //omitbegin
