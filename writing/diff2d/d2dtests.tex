@@ -135,7 +135,7 @@ In our power method application
 \end{packt}
 a first example of a parallel loop is scaling an array by a factor.
 %
-\cxxverbatimsnippet{d2dscaleseq}
+\ompverbatimsnippet{d2dscaleseq}
 %
 where \lstinline{m,n} are the size of the domain and \lstinline{b}~is the
 width of a halo region.
@@ -153,7 +153,7 @@ Some remarks:
   %% However, that is not always possible.
 \item We are using a traditional macro to translate from two-dimensional
   to one-dimensional indexing, skipping the border points:
-  \cxxverbatimsnippet{d2dseqindex}
+  \ompverbatimsnippet{d2dseqindex}
   Later we will discuss other indexing schemes.
 \begin{packt}
     (For the macro idiom, see section~\ref{sec:cpp-mac-param}.)
@@ -173,7 +173,7 @@ Some remarks:
 The $\ell_2$ reduction of our example application
 looks in simple OpenMP code like:
 %
-\cxxverbatimsnippet{d2dnormomp}
+\ompverbatimsnippet{d2dnormomp}
 %
 which parallelizes the outer loop only.
 Adding a directive \lstinline[language=omp]{collapse(2)}
@@ -202,7 +202,7 @@ The evaluation of the 5-point difference operator is perfectly parallel
 in that there are no dependencies between the points of the output vector.
 However, the loop is more complicated than the scaling operation above:
 %
-\cxxverbatimsnippet{d2d5ptseq}
+\ompverbatimsnippet{d2d5ptseq}
 
 While this operation is somewhat like a `transform' range operation,
 the complexity of the right-hand-side indexing precludes using
@@ -229,7 +229,7 @@ In graphs to follow we indicate by~`\n{oned}'
 the mode where we only parallelize the outer loop.
 For instance, the norm calculation is:
 %
-\cxxverbatimsnippet{d2dnormomp}
+\ompverbatimsnippet{d2dnormomp}
 
 We designate by `\n{clps}' this same code, but adding
 \lstinline[language=omp]{collapse(2)} to each OpenMP loop nest.
@@ -253,12 +253,12 @@ so we take a two-step approach:
 
 \item We define the iteration space as a \indexc{cartesian_product} range view:
 
-  \cxxverbatimsnippet{d2dinner}
+  \ompverbatimsnippet{d2dinner}
 
 \end{enumerate}
 This allows us to write, cleanly and compactly:
 %
-\cxxverbatimsnippet{d2d5ptspan}
+\ompverbatimsnippet{d2d5ptspan}
 %
 Unlike the OpenMP double loop, we now have a single loop
 spanning the two-dimensional domain.
@@ -271,7 +271,7 @@ iteration space is not without performance problems.
 We tackle this by having a variant, `\n{iota}',
 which splits the space orthogonally:
 %
-\cxxverbatimsnippet{d2dnormiota}
+\ompverbatimsnippet{d2dnormiota}
 
 \Level 1 {DIY cartesian product}
 
@@ -301,14 +301,14 @@ and for expressing common parallel algorithms.
 
 The preferred mechanism for handling memory coherence is through buffers.
 Host memory is wrapped in a buffer structure:
-\cxxverbatimsnippet{syclbufcreate}
+\ompverbatimsnippet{syclbufcreate}
 
 This memory can then transparently be accessed in a kernel,
 whether run on host or device,
 where coherence is ensured by the runtime.
 This turns out to be as efficient as more explicit mechanisms.
 %
-\cxxverbatimsnippet{syclbufaccess}
+\ompverbatimsnippet{syclbufaccess}
 %
 Note that Sycl has a true two-dimensional indexing mode.
 
@@ -329,14 +329,14 @@ that supports host and device execution with the same code.
 Unlike Sycl there is no explicit queue; instead,
 objects are explicitly associated with the host or device data space.
 
-\cxxverbatimsnippet{kokkosbufcreate}
+\ompverbatimsnippet{kokkosbufcreate}
 
 Like Sycl, there are explicit parallelism constructs.
 These closely resemble C++ range algorithms,
 specifying an explicit index space over which to iterate,
 and the lambda expression to apply at each index.
 
-\cxxverbatimsnippet{kokkosbufaccess}
+\ompverbatimsnippet{kokkosbufaccess}
 
 \Level 0 {Timing comparison and discussion}
 
@@ -551,11 +551,11 @@ as well as the linearized indexing scheme.
 
 \begin{comment}
   This makes send if we consider our `diy' implementation:
-  \cxxverbatimsnippet{d2ddiyiter}
+  \ompverbatimsnippet{d2ddiyiter}
   Unfortunately it's not the plus-plus operator but the plus-and-is,
   which is the bottlenect.
   For the former we can come up with trickery to lose the divisions:
-  \cxxverbatimsnippet{d2ddiziter}
+  \ompverbatimsnippet{d2ddiziter}
   for the latter that's much harder.
   (Note that the tricked code has no conditionals that could give branch mispredictions!)
 
