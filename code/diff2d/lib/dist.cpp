@@ -41,7 +41,7 @@ namespace linalg {
       ( const mpl::cartesian_communicator& comm,size_t m,size_t n,int border,
         bool trace )
         : comm(comm)
-        , rank( comm.rank() )
+        , procrank( comm.rank() )
         , m_global(m),n_global(n)
   {
     //codesnippet end
@@ -65,7 +65,7 @@ namespace linalg {
      * This process in particular
      */
     //codesnippet d2ddistributed3
-    coord = comm.coordinates(rank);
+    coord = comm.coordinates(procrank);
     auto pm = coord[0], pn = coord[1];
     auto
       sm = proc_start_m[pm+1]-proc_start_m[pm],
@@ -87,7 +87,7 @@ namespace linalg {
     vector<std::idxint> segments(psize+1);
     for ( int pi=0; pi<=psize; pi++ )
       segments.at(pi) = pi*size/psize;
-    if (trace and rank==0) 
+    if (trace and procrank==0) 
       rng::for_each( segments,
                      [init=true] ( auto p ) mutable {
                        if (init) { init=false; cout << format("pstarts: {}",p); } 
@@ -254,8 +254,8 @@ namespace linalg {
     real* first_data_point =  // should this be an mdspan?
       subdomain->data() + 2*subdomain->n2b() + 2*subdomain->border();
     auto proc_inner_layout =
-      [ this ] ( auto rank,auto n2b ) { 
-        auto coord = this->comm.coordinates(rank);
+      [ this ] ( auto procrank,auto n2b ) { 
+        auto coord = this->comm.coordinates(procrank);
         auto pm = coord[0], pn = coord[1];
         auto msize = this->proc_start_m[pm+1]-this->proc_start_m[pm];
         auto bs    = this->proc_start_n[pn+1]-this->proc_start_n[pn];
