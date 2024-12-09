@@ -189,7 +189,7 @@
 \def\RoutineIndexFont#1#2{% 
   \def\ifont{#2}\def\bfont{textbf}%
   \edef\tmp{%
-    \noexpand\lstinline+\indexedroutine+%
+    \noexpand\lstinline[language=#1]+\indexedroutine+%
     \ifx\ifont\bfont\noexpand\label{def:\indexedroutine}\fi%
     \noexpand\index[#1]{%
       \indexedroutine@{\catcode95=12 \noexpand\texttt{\indexedroutine}}|#2}%

@@ -17,14 +17,11 @@
 %%
 
 \usepackage{morewrites}
+
+% option nonewpage maybe?
 \usepackage[original]{imakeidx}
 %\indexsetup{noclearpage,toclevel=chapter}
 
-\makeindex %%[columns=1]
-\makeindex[name=def] %% ,columns=2
-\makeindex[name=cpp]
-\makeindex[name=f90]
-\makeindex[name=jul]
 \def\idxset#1{\def\currentindex{#1}}
 \idxset{def}
 
@@ -49,16 +46,16 @@
 \newcommand{\indexterm}[1]{\emph{#1}\index{#1}}
 
 \def\indextermtt#{\bgroup \innocentcharacters
-  \afterassignment\cmdtoindex\edef\indexedcmd}
+  \afterassignment\cmdtoindex \edef\indexedcmd}
 \def\indextermheader#{\bgroup \innocentcharacters
-  \afterassignment\cmdtoindex\edef\indexedcmd}
+  \afterassignment\cmdtoindex \edef\indexedcmd}
 \let\indexheader\indextermheader
 \def\indexheaderdef#{\bgroup \innocentcharacters
-  \afterassignment\cmdtoindexb\edef\indexedcmd}
+  \afterassignment\cmdtoindexb \edef\indexedcmd}
 \def\indextermttgroup#{\innocentcharacters
-  \afterassignment\cmdtoindex\edef\indexedcmd}
+  \afterassignment\cmdtoindex \edef\indexedcmd}
 \def\indextermttbgroup#{\innocentcharacters
-  \afterassignment\cmdtoindexb\edef\indexedcmd}
+  \afterassignment\cmdtoindexb \edef\indexedcmd}
 
 %% a language command to the current index
 %% this assumes the macro \indexedcmd contains the command
@@ -82,15 +79,12 @@
   \idxtmp
   \egroup
 }
-
 \def\indexfdef#{\bgroup \idxset{f90}\indextermttgroupbf}
 
 %%
 %% various types of indexterm
 %%
 
-%% \newcommand{\indextermtt}% begin term with underscore
-%%            {\bgroup\catcode`\_=12 \indextermtteg}
 \newcommand{\indextermtteg}[1]%end term with underscore
            {{\ttfamily\slshape #1}%
             \index{#1@\makeusletter\texttt{#1}\makeusother}\egroup
@@ -102,10 +96,11 @@
             \index{#1@\makeusletter\texttt{#1}\makeusother|textbf}\egroup
            }
 \newcommand{\indextermttsub}[2]{%
-    \emph{#1} \texttt{#2}%
+    \emph{#1 \texttt{#2}}%
     \index{#1@\makeusletter\texttt{#2}\makeusother!#1}}
-
-%% \newcommand{\indextermttdef}[1]{{\ttfamily\slshape #1}\index{#1@\texttt{#1}|textbf}}
+\newcommand{\indextermttbus}[2]{%
+    \emph{\texttt{#1} #2}%
+    \index{#1@\texttt{#1}!#2}}
 
 %%
 %% cmake indexing
@@ -140,6 +135,12 @@
 
 \newcommand{\indextermunix}% begin term with underscore
            {\bgroup\catcode`\_=12 \indextermunixeg}
+\def\nameunix#{\begingroup \innocentcharacters
+  \afterassignment\cmdrender \edef\indexedcmd}
+\def\cmdrender{%
+  \ttfamily \edef\tmp{\noexpand\lstinline[language=bash]{\indexedcmd}}\tmp
+  \endgroup 
+}
 \newcommand{\indextermunixeg}[1]%end term with underscore
            {{\ttfamily\slshape #1}%
             \index{#1@\makeusletter\texttt{#1}\makeusother\ (unix command)}\egroup
@@ -170,8 +171,7 @@
 \newcommand{\indexend}[1]{\index{#1|)}}
 
 \newcommand{\indexpragma}[1]{%
-  \lstinline{\##1}\index{\#pragma #1@{\texttt{\##1}}}%
-  \index{#1@{\texttt{#1}}|see{\texttt{\#pragma #1}}}%
+  \lstinline{\##1}\index{#1@{\texttt{\##1}}}%
 }
 
 \makeatletter
