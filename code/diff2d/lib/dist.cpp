@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** dist.cpp : distributed vector routines
  ****
@@ -44,6 +44,7 @@ namespace linalg {
         , procrank( comm.rank() )
         , m_global(m),n_global(n)
   {
+    // compute local sizes...
     //codesnippet end
     /*
      * set up processor grid
