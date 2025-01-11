@@ -1,4 +1,4 @@
-coord = comm.coordinates(rank);
+coord = comm.coordinates(procrank);
 auto pm = coord[0], pn = coord[1];
 auto
   sm = proc_start_m[pm+1]-proc_start_m[pm],
