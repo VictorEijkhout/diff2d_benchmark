@@ -3,7 +3,7 @@
 %%%%
 %%%% This text file is part of the source of 
 %%%% `The Art of HPC, vol 1: Science of Computing & vol 4: HPC Carpentry
-%%%% by Victor Eijkhout, copyright 2012-2024
+%%%% by Victor Eijkhout, copyright 2012-2025
 %%%%
 %%%% indexing macros
 %%%% (this also gets included in vol5)
@@ -35,6 +35,8 @@
     \lstset{language=cpp}\idxset{cpp}\def\idxprefix{std::}\indextermttgroup}
 \def\indexcrng{\bgroup
     \lstset{language=cpp}\idxset{cpp}\def\idxprefix{ranges::}\indextermttgroup}
+\def\indexcrngv{\bgroup
+    \lstset{language=cpp}\idxset{cpp}\def\idxprefix{ranges::views::}\indextermttgroup}
 \def\indexcdefstd{\bgroup
     \lstset{language=cpp}\idxset{cpp}\def\idxprefix{std::}\indextermttbgroup}
 \def\indexf   {\bgroup \idxset{f90}\indextermttgroup}
@@ -74,7 +76,7 @@
   \edef\idxtmp{%
     \noexpand\lstinline{\indexedcmd}%
     \noexpand\index[\currentindex]{%
-      \indexedcmd@{\catcode95=12 \noexpand\ttfamily \indexedcmd}|textbf}%
+      \indexedcmd@{\catcode95=12 \noexpand\texttt{\indexedcmd}}|textbf}%
   }%
   \idxtmp
   \egroup
@@ -110,7 +112,7 @@
            {\bgroup\catcode`\_=12 \indextermcmegkw}
 \newcommand{\indextermcmegkw}[1]%
            {{\lstinline[language=CMake]+#1+}%
-            \index{#1@\makeusletter\texttt{#1}makeusother}\egroup
+            \index{#1@\makeusletter\texttt{#1}\makeusother}\egroup
            }
 \let\indextermcmakekw\indexcmakekw
 % non-obivous cmake kw
@@ -142,15 +144,16 @@
   \endgroup 
 }
 \newcommand{\indextermunixeg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
+           {\lstinline[language=bash]{#1}%
             \index{#1@\makeusletter\texttt{#1}\makeusother\ (unix command)}\egroup
            }
 \newcommand{\indextermunixdef}[1]
-           {{\ttfamily\slshape #1}\index{#1@\texttt{#1}!(unix command)|textbf}}
+           {\lstinline[language=bash]{#1}%
+           \index{#1@\texttt{#1}!(unix command)|textbf}}
 \newcommand{\indextermunixdefus}% begin term with underscore
            {\bgroup\catcode`\_=12 \indextermunixdefeg}
 \newcommand{\indextermunixdefeg}[1]%end term with underscore
-           {{\ttfamily\slshape #1}%
+           {\lstinline[language=bash]{#1}%
             \index{#1@\makeusletter\texttt{#1}\makeusother\ (unix command)|textbf}\egroup
            }
 \let\indexunix\indextermunix
@@ -163,7 +166,7 @@
 \newcommand{\indextermsubdef}[2]{\emph{#1 #2}\index{#2!#1|textbf}}
 \newcommand{\indextermsubp}[2]{\emph{#1 #2s}\index{#2!#1}}
 \newcommand{\indextermbus}[2]{\emph{#1 #2}\index{#1!#2}}
-\let\indextermbusp\indextermbus
+\newcommand{\indextermbusp}[2]{\emph{#1 #2s}\index{#1!#2}}
 \newcommand{\indextermbusdef}[2]{\emph{#1 #2}\index{#1!#2|textbf}}
 \newcommand{\indextermstart}[1]{\emph{#1}\index{#1|(}}
 \newcommand{\indextermend}[1]{\index{#1|)}}

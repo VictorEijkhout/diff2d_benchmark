@@ -27,16 +27,17 @@ snippets :
 	 && snippetsdir=$$( pwd )/snippets.code \
 	 && echo " .. extracting snippets into $${snippetsdir}" \
 	 && mkdir -p $$snippetsdir \
-	 && logfile=snippets.log && rm -f $$logfile \
+	 && logfile=snippets.log && rm -f $$logfile $$ touch "$${logfile}" \
 	 && echo " .. see $$logfile afterwards" \
 	 && for d in ${SNIPPETSSOURCES} ; do \
-	      if [ -d "$$d" ] ; then \
-	        cmdline="make --no-print-directory snippets_extract \
-	                    SNIPPETSSOURCE=$$d SNIPPETSDIR=$${snippetsdir}" \
-	         && echo " .. $$cmdline" && eval $$cmdline \
-	      ; else \
-	        echo " .. no such dir: <<$$d>>" \
-	      ; fi \
+	      if [ ! -z "${SNIPPETSOURCESROOT}" ] ; then d="${SNIPPETSOURCESROOT}/$${d}" ; fi \
+	       && if [ -d "$$d" ] ; then \
+	            cmdline="make --no-print-directory snippets_extract \
+	                        SNIPPETSSOURCE=$$d SNIPPETSDIR=$${snippetsdir}" \
+	             && echo " .. $$cmdline" && eval $$cmdline \
+	          ; else \
+	            echo " .. no such dir: <<$$d>>" \
+	          ; fi \
 	    ; done >>$$logfile 2>&1 \
 	 && for d in ${SNIPPETSSOURCESGO} ; do \
 	      if [ -d "$$d" ] ; then \
@@ -49,11 +50,15 @@ snippets :
 	        echo " .. no such dir: <<$$d>>" \
 	      ; fi \
 	    ; done >>$$logfile 2>&1 \
-	  && echo "   (any errors are in snippets.log)" \
-	  && echo ".. sanitizing white space for examples" \
-	  && ( cd $$snippetsdir \
+	 && echo "   (any errors are in snippets.log)" \
+	 && echo ".. sanitizing white space for examples" \
+	 && ( cd $$snippetsdir \
 	        && for s in `ls` ; do \
-	             python ../scripts/cutspace.py $$s \
+	             if [ ! -z "${SCRIPTSDIR}" ] ; then \
+	               python "../${SCRIPTSDIR}/cutspace.py" $$s \
+	             ; else \
+	               python ../scripts/cutspace.py $$s \
+	             ; fi \
 	           ; done \
 	     ) \
 	  && echo ".. extracted"
