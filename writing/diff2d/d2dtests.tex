@@ -3,7 +3,7 @@
 %%%%
 %%%% This TeX file is part of the course
 %%%% Scientific Computing in C++23
-%%%% copyright 2023-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% copyright 2023-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
 %%%%
 %%%% d2dtests.tex : test results
 %%%%
@@ -83,8 +83,8 @@ in that it exhibits the most common parallelism patterns:
 \item global reduction operations
 \item point-to-point communications.
 \end{itemize}
-As follows.
-The method is given by
+To be precise,
+the method is given by
 \begin{quote}
   \begin{tabbing}
     Let $A$ a matrix of interest\\
@@ -101,7 +101,7 @@ and $x$ the corresponding eigenvector.
 
 The basis to parallelizing the power method lies in the distribution of~$x$.
 Each processing element~$p$, whether that be a core or processor,
-takes care (in a sense that we will later defined)
+takes care (in a sense that we will later define)
 of a disjoint set of indices~$I_p$.
 The operations then are:
 \begin{itemize}
@@ -116,7 +116,14 @@ The operations then are:
 \item Finally, for the operator $A$ we assume a sparse matrix,
   for instance a \acf{FD} stencil for a \ac{PDE}, or a \indexterm{convolution} kernel.
   This is characterized by each component $y_i$ of the output needing several
-  components $x_j$ of the input. In our case, putting a two-dimensional
+  .components $x_j$ of the
+\begin{nopackt}
+    input.
+\end{nopackt}
+\begin{packt}
+  input, as illustrated in figure~\ref{fig:laplacedomain}.
+\end{packt}
+In our case, putting a two-dimensional
   indexing on the vectors:
   \[ \forall_{i,j}\colon
   y_{ij} = 4x_{ij} - x_{i-1,j} -x_{i+1,j} - x_{i,j-1} - x_{i,j+1} \]

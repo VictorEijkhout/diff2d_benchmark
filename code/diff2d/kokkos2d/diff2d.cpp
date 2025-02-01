@@ -66,16 +66,16 @@ int main(int argc, char *argv[]) {
       //Kokkos::deep_copy(h_Ax, Ax);
 
       // Compute and apply scaling
-      real norm = 0.0;
       //codesnippet kokkosreduce
+      real norm = 0.0;
       Kokkos::parallel_reduce
-        ("Compute norm",
+        ("Compute norm squared",
          Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
-         KOKKOS_LAMBDA(int i, int j, real& update) {
-          update += Ax(i, j) * Ax(i, j);
+         KOKKOS_LAMBDA(int i, int j, real& accum) {
+          accum += Ax(i, j) * Ax(i, j);
         }, norm);
-      //codesnippet end
       norm = std::sqrt(norm);
+      //codesnippet end
 
       if ( trace and procno==0 )
         std::cout << std::format("[{:>2}] y norm: {}\n",it,norm);
