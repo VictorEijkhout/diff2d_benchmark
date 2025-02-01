@@ -49,47 +49,54 @@ getfiles :
 	            ${STC}/macros/{book,common,idx}macs.tex \
 	            ${PCSE}/macros/pcseidxmacs.tex \
 	            ../macros/ \
+	     && rsync \
+	            ${STC}/makefiles/Make.snippets \
+	            ../../makefiles \
 	 ; fi
 clean ::
 	@rm -f plots/*.{dep,dpth,idx,log,mw}
 
-SNIPPETSDIR = ../snippets
-CODEDIR = ../../code
-snippets-dir :
-	@if [ ! -d ${SNIPPETSDIR} ] ; then \
-	    mkdir -p ${SNIPPETSDIR} \
-	    && echo "## Automatically generated files only here" > ${SNIPPETSDIR}/README \
-	    ; fi
-snippets : snippets-dir
-	@echo "Extracting snippets"
-	@( export pwd=`pwd` \
-	  && cd ${SNIPPETSDIR} \
-	  && echo "C/C++ snippets" \
-	  && for x in \
-	        $${pwd}/${CODEDIR}/diff2d/*.{cpp,hpp} \
-	        $${pwd}/${CODEDIR}/diff2d/*/*.{cpp,hpp} \
-	        ; do \
-	      echo "  file <<$$x>>" \
-	      && cat $$x \
-	            | sed -e 's/CHKERRQ(ierr);//' \
-	            | awk -v fn=$${x##*/} \
-	                'BEGIN {f=0; ff=0; e=0; o=0} \
-	                 /snippet end/ {f=0; e=1} \
-	                 /omitend/     {o=0} \
-	                 f==1 && e==1  {print "   /* code omitted */ " > file; e=0 } \
-			 f==1 && ff==0 {print "// " fn > file; ff=1} \
-	                 f==1 && !/solution/ && !/solved/ && !/snipthis/ && !/snippetskip/ && o==0 && !/omit/ \
-	                               {print $$0 > file} \
-	                 /snippet /     {f=1; file=$$2 } \
-	                 /omitbegin/    {o=1} \
-	                ' \
-	      ; \
-	     done \
-	  && for s in `ls` ; do \
-	       python $${pwd}/../../scripts/cutspace.py $$s ; \
-	     done \
-	 ) >snippets.log 2>&1
-	@echo "(see snippets.log)"
+SNIPPETSOURCESROOT = ../../code/diff2d/
+SCRIPTSDIR = ../../scripts
+SNIPPETSSOURCES = . clps diy2d diy2e f77 iota kokkos2d lib mpl oned range seq span sycl
+include ../../makefiles/Make.snippets
+# SNIPPETSDIR = ../snippets
+# CODEDIR = ../../code
+# snippets-dir :
+# 	@if [ ! -d ${SNIPPETSDIR} ] ; then \
+# 	    mkdir -p ${SNIPPETSDIR} \
+# 	    && echo "## Automatically generated files only here" > ${SNIPPETSDIR}/README \
+# 	    ; fi
+# snippets : snippets-dir
+# 	@echo "Extracting snippets"
+# 	@( export pwd=`pwd` \
+# 	  && cd ${SNIPPETSDIR} \
+# 	  && echo "C/C++ snippets" \
+# 	  && for x in \
+# 	        $${pwd}/${CODEDIR}/diff2d/*.{cpp,hpp} \
+# 	        $${pwd}/${CODEDIR}/diff2d/*/*.{cpp,hpp} \
+# 	        ; do \
+# 	      echo "  file <<$$x>>" \
+# 	      && cat $$x \
+# 	            | sed -e 's/CHKERRQ(ierr);//' \
+# 	            | awk -v fn=$${x##*/} \
+# 	                'BEGIN {f=0; ff=0; e=0; o=0} \
+# 	                 /snippet end/ {f=0; e=1} \
+# 	                 /omitend/     {o=0} \
+# 	                 f==1 && e==1  {print "   /* code omitted */ " > file; e=0 } \
+# 			 f==1 && ff==0 {print "// " fn > file; ff=1} \
+# 	                 f==1 && !/solution/ && !/solved/ && !/snipthis/ && !/snippetskip/ && o==0 && !/omit/ \
+# 	                               {print $$0 > file} \
+# 	                 /snippet /     {f=1; file=$$2 } \
+# 	                 /omitbegin/    {o=1} \
+# 	                ' \
+# 	      ; \
+# 	     done \
+# 	  && for s in `ls` ; do \
+# 	       python $${pwd}/../../scripts/cutspace.py $$s ; \
+# 	     done \
+# 	 ) >snippets.log 2>&1
+# 	@echo "(see snippets.log)"
 
 include ../../makefiles/Make.clean
 MAKEFILESDIR := ../../${MAKEFILESDIR}

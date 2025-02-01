@@ -4,7 +4,7 @@
 %%%%
 %%%% This text file is part of the source of 
 %%%% `The Art of HPC, vol 1: The Science of Computing'
-%%%% by Victor Eijkhout, copyright 2012-2023
+%%%% by Victor Eijkhout, copyright 2012-2025
 %%%%
 %%%% This book is distributed under a Creative Commons Attribution 3.0
 %%%% Unported (CC BY 3.0) license and made possible by funding from
@@ -14,8 +14,6 @@
 %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newif\ifInBook \InBooktrue
 
 %% skip stuff that's only for the html version
 \excludecomment{htmlequation}
@@ -64,25 +62,11 @@
 \newcommand\furtherreading{\Level 0 {Further Reading}\label{sec:furtherreading-\chapshortname}}
 
 
-\newenvironment{specialnote}[1]
-               {\par\begin{raggedright}
-                 \leftskip=.5\unitindent
-                 \noindent\textsl{#1.}\kern1em\ignorespaces}
-               {\end{raggedright}\par}
-\newenvironment{taccnote}
-  {\begin{specialnote}{TACC note}}
-  {\end{specialnote}}
 \newenvironment{enrichment}
   {\begin{specialnote}{Enrichment}}
   {\end{specialnote}}
 \newenvironment{zshnote}
   {\begin{specialnote}{Zsh note}}
-  {\end{specialnote}}
-\newenvironment{fortrannote}
-  {\begin{specialnote}{Fortran note}}
-  {\end{specialnote}}
-\newenvironment{pythonnote}
-  {\begin{specialnote}{Python note}}
   {\end{specialnote}}
 
 %%
