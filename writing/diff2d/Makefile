@@ -58,7 +58,7 @@ clean ::
 
 SNIPPETSOURCESROOT = ../../code/diff2d/
 SCRIPTSDIR = ../../scripts
-SNIPPETSSOURCES = clps diy2d diy2e f77 iota kokkos2d lib mpl oned range seq span sycl
+SNIPPETSSOURCES = . clps diy2d diy2e f77 iota kokkos2d lib mpl oned range seq span sycl
 include ../../makefiles/Make.snippets
 # SNIPPETSDIR = ../snippets
 # CODEDIR = ../../code

@@ -80,11 +80,13 @@ namespace linalg {
     //auto [m,n,b,m2b,n2b] = this->inner_sizes();
     auto m = std::get<0>(this->inner_sizes());
     auto n = std::get<1>(this->inner_sizes());
-    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
-    auto q = this->q;
 
+    auto q = this->q;
+    //codesnippet syclbufaccess
+    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
     q.submit([&](sycl::handler &h) {
       sycl::accessor D_a(Buf_a, h, sycl::write_only);
+    //codesnippet end
 
       h.parallel_for(sycl::range<2>(m-2, n-2), [=](auto index) {
         auto row = index.get_id(0) + 1;
