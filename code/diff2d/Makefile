@@ -12,7 +12,7 @@
 info ::
 
 VARIANTS = oned clps kokkos2d span iota sycl diy2d diy2e \
-    seq f77
+    mpl seq f77
 .PHONY: variants
 variants: 
 	@echo ${VARIANTS}

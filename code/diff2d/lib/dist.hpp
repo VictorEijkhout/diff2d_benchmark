@@ -18,9 +18,8 @@
 #include <vector>
 
 #include <mpl/mpl.hpp>
-#define BUFFER        std::pair<real*,std::shared_ptr<mpl::layout<real>>>
+#define BUFFER        std::pair<real*,std::unique_ptr<mpl::layout<real>>>
 #define MKBUFFER std::make_pair
-// #define MKBUFFER std::make_pair<real*,std::shared_ptr<mpl::layout<real>>>
 
 #include "base.hpp"
 #include "seq.hpp"
