@@ -14,6 +14,7 @@
 #include <cstddef>
 #include <cstdint>
 using idxint = std::int64_t;
+using uidxint = std::uint64_t;
 
 #include <optional>
 #include <string>

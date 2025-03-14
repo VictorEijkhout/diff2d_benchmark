@@ -2,7 +2,7 @@
  *  ****
  *  **** This file belongs with the course
  *  **** Parallel Programming in MPI and OpenMP
- *  **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ *  **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  *  ****
  *  **** sycl.cpp : 2D diffusion in parallel through SYCL 
  *  **** code contributed by Yojan Chitkara
@@ -77,20 +77,27 @@ namespace linalg {
   template < typename real >
   void bordered_array_sycl<real>::set( real value, bool trace ) {
     auto out = this->data();
-    //auto [m,n,b,m2b,n2b] = this->inner_sizes();
-    auto m = std::get<0>(this->inner_sizes());
-    auto n = std::get<1>(this->inner_sizes());
+    auto [_m,_n,b,_m2b,_n2b] = this->inner_sizes();
+    auto m = static_cast<uidxint>(_m);
+    auto n = static_cast<uidxint>(_n);
+    auto m2b = static_cast<uidxint>(_m2b);
+    auto n2b = static_cast<uidxint>(_n2b);
 
     auto q = this->q;
     //codesnippet syclbufaccess
-    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
+    buffer<real,2> buf_exterior( out,sycl::range<2>{m2b,n2b} );
+    buffer<real,2> buf_interior
+      ( buf_exterior, /* data pointer */
+       sycl::id<2>{ 1,1 }, /* offset */
+       sycl::range<2>{ m,n } /* size */
+       );
     q.submit([&](sycl::handler &h) {
-      sycl::accessor D_a(Buf_a, h, sycl::write_only);
+      sycl::accessor D_a(buf_interior, h, sycl::write_only);
     //codesnippet end
 
-      h.parallel_for(sycl::range<2>(m-2, n-2), [=](auto index) {
-        auto row = index.get_id(0) + 1;
-        auto col = index.get_id(1) + 1;
+      h.parallel_for(sycl::range<2>(m, n), [=](auto index) {
+        auto row = index.get_id(0);
+        auto col = index.get_id(1);
         D_a[row][col] = value;
       });
     }).wait();
