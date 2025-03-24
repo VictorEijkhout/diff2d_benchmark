@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** base.cpp : base routines
  ****

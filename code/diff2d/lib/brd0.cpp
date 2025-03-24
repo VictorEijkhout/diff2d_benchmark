@@ -89,7 +89,7 @@ namespace linalg {
 
   //! Set the interior to a value
   template< typename real >
-  void bordered_array_1d<real>::set( real value, bool trace ) {
+  void bordered_array_1d<real>::set_value( real value, bool trace ) {
     auto out = this->data();
     auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
 #   pragma omp parallel for 

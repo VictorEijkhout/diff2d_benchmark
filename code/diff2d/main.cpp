@@ -2,13 +2,13 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** main.cpp : general main for diff2d codes
  ****
  ****************************************************************/
 
-X->set( 1.,trace );
+X->set_value( 1.,trace );
 if (view)
   X->view("Original");
 

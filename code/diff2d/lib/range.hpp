@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** plc.hpp : range policy based implementation
  ****
@@ -32,7 +32,7 @@ namespace linalg {
     void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
     void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
-    void set( real value,bool trace=false ) override;
+    void set_value( real value,bool trace=false ) override;
     void set_bc(bool down, bool right, bool trace=false) override;
     void view( std::string="" ) override;
   };

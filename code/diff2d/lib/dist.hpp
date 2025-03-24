@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** dist.hpp : headers for distributed bordered vector
  ****
@@ -67,8 +67,8 @@ namespace linalg {
     void scale_interior
         ( const linalg::distributed_array<real>& other, real );
     real l2norm() ;
-    void set( real value,bool trace=false)  {
-      subdomain->set( value,trace ); };
+    void set_value( real value,bool trace=false)  {
+      subdomain->set_value( value,trace ); };
     void set_bc(bool down,bool right, bool trace=false)  {
       subdomain->set_bc( coord[0]==dimensions.size(0),coord[1]==dimensions.size(1), trace ); };
     void view( std::string="" ) ;

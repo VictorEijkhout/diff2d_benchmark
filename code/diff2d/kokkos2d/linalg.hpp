@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2023 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** linalg.hpp : headers for bordered vector
  ****
@@ -153,7 +153,7 @@ namespace linalg {
     void copy_interior_from( const linalg::bordered_array<real>& );
     void scale_interior( const linalg::bordered_array<real>&, real );
     real l2norm();
-    void set( real value,bool trace=false );
+    void set_value real value,bool trace=false );
     void set_bc(bool down, bool right, bool trace=false);
     void view( std::string="" );
   };

@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** iota.cpp : bordered vector routines using mdspan
  ****
@@ -84,7 +84,7 @@ namespace linalg {
 
   //! Set the interior to a value
   template< typename real >
-  void bordered_array_iota<real>::set( real value, bool trace ) {
+  void bordered_array_iota<real>::set_value( real value, bool trace ) {
     auto out = this->data2d();
     for ( auto i : this->inneri() )
       for ( auto j : this->innerj() )

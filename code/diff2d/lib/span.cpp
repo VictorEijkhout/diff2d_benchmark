@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** span.cpp : bordered vector routines using mdspan
  ****
@@ -85,7 +85,7 @@ namespace linalg {
 
   //! Set the interior to a value
   template< typename real >
-  void bordered_array_span<real>::set( real value, bool trace ) {
+  void bordered_array_span<real>::set_value( real value, bool trace ) {
     auto out = this->data2d();
     for ( auto ij : this->inner() ) {
       auto [i,j] = ij;

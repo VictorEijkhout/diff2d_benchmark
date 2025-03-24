@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** seq.cpp : one-dimensional indexing for diff2d
  ****
@@ -92,7 +92,7 @@ namespace linalg {
 
   //! Set the interior to a value
   template< typename real >
-  void bordered_array_seq<real>::set( real value, bool trace ) {
+  void bordered_array_seq<real>::set_value( real value, bool trace ) {
     auto out = this->data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( idxint i=0; i<m; i++ )

@@ -75,7 +75,7 @@ namespace linalg {
   };
 
   template < typename real >
-  void bordered_array_sycl<real>::set( real value, bool trace ) {
+  void bordered_array_sycl<real>::set_value( real value, bool trace ) {
     auto out = this->data();
     auto [_m,_n,b,_m2b,_n2b] = this->inner_sizes();
     auto m = static_cast<uidxint>(_m);

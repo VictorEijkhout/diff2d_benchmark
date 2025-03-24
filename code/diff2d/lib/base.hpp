@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** base.hpp : headers for pure virtual base classes for diff2d implementation
  ****
@@ -196,7 +196,7 @@ namespace linalg {
     virtual void scale_interior
       ( const linalg::bordered_array_base<real>&, real ) = 0;
     virtual real l2norm() = 0;
-    virtual void set( real value,bool trace=false ) = 0;
+    virtual void set_value( real value,bool trace=false ) = 0;
     virtual void set_bc(bool down, bool right, bool trace=false) = 0;
     //codesnippet end
     virtual void view( std::string="" );

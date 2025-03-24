@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** diy2e.cpp: identical to span.cpp but using my own cartesian iteration
  ****
@@ -79,7 +79,7 @@ namespace linalg {
 
   //! Set the interior to a value
   template< typename real >
-  void bordered_array_diy2e<real>::set( real value, bool trace ) {
+  void bordered_array_diy2e<real>::set_value( real value, bool trace ) {
     auto out = this->data2d();
     for ( auto ij : this->inner_diy() ) {
       auto [i,j] = ij;
