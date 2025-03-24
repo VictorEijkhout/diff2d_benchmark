@@ -8,6 +8,9 @@
  ****
  ****************************************************************/
 
+#include <cstdlib>
+#include <cstdio>
+
 #include <chrono>
 #include <iostream>
 #include <format>
