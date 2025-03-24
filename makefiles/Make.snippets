@@ -86,7 +86,8 @@ snippets_extract ::
 	    ; elif [ "$${language}" = "bash" ] ; then \
 	      extension=sh \
 	    ; fi \
-	     && echo " .. files with extension <<$${extension}>> in $${sourcedir}" \
+	 && for extension in c cpp cxx F90 h hpp sh ; do \
+	    echo " .. files with extension <<$${extension}>> in $${sourcedir}" \
 	     && for c in $$( ls Makefile *.$${extension} *.h *.hpp 2>/dev/null ) ; do \
 	          echo ".. .. parsing $$c in $$sourcedir" \
 	           && awk -v fn=$${c##*/} -v td=${SNIPPETSDIR} -v sd=$$sourcedir \
@@ -115,7 +116,8 @@ snippets_extract ::
 	                        files[$$2]=1 ; firsttime=0 } \
 	            } \
 	            ' $$c \
-	        ; done
+	        ; done \
+	    ; done
 
 
 info ::

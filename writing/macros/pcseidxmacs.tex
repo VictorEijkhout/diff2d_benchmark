@@ -4,7 +4,7 @@
 %%%%
 %%%% This LaTeX file is part of the source of 
 %%%% `Parallel Computing'
-%%%% by Victor Eijkhout, copyright 2012-2024
+%%%% by Victor Eijkhout, copyright 2012-2025
 %%%%
 %%%% idxpkgmacs.tex : index-related macros for specific packages
 %%%%
@@ -14,9 +14,11 @@
 %%%%
 %%%% define the indexes
 %%%%
+\makeindex[name=def] %% ,columns=2
 \makeindex[name=mpi,title=,columns=1]
 \makeindex[name=mpl,title=,columns=1]
 \makeindex[name=omp,title=,columns=1]
+\makeindex[name=cuda,title=,columns=1]
 \makeindex[name=petsc,title=,columns=1]
 \makeindex[name=kokkos,title=,columns=1]
 \makeindex[name=sycl,title=,columns=1]
@@ -112,6 +114,12 @@
   \let\referencedroutine\indexedroutine
   \RoutineIndexFont{omp}{textbf}%
   \def\routinefam{omp}\RoutineRefDisplay\endgroup}
+
+% cuda
+\newcommand\indexcudashow  {\PackageIndex\cudaIndexRM}
+\newcommand\indexcudadef   {\PackageIndex\cudaIndexBF}
+\newcommand\cudaIndexRM{\RoutineIndexFont{cuda}{textrm}\endgroup}
+\newcommand\cudaIndexBF{\RoutineIndexFont{cuda}{textbf}\endgroup}
 
 % petsc
 \newcommand\indexpetscshow{\PackageIndex\petscIndexRM}

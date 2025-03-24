@@ -1,12 +1,14 @@
 % -*- latex -*-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%
-%%%% This TeX file is part of the course
-%%%% Scientific Computing in C++23
-%%%% copyright 2023-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
+%%%% This text file is part of the source of 
+%%%% the diff2d benchmark for parallel stencil codes
+%%%% by Victor Eijkhout, copyright 2012-2025
 %%%%
-%%%% d2dtests.tex : test results
+%%%% d2dtests.tex : body of the writeup paper
 %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{abstract}
@@ -79,12 +81,15 @@ For the mathematical side, see \HPSCref{app:power-method}.
 Computationally, the power method is an attractive paradigmatic example
 in that it exhibits the most common parallelism patterns:
 \begin{itemize}
-\item independent or `convenient' parallelism;
-\item global reduction operations
-\item point-to-point communications.
+\item independent or `convenient' parallelism, where
+  actions can be taken without any coordination;
+\item global reduction operations, where
+  processing elements combine their data, here by summing;
+\item point-to-point communications, where
+  processing elements pairwise exchange data.
 \end{itemize}
 To be precise,
-the method is given by
+the power method is defined as:
 \begin{quote}
   \begin{tabbing}
     Let $A$ a matrix of interest\\
@@ -112,7 +117,7 @@ The operations then are:
 \item Computing $\gamma$ is a all-reduction:
   each processing element $p$ first computes the norm $\gamma_p$
   of its owned elements independently
-  \[ \gamma_p=\surd\sum_{i\in I_p}y_i^2 \]
+  \[ \gamma_p=\sqrt{ \sum_{i\in I_p}y_i^2 } \]
   and the global norm $\gamma=\surd\sum_p\gamma_p$ is then formed by combination, and
   made available to all~$p$;
 \item Finally, for the operator $A$ we assume a sparse matrix,

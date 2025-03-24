@@ -4,7 +4,7 @@
 ####
 #### This make file is part of the source of 
 #### the diff2d_benchmark
-#### by Victor Eijkhout, copyright 2023-2024
+#### by Victor Eijkhout, copyright 2023-2025
 ####
 #### Root makefile for the diff2d writeup
 ####
@@ -36,7 +36,7 @@ onepass :
 	 && ${LATEX} -shell-escape ${FILE}
 
 .PHONY: getfiles
-ISP  = ../../../introduction-scientific-programming-private/guide
+ISP  = ../../../introduction-scientific-programming-private
 PCSE = ../../../parallel-programming-private
 STC  = ../../../scientific-computing-private
 getfiles :
@@ -46,8 +46,8 @@ getfiles :
 	     ; fi \
 	     && rsync \
 	            ${ISP}/macros/ispidxmacs.tex \
-	            ${STC}/macros/{book,common,idx}macs.tex \
-	            ${PCSE}/macros/pcseidxmacs.tex \
+	            ${STC}/macros/{book,common,idx,listing,snippet}macs.tex \
+	            ${PCSE}/macros/pcse{idx,snippet}macs.tex \
 	            ../macros/ \
 	     && rsync \
 	            ${STC}/makefiles/Make.snippets \

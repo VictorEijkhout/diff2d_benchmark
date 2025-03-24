@@ -4,7 +4,7 @@
 %%%%
 %%%% This text file is part of the source of 
 %%%% `The Art of HPC, vol 1: The Science of Computing'
-%%%% by Victor Eijkhout, copyright 2012-2023
+%%%% by Victor Eijkhout, copyright 2012-2025
 %%%%
 %%%% This book is distributed under a Creative Commons Attribution 3.0
 %%%% Unported (CC BY 3.0) license and made possible by funding from
@@ -13,18 +13,366 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{listings}
+\usepackage{listings,xcolor}
 
-\lstset{language=C}
-\lstdefinestyle{reviewcode}{
-  belowcaptionskip=1\baselineskip, breaklines=true,
-  xleftmargin=.5\unitindent, showstringspaces=false,
+%% https://latexcolor.com/
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{grullo}{rgb}{0.66, 0.6, 0.53}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{indianred}{rgb}{0.8, 0.36, 0.36}
+\definecolor{indianyellow}{rgb}{0.89, 0.66, 0.34}
+\definecolor{jade}{rgb}{0.0, 0.66, 0.42}
+\definecolor{lavender(floral)}{rgb}{0.71, 0.49, 0.86}
+
+\newcommand\lstcpp{cpp}
+\lstdefinelanguage{cpp}{
+   morecomment=[l]\#,
+   morecomment=[l]//,
+   morecomment=[s]{/*}{*/},
+   morestring=[b]",
+%%\lstdefinelanguage{cpp}{
+  %keywordsprefix=\#, %% this causes the whole line to be formatted. other solution?
+  %%  comment=[l]//,
+  commentstyle=\rmfamily\color{gray},
+  %% Datatypes
+  classoffset=0,
+  morekeywords={
+    int,short,long,unsigned,const,constexpr,consteval,auto,size_t,
+    int64_t,int32_t,uint64_t,uint32_t,
+    int8_t,uint8_t,int16_t,uint16_t,
+    float16_t,float32_t,float64_t,float128_t,bfloat16_t,
+    intptr_t,ptrdiff_t,
+    float,double,complex,bool,void,char,
+  },
+  keywordstyle=\bfseries\color{indianred},
+  %% Keywords 
+  classoffset=1,
+  morekeywords={
+    % C keywords
+    std,md,mdx,rng,views,namespace,mutable,friend,
+    main,return,using,abort,exit,
+    for,if,else,while,switch,case,and,or,
+    new,free,malloc,delete,sizeof,
+    alignas,alignof,aligned_alloc,aligned_storage,
+    true,false,
+    % class stuff
+    template,typename,concept,module,export,this,
+    class,struct,private,public,protected,extern,inline,operator,enum,
+    virtual,override,import,module,except,noexcept,
+    % unions and such
+    optional,variant,any,expected,unexpected,bitset,
+    % other
+    any_cast,bit_cast,const_cast,dynamic_cast,reinterpret_cast,static_cast,
+    decltype,
+    try,catch,throw,
+  },
+  keywordstyle=\bfseries\color{airforceblue}, %%{grullo},
+  %% Functions
+  classoffset=2,
+  morekeywords={
+    % C stuff
+    malloc,calloc,strlen,printf,scanf,sprintf,sscanf,
+    % classes
+    monostate,nullopt,strong_ordering,partial_ordering,
+    default_random_engine,random_device,
+    uniform_real_distribution,uniform_int_distribution,poisson_distribution,
+    shared_ptr,make_shared,unique_ptr,make_unique,nullptr,nullptr_t,
+    % exceptions
+    bad_cast,bad_alloc,bad_exception,bad_variant_access,bad_optional_access,
+    % I/O
+    cout,cin,endl,format,formatter,print,println,assert,static_assert,to_string,
+    % numerics
+    max,min,denorm_min,epsilon,lowest,sqrt,pow,to_ulong,conj,exp,abs,fabs,norm,polar,
+    add_sat,
+    cmp_equal,cmp_not_equal,cmp_greater,isnan,isinf,isfinite,isnormal,numeric_limits,
+    quiet_NaN,has_quiet_NaN,signaling_NaN
+    % container functions
+    emplace,push_back,pop,size,ssize,capacity,back,front,last,
+    begin,end,rbegin,rend,at,insert,erase,next,prev,advance,
+    get,data,extent,find,empty,union,
+    has_value,value,value_or,find_if,get_if,and_then,
+    rotr,exchange,
+    make_pair,make_tuple,
+    high_resolution_clock,steady_clock,system_clock,utc_clock,
+    now,count,seconds,milliseconds,
+    % range, view, algorithm
+    for_each,all_of,any_of,none_of,
+    accumulate,reduce,enumerate,transform,index,visit,adjacent,
+    transform_reduce,transform_inclusive_scan,transform_exclusive_scan,
+    partial_sum,inclusive_scan,exclusive_scan,min_element,sort,
+    cartesian_product,iota,iota_view,
+    plus,minus,multiplies,divides,modulus,logical_and,logical_or,negate,
+    max_element,
+    seq,par,par_unseq,unseq,
+    % more
+    source_location,current,to_underlying,as_const,layout_right,layout_left,
+    forward_iterator_tag,input_range,input_iterator,sentinel_for,
+  },
+  keywordstyle=\bfseries\color{jade},
+  %% Headers
+  classoffset=3,
+  morekeywords={
+    iostream,sstream,cstdlib,cstdio,functional,memory,limits,climits,
+    algorithm,numeric,ranges,execution,iterator,
+    chrono,random,rand,srand,
+    cstdint,cmath,bit,stdfloat,
+    TEST_CASE,SECTION,REQUIRE,REQUIRE_NOTHROW,REQUIRE_THROWS,INFO,
+  },
+  keywordstyle=\bfseries\color{green!40!blue!60},
+  %% containers
+  classoffset=4,
+  morekeywords={
+    % containers
+    array,vector,span,mdspan,submdspan,string,stringstream,
+    pair,tuple,function,range,map,set,bitset,
+    exception,time_point,stacktrace,
+  },
+  keywordstyle=\bfseries\color{amethyst},
+  %% OpenMP commands
+  classoffset=5,
+  morekeywords={
+  },
+  keywordstyle=\bfseries\color{green!40!red!60},
+  %% OpenMP keywords
+  classoffset=6,
+  morekeywords={
+  },
+  keywordstyle=\bfseries\color{green!70!red!30},
+}
+\newcommand\lstcstd[1]{\lstinline{std::#1}}
+
+\lstdefinelanguage{iomanip}[]{cpp}{
+  classoffset=2,
+  morekeywords={
+    dec,fixed,hex,left,right,scientific,setbase,setfill,setprecision,setw,
+    boolalpha,
+  },
+}
+
+\lstdefinelanguage{cuda}[]{cpp}{
+  %% keywords
+  classoffset=1,
+  morekeywords={
+    cudaSuccess,cudaErrorMemoryAllocation,cudaErrorNoDevice,cudaErrorInsufficientDriver,
+    threadIdx,blockIdx,gridDim,blockDim,
+    name,
+    % copy directions
+    cudaMemcpyHostToDevice,cudaMemcpyDeviceToHost,cudaMemcpyDeviceToDevice,
+    % allocation types
+    cudaHostAllocDefault,cudaHostAllocPortable,cudaHostAllocWriteCombined,cudaHostAllocMapped,
+    % device properties:
+    asyncEngineCount,unifiedAddressing,major,minor,canMapHostMemory,
+    multiProcessorCount,clockRate,totalGlobalMem,sharedMemPerBlock,
+    maxThreadsPerBlock,maxThreadsDim,
+  },
+  %% functions
+  classoffset=2,
+  morekeywords={
+    __global__,__device__,__host__,__shared__,
+    cudaGetDeviceCount,cudaGetDeviceProperties,
+    cudaMalloc,cudaHostAlloc,cudaMallocHost,cudaMallocManaged,
+    cudaMemcpy,cudaMemset,cudaFree,cudaFreeHost,cudaMemcpyAsync,
+    cudaHostGetDevicePointer,cudaDeviceSynchronize,cudaGetErrorString,
+    __syncthreads,
+    cudaEventCreate,cudaEventRecord,cudaEventSynchronize,cudaEventElapsedTime,
+    cudaStreamCreate,cudaStreamDestroy,
+  },
+  %% data types
+  classoffset=0,
+  morekeywords={
+    cudaDeviceProp,dim3,cudaEvent_t,cudaStream_t,cudaError_t,
+  },
+}
+
+\lstdefinelanguage{omp}[]{cpp}{
+  classoffset=5,
+  morekeywords={
+    omp,
+    somedirective,
+    parallel,for,do,loop,simd,
+    section,sections,declare,
+    single,master,atomic,critical,target,flush,threadprivate,
+    %%
+    someclause,
+    reduction,taskgroup,taskloop,task,taskwwait,schedule,mask,filter,
+    collapse,
+    end,cancel,
+    %%
+    omp_get_num_threads,omp_get_thread_num,omp_get_num_procs,
+    omp_init_lock,omp_destroy_lock,omp_set_lock,omp_unset_lock,omp_test_lock,
+    omp_set_schedule,omp_get_schedule,
+  },
+  classoffset=6,
+  morekeywords={
+    static,guided,dynamic,runtime,auto,close,spread,ordered,
+    shared,private,firstprivate,lastprivate,depend,final,
+    omp_in,omp_out,copyin,copyout,
+    write,read,update,capture,
+  },
+}
+
+\lstdefinelanguage{kokkos}[]{cpp}{
+  classoffset=2,
+  morekeywords={
+    % namespaces
+    Kokkos,
+    % classes
+    MemSpace,View,MDRangePolicy,Rank,
+    % values
+    HostSpace,CudaSpace,HIPSpace,LayoutRight,
+    % functions
+    parallel_for,parallel_reduce,
+  }
+}
+
+\lstdefinelanguage{mpi}[]{cpp}{
+}
+
+\lstdefinelanguage{mpl}[]{cpp}{
+  classoffset=1,
+  morekeywords={
+    %% classes
+    mpl,environment,communicator,cartesian_communicator,
+    layout,contiguous_layout,strided_vector_layout,
+    dimensions,coordinates,
+  },
+  classoffset=2,
+  morekeywords={
+    %% functions
+    dims_create,get_dimensions,shift,rank,size,proc_null,tag_t,
+    bcast,reduce,allreduce,scatter,gather,send,recv,sendrecv,  
+    max,min,plus,multiplies,logical_and,logical_or,logical_xor,
+    bit_and,bit_or,bit_xor,
+  },
+}
+
+\lstdefinelanguage{petsc}[]{cpp}{
+}
+
+\lstdefinelanguage{range}[]{cpp}{
+  classoffset=2,
+  morekeywords={
+    drop,filter,reverse,take,to,zip,
+  },
+}
+
+\lstdefinelanguage{tuple}[]{cpp}{
+  classoffset=2,
+  morekeywords={
+    first,second,
+  },
+}
+
+\lstdefinelanguage{sycl}[]{cpp}{
+  classoffset=1,
+  morekeywords={
+    % namespaces
+    sycl,
+  },
+  classoffset=2,
+  morekeywords={
+    % functions
+    submit,get_id,range,item,wait,parallel_for,
+    cpu_selector_v,gpu_selector_v,
+  },
+  %% containers
+  classoffset=4,
+  morekeywords={
+    % classes
+    queue,buffer,accessor,handler,range,
+  },
+}
+
+\lstdefinelanguage{Julia}
+                  {morekeywords={function,if,else,end,print,println},
+                    sensitive=true,
+                  }
+                  
+%% https://latexcolor.com/
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\lstdefinelanguage{CMake}{
+  classoffset=0,
+  morekeywords={project,cmake_minimum_required,include,
+    add_executable,add_library,enable_language,
+    target_compile_definitions,target_compile_options,add_compile_options,
+    set_target_properties,target_some_requirement,
+    target_include_libraries,target_include_directories,set_target_properties,
+    target_link_library,target_link_directories,target_link_libraries,
+    target_compile_features,target_link_options,target_sources,
+    add_subdirectory,
+    find_library,find_package,pkg_check_modules,
+    install,math,message,option,set,
+    if,else,elseif,endif,file,while,endwhile,foreach,endforeach,
+    FetchContent,FetchContent_Declare,FetchContent_MakeAvailable,
+    %% sycl
+    add_sycl_to_target,
+  },
+  keywordstyle=\bfseries\color{azure},
+  classoffset=1,
+  morekeywords={
+    DIRECTORY,DESTINATION,FILES,GLOB,INTERFACE,MATCHES,PROPERTIES,
+    NOTICE,VERBOSE,FATAL_ERROR,SEND_ERROR,WARNING,AUTHOR_WARNING,DEPRECATION,
+    STATUS,VERBOSE,DEBUG,TRACE,
+    PRIVATE,PUBLIC,REQUIRED,SHARED,STATIC,TARGETS,TRUE,VERSION,
+    FILES_MATCHING, PATTERN,STREQUAL,NOT,DEFINED,LESS,IN,ITEMS,LISTS,RANGE,
+    LIBRARY_OUTPUT_PATH,GIT_REPOSITORY,
+    },
+  keywordstyle=\bfseries\color{green!50!brown},
+  classoffset=2,
+  morekeywords={
+    CMAKE_CXX_COMPILER,CMAKE_C_COMPILER,CMAKE_Fortran_COMPILER,CMAKE_LINKER,
+    CMAKE_CXX_FLAGS,CMAKE_C_FLAGS,CMAKE_Fortran_FLAGS,CMAKE_CXX_STANDARD,
+    CMAKE_BUILD_TYPE,CMAKE_CXX_COMPILE_FEATURES,
+    CMAKE_EXE_LINKER_FLAGS,,CMAKE_LINKER_FLAGS,
+    CMAKE_INSTALL_PREFIX,CMAKE_PREFIX_PATH,CMAKE_MODULE_PATH,CMAKE_SYSTEM_NAME,
+    CMAKE_CURRENT_BINARY_DIR,CMAKE_CURRENT_SOURCE_DIR,CMAKE_SOURCE_DIR,
+    PROJECT_SOURCE_DIR,PROJECT_NAME,PROJECT_VERSION,
+    CMAKE_INSTALL_RPATH,CMAKE_INSTALL_RPATH_USE_LINK_PATH,
+    CMAKE_POSITION_INDEPENDENT_CODE,
+    },
+  keywordstyle=\color{ballblue},
+}
+
+\lstdefinelanguage{shell}{
+   morecomment=[l]\#,
+   morestring=[b]",
+  classoffset=0,
+  morekeywords={
+    if,then,else,fi,for,while,do,done,
+    cd,ar,nm,ld,pwd,grep,
+  },
+  keywordstyle=\bfseries\color{indianred},
+  classoffset=1,
+  morekeywords={
+    gcc,g++,icc,icx,icpc,icpx,gfortran,ifort,ifx,
+  },
+  keywordstyle=\bfseries\color{airforceblue},
+}
+
+\lstdefinelanguage{zsh}[]{shell}{
+  morekeywords={
+    make,cmake,mkdir,
+  },
+}
+
+\lstdefinelanguage{git}[]{shell}{
+  morekeywords={
+    git,add,branch,checkout,clone,commit,diff,
+    init,log,pull,push,remote,revert,status,
+    HEAD,
+    },
+  keywordstyle=\bfseries\color{orange!40!blue},
+}
+
+\lstdefinestyle{gitsession}{
+  language=git,
   basicstyle=\footnotesize\ttfamily,
-  keywordstyle=\bfseries\color{blue},
-  commentstyle=\color{red!60!black},
-  identifierstyle=\slshape\color{black},
-  stringstyle=\color{green!60!black}, columns=fullflexible,
-  keepspaces=true, }
+  breaklines=true, breakatwhitespace=true,
+  postbreak=\hbox{{$\hookrightarrow$}}, % \textcolor{green}
+}
+
 \lstdefinestyle{greencode}{
   belowcaptionskip=1\baselineskip, breaklines=true,
   xleftmargin=.5\unitindent, showstringspaces=false,
@@ -34,10 +382,9 @@
   identifierstyle=\slshape\color{black},
   stringstyle=\color{green!60!black}, columns=fullflexible,
   keepspaces=true, }
-\lstset{style=reviewcode}
+%% \lstset{style=reviewcode}
 
-\lstdefinestyle{snippetcode}{
-  belowcaptionskip=1\baselineskip,
+\lstdefinestyle{booksnippetcode}{
   breaklines=true,
   showstringspaces=false,
   basicstyle=\footnotesize\ttfamily,
@@ -48,6 +395,22 @@
   columns=fullflexible,
   keepspaces=true,
 }
+\newcommand\snippetstyle{booksnippetcode}
+\lstset{style=\snippetstyle}
+
+\lstdefinestyle{slidesnippetcode}{
+  numbers=left,numberstyle=\tiny,numbersep=3pt,
+  breaklines=true,
+  showstringspaces=false,
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{red!60!black},
+  stringstyle=\bfseries\color{gray!50!black},
+  identifierstyle=\slshape\color{black},
+  columns=fullflexible,
+  keepspaces=true,
+}
+
 \lstdefinestyle{verbatimcode}{
   language=verbatim,
   basicstyle=\footnotesize\ttfamily,

@@ -1,3 +1,16 @@
+% -*- latex -*-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%% This text file is part of the source of 
+%%%% the diff2d benchmark for parallel stencil codes
+%%%% by Victor Eijkhout, copyright 2012-2025
+%%%%
+%%%% macroload.tex : all the macro files together
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{geometry,fancyhdr,wrapfig}
 \usepackage{amssymb,amsmath,verbatim,graphicx,pslatex,multicol}
 \usepackage{comment}
@@ -16,13 +29,21 @@
 \usepackage[original,nonewpage]{imakeidx}
 \makeindex % default index
 %%\input idxmacs
-\input ispidxmacs
+\input idxmacs
 \input pcseidxmacs
 
 \input listingmacs
-\newcommand\codesnippetsdir{../snippets}
+
 \input snippetmacs
+\input pcsesnippetmacs
+%% \def\snippetstyle{booksnippetcode}
+%% \lstset{style=\snippetstyle}
+\newcommand\codesnippetsdir{../snippets}
+
 \input ../../../scientific-computing-private/macros/tikzplot
+\def\graphwidth{.45}
+\def\graphheight{.4}
+
 \excludecomment{packt}
 
 %%
