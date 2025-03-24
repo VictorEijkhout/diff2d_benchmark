@@ -40,7 +40,7 @@ namespace linalg {
 #ifdef USE_TBB
         exec::par_unseq,
 #endif
-        this->inner().begin(),this->inner().end(),
+        this->inner_range().begin(),this->inner_range().end(),
         [out = data2d(), in = other.data2d()] ( auto idx ) {
         auto [i,j] = idx;
         out[i,j] = 4*in[i,j] - in[i-1,j] - in[i+1,j] - in[i,j-1] - in[i,j+1]; }
@@ -57,7 +57,7 @@ namespace linalg {
 #ifdef USE_TBB
         exec::par_unseq,
 #endif
-        this->inner().begin(),this->inner().end(),
+        this->inner_range().begin(),this->inner_range().end(),
         [out = data2d(),in = other.data2d()] ( auto idx ) {
         auto [i,j] = idx;
         out[i,j] = in[i,j]; }
@@ -69,14 +69,14 @@ namespace linalg {
   template< typename real >
   void bordered_array<real>::scale_interior
       ( const linalg::bordered_array<real>& other,real factor ) {
-    const auto otherinner = other.inner();
+    const auto otherinner = other.inner_range();
     transform
       ( 
 #ifdef USE_TBB
         exec::par_unseq,
 #endif
 	otherinner().begin(),otherinner().end(),
-        this->inner().begin(),
+        this->inner_range().begin(),
         [out = data2d(),factor] ( auto idx ) {
         auto [i,j] = idx;
         out[i,j] *= factor; }
@@ -93,7 +93,7 @@ namespace linalg {
 #ifdef USE_TBB
         exec::par_unseq,
 #endif
-        this->inner().begin(),this->inner().end(),
+        this->inner_range().begin(),this->inner_range().end(),
         [out = data2d(),&sum_of_squares] ( auto idx ) {
         auto [i,j] = idx;
         sum_of_squares += out[i,j] * out[i,j]; }
@@ -110,7 +110,7 @@ namespace linalg {
 #ifdef USE_TBB
         exec::par_unseq,
 #endif
-        this->inner().begin(),this->inner().end(),
+        this->inner_range().begin(),this->inner_range().end(),
         [this,out = data2d(),value,trace] ( auto idx ) {
         auto [i,j] = idx;
         out[i,j] = value;
@@ -157,7 +157,7 @@ namespace linalg {
     std::vector<real> internal( _m * _n );
     size_t loc{0};
     std::for_each
-      ( this->inner().begin(),this->inner().end(),
+      ( this->inner_range().begin(),this->inner_range().end(),
 	[ out=internal.data(),in=data2d(),&loc ] ( auto idx ) {
 	auto [i,j] = idx;
 	out[loc++] = in[i,j];

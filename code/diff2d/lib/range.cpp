@@ -28,7 +28,7 @@ namespace linalg {
                                 std::__iterator_category_t<_IteratorTypes>>...>;
 
     // range algorithms on ranges doesn't work
-    // auto inner = this->inner();
+    // auto inner = this->inner_range();
   template< typename real >
   void bordered_array_range<real>::central_difference_from
       ( const linalg::bordered_array_base<real>& _other,bool trace ) {
@@ -67,7 +67,7 @@ namespace linalg {
   real bordered_array_range<real>::l2norm() {
     real sum_of_squares{0};
     const auto& array = this->data2d();
-    auto inner = this->inner();
+    auto inner = this->inner_range();
     std::for_each
       ( std::execution::par,
         inner.begin(),inner.end(),
@@ -116,7 +116,7 @@ namespace linalg {
     auto& out = this->data2d();
     auto m = this->m(), n = this->n(), n2b = this->n2b();
     auto border = this->border();
-    auto inner = this->inner();
+    auto inner = this->inner_range();
     std::for_each
       ( std::execution::par,
         inner.begin(),inner.end(),

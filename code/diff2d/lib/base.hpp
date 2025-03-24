@@ -50,10 +50,10 @@ namespace linalg {
     //codesnippet end
     friend class distributed_array<real>;
   protected:
-    idxint _m{0},_n{0}; int _border{0}; 
+    idxint m_{0},n_{0}; int _border{0}; 
   public:
     virtual ~bordered_array_base() {
-      if (data_owned) { delete[] _data; } };
+      if (data_owned) { delete[] data_; } };
     //codesnippet d2dbaseconstruct
     bordered_array_base( idxint m,idxint n,int border );
     //codesnippet end
@@ -62,19 +62,19 @@ namespace linalg {
     // Constructor from data, only for the MPI gathered version
     bordered_array_base( idxint m,idxint n,real *data );
     std::tuple<idxint,idxint,int> outer_sizes() const {
-      return std::make_tuple(_m+2*_border,_n+2*_border,_border); };
+      return std::make_tuple(m_+2*_border,n_+2*_border,_border); };
     std::tuple<idxint,idxint,int,idxint,idxint> inner_sizes() const {
-      return std::make_tuple(_m,_n,_border,_m+2*_border,_n+2*_border); };
-    inline auto m() const { return _m; };
-    inline auto n() const { return _n; };
+      return std::make_tuple(m_,n_,_border,m_+2*_border,n_+2*_border); };
+    inline auto m() const { return m_; };
+    inline auto n() const { return n_; };
     inline auto border() const { return _border; };
-    inline auto n2b() const { return _n+2*_border; };
+    inline auto n2b() const { return n_+2*_border; };
   private:
     logging _logger;
 
     //codesnippet d2dspan0
   private:
-    real *_data{nullptr};
+    real *data_{nullptr};
     md::mdspan<
       real,
       md::dextents<idxint,2>
@@ -88,8 +88,8 @@ namespace linalg {
      */
 
     //codesnippet d2dbaredata
-    real* data() { return _data; };
-    real const * const data() const { return _data; };
+    real* data() { return data_; };
+    real const * const data() const { return data_; };
     //codesnippet end
 
     //codesnippet d2dspan2
@@ -113,16 +113,24 @@ namespace linalg {
       return (i+this->border())*(this->n()+2*this->border()) + j+this->border(); };
 
     /*! A view to the interior
-     * \todo we should really use _m,_n instead of the extents
+     * \todo we should really use m_,n_ instead of the extents
      * \todo we really want cbegin / cend but not yet available
      */
      mutable std::optional< decltype( rng::views::cartesian_product
                              ( rng::views::iota(idxint{0},idxint{0}),
                                rng::views::iota(idxint{0},idxint{0}) ) ) >
-            range2d = {};
-    auto inner() const {
+            range2d_ = {};
+  private:
+    decltype( rng::views::cartesian_product
+	      ( rng::views::iota(idxint{0},idxint{0}),
+		rng::views::iota(idxint{0},idxint{0}) ) )  range2d;
+  public:
+    //codesnippet d2dinnerrange
+    auto& inner_range() const { return range2d; };
+    //codesnippet end
+#if 0
       if (not range2d.has_value()) {
-        //codesnippet d2dinner
+        //codesnipper d2dinner
         const auto& s = data2d();
         int b = this->border();
         idxint
@@ -132,10 +140,11 @@ namespace linalg {
           hi_n = static_cast<idxint>(s.extent(1)-b);
         range2d = rng::views::cartesian_product
           ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
-        //codesnippet end
+        //codesnipper end
       }
       return *range2d;
     };
+#endif
 
     mutable std::optional< decltype( rng::views::iota(idxint{0},idxint{0}) ) >
             range2di = {};

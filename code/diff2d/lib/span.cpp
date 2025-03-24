@@ -43,7 +43,7 @@ namespace linalg {
     auto out = this->data2d();
     const auto in = other.data2d();
     #pragma omp parallel for 
-    for ( auto ij : this->inner() ) {
+    for ( auto ij : this->inner_range() ) {
       auto [i,j] = ij;
       out[ i,j ] = 4*in[ i,j ]
         - in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
@@ -60,7 +60,7 @@ namespace linalg {
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for
-    for ( auto ij : this->inner() ) {
+    for ( auto ij : this->inner_range() ) {
       auto [i,j] = ij;
       out[ i,j ] = in[ i,j] * factor;
     }
@@ -74,7 +74,7 @@ namespace linalg {
     //codesnippet d2dnormspan
     auto array = this->data2d();
     #pragma omp parallel for reduction(+:sum_of_squares)
-    for ( auto ij : this->inner() ) {
+    for ( auto ij : this->inner_range() ) {
       auto [i,j] = ij;
       auto v = array[i,j];
       sum_of_squares += v*v;
@@ -87,7 +87,7 @@ namespace linalg {
   template< typename real >
   void bordered_array_span<real>::set_value( real value, bool trace ) {
     auto out = this->data2d();
-    for ( auto ij : this->inner() ) {
+    for ( auto ij : this->inner_range() ) {
       auto [i,j] = ij;
       out[i,j] = value;
     }

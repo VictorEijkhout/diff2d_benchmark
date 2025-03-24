@@ -2,7 +2,7 @@
  ****
  **** This file belongs with the course
  **** Parallel Programming in MPI and OpenMP
- **** copyright 2019-2024 Victor Eijkhout eijkhout@tacc.utexas.edu
+ **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
  **** linalg.cpp : bordered vector routines for omp
  ****    using mdspan but 1D -> 2D index conversion
@@ -39,7 +39,7 @@ namespace linalg {
     auto out = this->data2d();
     const auto& in = other.data2d();
 #   pragma omp parallel for
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) {
       auto [i,j] = split_i_j(ij);
       out[ i,j ] = 4*in[ i,j ]
 	- in[ i-1,j ] - in[ i+1,j ] - in[ i,j-1 ] - in[ i,j+1 ];
@@ -55,7 +55,7 @@ namespace linalg {
     auto out = this->data2d();
     auto in = other.data2d();
 #   pragma omp parallel for
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) {
       auto [i,j] = split_i_j(ij);
       out[ i,j ] = in[ i,j ];
     }
@@ -70,7 +70,7 @@ namespace linalg {
     auto out = this->data2d();
     auto in = other.data2d();
 #   pragma omp parallel for 
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) {
       auto [i,j] = split_i_j(ij);
       out[ i,j ] = in[ i,j ] * factor;
     }
@@ -84,7 +84,7 @@ namespace linalg {
     auto out = this->data2d();
     real sum_of_squares{0};
 #   pragma omp parallel for reduction(+:sum_of_squares)
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) {
       auto [i,j] = split_i_j(ij);
       auto v = out[ i,j ];
       sum_of_squares += v*v;
@@ -98,7 +98,7 @@ namespace linalg {
   void bordered_array<real>::set( real value, bool trace ) {
     auto out = this->data2d();
 #   pragma omp parallel for 
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->inner_size()) ) {
       auto [i,j] = split_i_j(ij);
         out[i,j] = value;
     };
@@ -108,7 +108,7 @@ namespace linalg {
   void bordered_array<real>::set_bc( bool down,bool right, bool trace ) {
     auto out = this->data2d();
     //#   pragma omp parallel for
-    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->domain_size()) ) { //this->inner() ) {
+    for ( auto ij : rng::views::iota(static_cast<size_t>(0),this->domain_size()) ) {
       auto [i,j] = split_i_j(ij);
       if ( i==_m-1 or j==_n-1 )
 	out[ i,j ] = 1.;

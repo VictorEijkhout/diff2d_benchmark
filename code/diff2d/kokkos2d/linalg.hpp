@@ -97,7 +97,7 @@ namespace linalg {
     /*! A view to the interior
      * \todo we should really use _m,_n instead of the extents
      */
-    auto inner() {
+    auto inner_range() {
       const auto s = data2d();
       // we really want cbegin / cend but not yet available
       size_t
@@ -110,7 +110,7 @@ namespace linalg {
     };
     //codesnippet end
     // and a const version
-    const auto inner() const {
+    const auto inner_range() const {
       const auto s = data2d();
       // we really want cbegin / cend but not yet available
       size_t

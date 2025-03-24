@@ -23,23 +23,35 @@ namespace linalg {
   template< typename real >
   bordered_array_base<real>::bordered_array_base
         ( idxint m,idxint n,int border )
-    : _m(m),_n(n),_border(border)
-    , _data( new real[ (m+2*border)*(n+2*border) ] )
+    : m_(m),n_(n),_border(border)
+    , data_( new real[ (m+2*border)*(n+2*border) ] )
     , data_owned(true)
     , cartesian_data
       ( md::mdspan
-        ( _data,md::extents{m+2*border,n+2*border} )
+        ( data_,md::extents{m+2*border,n+2*border} )
         ) 
     //codesnippet end
-      {};
+      {
+        //codesnippet d2dinner
+        const auto& s = data2d();
+        int b = this->border();
+        idxint
+          lo_m = static_cast<idxint>(b),
+          hi_m = static_cast<idxint>(s.extent(0)-b),
+          lo_n = static_cast<idxint>(b),
+          hi_n = static_cast<idxint>(s.extent(1)-b);
+        range2d = rng::views::cartesian_product
+          ( rng::views::iota(lo_m,hi_m),rng::views::iota(lo_n,hi_n) );
+        //codesnippet end
+      };
 
   //! Constructor from data. This uses a zero border.
   template< typename real >
   bordered_array_base<real>::bordered_array_base( idxint m,idxint n,real *data )
-    : _m(m),_n(n),_border(0)
-    , _data(data)
+    : m_(m),n_(n),_border(0)
+    , data_(data)
     , data_owned(false)
-    , cartesian_data( md::mdspan( _data,md::extents{m,n} ) ) 
+    , cartesian_data( md::mdspan( data_,md::extents{m,n} ) ) 
   {};
 
   template< typename real >
