@@ -110,13 +110,16 @@ namespace linalg {
     auto out = this->data();
     auto m = std::get<0>(this->inner_sizes());
     auto n = std::get<0>(this->inner_sizes());
-    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
-    buffer<real,1> Buf_n(&norm, range<1>(1));
+    buffer<real,2> Buf_a
+      (out, sycl::range<2>(m,n));
+    buffer<real,1> Buf_n
+      (&norm, range<1>(1));
 
     auto q = this->q;
     q.submit([&](handler &h) {
       accessor D_a(Buf_a, h, read_only);
-      auto D_Fn = reduction(Buf_n, h, std::plus<real>());
+      auto D_Fn = reduction
+	(Buf_n, h, std::plus<real>());
 
       h.parallel_for
         (range<2>(m - 2, n - 2),
