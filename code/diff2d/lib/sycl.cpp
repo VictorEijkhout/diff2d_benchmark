@@ -25,7 +25,6 @@ namespace linalg {
   bordered_array_sycl<real>::bordered_array_sycl( idxint m,idxint n,int border, queue q )
     : bordered_array_base<real>(m,n,border) {
     auto out = this->data();
-    //[m,n,border] = this->outer_sizes();
 
     q = this->q;
     buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
@@ -51,56 +50,56 @@ namespace linalg {
     auto in = other.data();
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
     auto q = this->q;
-    buffer<real,2> Buf_a(out, sycl::range<2>(m2b,n2b));
-    buffer<real,2> Buf_b(in, sycl::range<2>(m,n));
     //codesnippet d2d5ptsycl
+    sycl::range<2> outer_range(m2b,n2b);
+    buffer<real,2> Buf_a(out, outer_range);
+    buffer<real,2> Buf_b(in,  outer_range);
+    sycl::range<2> inner_range(m,n);
+    sycl::id<2> offset{1,1};
     q.submit([&] (handler &h)
     {
-      accessor D_a(Buf_a,h,read_only);
-      accessor D_b(Buf_b,h,write_only);
+      accessor D_a(Buf_a,h,inner_range,offset,read_only);
+      accessor D_b(Buf_b,h,inner_range,offset,write_only);
 
-      h.parallel_for(range<2>(other.m() - 2,other.n() - 2), [=](item<2> index){
-        auto row = index.get_id(0) + 1;
-        auto col = index.get_id(1) + 1;
+      h.parallel_for(inner_range, [=](item<2> index){
+        auto row = index.get_id(0);
+        auto col = index.get_id(1);
 
         real stencil_value =
           4*D_a[row][col]
           - D_a[row-1][col] - D_a[row+1][col]
           - D_a[row][col-1] - D_a[row][col+1];
-        D_b[row-1][col-1] = stencil_value;
+        D_b[row][col] = stencil_value;
       });
     }).wait();
     //codesnippet end
-
   };
 
   template < typename real >
   void bordered_array_sycl<real>::set_value( real value, bool trace ) {
     auto out = this->data();
-    auto [_m,_n,b,_m2b,_n2b] = this->inner_sizes();
-    auto m = static_cast<uidxint>(_m);
-    auto n = static_cast<uidxint>(_n);
-    auto m2b = static_cast<uidxint>(_m2b);
-    auto n2b = static_cast<uidxint>(_n2b);
+    auto [m_,n_,b,m2b_,n2b_] = this->inner_sizes();
+    auto m = static_cast<uidxint>(m_);
+    auto n = static_cast<uidxint>(n_);
+    auto m2b = static_cast<uidxint>(m2b_);
+    auto n2b = static_cast<uidxint>(n2b_);
 
     auto q = this->q;
     //codesnippet syclbufaccess
-    buffer<real,2> buf_exterior( out,sycl::range<2>{m2b,n2b} );
-    buffer<real,2> buf_interior
-      ( buf_exterior, /* data pointer */
-       sycl::id<2>{ 1,1 }, /* offset */
-       sycl::range<2>{ m,n } /* size */
-       );
+    buffer<real,2> Buf_a(out, sycl::range<2>(m,n));
     q.submit([&](sycl::handler &h) {
-      sycl::accessor D_a(buf_interior, h, sycl::write_only);
+      sycl::accessor D_a(Buf_a, h, sycl::write_only);
     //codesnippet end
 
-      h.parallel_for(sycl::range<2>(m, n), [=](auto index) {
-        auto row = index.get_id(0);
-        auto col = index.get_id(1);
-        D_a[row][col] = value;
-      });
+      h.parallel_for(sycl::range<2>(m, n),
+        [=](auto index) {
+          auto row = index.get_id(0)+1;
+          auto col = index.get_id(1)+1;
+          D_a[row][col] = value;
+          });
     }).wait();
+
+    return;
   };
 
   //codesnippet d2dnormsycl
@@ -131,7 +130,7 @@ namespace linalg {
            sum += (value*value);
       });
     }).wait();
-
+    
     norm = std::sqrt(norm);
     return norm;
   };
@@ -151,6 +150,7 @@ namespace linalg {
         std::cout << std::format("{:5.2}{}",out[ this->oindex(i,j) ],c);
       }
     }
+    return;
   };
 
   template< typename real >
