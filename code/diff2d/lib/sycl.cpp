@@ -35,7 +35,7 @@ namespace linalg {
       h.parallel_for(sycl::range<2>(m, n), [=](auto index) {
         auto row = index.get_id(0) + 1;
         auto col = index.get_id(1) + 1;
-        D_a[row][col] = static_cast<real>(0);
+        D_a[row][col] = static_cast<real>(1);
       });
     }).wait();  
   };
@@ -161,6 +161,22 @@ namespace linalg {
  template< typename real >
   void bordered_array_sycl<real>::scale_interior
       ( const linalg::bordered_array_base<real>& _other, real factor ) {
+
+    // upcast base to derived type
+    const auto& other =
+      dynamic_cast<const linalg::bordered_array_sycl<real>&>(_other);
+    //codesnippet end
+    auto out = this->data();
+    auto in = other.data();
+    auto [m,n,b,m2b,n2b] = this->inner_sizes();
+    //codesnippet d2dscalesycl
+    for ( idxint i=0; i<m; i++ )
+      for ( idxint j=0; j<n; j++ )
+        out[ IINDEX(i,j,m,n,b) ] = in[ IINDEX(i,j,m,n,b) ] * factor;
+    //codesnippet end
+    log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
+
+
   };
 
 };
