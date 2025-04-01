@@ -29,7 +29,7 @@ namespace sparsealg {
     //std::cout << std::format("zero with border: {} x {}\n",m,n);
     for ( idxint i=0; i<m; ++i )
       for ( idxint j=0; j<n; ++j )
-        out[ IINDEX(i,j,m,n,0) ] = static_cast<real>(0);
+        out[ index2d(i,j,m,n,0) ] = static_cast<real>(0);
   };
 
   //! Compute the 5-point Laplace stencil from an input array
@@ -44,9 +44,9 @@ namespace sparsealg {
   //codesnippet d2d5ptseq
     for ( idxint i=0; i<m; i++ ) {
       for ( idxint j=0; j<n; j++ ) {
-        out[ IINDEX(i,j,m,n,b) ] = 4*in[ IINDEX(i,j,m,n,b) ]
-          - in[ IINDEX(i-1,j,m,n,b) ] - in[ IINDEX(i+1,j,m,n,b) ]
-          - in[ IINDEX(i,j-1,m,n,b) ] - in[ IINDEX(i,j+1,m,n,b) ];
+        out[ index2d(i,j,m,n,b) ] = 4*in[ index2d(i,j,m,n,b) ]
+          - in[ index2d(i-1,j,m,n,b) ] - in[ index2d(i+1,j,m,n,b) ]
+          - in[ index2d(i,j-1,m,n,b) ] - in[ index2d(i,j+1,m,n,b) ];
       }
     }
     //codesnippet end
@@ -68,7 +68,7 @@ namespace sparsealg {
     //codesnippet d2dscaleseq
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
-        out[ IINDEX(i,j,m,n,b) ] = in[ IINDEX(i,j,m,n,b) ] * factor;
+        out[ index2d(i,j,m,n,b) ] = in[ index2d(i,j,m,n,b) ] * factor;
     //codesnippet end
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
   };
@@ -82,7 +82,7 @@ namespace sparsealg {
   //codesnippet d2dnormseq
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto v = in[ IINDEX(i,j,m,n,b) ];
+        auto v = in[ index2d(i,j,m,n,b) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip
@@ -97,7 +97,7 @@ namespace sparsealg {
     auto [m,n,b,m2b,n2b] = this->inner_sizes();
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto ij = IINDEX(i,j,m,n,b);
+        auto ij = index2d(i,j,m,n,b);
         out[ ij ] = value;
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*2 );
@@ -110,7 +110,7 @@ namespace sparsealg {
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
-          out[ IINDEX(i,j,m,n,b) ] = 1.;
+          out[ index2d(i,j,m,n,b) ] = 1.;
   };
 
 };

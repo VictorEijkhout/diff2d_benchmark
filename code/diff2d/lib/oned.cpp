@@ -47,9 +47,9 @@ namespace sparsealg {
     #pragma omp parallel for
     for ( idxint i=0; i<m; i++ ) {
       for ( idxint j=0; j<n; j++ ) {
-        out[ IINDEX(i,j,m,n,b) ] = 4*in[ IINDEX(i,j,m,n,b) ]
-          - in[ IINDEX(i-1,j,m,n,b) ] - in[ IINDEX(i+1,j,m,n,b) ]
-          - in[ IINDEX(i,j-1,m,n,b) ] - in[ IINDEX(i,j+1,m,n,b) ];
+        out[ index2d(i,j,m,n,b) ] = 4*in[ index2d(i,j,m,n,b) ]
+          - in[ index2d(i-1,j,m,n,b) ] - in[ index2d(i+1,j,m,n,b) ]
+          - in[ index2d(i,j-1,m,n,b) ] - in[ index2d(i,j+1,m,n,b) ];
       }
     }
   //codesnippet end
@@ -71,7 +71,7 @@ namespace sparsealg {
     #pragma omp parallel for 
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
-        out[ IINDEX(i,j,m,n,b) ] = in[ IINDEX(i,j,m,n,b) ] * factor;
+        out[ index2d(i,j,m,n,b) ] = in[ index2d(i,j,m,n,b) ] * factor;
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*3 );//snippetskip
   };
   //codesnippet end
@@ -87,7 +87,7 @@ namespace sparsealg {
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto v = in[ IINDEX(i,j,m,n,b) ];
+        auto v = in[ index2d(i,j,m,n,b) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip
@@ -104,7 +104,7 @@ namespace sparsealg {
     #pragma omp parallel for 
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
-        auto ij = IINDEX(i,j,m,n,b);
+        auto ij = index2d(i,j,m,n,b);
         out[ ij ] = value;
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*2 );
@@ -119,7 +119,7 @@ namespace sparsealg {
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
-          out[ IINDEX(i,j,m,n,b) ] = 1.;
+          out[ index2d(i,j,m,n,b) ] = 1.;
   };
 
   template< typename real >

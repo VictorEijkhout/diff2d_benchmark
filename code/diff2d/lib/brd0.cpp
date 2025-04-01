@@ -22,16 +22,17 @@ namespace sparsealg {
 #   pragma omp parallel for 
     for ( size_t i=1; i<m-1; i++ ) {
       for ( size_t j=1; j<n-1; j++ ) {
-        out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
-          - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ] - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
+        out[ index2d(i,j) ] = 4*in[ index2d(i,j) ]
+          - in[ index2d(i-1,j) ] - in[ index2d(i+1,j) ]
+          - in[ index2d(i,j-1) ] - in[ index2d(i,j+1) ];
       }
     }
     } else {
 #   pragma omp parallel for 
     for ( size_t i=0; i<m; i++ ) {
       for ( size_t j=0; j<n; j++ ) {
-        out[ IINDEX(i,j) ] = 4*in[ IINDEX(i,j) ]
-          - in[ IINDEX(i-1,j) ] - in[ IINDEX(i+1,j) ] - in[ IINDEX(i,j-1) ] - in[ IINDEX(i,j+1) ];
+        out[ index2d(i,j) ] = 4*in[ index2d(i,j) ]
+          - in[ index2d(i-1,j) ] - in[ index2d(i+1,j) ] - in[ index2d(i,j-1) ] - in[ index2d(i,j+1) ];
       }
     }
     }
@@ -50,7 +51,7 @@ namespace sparsealg {
 #   pragma omp parallel for 
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ ) {
-        out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ];
+        out[ index2d(i,j) ] = in[ index2d(i,j) ];
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*3 );
   };
@@ -67,7 +68,7 @@ namespace sparsealg {
 #   pragma omp parallel for 
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ )
-        out[ IINDEX(i,j) ] = in[ IINDEX(i,j) ] * factor;
+        out[ index2d(i,j) ] = in[ index2d(i,j) ] * factor;
     log_flops(m*n*1); log_bytes( sizeof(real)*m*n*2 );
   };
 
@@ -80,7 +81,7 @@ namespace sparsealg {
 #   pragma omp parallel for reduction(+:sum_of_squares)
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ ) {
-        auto v = out[ IINDEX(i,j) ];
+        auto v = out[ index2d(i,j) ];
         sum_of_squares += v*v;
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 );
@@ -95,7 +96,7 @@ namespace sparsealg {
 #   pragma omp parallel for 
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ ) {
-        auto ij = IINDEX(i,j);
+        auto ij = index2d(i,j);
         out[ ij ] = value;
       }
     log_flops(m*n*0); log_bytes( sizeof(real)*m*n*2 );
@@ -109,7 +110,7 @@ namespace sparsealg {
     for ( size_t i=0; i<m; i++ )
       for ( size_t j=0; j<n; j++ )
         if ( i==m-1 or j==n-1 )
-          out[ IINDEX(i,j) ] = 1.;
+          out[ index2d(i,j) ] = 1.;
   };
 
   template< typename real >

@@ -16,10 +16,6 @@
 
 #include "sycl.hpp"
 
-//codesnippet d2dsyclindex
-#define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b
-//codesnippet end
-
 namespace sparsealg {
   template< typename real >
   bordered_array_sycl<real>::bordered_array_sycl( idxint m,idxint n,int border, queue q )

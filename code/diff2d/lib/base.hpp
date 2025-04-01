@@ -38,6 +38,12 @@ public:
     return std::make_pair(flopcount,bytecount); };
 };
 
+//codesnippet d2dseqindef
+inline idxint index2d( idxint i,idxint j,idxint m,idxint n,idxint b ) {
+  return (i+b)*(n+2*b) + j+b;
+};
+//codesnippet end
+
 namespace sparsealg {
 
   // forward definition so that we can declare it `friend'
