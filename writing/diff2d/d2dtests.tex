@@ -185,9 +185,11 @@ looks in simple OpenMP code like:
 %
 \ompverbatimsnippet{d2dnormomp}
 %
-which parallelizes the outer loop only.
-Adding a directive \lstinline[language=omp]{collapse(2)}
-parallelizes both simultaneously.
+The \lstinline[language=omp]{reduction} clause specifies
+both the reduction operator and reduction variable.
+The above snippet parallelizes the outer loop only;
+adding a directive \lstinline[language=omp]{collapse(2)}
+parallelizes both loops simultaneously.
 
 %%packtsnippet end
 

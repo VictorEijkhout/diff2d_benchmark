@@ -79,11 +79,11 @@ namespace sparsealg {
   //! Compute the L2 norm of the interior
   template< typename real >
   real bordered_array_1d<real>::l2norm() {
-    real sum_of_squares{0};
     auto in = this->data();
     auto m = this->m(), n = this->n();
     auto b = this->border();
     //codesnippet d2dnormomp
+    real sum_of_squares{0};
     #pragma omp parallel for reduction(+:sum_of_squares)
     for ( idxint i=0; i<m; i++ )
       for ( idxint j=0; j<n; j++ ) {
