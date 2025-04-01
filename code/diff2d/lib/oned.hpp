@@ -8,15 +8,15 @@
  ****
  ****************************************************************/
 
-#ifndef LINALG_ONED_H
-#define LINALG_ONED_H
+#ifndef SPARSEALG_ONED_H
+#define SPARSEALG_ONED_H
 
 #include <tuple>
 #include <vector>
 
 #include "base.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   //codesnippet d2dbordered
   template< typename real >
@@ -33,8 +33,8 @@ namespace linalg {
 
     // required functionality
     void central_difference_from
-        ( const linalg::bordered_array_base<real>&,bool=false ) override;
-    void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
+        ( const sparsealg::bordered_array_base<real>&,bool=false ) override;
+    void scale_interior( const sparsealg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
     void set_value( real value,bool trace=false ) override;
     void set_bc(bool down, bool right, bool trace=false) override;

@@ -20,7 +20,7 @@ using std::format;
 #include "omp.h"
 #include "iota.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   template< typename real >
   bordered_array_iota<real>::bordered_array_iota( idxint m,idxint n,int border )
@@ -37,9 +37,9 @@ namespace linalg {
   //codesnippet d2d5ptiota
   template< typename real >
   void bordered_array_iota<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
     const auto& other =
-      dynamic_cast<const linalg::bordered_array_iota<real>&>(_other);
+      dynamic_cast<const sparsealg::bordered_array_iota<real>&>(_other);
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for 
@@ -54,8 +54,8 @@ namespace linalg {
   //codesnippet d2dscaleiota
   template< typename real >
   void bordered_array_iota<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
-    const auto& other = dynamic_cast<const linalg::bordered_array_iota<real>&>(_other);
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_iota<real>&>(_other);
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for
@@ -119,7 +119,7 @@ namespace linalg {
   };
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_iota<float>;
   template class bordered_array_iota<double>;
 };

@@ -40,10 +40,10 @@ int main(int argc,char **argv) {
   std::cout << std::format("Threads: {:>3}\n",nthreads);
   std::cout << std::format("Vector size: {} x {}\n",msize,nsize);
 
-  auto X = unique_ptr<linalg::bordered_array_base<real>>
-    ( make_unique<linalg::bordered_array_1d<real>>(msize,nsize,border) );
-  auto Y = unique_ptr<linalg::bordered_array_base<real>>
-    ( make_unique<linalg::bordered_array_1d<real>>(msize,nsize,border) );
+  auto X = unique_ptr<sparsealg::bordered_array_base<real>>
+    ( make_unique<sparsealg::bordered_array_1d<real>>(msize,nsize,border) );
+  auto Y = unique_ptr<sparsealg::bordered_array_base<real>>
+    ( make_unique<sparsealg::bordered_array_1d<real>>(msize,nsize,border) );
 
 #include "../main.cpp"
 

@@ -34,9 +34,9 @@ MODULES = cxxopts fmtlib
 ##
 ## dependencies
 ##
-EXTRA_OBJS = linalg.o
-diff2d.o : ../main.cpp ../options.cpp ../linalg.hpp
-linalg.o : ../linalg.hpp
+EXTRA_OBJS = sparsealg.o
+diff2d.o : ../main.cpp ../options.cpp ../sparsealg.hpp
+sparsealg.o : ../sparsealg.hpp
 
 ##
 ## compilation

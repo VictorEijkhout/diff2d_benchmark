@@ -30,7 +30,7 @@ namespace rng = std::ranges;
 #include <memory>
 using std::unique_ptr,std::make_unique;
 
-namespace linalg {
+namespace sparsealg {
 
   /*
    * Constructor
@@ -215,7 +215,7 @@ namespace linalg {
   //! Other is by non-const reference because we do halo exchange on it.
   template< typename real >
   void distributed_array<real>::central_difference_from
-  ( const linalg::distributed_array<real>& other,bool trace ) {
+  ( const sparsealg::distributed_array<real>& other,bool trace ) {
     // make distributed vector that has internal data of `other'
     tmp->scale_interior( *(other.subdomain),static_cast<real>(1) );
     halo_exchange( *tmp,trace );
@@ -240,7 +240,7 @@ namespace linalg {
   //codesnippet d2dscalempl
   template< typename real >
   void distributed_array<real>::scale_interior
-      ( const linalg::distributed_array<real>& other, real factor ) {
+      ( const sparsealg::distributed_array<real>& other, real factor ) {
     subdomain->scale_interior( *(other.subdomain),factor);
   };
   //codesnippet end
@@ -306,11 +306,11 @@ namespace linalg {
     return subdomain->log_report(); };
 
     // upcast base to derived type
-    // const auto& other = dynamic_cast<const linalg::distributed_array<real>&>(_other);
+    // const auto& other = dynamic_cast<const sparsealg::distributed_array<real>&>(_other);
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class distributed_array<float>;
   template class distributed_array<double>;
 };

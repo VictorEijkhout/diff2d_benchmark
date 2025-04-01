@@ -20,7 +20,7 @@ using std::format;
 
 #include "range.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   template <typename... _IteratorTypes>
   using __are_random_access_iterators
@@ -31,8 +31,8 @@ namespace linalg {
     // auto inner = this->inner_range();
   template< typename real >
   void bordered_array_range<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
-    const auto& other = dynamic_cast<const linalg::bordered_array_range<real>&>(_other);
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_range<real>&>(_other);
     auto& out = this->data2d();
     const auto& in = other.data2d();
     auto inner = inner_range<real>(*this);
@@ -48,8 +48,8 @@ namespace linalg {
 
   template< typename real >
   void bordered_array_range<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
-    const auto& other = dynamic_cast<const linalg::bordered_array_range<real>&>(_other);
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_range<real>&>(_other);
     auto& out = this->data2d();
     const auto& in = other.data2d();
     auto inner = inner_range<real>(*this);
@@ -131,7 +131,7 @@ namespace linalg {
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_range<float>;
   template class bordered_array_range<double>;
 };

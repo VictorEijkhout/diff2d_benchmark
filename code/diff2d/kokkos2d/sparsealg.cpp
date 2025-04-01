@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** linalg.cpp : bordered vector routines
+ **** sparsealg.cpp : bordered vector routines
  ****
  ****************************************************************/
 
@@ -17,9 +17,9 @@ using std::cout;
 #include <format>
 using std::format;
 
-#include "linalg.hpp"
+#include "sparsealg.hpp"
 
-namespace linalg {
+namespace sparsealg {
 #include <algorithm>
   using std::for_each,std::transform;
 
@@ -34,7 +34,7 @@ namespace linalg {
   //! Compute the 5-point Laplace stencil from an input array
   template< typename real >
   void bordered_array<real>::central_difference_from
-      ( const linalg::bordered_array<real>& other,bool trace ) {
+      ( const sparsealg::bordered_array<real>& other,bool trace ) {
     for_each
       ( 
 #ifdef USE_TBB
@@ -51,7 +51,7 @@ namespace linalg {
   //! Copy the interior of another bordered array, but leave border alone
   template< typename real >
   void bordered_array<real>::copy_interior_from
-      ( const linalg::bordered_array<real>& other ) {
+      ( const sparsealg::bordered_array<real>& other ) {
     for_each
       ( 
 #ifdef USE_TBB
@@ -68,7 +68,7 @@ namespace linalg {
   //! Scale the interior, leaving the border alone
   template< typename real >
   void bordered_array<real>::scale_interior
-      ( const linalg::bordered_array<real>& other,real factor ) {
+      ( const sparsealg::bordered_array<real>& other,real factor ) {
     const auto otherinner = other.inner_range();
     transform
       ( 
@@ -166,7 +166,7 @@ namespace linalg {
   };
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array<float>;
   template class bordered_array<double>;
 };

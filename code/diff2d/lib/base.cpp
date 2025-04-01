@@ -13,7 +13,7 @@
 #include <sstream>
 #include <format>
 
-namespace linalg {
+namespace sparsealg {
 
   /*! The constructor copies arguments and allocates the data
    * Note that the data is not zero-initialized, 
@@ -74,7 +74,7 @@ namespace linalg {
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_base<float>;
   template class bordered_array_base<double>;
 };

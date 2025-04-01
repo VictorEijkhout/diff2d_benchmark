@@ -8,12 +8,12 @@
  ****
  ****************************************************************/
 
-#ifndef LINALG_DIY2D_H
-#define LINALG_DIY2D_H
+#ifndef SPARSEALG_DIY2D_H
+#define SPARSEALG_DIY2D_H
 
 #include "base.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   //codesnippet d2dbordered
   template< typename real >
@@ -29,8 +29,8 @@ namespace linalg {
     bordered_array_diy2d( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
 
-    void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
-    void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
+    void central_difference_from( const sparsealg::bordered_array_base<real>&,bool=false ) override;
+    void scale_interior( const sparsealg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
     void set_value( real value,bool trace=false ) override;
     void set_bc(bool down, bool right, bool trace=false) override;

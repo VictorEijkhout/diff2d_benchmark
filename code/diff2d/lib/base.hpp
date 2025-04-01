@@ -8,8 +8,8 @@
  ****
  ****************************************************************/
 
-#ifndef LINALG_BASE_H
-#define LINALG_BASE_H
+#ifndef SPARSEALG_BASE_H
+#define SPARSEALG_BASE_H
 
 #include <cstddef>
 #include <cstdint>
@@ -38,7 +38,7 @@ public:
     return std::make_pair(flopcount,bytecount); };
 };
 
-namespace linalg {
+namespace sparsealg {
 
   // forward definition so that we can declare it `friend'
   template< typename real >
@@ -201,9 +201,9 @@ namespace linalg {
     // essential functionality
     //codesnippet d2dvirtualfunc
     virtual void central_difference_from
-      ( const linalg::bordered_array_base<real>&,bool=false ) = 0;
+      ( const sparsealg::bordered_array_base<real>&,bool=false ) = 0;
     virtual void scale_interior
-      ( const linalg::bordered_array_base<real>&, real ) = 0;
+      ( const sparsealg::bordered_array_base<real>&, real ) = 0;
     virtual real l2norm() = 0;
     virtual void set_value( real value,bool trace=false ) = 0;
     virtual void set_bc(bool down, bool right, bool trace=false) = 0;

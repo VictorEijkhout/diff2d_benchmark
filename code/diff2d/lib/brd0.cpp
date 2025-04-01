@@ -7,14 +7,14 @@
 
 #define IINDEX( i,j ) ((i)+border)*n2b + (j)+border
 
-namespace linalg {
+namespace sparsealg {
 
   //! Compute the 5-point Laplace stencil from an input array
   template< typename real >
   void bordered_array_1d<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
@@ -41,9 +41,9 @@ namespace linalg {
   //! Copy the interior of another bordered array, but leave border alone
   template< typename real >
   void bordered_array_1d<real>::copy_interior_from
-      ( const linalg::bordered_array_base<real>& _other ) {
+      ( const sparsealg::bordered_array_base<real>& _other ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
@@ -58,9 +58,9 @@ namespace linalg {
   //! Scale the interior, leaving the border alone
   template< typename real >
   void bordered_array_1d<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n(), border = this->border(), n2b = this->n2b();
@@ -128,7 +128,7 @@ namespace linalg {
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_1d<float>;
   template class bordered_array_1d<double>;
 };

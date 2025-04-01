@@ -18,7 +18,7 @@
 
 #define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b
 
-namespace linalg {
+namespace sparsealg {
 
   template< typename real >
   bordered_array_1d<real>::bordered_array_1d( idxint m,idxint n,int border )
@@ -34,9 +34,9 @@ namespace linalg {
   //! Compute the 5-point Laplace stencil from an input array
   template< typename real >
   void bordered_array_1d<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n();
@@ -55,9 +55,9 @@ namespace linalg {
   //! Scale the interior, leaving the border alone
   template< typename real >
   void bordered_array_1d<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
     // upcast base to derived type
-    const auto& other = dynamic_cast<const linalg::bordered_array_1d<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_1d<real>&>(_other);
     auto out = this->data();
     auto in = other.data();
     auto m = this->m(), n = this->n();
@@ -130,7 +130,7 @@ namespace linalg {
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_1d<float>;
   template class bordered_array_1d<double>;
 };

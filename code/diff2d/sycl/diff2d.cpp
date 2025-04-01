@@ -51,11 +51,11 @@ int main(int argc,char *argv[])
   std::cout << std::format("Vector size: {} x {}\n",msize,nsize);
 
   //codesnippet d2duniquesycl
-  auto X = unique_ptr<linalg::bordered_array_base<real>>
-      ( make_unique<linalg::bordered_array_sycl<real>>(msize,nsize,border,q) );
+  auto X = unique_ptr<sparsealg::bordered_array_base<real>>
+      ( make_unique<sparsealg::bordered_array_sycl<real>>(msize,nsize,border,q) );
   //codesnippet end
-  auto Y = unique_ptr<linalg::bordered_array_base<real>>
-      ( make_unique<linalg::bordered_array_sycl<real>>(msize,nsize,border,q) );
+  auto Y = unique_ptr<sparsealg::bordered_array_base<real>>
+      ( make_unique<sparsealg::bordered_array_sycl<real>>(msize,nsize,border,q) );
   
   #include "../main.cpp"
 

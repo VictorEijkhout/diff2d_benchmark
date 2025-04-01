@@ -25,7 +25,7 @@ using std::format;
 #include "cxxopts.hpp"
 
 #include "omp.h"
-#include "../linalg.hpp"
+#include "../sparsealg.hpp"
 
 using real = float;
 
@@ -52,7 +52,7 @@ int main(int argc,char **argv) {
   cout << format("Threads: {:>3}\n",nthreads);
   if (trace)
     cout << format("Vector size: {} x {}\n",msize,nsize);
-  linalg::bordered_array<real> X(msize,nsize,border),Y(msize,nsize,border);
+  sparsealg::bordered_array<real> X(msize,nsize,border),Y(msize,nsize,border);
   X.set_collapse(collapse); Y.set_collapse(collapse);
 
   // force tracing calls to happen

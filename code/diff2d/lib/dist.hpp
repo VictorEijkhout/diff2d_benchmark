@@ -24,7 +24,7 @@
 #include "base.hpp"
 #include "seq.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   //codesnippet d2distarray
   template< typename real >
@@ -65,7 +65,7 @@ namespace linalg {
     void central_difference_from
         ( const distributed_array<real>& other,bool=false );
     void scale_interior
-        ( const linalg::distributed_array<real>& other, real );
+        ( const sparsealg::distributed_array<real>& other, real );
     real l2norm() ;
     void set_value( real value,bool trace=false)  {
       subdomain->set_value( value,trace ); };

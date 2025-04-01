@@ -20,7 +20,7 @@
 #define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b
 //codesnippet end
 
-namespace linalg {
+namespace sparsealg {
   template< typename real >
   bordered_array_sycl<real>::bordered_array_sycl( idxint m,idxint n,int border, queue q )
     : bordered_array_base<real>(m,n,border) {
@@ -42,9 +42,9 @@ namespace linalg {
 
   template< typename real >
   void bordered_array_sycl<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
 
-    const auto& other = dynamic_cast<const linalg::bordered_array_sycl<real>&>(_other);
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_sycl<real>&>(_other);
 
     auto out = this->data();
     auto in = other.data();
@@ -160,12 +160,12 @@ namespace linalg {
 
  template< typename real >
   void bordered_array_sycl<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
   };
 
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_sycl<float>;
   template class bordered_array_sycl<double>;
 };

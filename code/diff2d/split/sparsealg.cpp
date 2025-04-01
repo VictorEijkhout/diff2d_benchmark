@@ -4,7 +4,7 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** linalg.cpp : bordered vector routines for omp
+ **** sparsealg.cpp : bordered vector routines for omp
  ****    using mdspan but 1D -> 2D index conversion
  ****
  ****************************************************************/
@@ -21,9 +21,9 @@ using std::cout;
 using std::format;
 
 #define HAVE_SPAN
-#include "../linalg.hpp"
+#include "../sparsealg.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   //! The constructor copies arguments and allocates the data
   template< typename real >
@@ -35,7 +35,7 @@ namespace linalg {
   template< typename real >
   //codesnippet d2d5ptspn
   void bordered_array<real>::central_difference_from
-      ( const linalg::bordered_array<real>& other,bool trace ) {
+      ( const sparsealg::bordered_array<real>& other,bool trace ) {
     auto out = this->data2d();
     const auto& in = other.data2d();
 #   pragma omp parallel for
@@ -51,7 +51,7 @@ namespace linalg {
   //codesnippet d2dcopyspn
   template< typename real >
   void bordered_array<real>::copy_interior_from
-      ( const linalg::bordered_array<real>& other ) {
+      ( const sparsealg::bordered_array<real>& other ) {
     auto out = this->data2d();
     auto in = other.data2d();
 #   pragma omp parallel for
@@ -66,7 +66,7 @@ namespace linalg {
   //codesnippet d2dscalespn
   template< typename real >
   void bordered_array<real>::scale_interior
-      ( const linalg::bordered_array<real>& other, real factor ) {
+      ( const sparsealg::bordered_array<real>& other, real factor ) {
     auto out = this->data2d();
     auto in = other.data2d();
 #   pragma omp parallel for 
@@ -128,7 +128,7 @@ namespace linalg {
   };
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array<float>;
   template class bordered_array<double>;
 };

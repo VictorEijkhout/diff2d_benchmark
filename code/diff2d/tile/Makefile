@@ -34,21 +34,21 @@ MODULES = cxxopts fmtlib mdspan
 ##
 ## dependencies
 ##
-EXTRA_OBJS = linalg.o
-diff2d.o : ../main.cpp ../options.cpp ../linalg.hpp
-linalg.o : ../linalg.hpp linalg.cpp
+EXTRA_OBJS = sparsealg.o
+diff2d.o : ../main.cpp ../options.cpp ../sparsealg.hpp
+sparsealg.o : ../sparsealg.hpp sparsealg.cpp
 ## reuse the omp main unchanged
 diff2d.cpp : ../omp/diff2d.cpp
 	@echo " .. copying $<"
 	@cp $< .
 ## we use the omp implementation, adding a `tile' parameter
-linalg.cpp : ../omp/linalg.cpp
+sparsealg.cpp : ../omp/sparsealg.cpp
 	@echo " .. copying $<"
 	@cat $< \
 	| sed -e '/parallel for/s/$$/ tile(30,30)/' \
 	> $@
 clean ::
-	@rm -f diff2d.cpp linalg.cpp
+	@rm -f diff2d.cpp sparsealg.cpp
 
 ##
 ## compilation

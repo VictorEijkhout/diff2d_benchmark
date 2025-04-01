@@ -9,8 +9,8 @@
  *  ****
  *  ****************************************************************/
 
-#ifndef LINALG_SYCL_H
-#define LINALG_SYCL_H
+#ifndef SPARSEALG_SYCL_H
+#define SPARSEALG_SYCL_H
 
 #include <tuple>
 #include <vector>
@@ -21,7 +21,7 @@ using namespace sycl;
 #include "base.hpp"
 
 
-namespace linalg {
+namespace sparsealg {
 
   //codesnippet d2dborderedsycl
   template< typename real >
@@ -39,8 +39,8 @@ namespace linalg {
     using bordered_array_base<real>::log_bytes;
 
     //required functionality
-    void central_difference_from( const linalg::bordered_array_base<real>&,bool=false ) override;
-    void scale_interior( const linalg::bordered_array_base<real>&, real ) override;
+    void central_difference_from( const sparsealg::bordered_array_base<real>&,bool=false ) override;
+    void scale_interior( const sparsealg::bordered_array_base<real>&, real ) override;
     real l2norm() override;
     void set_value( real value,bool trace=false ) override;
     void view(std::string caption) override;

@@ -57,10 +57,10 @@ int main(int argc,char **argv) {
   if ( trace and procno==0 )
     std::cout << std::format("Setting up domain of {} x {}\n",msize,nsize);
 
-  auto X = // unique_ptr<linalg::bordered_array_base<real>>
-    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border,trace);
-  auto Y = // unique_ptr<linalg::bordered_array_base<real>>
-    make_unique<linalg::distributed_array<real>>(cart_comm,msize,nsize,border,trace);
+  auto X = // unique_ptr<sparsealg::bordered_array_base<real>>
+    make_unique<sparsealg::distributed_array<real>>(cart_comm,msize,nsize,border,trace);
+  auto Y = // unique_ptr<sparsealg::bordered_array_base<real>>
+    make_unique<sparsealg::distributed_array<real>>(cart_comm,msize,nsize,border,trace);
 
   try {
 #include "../main.cpp"

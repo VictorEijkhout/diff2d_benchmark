@@ -4,12 +4,12 @@
  **** Parallel Programming in MPI and OpenMP
  **** copyright 2019-2025 Victor Eijkhout eijkhout@tacc.utexas.edu
  ****
- **** linalg.hpp : headers for bordered vector
+ **** sparsealg.hpp : headers for bordered vector
  ****
  ****************************************************************/
 
-#ifndef LINALG_HPP
-#define LINALG_HPP
+#ifndef SPARSEALG_HPP
+#define SPARSEALG_HPP
 
 #include <algorithm>
 #include <memory>
@@ -35,7 +35,7 @@ public:
     return std::make_pair(flopcount,bytecount); };
 };
 
-namespace linalg {
+namespace sparsealg {
 
   template< typename real >
   class distributed_array;
@@ -149,9 +149,9 @@ namespace linalg {
 
     std::vector<real> internal_data();
 
-    void central_difference_from( const linalg::bordered_array<real>&,bool=false );
-    void copy_interior_from( const linalg::bordered_array<real>& );
-    void scale_interior( const linalg::bordered_array<real>&, real );
+    void central_difference_from( const sparsealg::bordered_array<real>&,bool=false );
+    void copy_interior_from( const sparsealg::bordered_array<real>& );
+    void scale_interior( const sparsealg::bordered_array<real>&, real );
     real l2norm();
     void set_value real value,bool trace=false );
     void set_bc(bool down, bool right, bool trace=false);

@@ -20,7 +20,7 @@ using std::format;
 #include "omp.h"
 #include "diy2d.hpp"
 
-namespace linalg {
+namespace sparsealg {
 
   template< typename real >
   bordered_array_diy2d<real>::bordered_array_diy2d( idxint m,idxint n,int border )
@@ -36,9 +36,9 @@ namespace linalg {
   //! Compute the 5-point Laplace stencil from an input array
   template< typename real >
   void bordered_array_diy2d<real>::central_difference_from
-      ( const linalg::bordered_array_base<real>& _other,bool trace ) {
+      ( const sparsealg::bordered_array_base<real>& _other,bool trace ) {
     const auto& other =
-      dynamic_cast<const linalg::bordered_array_diy2d<real>&>(_other);
+      dynamic_cast<const sparsealg::bordered_array_diy2d<real>&>(_other);
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for 
@@ -52,8 +52,8 @@ namespace linalg {
   //! Scale the interior, leaving the border alone
   template< typename real >
   void bordered_array_diy2d<real>::scale_interior
-      ( const linalg::bordered_array_base<real>& _other, real factor ) {
-    const auto& other = dynamic_cast<const linalg::bordered_array_diy2d<real>&>(_other);
+      ( const sparsealg::bordered_array_base<real>& _other, real factor ) {
+    const auto& other = dynamic_cast<const sparsealg::bordered_array_diy2d<real>&>(_other);
     auto out = this->data2d();
     auto in = other.data2d();
     #pragma omp parallel for
@@ -115,7 +115,7 @@ namespace linalg {
   };
 };
 
-namespace linalg {
+namespace sparsealg {
   template class bordered_array_diy2d<float>;
   template class bordered_array_diy2d<double>;
 };
