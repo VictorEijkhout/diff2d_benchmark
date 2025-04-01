@@ -1,1 +1,0 @@
-bordered_array_base( idxint m,idxint n,int border );

@@ -1,8 +1,0 @@
-real norm = 0.0;
-Kokkos::parallel_reduce
-  ("Compute norm squared",
-   Kokkos::MDRangePolicy<Kokkos::Rank<2>>({1, 1}, {msize-1, nsize-1}),
-   KOKKOS_LAMBDA(int i, int j, real& accum) {
-    accum += Ax(i, j) * Ax(i, j);
-  }, norm);
-norm = std::sqrt(norm);

@@ -94,7 +94,8 @@ snippets_extract ::
 	            'BEGIN { printing=0; firsttime=0; file="foo"; files["x"]="y" } \
 	             /snippet end/  { printing=0; firsttime=0 } \
 	             printing==1 && firsttime==1 { print "// " sd "/" fn > file } \
-	             printing==1 && !/snipexclude/ { print $$0 > file; firsttime=0 } \
+	             printing==1 && !/snipexclude/ && !/snippetskip/ { \
+	                print $$0 > file; firsttime=0 } \
 	             /snippet /  && !/snippet end/ { \
 	                printing=1; file=td "/" $$2 ; \
 	                print "writing snippet file " file " into " td; \

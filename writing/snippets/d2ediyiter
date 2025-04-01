@@ -1,7 +1,0 @@
-auto& operator++(  ) {
-  c--;
-  j++; j *= (c>0);
-  i += (c==0);
-  c += m*(c==0);
-  return *this;
-};

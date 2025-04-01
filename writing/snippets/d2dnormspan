@@ -1,8 +1,0 @@
-auto array = this->data2d();
-#pragma omp parallel for reduction(+:sum_of_squares)
-for ( auto ij : this->inner() ) {
-  auto [i,j] = ij;
-  auto v = array[i,j];
-  sum_of_squares += v*v;
-}
-return std::sqrt(sum_of_squares);

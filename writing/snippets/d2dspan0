@@ -1,6 +1,0 @@
-private:
-  real *_data{nullptr};
-  md::mdspan<
-    real,
-    md::dextents<idxint,2>
-            > cartesian_data;

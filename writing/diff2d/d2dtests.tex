@@ -161,11 +161,7 @@ Some remarks:
 \item
   The loops range only over the $m\times n$ interior part of the domain,
   which is allocated with size $(m+2b)\times(n+2b)$.
-  %% of the \lstinline{mdspan}.
-  %% Later we will explore using a range-based loop and
-  %% dispensing with indexing entirely.
-  %% However, that is not always possible.
-\item We are using a traditional macro to translate from two-dimensional
+\item We  translate from two-dimensional
   to one-dimensional indexing, skipping the border points:
   \ompverbatimsnippet{d2dseqindex}
   Later we will discuss other indexing schemes.

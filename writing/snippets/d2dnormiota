@@ -1,8 +1,0 @@
-  #pragma omp parallel for reduction(+:sum_of_squares)
-  for ( auto i : this->inneri() )
-    for ( auto j : this->innerj() ) {
-      auto v = array[i,j];
-      sum_of_squares += v*v;
-    }
-  return std::sqrt(sum_of_squares);
-};

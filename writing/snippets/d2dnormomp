@@ -1,8 +1,0 @@
-  #pragma omp parallel for reduction(+:sum_of_squares)
-  for ( idxint i=0; i<m; i++ )
-    for ( idxint j=0; j<n; j++ ) {
-      auto v = in[ IINDEX(i,j,m,n,b) ];
-      sum_of_squares += v*v;
-    }
-  return std::sqrt(sum_of_squares);
-};

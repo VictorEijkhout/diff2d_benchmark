@@ -1,2 +1,0 @@
-// oned.cpp
-#define IINDEX( i,j,m,n,b ) ((i)+b)*(n+2*b) + (j)+b

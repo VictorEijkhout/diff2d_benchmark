@@ -21,9 +21,7 @@ auto start_time = myclock::now();
 
 //codesnippet d2dmain
 for ( int it=0; it<itcount; it++ ) {
-  /*
-   * Matrix-vector product
-   */
+  // Matrix-vector product
   Y->central_difference_from( *X,trace );
   //omitbegin
   if (view)

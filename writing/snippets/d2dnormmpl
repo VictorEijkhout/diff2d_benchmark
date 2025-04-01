@@ -1,8 +1,0 @@
-template< typename real >
-real distributed_array<real>::l2norm() { 
-  real local_norm = subdomain->l2norm();
-  local_norm *= local_norm;
-  real global_norm;
-  comm.allreduce( mpl::plus<real>(),local_norm,global_norm);
-  return std::sqrt(global_norm);
-};

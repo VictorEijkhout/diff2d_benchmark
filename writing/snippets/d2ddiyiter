@@ -1,3 +1,0 @@
-auto& operator++(  ) {
-  j++; i+= (j/m); j = j%m;
-  return *this; };

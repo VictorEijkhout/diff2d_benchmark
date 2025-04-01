@@ -1,6 +1,0 @@
-// dist.hpp
-template< typename real >
-class distributed_array {
-private:
-  size_t m_global,n_global;
-  std::unique_ptr<bordered_array_base<real>> subdomain{nullptr};
