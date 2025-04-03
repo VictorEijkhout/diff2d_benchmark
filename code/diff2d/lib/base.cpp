@@ -8,11 +8,14 @@
  ****
  ****************************************************************/
 
-#include "base.hpp"
 #include <iostream>
 #include <sstream>
 #include <format>
 
+#include <memory>
+using std::unique_ptr,std::make_unique;
+
+#include "base.hpp"
 namespace sparsealg {
 
   /*! The constructor copies arguments and allocates the data
@@ -24,11 +27,12 @@ namespace sparsealg {
   bordered_array_base<real>::bordered_array_base
         ( idxint m,idxint n,int border )
     : m_(m),n_(n),_border(border)
-    , data_( new real[ (m+2*border)*(n+2*border) ] )
+    , data_( make_unique<real[]>( (m+2*border)*(n+2*border) ) )
+      // , data_( new real[ (m+2*border)*(n+2*border) ] )
     , data_owned(true)
     , cartesian_data
       ( md::mdspan
-        ( data_,md::extents{m+2*border,n+2*border} )
+        ( data_.get(),md::extents{m+2*border,n+2*border} )
         ) 
     //codesnippet end
       {
@@ -45,15 +49,17 @@ namespace sparsealg {
         //codesnippet end
       };
 
+#if 0
   //! Constructor from data. This uses a zero border.
   template< typename real >
   bordered_array_base<real>::bordered_array_base( idxint m,idxint n,real *data )
     : m_(m),n_(n),_border(0)
-    , data_(data)
+    , data_(data) // AHEM
     , data_owned(false)
-    , cartesian_data( md::mdspan( data_,md::extents{m,n} ) ) 
+    , cartesian_data( md::mdspan( data_.get(),md::extents{m,n} ) ) 
   {};
-
+#endif
+  
   template< typename real >
   void bordered_array_base<real>::view( std::string caption ) {
     std::stringstream cout;

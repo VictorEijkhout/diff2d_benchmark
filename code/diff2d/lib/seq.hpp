@@ -29,8 +29,10 @@ namespace sparsealg {
 
     // constructors
     bordered_array_seq( idxint m,idxint n,int border );
+#if 0
     bordered_array_seq( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
+#endif
 
     // required functionality
     void central_difference_from( const sparsealg::bordered_array_base<real>&,bool=false ) override;

@@ -26,9 +26,11 @@ namespace sparsealg {
 
     bordered_array_range( idxint m,idxint n,int border )
       : bordered_array_base<real>(m,n,border) {};
+#if 0
     bordered_array_range( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
-
+#endif
+    
     void central_difference_from( const sparsealg::bordered_array_base<real>&,bool=false ) override;
     void scale_interior( const sparsealg::bordered_array_base<real>&, real ) override;
     real l2norm() override;

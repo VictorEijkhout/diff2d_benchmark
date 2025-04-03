@@ -16,6 +16,7 @@
 using idxint = std::int64_t;
 using uidxint = std::uint64_t;
 
+#include <memory>
 #include <optional>
 #include <string>
 #include <tuple>
@@ -59,7 +60,8 @@ namespace sparsealg {
     idxint m_{0},n_{0}; int _border{0}; 
   public:
     virtual ~bordered_array_base() {
-      if (data_owned) { delete[] data_; } };
+      // if (data_owned) { delete[] data_; }
+    };
     //codesnippet d2dbaseconstruct
     bordered_array_base( idxint m,idxint n,int border );
     //codesnippet end
@@ -80,7 +82,7 @@ namespace sparsealg {
 
     //codesnippet d2dspan0
   private:
-    real *data_{nullptr};
+    std::unique_ptr<real[]> data_{nullptr};
     md::mdspan<
       real,
       md::dextents<idxint,2>
@@ -94,8 +96,8 @@ namespace sparsealg {
      */
 
     //codesnippet d2dbaredata
-    real* data() { return data_; };
-    real const * const data() const { return data_; };
+    real* data() { return data_.get(); };
+    real const * const data() const { return data_.get(); };
     //codesnippet end
 
     //codesnippet d2dspan2

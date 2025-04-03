@@ -31,9 +31,11 @@ namespace sparsealg {
     sycl::queue q;
     bordered_array_sycl( idxint m,idxint n,int border,sycl::queue q );
     //codesnippet end
+#if 0
     bordered_array_sycl( idxint m,idxint n,real *data )
       : bordered_array_base<real>(m,n,data) {};
-
+#endif
+    
     // bookkeeping
     using bordered_array_base<real>::log_flops;
     using bordered_array_base<real>::log_bytes;
