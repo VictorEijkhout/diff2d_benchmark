@@ -163,11 +163,8 @@ Some remarks:
   which is allocated with size $(m+2b)\times(n+2b)$.
 \item We  translate from two-dimensional
   to one-dimensional indexing, skipping the border points:
-  \ompverbatimsnippet{d2dseqindex}
+  \ompverbatimsnippet{d2dseqindexf}
   Later we will discuss other indexing schemes.
-\begin{packt}
-    (For the macro idiom, see section~\ref{sec:cpp-mac-param}.)
-\end{packt}
 \item
   For the initial implementation, the \lstinline{out,in} data
   are \lstinline{double*} pointers, for instance obtained
