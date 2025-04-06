@@ -1,0 +1,176 @@
+==== Run ../bin_gcc/span on 1 threads ====
+Execute program ../bin_gcc/span cores 1
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=1 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:   1
+Vector size: 26000 x 26000
+x norm: 4096
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2359264
+[ 2] y norm: 2.9009447
+[ 3] y norm: 3.1926665
+[ 4] y norm: 3.3683305
+Time:  25254 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 11 threads ====
+Execute program ../bin_gcc/span cores 11
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  11
+Vector size: 26000 x 26000
+x norm: 13584.8955
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2365777
+[ 2] y norm: 2.898097
+[ 3] y norm: 3.1968544
+[ 4] y norm: 3.3680384
+Time:   2508 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 22 threads ====
+Execute program ../bin_gcc/span cores 22
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=22 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  22
+Vector size: 26000 x 26000
+x norm: 19211.943
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2364612
+[ 2] y norm: 2.8981802
+[ 3] y norm: 3.1968472
+[ 4] y norm: 3.3683689
+Time:   1372 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 33 threads ====
+Execute program ../bin_gcc/span cores 33
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=33 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  33
+Vector size: 26000 x 26000
+x norm: 23529.729
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2364283
+[ 2] y norm: 2.8981478
+[ 3] y norm: 3.1969469
+[ 4] y norm: 3.3683865
+Time:    914 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 44 threads ====
+Execute program ../bin_gcc/span cores 44
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  44
+Vector size: 26000 x 26000
+x norm: 26000.006
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236413
+[ 2] y norm: 2.8981426
+[ 3] y norm: 3.1970317
+[ 4] y norm: 3.3683064
+Time:    682 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 56 threads ====
+Execute program ../bin_gcc/span cores 56
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  56
+Vector size: 26000 x 26000
+x norm: 25999.996
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363977
+[ 2] y norm: 2.898142
+[ 3] y norm: 3.1970422
+[ 4] y norm: 3.3682923
+Time:    542 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 67 threads ====
+Execute program ../bin_gcc/span cores 67
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=67 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  67
+Vector size: 26000 x 26000
+x norm: 25999.992
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363875
+[ 2] y norm: 2.898158
+[ 3] y norm: 3.1970434
+[ 4] y norm: 3.3682814
+Time:    453 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 78 threads ====
+Execute program ../bin_gcc/span cores 78
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=78 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  78
+Vector size: 26000 x 26000
+x norm: 26000.002
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.23638
+[ 2] y norm: 2.8981535
+[ 3] y norm: 3.197047
+[ 4] y norm: 3.3682787
+Time:    409 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 89 threads ====
+Execute program ../bin_gcc/span cores 89
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads:  89
+Vector size: 26000 x 26000
+x norm: 26000.014
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363758
+[ 2] y norm: 2.89815
+[ 3] y norm: 3.1970325
+[ 4] y norm: 3.3682957
+Time:    386 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 100 threads ====
+Execute program ../bin_gcc/span cores 100
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=100 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads: 100
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363741
+[ 2] y norm: 2.8981462
+[ 3] y norm: 3.1970425
+[ 4] y norm: 3.368297
+Time:    394 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
+==== Run ../bin_gcc/span on 112 threads ====
+Execute program ../bin_gcc/span cores 112
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin_gcc/span -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: span
+Threads: 112
+Vector size: 26000 x 26000
+x norm: 25999.996
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363706
+[ 2] y norm: 2.8981445
+[ 3] y norm: 3.1970475
+[ 4] y norm: 3.368299
+Time:    408 msec
+span-BW: (estimated Gb/sec)       0
+span-Flops:       0
