@@ -1,0 +1,176 @@
+==== Run ../bin_gcc/iota on 1 threads ====
+Execute program ../bin_gcc/iota cores 1
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=1 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:   1
+Vector size: 26000 x 26000
+x norm: 4096
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2359264
+[ 2] y norm: 2.9009447
+[ 3] y norm: 3.1926665
+[ 4] y norm: 3.3683305
+Time:   9114 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 11 threads ====
+Execute program ../bin_gcc/iota cores 11
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  11
+Vector size: 26000 x 26000
+x norm: 13584.8955
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2365777
+[ 2] y norm: 2.898097
+[ 3] y norm: 3.1968544
+[ 4] y norm: 3.3680387
+Time:   1110 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 22 threads ====
+Execute program ../bin_gcc/iota cores 22
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=22 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  22
+Vector size: 26000 x 26000
+x norm: 19211.943
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2364612
+[ 2] y norm: 2.8981802
+[ 3] y norm: 3.1968477
+[ 4] y norm: 3.3683689
+Time:    629 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 33 threads ====
+Execute program ../bin_gcc/iota cores 33
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=33 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  33
+Vector size: 26000 x 26000
+x norm: 23529.729
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236428
+[ 2] y norm: 2.8981476
+[ 3] y norm: 3.1969464
+[ 4] y norm: 3.3683915
+Time:    471 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 44 threads ====
+Execute program ../bin_gcc/iota cores 44
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  44
+Vector size: 26000 x 26000
+x norm: 26000.008
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236413
+[ 2] y norm: 2.898142
+[ 3] y norm: 3.1970317
+[ 4] y norm: 3.3683062
+Time:    390 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 56 threads ====
+Execute program ../bin_gcc/iota cores 56
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  56
+Vector size: 26000 x 26000
+x norm: 25999.996
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363977
+[ 2] y norm: 2.898142
+[ 3] y norm: 3.1970427
+[ 4] y norm: 3.368292
+Time:    336 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 67 threads ====
+Execute program ../bin_gcc/iota cores 67
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=67 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  67
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363877
+[ 2] y norm: 2.8981578
+[ 3] y norm: 3.1970434
+[ 4] y norm: 3.3682814
+Time:    314 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 78 threads ====
+Execute program ../bin_gcc/iota cores 78
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=78 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  78
+Vector size: 26000 x 26000
+x norm: 25999.992
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363799
+[ 2] y norm: 2.8981538
+[ 3] y norm: 3.1970463
+[ 4] y norm: 3.368279
+Time:    303 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 89 threads ====
+Execute program ../bin_gcc/iota cores 89
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads:  89
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363756
+[ 2] y norm: 2.89815
+[ 3] y norm: 3.1970336
+[ 4] y norm: 3.368295
+Time:    297 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 100 threads ====
+Execute program ../bin_gcc/iota cores 100
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=100 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads: 100
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363741
+[ 2] y norm: 2.8981469
+[ 3] y norm: 3.1970422
+[ 4] y norm: 3.3682966
+Time:    308 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
+==== Run ../bin_gcc/iota on 112 threads ====
+Execute program ../bin_gcc/iota cores 112
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin_gcc/iota -m 26000 -n 26000 -i 5 --trace
+Total cores available: 112
+Runtype: iota
+Threads: 112
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363706
+[ 2] y norm: 2.8981447
+[ 3] y norm: 3.1970468
+[ 4] y norm: 3.3682988
+Time:    314 msec
+iota-BW: (estimated Gb/sec)       0
+iota-Flops:       0
