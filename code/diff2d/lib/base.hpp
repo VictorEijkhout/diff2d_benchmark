@@ -40,7 +40,7 @@ public:
 };
 
 //codesnippet d2dseqindexf
-inline idxint index2d( idxint i,idxint j,idxint m,idxint n,idxint b ) {
+inline constexpr idxint index2d( idxint i,idxint j,idxint m,idxint n,idxint b ) {
   return (i+b)*(n+2*b) + j+b;
 };
 //codesnippet end
