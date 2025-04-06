@@ -149,29 +149,29 @@ In our power method application
 \end{packt}
 a first example of a parallel loop is scaling an array by a factor.
 %
-\ompverbatimsnippet{d2dscaleseq}
+\begin{lstlisting}
+#pragma omp parallel for 
+for ( idxint i=0; i<m; i++ )
+  for ( idxint j=0; j<n; j++ )
+    out[ index2d(i,j,m,n,b) ] = in[ index2d(i,j,m,n,b) ] * factor;
+\end{lstlisting}
+%% \ompverbatimsnippet{d2dscaleseq}
 %
 where \lstinline{m,n} are the size of the domain and \lstinline{b}~is the
 width of a halo region.
 
-Some remarks:
-\begin{enumerate}
-\item We use template parameters \lstinline{idxint} and \lstinline{real}
-  for integers and floating point quantities, respectively.
-\item
-  The loops range only over the $m\times n$ interior part of the domain,
-  which is allocated with size $(m+2b)\times(n+2b)$.
-\item We  translate from two-dimensional
-  to one-dimensional indexing, skipping the border points:
-  \ompverbatimsnippet{d2dseqindexf}
-  Later we will discuss other indexing schemes.
-\item
-  For the initial implementation, the \lstinline{out,in} data
-  are \lstinline{double*} pointers, for instance obtained
-  as the \lstinline{data} member of a \lstinline{std::vector}.
-  Later we will explore implementing the data as an \lstinline{mdspan} object
-  so we can use the two-dimensional \lstinline{[i,j]} type indexing.
-\end{enumerate}
+For the initial implementation, the \lstinline{out,in} data
+are \lstinline{double*} pointers, for instance obtained
+as the \lstinline{data} member of a \lstinline{std::vector}.
+The loops range only over the $m\times n$ interior part of the domain,
+which is allocated with size $(m+2b)\times(n+2b)$.
+
+The indexing function translates from two-dimensional
+to one-dimensional indexing, skipping the border points:
+\ompverbatimsnippet{d2dseqindexf}
+Later we will explore implementing the data as an \lstinline{mdspan} object
+so we can use the two-dimensional \lstinline{[i,j]} type indexing.
+
 %%packtsnippet end
 
 \Level 1 {Reduction}
