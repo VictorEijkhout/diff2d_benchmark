@@ -18,7 +18,7 @@
 #include <vector>
 
 #include <mpl/mpl.hpp>
-#define BUFFER        std::pair<real*,std::unique_ptr<mpl::layout<real>>>
+#define BUFFER        std::pair<real*,std::shared_ptr<mpl::layout<real>>>
 #define MKBUFFER std::make_pair
 
 #include "base.hpp"
@@ -36,7 +36,7 @@ namespace sparsealg {
 
     //codesnippet d2distarraycomm    
     const mpl::cartesian_communicator& comm; 
-    const int rank;
+    const int procrank;
     mpl::cartesian_communicator::dimensions dimensions; 
     //! coordinate of this processor
     mpl::cartesian_communicator::vector coord;
@@ -46,9 +46,9 @@ namespace sparsealg {
     // orthogonal sizes of processor subdomains
     std::vector<idxint> proc_start_m,proc_start_n;
     std::map<char,int> neighbors;
+  //codesnippet end
     // temp array, just for the central difference routine. somewhat wasteful
     std::unique_ptr<bordered_array_base<real>> tmp{nullptr};
-  //codesnippet end
   public:
     // constructor
     distributed_array

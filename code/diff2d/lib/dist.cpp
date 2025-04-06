@@ -8,8 +8,6 @@
  ****
  ****************************************************************/
 
-#include <memory>
-using std::unique_ptr,std::make_unique;
 #include <string>
 using std::string;
 #include <tuple>
@@ -29,6 +27,7 @@ namespace rng = std::ranges;
 
 #include <memory>
 using std::unique_ptr,std::make_unique;
+using std::shared_ptr,std::make_shared;
 
 namespace sparsealg {
 
@@ -145,18 +144,18 @@ namespace sparsealg {
       ptr = &( data2d[b,n+b-1] );
     else if ( direction=='S' )
       ptr = &( data2d[m+b-1,b] );
-    unique_ptr<mpl::layout<real>> layout;
+    shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
     if ( direction=='N' or direction=='S' )
       //codesnippet d2dlythor
-      layout = unique_ptr<mpl::layout<real>>
-        ( make_unique<mpl::contiguous_layout<real>>(n) );
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::contiguous_layout<real>>(n) );
       //codesnippet end
     else
       //codesnippet d2dlytver
-      layout = unique_ptr<mpl::layout<real>>
-        ( make_unique<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
       //codesnippet end
     return make_pair(ptr,layout);      
   };
@@ -177,15 +176,15 @@ namespace sparsealg {
       ptr = &( data2d[b,n+b] );
     else if ( direction=='S' )
       ptr = &( data2d[m+b,b] );
-    unique_ptr<mpl::layout<real>> layout;
+    shared_ptr<mpl::layout<real>> layout;
     if (b>1)
       throw( "can not make layout for b>1" );
     if ( direction=='N' or direction=='S' )
-      layout = unique_ptr<mpl::layout<real>>
-        ( make_unique<mpl::contiguous_layout<real>>(n) );
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::contiguous_layout<real>>(n) );
     else
-      layout = unique_ptr<mpl::layout<real>>
-        ( make_unique<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
+      layout = shared_ptr<mpl::layout<real>>
+        ( make_shared<mpl::strided_vector_layout<real>>(m,1,n+2*b) );
     return MKBUFFER(ptr,layout);      
   };
 
