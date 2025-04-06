@@ -1,0 +1,165 @@
+==== Run ../bin_gcc/oned on 1 threads ====
+Execute program ../bin_gcc/oned cores 1
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=1 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:   1
+Vector size: 26000 x 26000
+x norm: 4096
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2359264
+[ 2] y norm: 2.9009447
+[ 3] y norm: 3.1926665
+[ 4] y norm: 3.3683305
+Time:   8432 msec
+omp-BW: (estimated Gb/sec)    12.2
+omp-Flops:    3.85
+==== Run ../bin_gcc/oned on 11 threads ====
+Execute program ../bin_gcc/oned cores 11
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=11 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  11
+Vector size: 26000 x 26000
+x norm: 13584.8955
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2365777
+[ 2] y norm: 2.898097
+[ 3] y norm: 3.1968544
+[ 4] y norm: 3.3680387
+Time:   1103 msec
+omp-BW: (estimated Gb/sec)    93.2
+omp-Flops:    29.4
+==== Run ../bin_gcc/oned on 22 threads ====
+Execute program ../bin_gcc/oned cores 22
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=22 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  22
+Vector size: 26000 x 26000
+x norm: 19211.943
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2364612
+[ 2] y norm: 2.89818
+[ 3] y norm: 3.1968472
+[ 4] y norm: 3.3683689
+Time:    706 msec
+omp-BW: (estimated Gb/sec)     146
+omp-Flops:      46
+==== Run ../bin_gcc/oned on 33 threads ====
+Execute program ../bin_gcc/oned cores 33
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=33 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  33
+Vector size: 26000 x 26000
+x norm: 23529.729
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236428
+[ 2] y norm: 2.8981478
+[ 3] y norm: 3.1969466
+[ 4] y norm: 3.368387
+Time:    536 msec
+omp-BW: (estimated Gb/sec)     192
+omp-Flops:    60.5
+==== Run ../bin_gcc/oned on 44 threads ====
+Execute program ../bin_gcc/oned cores 44
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=44 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  44
+Vector size: 26000 x 26000
+x norm: 26000.008
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2364123
+[ 2] y norm: 2.8981423
+[ 3] y norm: 3.1970308
+[ 4] y norm: 3.3683333
+Time:    429 msec
+omp-BW: (estimated Gb/sec)     240
+omp-Flops:    75.6
+==== Run ../bin_gcc/oned on 56 threads ====
+Execute program ../bin_gcc/oned cores 56
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=56 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  56
+Vector size: 26000 x 26000
+x norm: 25999.996
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.236398
+[ 2] y norm: 2.8981419
+[ 3] y norm: 3.1970413
+[ 4] y norm: 3.3682926
+Time:    369 msec
+omp-BW: (estimated Gb/sec)     278
+omp-Flops:    87.9
+==== Run ../bin_gcc/oned on 67 threads ====
+Execute program ../bin_gcc/oned cores 67
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=67 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  67
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363875
+[ 2] y norm: 2.898158
+[ 3] y norm: 3.1970425
+[ 4] y norm: 3.3682837
+Time:    354 msec
+omp-BW: (estimated Gb/sec)     290
+omp-Flops:    91.7
+==== Run ../bin_gcc/oned on 78 threads ====
+Execute program ../bin_gcc/oned cores 78
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=78 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  78
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.23638
+[ 2] y norm: 2.8981533
+[ 3] y norm: 3.1970468
+[ 4] y norm: 3.368278
+Time:    365 msec
+omp-BW: (estimated Gb/sec)     282
+omp-Flops:    88.9
+==== Run ../bin_gcc/oned on 89 threads ====
+Execute program ../bin_gcc/oned cores 89
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=89 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads:  89
+Vector size: 26000 x 26000
+x norm: 25999.998
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363758
+[ 2] y norm: 2.8981502
+[ 3] y norm: 3.1970325
+[ 4] y norm: 3.3682957
+Time:    368 msec
+omp-BW: (estimated Gb/sec)     279
+omp-Flops:    88.2
+==== Run ../bin_gcc/oned on 100 threads ====
+Execute program ../bin_gcc/oned cores 100
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=100 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 100
+Vector size: 26000 x 26000
+x norm: 26000
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363741
+[ 2] y norm: 2.8981462
+[ 3] y norm: 3.1970425
+[ 4] y norm: 3.3682976
+Time:    377 msec
+omp-BW: (estimated Gb/sec)     273
+omp-Flops:    86.1
+==== Run ../bin_gcc/oned on 112 threads ====
+Execute program ../bin_gcc/oned cores 112
+Commandline: OMP_PROC_BIND=true KMP_BLOCKTIME=infinite OMP_NUM_THREADS=112 ./../bin_gcc/oned -m 26000 -n 26000 -i 5 --trace
+Runtype: omp
+Threads: 112
+Vector size: 26000 x 26000
+x norm: 25999.996
+[ 0] y norm: 322.50272
+[ 1] y norm: 2.2363706
+[ 2] y norm: 2.898144
+[ 3] y norm: 3.1970484
+[ 4] y norm: 3.3682988
+Time:    388 msec
+omp-BW: (estimated Gb/sec)     265
+omp-Flops:    83.6
