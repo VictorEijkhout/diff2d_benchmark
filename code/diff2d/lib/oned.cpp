@@ -92,8 +92,8 @@ namespace sparsealg {
       }
     log_flops(m*n*3); log_bytes( sizeof(real)*m*n*1 ); //snippetskip
     return std::sqrt(sum_of_squares);
+    //codesnippet end
   };
-  //codesnippet end
 
   //! Set the interior to a value
   template< typename real >

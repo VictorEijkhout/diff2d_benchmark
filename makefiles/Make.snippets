@@ -91,12 +91,13 @@ snippets_extract ::
 	     && for c in $$( ls Makefile *.$${extension} *.h *.hpp 2>/dev/null ) ; do \
 	          echo ".. .. parsing $$c in $$sourcedir" \
 	           && awk -v fn=$${c##*/} -v td=${SNIPPETSDIR} -v sd=$$sourcedir \
-	            'BEGIN { printing=0; firsttime=0; file="foo"; files["x"]="y" } \
+	            'BEGIN { printing=0; firsttime=0; skipping=0; file="foo"; files["x"]="y" } \
 	             /snippet end/  { printing=0; firsttime=0 } \
 	             printing==1 && firsttime==1 { print "// " sd "/" fn > file } \
-	             printing==1 && !/snipexclude/ && !/snippetskip/ { \
+	             /snippetskipbegin/ { skipping=1} \
+	             printing==1 && !/snipexclude/ && !/snippetskip/ && skipping==0 { \
 	                print $$0 > file; firsttime=0 } \
-	             /snippet /  && !/snippet end/ { \
+	             /snippet /  && !/snippet end/ && !/snippetskip/ { \
 	                printing=1; file=td "/" $$2 ; \
 	                print "writing snippet file " file " into " td; \
 	  		if ( $$2 in files ) \
@@ -105,7 +106,8 @@ snippets_extract ::
 	                else \
 	                    { print "    marking new file " $$2 ; \
 	                        files[$$2]=1 ; firsttime=1 } \
-	            } \
+	                } \
+	             /snippetskipend/   { skipping=0 } \
 	             /snippetcont /  && !/snippet end/ { \
 	                printing=1; file=td "/" $$2; \
 	                print "writing snippet file " file; \
